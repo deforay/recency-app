@@ -1,0 +1,291 @@
+
+<ion-view view-title="Add Recency">
+        <header class="row recency-tab" >
+                <button id="main-recency" class="col btn recency-head " ng-click="recencydisplay=true;setmainactive();">Patient Details</button>
+                <button id="other-recency" class="col btn recency-head" ng-click="recencydisplay=false;setothersactive();">Other Details</button>
+            </header>
+<div class="RecencyForm">        
+  <ion-content style="top:0!important;bottom: 100px;">
+ 
+        <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
+
+    <div class="loginFields">
+        <div class="row">
+        <form class="col loginForm" name="addform" >
+            <div ng-show="recencydisplay">    
+                  <div class="row">
+                      <div class="input-field col "> 
+                            <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                    <p>Sample ID</p>
+                                </span>  
+                       <div class="form-logo"><img src="img/lab.png"></div> 
+                          <input id="sampleId" type="text" class="sampleId" name="sampleId" ng-model='recency.sampleId' placeholder="Sample ID" > 
+                      </div>  
+                  </div>
+            
+                  <div class="row">     
+                      <div class="input-field col ">
+                            <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                    <p>Patient ID</p>
+                                </span>
+                          <div class="form-logo"><img src="img/id-card.png"></div> 
+                          <input id="patientId" type="text" name ="patientId" class="patientId" ng-model='recency.patientId' placeholder="Patient ID" >
+                         
+                        </div>
+                  </div>
+                  <!-- <div class="row">     
+                        <div class="input-field col ">
+                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                      <p>Facility</p>
+                                  </span>
+                            <div class="form-logo"><img src="img/facility.png"></div> 
+                            <input type="text" id="autocomplete-facilities" name="facilities" class="autocomplete"  placeholder="Facility"  ng-model="recency.facilities" required>
+                           
+                          </div>
+                    </div> -->
+                    <div class="row">
+                        <div class="input-field col ">
+                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                      <p>Facility<span style="color:#df3838;"> *</span></p>
+                                  </span>
+                            <div class="form-logo "><img src="img/facility.png"></div> 
+                                <select name="facility" ng-model="recency.facilityId" ng-options="facility.facility_id as facility.facility_name for facility in facilityData track by facility.facility_id"
+                                ng-change="GetValue()"  >
+                                <option value=""><< select >></option>
+                            </select>
+
+                        </div>
+                    </div>
+                  <div class="row">
+                      <div class="input-field col ">
+                            <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                    <p>HIV+ Diag Date<span style="color:#df3838;"> *</span></p>
+                                </span>
+                          <div class="form-logo date-img"><img src="img/date.png"></div> 
+                          <input id="hivDiagnosisDate" type="date" class="hivDiagnosisDate" name="hivDiagnosisDate" ng-model='recency.hivDiagnosisDate' placeholder="HIV+ Diag Date"  required>
+                       
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="input-field col ">
+                            <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                    <p>HIV+ Recency Date<span style="color:#df3838;"> *</span></p>
+                                </span>
+                          <div class="form-logo date-img"><img src="img/date.png"></div> 
+                          <input id="hivRecencyDate" type="date" class="hivRecencyDate" name="hivRecencyDate" ng-model='recency.hivRecencyDate' placeholder="HIV+ Recency Date"  required>
+                         
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="input-field col ">
+                            <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                    <p>HIV+ Recency Result<span style="color:#df3838;"> *</span></p>
+                                </span>
+                          <div class="form-logo"><img src="img/recencyresult.png"></div> 
+                          <input id="hivRecencyResult" type="text" class="hivRecencyResult" name="hivRecencyResult" ng-model='recency.hivRecencyResult' placeholder="HIV+ Recency Result"  required>
+                         
+                      </div>
+                  </div>
+                  <div class="row">
+                        <div class="input-field col ">
+                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                    <p>D.O.B</p>
+                                      <!-- <p>D.O.B<span style="color:#df3838;" > *</span></p> -->
+                                  </span>
+                            <div class="form-logo date-img"><img src="img/date.png"></div> 
+                            <input id="dob" type="date" class="dob" name="dob" ng-model='recency.dob' ng-blur="calculateAge(recency.dob)" placeholder="DOB"  required>
+                           
+                        </div>
+                    </div>
+                    <div class="row">
+                            <div class="input-field col ">
+                                  <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                          <p>Age</p>
+                                          <!-- <p>Age<span style="color:#df3838;"> *</span></p> -->
+                                      </span>
+                                <div class="form-logo date-img"><img src="img/date.png"></div> 
+                                <input id="age" type="text" class="age" name="age" ng-model='recency.age' placeholder="Age"  required>
+                               
+                            </div>
+                        </div>
+                  <div class="row">
+                        <div class="radio-head" >
+                                <p>Gender</p>
+                                <!-- <p>Gender<span style="color:#df3838;"> *</span></p> -->
+                       
+                      <div class="input-field col "  ng-repeat="item in genders">
+                           
+                          <div class="recency-radio" >
+                              <ion-checkbox ng-model="item.checked" ng-click="updateSelection($index, genders, item.title)" required> {{ item.title }}</ion-checkbox>
+
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                        <div class="input-field col ">
+                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                      <p>Location One</p>
+                                      <!-- <p>Age<span style="color:#df3838;"> *</span></p> -->
+                                  </span>
+                            <div class="form-logo date-img"><img src="img/house.png"></div> 
+                            <input id="locationOne" type="text" class="locationOne" name="locationOne" ng-model='recency.locationOne' placeholder="locationOne"  required>
+                           
+                        </div>
+                    </div>  <div class="row">
+                            <div class="input-field col ">
+                                  <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                        <p>Location Two</p>
+                                          <!-- <p>Age<span style="color:#df3838;"> *</span></p> -->
+                                      </span>
+                                <div class="form-logo date-img"><img src="img/house.png"></div> 
+                                <input id="locationTwo" type="text" class="locationTwo" name="locationTwo" ng-model='recency.locationTwo' placeholder="locationTwo"  required>
+                               
+                            </div>
+                        </div>  <div class="row">
+                                <div class="input-field col ">
+                                      <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                            <p>Location Three</p>
+                                              <!-- <p>Age<span style="color:#df3838;"> *</span></p> -->
+                                          </span>
+                                    <div class="form-logo date-img"><img src="img/house.png"></div> 
+                                    <input id="locationThree" type="text" class="locationThree" name="locationThree" ng-model='recency.locationThree' placeholder="locationThree"  required>
+                                   
+                                </div>
+                            </div>
+            </div>
+            <div ng-hide="recencydisplay"> 
+                  <div class="row">
+                        <div class="input-field col ">
+                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                      <p>Marital Status</p>
+                                  </span>
+                            <div class="form-logo "><img src="img/martial_status.png"></div> 
+                            <select class="ng-valid" id="maritalStatus" ng-model="recency.maritalStatus">
+                                    <option value=""><< select >></option>
+                                    <option value="never_married">Never Married</option>
+                                <option value="married_cohabited">Married - Cohabited</option>
+                                <option value="married_cohabiting">Married Cohabiting</option>
+                                <option value="widow">Widow</option>
+                                <option value="divorce_separated">Divorce - Separated</option>
+                                    <!-- <option ng-repeat="company in companies" value="{{company['company-id']}}">{{company['company-name']}}</option> -->
+                                  </select>                               
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col ">
+                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                      <p>Residence</p>
+                                  </span>
+                            <div class="form-logo "><img src="img/house.png"></div> 
+                            <select class="ng-valid" id="residence" ng-model="recency.residence">
+                                    <option value=""><< select >></option>
+                                    <option value="urban">Urban</option> 
+                                    <option value="rural">Rural</option>
+                                    <!-- <option ng-repeat="company in companies" value="{{company['company-id']}}">{{company['company-name']}}</option> -->
+                                  </select>                               
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col ">
+                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                      <p>Education Level</p>
+                                  </span>
+                            <div class="form-logo "><img src="img/education.png"></div> 
+                            <select class="ng-valid" id="educationLevel" ng-model="recency.educationLevel">
+                                    <option value=""><< select >></option>
+                                    <option value="primary">Primary</option> 
+                                    <option value="university_or_higher">University or Higher</option>
+                             
+                                    <!-- <option ng-repeat="company in companies" value="{{company['company-id']}}">{{company['company-name']}}</option> -->
+                                  </select>                               
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col ">
+                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                      <p>Risk Population/s</p>
+                                  </span>
+                            <div class="form-logo "><img src="img/population.png"></div> 
+                            <select class="ng-valid" id="riskPopulation" ng-model="recency.riskPopulation">
+                                    <option value=""><< select >></option>
+                                    <option ng-repeat="rp in riskpopulations" value="{{rp['rp_id']}}">{{rp['name']| underscorefilter}}</option>
+                                  </select>                               
+                        </div>
+                    </div>
+                     <div class="row">
+                        <div class="input-field col ">
+                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                      <p>Pregnancy Status</p>
+                                  </span>
+                            <div class="form-logo "><img src="img/pregnancy-test.png"></div> 
+                            <select class="ng-valid" id="pregnancyStatus" ng-model="recency.pregnancyStatus">
+                                    <option value=""><< select >></option>
+                                    <option value="currently_pregnant">Currently Pregnant</option> 
+                                    <option value="not_pregnant">Not Pregnant</option>
+                                    <option value="not_known">Not Known</option>
+                            </select>                               
+                        </div>
+                    </div>
+                     <div class="row">
+                        <div class="input-field col ">
+                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                      <p>Current Sexual Partners</p>
+                                  </span>
+                            <div class="form-logo "><img src="img/gender.png"></div> 
+                            <select class="ng-valid" id="currentSexualPartner" ng-model="recency.currentSexualPartner">
+                                    <option value=""><< select >></option>
+                                    <option value="1">1</option> 
+                                    <option value="2_3">2-3</option>
+                                    <option value=">3"> >3</option>
+                            </select>                               
+                        </div>
+                    </div> 
+                    <div class="row">
+                        <div class="input-field col ">
+                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                      <p>Past HIV Testing</p>
+                                  </span>
+                            <div class="form-logo "><img src="img/hiv-test.png"></div> 
+                            <select class="ng-valid" id="pastHivTesting" ng-model="recency.pastHivTesting">
+                                    <option value=""><< select >></option>
+                                    <option value="yes">Yes</option> 
+                                    <option value="no">No</option>
+                                    <option value="not_known">Not Known</option>
+                             
+                                    <!-- <option ng-repeat="company in companies" value="{{company['company-id']}}">{{company['company-name']}}</option> -->
+                                  </select>                               
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col ">
+                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                      <p>Tested in last 12Months</p>
+                                  </span>
+                            <div class="form-logo "><img src="img/testtime.png"></div> 
+                            <select class="ng-valid" id="testLast12Month" ng-model="recency.testLast12Month">
+                                    <option value=""><< select >></option>
+                                    <option value="yes">Yes</option> 
+                                    <option value="no">No</option>
+                                    <option value="not_known">Not Known</option>
+                            </select>                               
+                        </div>
+                    </div>
+               </div>     
+                  <div class="row" ng-hide="recencydisplay">
+                      <div class="input-field col ">
+                          <button class="button button-block  waves-effect waves-light" type="submit"
+                             ng-click="addRecency(recency.sampleId,recency.patientId,recency.facilityId,recency.hivDiagnosisDate,recency.hivRecencyDate,recency.hivRecencyResult,recency.dob,recency.age,recency.locationOne,recency.locationTwo,recency.locationThree,recency.maritalStatus,recency.residence,recency.educationLevel,recency.riskPopulation,recency.pregnancyStatus,recency.currentSexualPartner,recency.pastHivTesting,recency.testLast12Month)">
+                             SAVE & CONTINUE
+                          </button>
+                      </div>
+                    </div>
+
+              </form>
+        
+           
+          </div>
+      </div>
+  </ion-content>
+  </div>
+</ion-view>
