@@ -1,4 +1,4 @@
-<ion-view view-title="Recency Data" >
+<ion-view view-title="Old Recency Data" >
     <div class="backgroundimg" ng-show="showauth" >
         <div class="authWrapper">
             <div class="container" >
@@ -42,7 +42,7 @@
         </div>
       </div>
       <ion-content class="animate-fade-slide-in"  ng-hide="showauth">
-            <div class="recency-view">
+            <!-- <div class="recency-view">
                <div class="item card-item" style="border:none" >   
                   <a class="card stable-bg ink ink-dark">
                      <div class="table-header">
@@ -63,7 +63,34 @@
                       </div>
                     </a>
                 </div>
-            </div>
+            </div> -->
+
+            <ion-list type="list-inset"  ng-hide="showauth">
+                <h3 style="font-size:17px"> Recency Reporting</h3>
+              <div style="overflow-x:auto;margin-bottom: 30px;">
+            <table class="table table-bordered table-striped order-table" style="width: 100%" id="ordertable">
+              <tr style="white-space: nowrap">
+                <th>Sample ID / Patient ID</th>
+                <th style="text-align: center">Facility</th>
+                <th>HIV+ Diag Date</th>
+                <th>HIV+ Rec Result</th>
+              </tr>
+              <tr ng-repeat="recency in recencyDatas " >
+                <td class="orderid">
+                <p>{{ recency['sample_id'] }} </p> 
+                <p>
+                  {{ recency['patient_id'] }}</p>
+               </td>
+
+                <td>{{ recency['facility_name'] }}</td>
+                <td>{{ recency['hiv_diagnosis_date'] | date: "dd-MM-yyyy" }}</td>
+                <td >{{ recency['hiv_recency_result'] }}</td>
+              </tr>
+              
+              
+            </table>
+          </div>
+         </ion-list>
           </ion-content>
 </ion-view>
 

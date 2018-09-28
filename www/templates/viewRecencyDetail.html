@@ -1,26 +1,52 @@
-<ion-view view-title="View Recency Detail">
+<ion-view view-title="New Recency Detail">
   <ion-content class="animate-fade-slide-in">
     <div class="recency-view">
-       <div class="item card-item" style="border:none" >   
+       <div class="item card-item" style="border:none;padding-top: 0; padding-bottom: 0;" >   
           <a class="card stable-bg ink ink-dark">
              <div class="table-header">
-                <span style="float: left ">Patient Details</span>
+                <span style="float: left ">Recency Test</span>
              </div>
             <div class="item item-text-wrap" style="border: 1px solid #e4e4e4;">
-              Recency Details
+              <p><b>Sample ID :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.sampleId}} </p>
+              <p><b>Patient ID :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.patientId}}</p>
+              <p><b>Facility :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.facility_name}}</p>
+              <p><b>HIV+ Diagnosis Date :</b>&nbsp;&nbsp;&nbsp;{{recencyDetail.hivDiagnosisDate}}</b></p>
+              <p><b>HIV+ Rec. Date :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.hivRecencyDate}}</p>
+              <p style="text-transform: capitalize"><b>HIV+ Rec. Result :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.hivRecencyResultName }}</p>
+              <p><b>Age :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.age}}</p>
+              <p><b>Date Of Birth :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.dob}}</p>
+              <p style="text-transform: capitalize"><b>Gender :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.gender | replace: '_':' '}}</p>
+       
             </div>
           </a>
         </div>
-        <div class="item card-item" style="border:none" >   
+        <div class="item card-item" style="border:none;padding-top:-0" >   
             <a class="card stable-bg ink ink-dark">
                <div class="table-header">
-                  <span style="float: left ">Other Details</span>
+                  <span style="float: left ">Behaviour</span>
                </div>
               <div class="item item-text-wrap" style="border: 1px solid #e4e4e4;">
-                Recency Details
+                <p style="text-transform: capitalize"><b>Marital Status :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.maritalStatus |replace: '_':' ' }} </p>
+              <p style="text-transform: capitalize"><b>Residence :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.residence}}</p>
+              <p style="text-transform: capitalize"><b>Education Level :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.educationLevel | replace: '_':' '}}</p>
+              <p style="text-transform: capitalize"><b>Risk Population :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.riskPopulation  | replace: '_':' '}}</p>
+              <p style="text-transform: capitalize"><b>Pregnancy Status :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.pregnancyStatus | replace: '_':' '}}</p>
+              <p style="text-transform: capitalize"><b>Current Sexual Partners :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.currentSexualPartner}}</p>
+              <p style="text-transform: capitalize"><b>Past HIV Testing :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.pastHivTesting | replace: '_':' '}}</p>
+              <p style="text-transform: capitalize"><b>Tested in last 12 Months :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.testLast12Month | replace: '_':' '}}</p>
               </div>
             </a>
         </div>
+        <div class="row">
+            <div class="input-field col  ">
+                <button class="button button-block editbtn waves-effect waves-light" type="button"
+                   ng-click="editRecency(recencyDetail)">
+                   EDIT
+                </button>
+            </div>
+        </div>
+      
+
     </div>
   </ion-content>
 </ion-view>

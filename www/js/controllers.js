@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope,$rootScope,$ionicModal, $window, $ionicModal, $timeout,$ionicPopup,$localStorage,$preLoader, $state) {
+.controller('AppCtrl', function($scope,$rootScope,$ionicModal,  $window, $ionicModal, $timeout,$ionicPopup,$localStorage,$preLoader, $state) {
 
  //$rootScope.apiUrl = 'http://recency.deforay.in/';
  // $rootScope.apiUrl='http://recency-web/';

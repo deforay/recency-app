@@ -5,7 +5,8 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 //angular.module('starter', ['ionic', 'starter.controllers'])
-angular.module('starter', ['ionic',
+angular.module('starter',  ['ionic',
+                            'ionic-datepicker',
                             'ngCordova',
                             'starter.controllers',
                             'starter.services',
@@ -17,7 +18,7 @@ angular.module('starter', ['ionic',
                             'starter.viewRecencyDetailCtrl',
                             'starter.editRecencyCtrl'
                            ])
-.run(function($ionicPlatform,$rootScope) {
+.run(function($ionicPlatform,$ionicHistory, $localStorage,$ionicPopup,$state) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs).
@@ -27,6 +28,7 @@ angular.module('starter', ['ionic',
     // to interact with the app.
     //$rootScope.apiUrl = 'http://recency.deforay.in/';
     //$rootScope.apiUrl='http://recency-web/';
+
     if (window.cordova && window.Keyboard) {
       window.Keyboard.hideKeyboardAccessoryBar(true);
     }
@@ -37,9 +39,42 @@ angular.module('starter', ['ionic',
       StatusBar.styleDefault();
     }
   });
+  // $ionicPlatform.registerBackButtonAction(function(e) {
+  //   e.preventDefault();
+  //   function showConfirm() {
+  // var confirmPopup = $ionicPopup.confirm({
+  //   title: 'Recency',
+  //   template: '<center>Are you sure want to Exit App?<center>',
+  //   buttons: [
+  //     {
+  //       text: '<b>Yes</b>',
+  //       type: 'button-balanced',
+  //       onTap: function(e) {
+  //         $localStorage.set('logout',true);
+  //         ionic.Platform.exitApp();
+  //                          }
+  //     },
+  //     { text: 'Cancel', type: 'button-assertive',onTap: function(e) { return true; } },
+  //   ]
+  // })
+  // };
+  //   // Is there a page to go back to?
+  //  if ($state.current.name == 'app.addRecency' || $state.current.name == 'app.viewRecency'|| $state.current.name == 'app.recencyData'){
+  //     showConfirm();
+  //   } else
+  //    if ($ionicHistory.backView()) {
+  //     // Go back in history
+  //     $ionicHistory.backView().go();
+  //    }
+  //    else
+  //   {
+  //     showConfirm();
+  //   }
+  //   return false;
+  //  }, 101);
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider,ionicDatePickerProvider) {
   $stateProvider
 
     .state('app', {
@@ -109,16 +144,24 @@ angular.module('starter', ['ionic',
       }
     }
   })
-  //   .state('app.playlists', {
-  //     url: '/playlists',
-  //     views: {
-  //       'menuContent': {
-  //         templateUrl: 'templates/playlists.html',
-         
-  //       }
-  //     }
-  //   })
 
+  var datePickerObj = {
+    inputDate: new Date(),
+    titleLabel: 'Select a Date',
+    setLabel: 'Set',
+    closeLabel: 'Close',
+    mondayFirst: false,
+    weeksList: ["S", "M", "T", "W", "T", "F", "S"],
+    monthsList: ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"],
+    templateType: 'popup',
+    from: new Date(1900, 1, 1),
+    to:new Date(2040,12,31),
+    showTodayButton: false,
+    dateFormat: 'dd MMMM yyyy',
+    closeOnSelect: false,
+    disableWeekdays: []
+  };
+  ionicDatePickerProvider.configDatePicker(datePickerObj);
   // .state('app.single', {
   //   url: '/playlists/:playlistId',
   //   views: {
@@ -130,4 +173,7 @@ angular.module('starter', ['ionic',
   // });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
+
+
+
 });
