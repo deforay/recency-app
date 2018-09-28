@@ -541,12 +541,12 @@ $scope.GetCityValue = function(district){
         
              $scope.recency ={};
               $scope.recencydisplay=true;
-              // $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
-              // .then(function(success) {
-              //   // success
-              // }, function (error) {
-              //   // error
-              // });
+              $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
+              .then(function(success) {
+                // success
+              }, function (error) {
+                // error
+              });
               $("#main-recency").addClass("active");
               $("#other-recency").removeClass('active')
              //  $window.location.reload(true);

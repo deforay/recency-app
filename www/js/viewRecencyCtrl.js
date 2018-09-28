@@ -19,10 +19,13 @@ app=angular.module('starter.viewRecencyCtrl', ['starter.services'])
     $scope.displaymessage = false;
 }  
 else{
- $scope.syncCount =   localStorage.getItem('syncCount')
-// if(!localStorage.getItem('syncCount')){
-//     $scope.syncCount = 0;
-// }
+ $scope.syncCount =   localStorage.getItem('syncCount');
+
+if($scope.syncCount== undefined || $scope.syncCount == ""){
+    $scope.syncCount = 0;
+ console.log($scope.syncCount);
+
+}
     $scope.displaymessage = true;
 }   
   var recencydatas = $scope.recencyList;

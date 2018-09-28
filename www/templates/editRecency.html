@@ -118,7 +118,7 @@
                                           <!-- <p>Age<span style="color:#df3838;"> *</span></p> -->
                                       </span>
                                 <div class="form-logo date-img"><img src="img/date.png"></div> 
-                                <input id="age" type="text" class="age" name="age" ng-model='recency.age' ng-change="cleardob()" placeholder="Age"  required>
+                                <input id="age" type="number" class="age" name="age" ng-model='recency.age' ng-change="cleardob()" placeholder="Age"  required>
                                
                             </div>
                     </div>
@@ -145,11 +145,11 @@
  
                               </span>
                         <div class="form-logo date-img"><img src="img/house.png"></div>
-                        <select id="province" ng-if="loc.global_name=='location_one'" name="province" ng-model='recency.location[0]' 
+                         <select id="province" ng-if="loc.global_name=='location_one'" name="province" ng-model='recency.location[0]' 
                                  ng-change="GetDistrictValue(recency.location[0])"  >
                           <option value="">-- Select --</option>
                           <option ng-repeat="province in provinceData" value="{{province['province_id']}}">{{province['province_name']}}</option>
-                         </select>
+                         </select> 
                         <select id="district" ng-if="loc.global_name=='location_two'" name="district" ng-model='recency.location[1]' 
                           ng-change="GetCityValue(recency.location[1])"  >
                           <option value="">-- Select --</option>
@@ -166,9 +166,9 @@
                 </div>
                 <div class="row">
                         <div class=" input-field col">
-                                <p style="margin-left: 10px;" ng-show="giserror">GIS Information is Not Available</p>
+                                <p style="margin-left: 10px;" ng-show="giserror">GIS Information is Not Available  </p>
                                     
-                                 <p style="margin-left: 10px;" ng-show="gis">GIS Information Captured.<br> Latitude :&nbsp;&nbsp; {{recency.latitude}}<br> Longitude:&nbsp;&nbsp;{{recency.longitude}}</p>
+                                 <p style="margin-left: 10px;" ng-show="gis">GIS Information Captured.<br> Latitude :&nbsp;&nbsp; {{recency.latitude}}<br> Longitude:&nbsp;&nbsp;{{recency.longitude}}   {{recency.location[0]}} {{recency.location[1]}} {{recency.location[2]}}</p>
                              </div>
                      </div>
                 <div class="row" >

@@ -4,9 +4,15 @@ app=angular.module('starter.editRecencyCtrl', ['starter.services'])
   $scope.recencyData ={};
   $scope.provinceData = JSON.parse(localStorage.getItem('ProvinceData'));
  $scope.recencyDetails = JSON.parse(localStorage.getItem('viewRecency'));
-  console.log( $scope.recencyDetails)
+ // console.log( $scope.recencyDetails)
+  $("#main-recency").addClass("active");
+  
   $scope.recency = $scope.recencyDetails;
-  console.log($scope.recency)
+  $scope.recency.location[0] = $scope.recency.location_one;
+  $scope.recency.location[1] = $scope.recency.location_two;
+  $scope.recency.location[2] = $scope.recency.location_three;
+// console.log($scope.recency)
+
    if($scope.recency.location_two){
     var localDistrict = JSON.parse(localStorage.getItem('DistrictData'));
     var result = localDistrict.filter(obj => {
@@ -22,6 +28,7 @@ app=angular.module('starter.editRecencyCtrl', ['starter.services'])
     })
     $scope.cityData = cityresult;
   }
+ // console.log( $scope.recency.location)
   $scope.doRefresh = function() {
     $preLoader.show();
     $window.location.reload(true);
@@ -133,13 +140,13 @@ app=angular.module('starter.editRecencyCtrl', ['starter.services'])
     }
     
   }
-console.log($scope.recency.location)
+console.log($scope.recency.location[0])
  
   if( $scope.recency.otherriskPopulation != undefined){
     $scope.recency.riskPopulation ="Other";
     $scope.otherpopulation = true;
   }
-  console.log($scope.recency.location)
+  console.log($scope.recency.location[1])
   // $scope.recency.hivDiagnosisDate =  $scope.recency.hivDiagnosisDate.split("-").reverse().join("-");
   // $scope.recency.hivDiagnosisDate = new Date($scope.recency.hivDiagnosisDate);
   // $scope.recency.hivRecencyDate =  $scope.recency.hivRecencyDate.split("-").reverse().join("-");
@@ -159,7 +166,7 @@ console.log($scope.recency.location)
   $scope.setmainactive = function(){
     $scope.recencydisplay=true;
     if($("#main-recency").hasClass('active')){
-      $("#main-recency").removeClass('active')
+     // $("#main-recency").removeClass('active')
   } else {
       $("#main-recency").addClass('active')
       $("#other-recency").removeClass('active')
@@ -169,7 +176,7 @@ console.log($scope.recency.location)
   $scope.setothersactive = function(){
     $scope.recencydisplay=false;
     if($("#other-recency").hasClass('active')){
-      $("#other-recency").removeClass('active')
+   //   $("#other-recency").removeClass('active')
   } else {
       $("#other-recency").addClass('active')
       $("#main-recency").removeClass('active')
@@ -295,94 +302,7 @@ console.log($scope.recency.location)
      localStorage.setItem('RiskPopulations',JSON.stringify($scope.riskpopulations)) 
         
     });
-     // If Internet Connection Disconnected
-     if($scope.facilityData== undefined ||  $scope.riskpopulations == undefined ||  $scope.configdata ==undefined ){
-      $localStorage.set('offline','true');
-      $scope.riskpopulations = JSON.parse(localStorage.getItem('RiskPopulations'));
-      $scope.configdata = JSON.parse(localStorage.getItem('GlobalConfig'));
-      $scope.provinceData =  JSON.parse(localStorage.getItem('ProvinceData'));      
-    //  $scope.districtData =  JSON.parse(localStorage.getItem('DistrictData'))      
-     // $scope.cityData =  JSON.parse(localStorage.getItem('CityData'))     
-      $scope.recency.location =[];
-      console.log($scope.configdata)
-      for(i=0;i<$scope.configdata.length;i++){
-        $scope.recency.location[i]="";       
-     } 
-      var localarr = [];
-      var localfacility =[];
-      var localprovince = [];
-      $scope.freq_facilities = [];
-      $scope.freq_provinces = [];
 
-      $scope.allfacilities = new Array();
-      $scope.allprovinces = new Array();
-      $scope.facilityData = new Array();
-      localarr = JSON.parse(localStorage.getItem('RecencyData'));
-      localfacility =JSON.parse(localStorage.getItem('FacilityData'));
-      localprovince =  JSON.parse(localStorage.getItem('ProvinceData'))      
-
-      if(localarr !=null){
-          var localarrsize = Object.keys(localarr).length;
-         // var obj = {};
-         // Display recent Facilities on top of dropdown 
-          $scope.allfacilities =localfacility;
-          for(i=0;i<localarrsize;i++){
-            $scope.freq_facilities.unshift({
-              "facility_id":localarr[i]['facilityId'],
-              "facility_name":localarr[i]['facility_name']
-            })
-          } 
-          for(i =0;i<Object.keys($scope.freq_facilities).length;i++){  
-            $scope.allfacilities.unshift($scope.freq_facilities[i]);
-          }
-          var trimmedArray = [];
-          var values = [];
-          var value;
-          for(var i = 0; i < $scope.allfacilities.length; i++) {
-            value = $scope.allfacilities[i]['facility_id'];
-            if(values.indexOf(value) === -1) {
-              trimmedArray.push($scope.allfacilities[i]);
-              values.push(value);
-            }
-          }
-          $scope.facilityData = trimmedArray;   
-
-          //Display recent province on top of dropdown
-
-          $scope.allprovinces =localprovince;
-          for(i=0;i<localarrsize;i++){
-            $scope.freq_provinces.unshift({
-              "province_id":localarr[i]['location_one'],
-              "province_name":localarr[i]['location_one_name']
-            })
-            console.log($scope.freq_provinces)
-          } 
-          for(i =0;i<Object.keys($scope.freq_provinces).length;i++){  
-            $scope.allprovinces.unshift($scope.freq_provinces[i]);
-            console.log($scope.allprovinces)
-
-          }
-          var trimmedArray1 = [];
-          var values1 = [];
-          var value1;
-          for(var i = 0; i < $scope.allprovinces.length; i++) {
-            value1 = $scope.allprovinces[i]['province_id'];
-            if(values1.indexOf(value1) === -1) {
-              trimmedArray1.push($scope.allprovinces[i]);
-              values1.push(value1);
-            }
-          }
-          $scope.provinceData = trimmedArray1;  
-          console.log($scope.provinceData);
-  
-      }else{
-
-        $scope.facilityData =localfacility;
-        $scope.provinceData =localprovince;
-        console.log($scope.provinceData)
-
-      }
-    }
  
     $scope.getLatLong = function(){
       var options = {maximumAge: 20000,timeout: 30000, enableHighAccuracy: true};
@@ -622,12 +542,12 @@ console.log($scope.recency.location)
      localStorage.setItem('RecencyData',JSON.stringify($scope.chkrecency));
     $scope.recency ={};
            $scope.recencydisplay=true;
-          //  $cordovaToast.show('Edited Successfully', 'long', 'center')
-          //  .then(function(success) {
-          //    // success
-          //  }, function (error) {
-          //    // error
-          //  });
+           $cordovaToast.show('Edited Successfully', 'long', 'center')
+           .then(function(success) {
+             // success
+           }, function (error) {
+             // error
+           });
            $("#main-recency").addClass("active");
            $("#other-recency").removeClass('active');
            $window.location.reload(true);
