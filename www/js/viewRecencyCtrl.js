@@ -1,10 +1,34 @@
 
 app=angular.module('starter.viewRecencyCtrl', ['starter.services'])
 
-.controller('viewRecencyCtrl', function($scope,$rootScope,$http,$preLoader, $ionicPopup, $cordovaToast, $location,$window, $stateParams) {
+.controller('viewRecencyCtrl', function($scope,$rootScope,$http,$preLoader, $ionicPopup, $cordovaToast, $location,$window, $stateParams,$ionicPlatform, $cordovaBadge) {
     $rootScope.apiUrl = localStorage.getItem('apiUrl');
     var recencyList =   localStorage.getItem('RecencyData');
-    //  console.log(recencyList)
+   // console.log(recencyList)
+//    $ionicPlatform.ready(function() {
+//    // $cordovaBadge.promptForPermission();
+
+// cordova.plugins.notification.badge.set(10);
+    // $scope.setBadge = function(value) {
+    //     $cordovaBadge.hasPermission().then(function(result) {
+    //         console.log(value)
+    //         $cordovaBadge.set(value);
+    //         console.log(value)
+    //     }, function(error) {
+    //         alert(error);
+    //     });
+    // }
+// });
+// document.addEventListener('deviceready', function () {
+
+//     $cordovaBadge.hasPermission().then(function(result) {
+//         $cordovaBadge.set(5);
+//     }, function(error) {
+//         alert(error);
+//     });
+// //cordova.plugins.notification.badge.set(10);
+// }, false);
+
         if(recencyList != null){
         recencyList    = JSON.parse(recencyList);
         console.log(recencyList);
@@ -19,17 +43,15 @@ app=angular.module('starter.viewRecencyCtrl', ['starter.services'])
     $scope.displaymessage = false;
 }  
 else{
- $scope.syncCount =   localStorage.getItem('syncCount');
-
-if($scope.syncCount== undefined || $scope.syncCount == ""){
-    $scope.syncCount = 0;
- console.log($scope.syncCount);
-
-}
+        $scope.syncCount =   localStorage.getItem('syncCount');
+        if($scope.syncCount== undefined || $scope.syncCount == ""){
+             $scope.syncCount = 0;
+            console.log($scope.syncCount);
+        }
     $scope.displaymessage = true;
-}   
+    }   
   var recencydatas = $scope.recencyList;
-        console.log(recencydatas)
+      //  console.log(recencydatas)
         $scope.doRefresh = function() {
             $preLoader.show();
             $window.location.reload(true);

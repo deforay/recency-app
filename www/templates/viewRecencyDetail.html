@@ -1,26 +1,143 @@
-<ion-view view-title="New Recency Detail">
+<ion-view view-title="Local Recency Detail">
   <ion-content class="animate-fade-slide-in">
     <div class="recency-view">
-       <div class="item card-item" style="border:none;padding-top: 0; padding-bottom: 0;" >   
+        <div class="row">
+            <div class="input-field col  ">
+                <button class="button button-block editbtn waves-effect waves-light" style="margin-bottom: 0" type="button"
+                   ng-click="editRecency(recencyDetail)">
+                   EDIT
+                </button>
+            </div>
+        </div>
+ 
+        <div class="card">
+          
+            <table class="item item-stacked-label item-text-wrap" style="border-top:none">
+            <p style="padding-left: 20px;padding-top: 9px;margin: 0;font-size: 16px;font-weight: bold;color: #10559a;">Recency Test</p>
+
+              <tr>
+                <td style="font-size:14px;"><b>Sample ID</b></td>
+                <td>&nbsp;:&nbsp; </td>
+                <td style="font-size:14px;"> {{recencyDetail.sampleId}}</td>
+              </tr>
+              <tr>
+                <td style="font-size:14px;"><b>Patient ID</b> </td>
+                <td>&nbsp;:&nbsp; </td>
+                <td style="font-size:14px;"> {{recencyDetail.patientId}} </td>
+              </tr>
+              <tr>
+                <td style="font: size 14px;"><b>Facility</b> </td>
+                <td>&nbsp;:&nbsp; </td>
+                <td style="font: size 14px;"> {{recencyDetail.facility_name}} </td>
+              </tr>
+              <tr>
+                <td style="font: size 14px;"><b>HIV+ Diag. Date</b> </td>
+                <td>&nbsp;:&nbsp; </td>
+                <td style="font: size 14px;"> {{recencyDetail.hivDiagnosisDate}} </td>
+              </tr>
+              <tr>
+                <td style="font: size 14px;"><b>HIV+ Rec. Date</b> </td>
+                <td>&nbsp;:&nbsp; </td>
+                <td style="font-size:14px;"> {{recencyDetail.hivRecencyDate}} </td>
+              </tr>
+          
+               <tr>
+                <td style="font: size 14px;"><b>HIV+ Rec. Result</b> </td>
+                <td>&nbsp;:&nbsp; </td>
+                <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.hivRecencyResultName}} </td>
+              </tr>
+              <tr>
+                <td style="font: size 14px;"><b>Age</b> </td>
+                <td>&nbsp;:&nbsp; </td>
+                <td style="font-size:14px;"> {{recencyDetail.age}} </td>
+              </tr>
+               <tr>
+                <td style="font: size 14px;"><b>Date Of Birth</b> </td>
+                <td>&nbsp;:&nbsp; </td>
+                <td style="font-size:14px;"> {{recencyDetail.dob}} </td>
+              </tr>
+                <tr>
+                  <td style="font: size 14px;"><b>Gender</b> </td>
+                  <td>&nbsp;:&nbsp; </td>
+                  <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.gender | replace: '_':' '}} </td>
+                </tr>
+                </table>
+            <table class="item item-stacked-label item-text-wrap" style="border-top:none">
+                <p style="padding-left: 20px;padding-top: 9px;margin: 0;font-size: 16px;font-weight: bold;color: #10559a;">Behaviour</p>
+
+                <tr>
+                    <td style="font: size 14px;"><b>Marital Status</b> </td>
+                    <td>&nbsp;:&nbsp; </td>
+                    <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.maritalStatus| replace: '_':' '}} </td>
+                  </tr>
+                 <tr>
+                    <td style="font: size 14px;"><b>Residence</b> </td>
+                    <td>&nbsp;:&nbsp; </td>
+                    <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.residence}} </td>
+                  </tr>
+                   <tr>
+                    <td style="font: size 14px;"><b>Education Level</b> </td>
+                    <td>&nbsp;:&nbsp; </td>
+                    <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.educationLevel| replace: '_':' '}} </td>
+                  </tr>
+                   <tr>
+                    <td style="font: size 14px;"><b>Risk Population</b> </td>
+                    <td>&nbsp;:&nbsp; </td>
+                    <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.riskPopulation| replace: '_':' '}} </td>
+                  </tr>
+                   <tr>
+                    <td style="font: size 14px;"><b>Pregnancy Status</b> </td>
+                    <td>&nbsp;:&nbsp; </td>
+                    <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.pregnancyStatus| replace: '_':' '}} </td>
+                  </tr>
+                   <tr>
+                    <td style="font: size 14px;"><b>Current Sexual Partners</b> </td>
+                    <td>&nbsp;:&nbsp; </td>
+                    <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.currentSexualPartner}} </td>
+                  </tr>
+                   <tr>
+                    <td style="font: size 14px;"><b>Past HIV Testing</b> </td>
+                    <td>&nbsp;:&nbsp; </td>
+                    <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.pastHivTesting| replace: '_':' '}} </td>
+                  </tr>
+                   <tr>
+                    <td style="font: size 14px;"><b>Tested in last 12 Months</b> </td>
+                    <td>&nbsp;:&nbsp; </td>
+                    <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.testLast12Month| replace: '_':' '}} </td>
+                  </tr>
+            </table>
+            
+            
+          </div>  
+                <!-- <div class="item card-item" style="border:none;padding-top: 0; padding-bottom: 0;" >   
           <a class="card stable-bg ink ink-dark">
-             <div class="table-header">
-                <span style="float: left ">Recency Test</span>
-             </div>
+  
             <div class="item item-text-wrap" style="border: 1px solid #e4e4e4;">
+     
+            
+
               <p><b>Sample ID :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.sampleId}} </p>
               <p><b>Patient ID :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.patientId}}</p>
               <p><b>Facility :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.facility_name}}</p>
-              <p><b>HIV+ Diagnosis Date :</b>&nbsp;&nbsp;&nbsp;{{recencyDetail.hivDiagnosisDate}}</b></p>
+              <p><b>HIV+ Diag. Date :</b>&nbsp;&nbsp;&nbsp;{{recencyDetail.hivDiagnosisDate}}</b></p>
               <p><b>HIV+ Rec. Date :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.hivRecencyDate}}</p>
               <p style="text-transform: capitalize"><b>HIV+ Rec. Result :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.hivRecencyResultName }}</p>
               <p><b>Age :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.age}}</p>
               <p><b>Date Of Birth :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.dob}}</p>
               <p style="text-transform: capitalize"><b>Gender :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.gender | replace: '_':' '}}</p>
-       
+              <p style="text-transform: capitalize"><b>Marital Status :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.maritalStatus |replace: '_':' ' }} </p>
+              <p style="text-transform: capitalize"><b>Residence :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.residence}}</p>
+              <p style="text-transform: capitalize"><b>Education Level :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.educationLevel | replace: '_':' '}}</p>
+              <p style="text-transform: capitalize"><b>Risk Population :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.riskPopulation  | replace: '_':' '}}</p>
+              <p style="text-transform: capitalize"><b>Pregnancy Status :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.pregnancyStatus | replace: '_':' '}}</p>
+              <p style="text-transform: capitalize"><b>Current Sexual Partners :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.currentSexualPartner}}</p>
+              <p style="text-transform: capitalize"><b>Past HIV Testing :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.pastHivTesting | replace: '_':' '}}</p>
+              <p style="text-transform: capitalize"><b>Tested in last 12 Months :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.testLast12Month | replace: '_':' '}}</p>
             </div>
           </a>
-        </div>
-        <div class="item card-item" style="border:none;padding-top:-0" >   
+        </div> -->
+
+        <!-- <div class="item card-item" style="border:none;padding-top:-0" >   
             <a class="card stable-bg ink ink-dark">
                <div class="table-header">
                   <span style="float: left ">Behaviour</span>
@@ -36,17 +153,7 @@
               <p style="text-transform: capitalize"><b>Tested in last 12 Months :</b>&nbsp;&nbsp;&nbsp; {{recencyDetail.testLast12Month | replace: '_':' '}}</p>
               </div>
             </a>
-        </div>
-        <div class="row">
-            <div class="input-field col  ">
-                <button class="button button-block editbtn waves-effect waves-light" type="button"
-                   ng-click="editRecency(recencyDetail)">
-                   EDIT
-                </button>
-            </div>
-        </div>
-      
-
+        </div> -->
     </div>
   </ion-content>
 </ion-view>

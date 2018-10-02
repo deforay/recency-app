@@ -19,7 +19,8 @@
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-network-information": {},
       "cordova-plugin-geolocation": {},
-      "cordova-plugin-x-toast": {}
+      "cordova-plugin-x-toast": {},
+      "cordova-plugin-badge": {}
     },
     "platforms": [
       "android"
@@ -27,6 +28,7 @@
   },
   "dependencies": {
     "cordova-android": "~7.0.0",
+    "cordova-plugin-badge": "^0.8.7",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-ionic-keyboard": "^2.1.2",

@@ -246,7 +246,8 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
          }
           $localStorage.set('apiUrl',credentials.serverHost);       
            $preLoader.show();
-        $http({
+      
+       $http({
           url: credentials.serverHost+"/api/login",
           method: "POST",
           data: { "email": credentials.email, "password" : credentials.serverpassword }

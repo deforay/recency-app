@@ -547,9 +547,10 @@ $scope.GetCityValue = function(district){
               }, function (error) {
                 // error
               });
+              $scope.getLatLong();
               $("#main-recency").addClass("active");
               $("#other-recency").removeClass('active')
-             //  $window.location.reload(true);
+             // $window.location.reload(true);
             $preLoader.hide();
 
 

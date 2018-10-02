@@ -86,4 +86,5 @@
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1" />
     <engine name="android" spec="~7.0.0" />
     <plugin name="cordova-plugin-x-toast" spec="https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git" />
+    <plugin name="cordova-plugin-badge" spec="^0.8.7" />
 </widget>

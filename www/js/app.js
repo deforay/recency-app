@@ -18,7 +18,7 @@ angular.module('starter',  ['ionic',
                             'starter.viewRecencyDetailCtrl',
                             'starter.editRecencyCtrl'
                            ])
-.run(function($ionicPlatform,$ionicHistory, $localStorage,$ionicPopup,$state) {
+.run(function($ionicPlatform,$ionicHistory, $localStorage,$ionicPopup,$state,$cordovaBadge) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs).
@@ -38,6 +38,9 @@ angular.module('starter',  ['ionic',
       // remove the status bar on iOS or change it to use white instead of dark colors.
       StatusBar.styleDefault();
     }
+
+
+   
   });
   // $ionicPlatform.registerBackButtonAction(function(e) {
   //   e.preventDefault();

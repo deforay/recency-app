@@ -198,8 +198,8 @@ a{
     height: 100%;
     width: 100%;
     overflow: auto;
-    background: #222;
-    opacity: 0.7;
+    /* background: #222;
+    opacity: 0.7; */
 }
 
 .authWrapper .logo {
@@ -218,20 +218,10 @@ a{
     margin-top: 0;
     margin-bottom: 0;
 }
-.authWrapper .input-field .firstName,
-.authWrapper .input-field .lastName {
-  background: url(../img/user_white.png) no-repeat left center;
-    border-color: rgba(0, 0, 0, 0.12);
-    border-bottom: 1px solid #fff !important;
-    padding: 7px 10px 7px 40px;
-    color: #FFF;
-    box-sizing: border-box;
-    box-shadow: none !important;
-}
 
 .authWrapper .input-field .mobileNumber {
     background: url(../img/mobile_white.png) no-repeat left center; 
-  /*   background: rgba(255, 255, 255, 0.5); text-align: center;  */ 
+  
     border-color: rgba(0, 0, 0, 0.12);
     border-bottom: 1px solid #fff !important;
   padding: 7px 10px 7px 50px; 
@@ -243,21 +233,19 @@ a{
 }
 
 .authWrapper .input-field .serverHost {
-    background: url(../img/host_white.png) no-repeat left center;
+    background: url(../img/host.png) no-repeat left center;
       border-color: rgba(0, 0, 0, 0.12);
       border-bottom: 1px solid #fff !important;
    padding: 7px 10px 7px 50px;
-      color: #FFF;
       width: 100%;
       box-sizing: border-box;
       box-shadow: none !important;
   }
 .authWrapper .input-field .userName {
-  background: url(../img/address_white.png) no-repeat left center;
+  background: url(../img/address.png) no-repeat left center;
     border-color: rgba(0, 0, 0, 0.12);
     border-bottom: 1px solid #fff !important;
  padding: 7px 10px 7px 50px;
-    color: #FFF;
     width: 100%;
     box-sizing: border-box;
     box-shadow: none !important;
@@ -268,33 +256,21 @@ a{
 .authWrapper .input-field .Oldpassword,
 .authWrapper .input-field .Newpassword ,
 .authWrapper .input-field .onetimePass {
-   background: url(../img/key_white.png) no-repeat left center; 
+   background: url(../img/key.png) no-repeat left center; 
 
     border-color: rgba(0, 0, 0, 0.12);
     border-bottom: 1px solid #fff !important;
     padding: 7px 10px 7px 50px;
-    color: #FFF;
     width: 100%;
     box-sizing: border-box;
     box-shadow: none !important;
-}
+} 
 
 .authWrapper .loginFields {
     margin-top: 30px;
 }
 
-.authWrapper .input-field .firstName:focus {
-      border-bottom: 1px solid #000 !important;
-    color: #000 !important;
-    -moz-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    -webkit-transition: all 0.3s;
-    transition: all 0.3s;
-    background: rgba(255, 255, 255, 0.5);
-    padding: 7px 10px 7px 50px !important
-}
-
-.authWrapper .input-field .mobileNumber:focus {
+.authWrapper .input-field .mobileNumber{
      border-bottom: 1px solid #000 !important;
     color: #000 !important;
     -moz-transition: all 0.3s;
@@ -305,17 +281,7 @@ a{
     padding: 7px 10px 7px 50px !important
 }
 
-.authWrapper .input-field .lastName:focus {
-      border-bottom: 1px solid #000 !important;
-    color: #000 !important;
-    -moz-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    -webkit-transition: all 0.3s;
-    transition: all 0.3s;
-    background: rgba(255, 255, 255, 0.5);
-    padding: 7px 10px 7px 50px !important
-}
-
+.authWrapper .input-field .userName,
 .authWrapper .input-field .userName:focus {
     border-bottom: 1px solid #000 !important;
     color: #000 !important;
@@ -323,9 +289,10 @@ a{
     -o-transition: all 0.3s;
     -webkit-transition: all 0.3s;
     transition: all 0.3s;
-    background: rgba(255, 255, 255, 0.5);
+    /* background: rgba(255, 255, 255, 0.5); */
     padding: 7px 10px 7px 50px !important 
 }
+.authWrapper .input-field .serverHost,
 .authWrapper .input-field .serverHost:focus {
     border-bottom: 1px solid #000 !important;
     color: #000 !important;
@@ -333,10 +300,14 @@ a{
     -o-transition: all 0.3s;
     -webkit-transition: all 0.3s;
     transition: all 0.3s;
-    background: rgba(255, 255, 255, 0.5);
+    /* background: rgba(255, 255, 255, 0.5); */
     padding: 7px 10px 7px 50px !important 
 }
-.authWrapper .input-field .password:focus,
+.authWrapper .input-field .password,
+.authWrapper .input-field .confirmpassword,
+.authWrapper .input-field .Oldpassword,
+.authWrapper .input-field .Newpassword ,
+.authWrapper .input-field .onetimePass,
 .authWrapper .input-field .confirmpassword:focus,
 .authWrapper .input-field .Oldpassword:focus,
 .authWrapper .input-field .Newpassword:focus,
@@ -347,7 +318,8 @@ a{
     -o-transition: all 0.3s;
     -webkit-transition: all 0.3s;
     transition: all 0.3s;
-    background: rgba(255, 255, 255, 0.5);
+    width: 100%;
+    /* background: rgba(255, 255, 255, 0.5); */
     padding: 7px 10px 7px 50px !important 
 }
 
@@ -366,7 +338,7 @@ input::-webkit-input-placeholder {
 }
 
 .authWrapper .loginFields span{
-    color: white;
+    color: #000;
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
 }
 
@@ -709,7 +681,11 @@ nav .brand-logo {
 
 
 /* Card CSS */
-
+.item-text-wrap  th,
+.item-text-wrap  td{
+    border:none;
+    padding: 4px 4px;
+}
 .card .table-header {
     height: 35px;
     padding: 0;
@@ -818,7 +794,8 @@ nav .brand-logo {
 .button.button-light {
 
     border-color: transparent;
-    background-color: #000;
+    /* background-color: #000; */
+    background-color: #727477;
     color: white;
 
 }
@@ -834,7 +811,8 @@ nav .brand-logo {
 .passcode-tab .add-passcode-col,
 .passcode-tab .view-passcode-col
 {
-    border-bottom: 1px solid white ;
+    border-bottom: 1px solid #000 ;
+    /* border-bottom: 1px solid white ; */
 }
 .passcode-tab .passcode-col.error,
 .passcode-tab .add-passcode-col.error,
