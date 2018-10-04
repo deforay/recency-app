@@ -3,7 +3,7 @@
         <div class="authWrapper">
             <div class="container" >
               <ion-content >
-                <div class="logo"> <img src="img/logo.png" alt=""></div>
+                <div class="logo"> <img src="img/icon.png" alt=""></div>
                 <div class="loginFields">
                     <div class="row">
                       <form class="col loginForm" name="loginForm" >
@@ -73,7 +73,7 @@
                 <th>Sample ID / Patient ID</th>
                 <th style="text-align: center">Facility</th>
                 <th>HIV+ Diag Date</th>
-                <th>HIV+ Rec Result</th>
+                <!-- <th>HIV+ Rec Result</th> -->
               </tr>
               <tr ng-repeat="recency in recencyDatas " >
                 <td class="orderid">
@@ -84,7 +84,7 @@
 
                 <td>{{ recency['facility_name'] }}</td>
                 <td>{{ recency['hiv_diagnosis_date'] | date: "dd-MM-yyyy" }}</td>
-                <td >{{ recency['hiv_recency_result'] }}</td>
+                <!-- <td >{{ recency['hiv_recency_result'] }}</td> -->
               </tr>
               
               

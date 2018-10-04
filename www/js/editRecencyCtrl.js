@@ -5,7 +5,7 @@ app=angular.module('starter.editRecencyCtrl', ['starter.services'])
   $scope.displaybadge = false;
   $scope.provinceData = JSON.parse(localStorage.getItem('ProvinceData'));
  $scope.recencyDetails = JSON.parse(localStorage.getItem('viewRecency'));
- // console.log( $scope.recencyDetails)
+console.log( $scope.recencyDetails)
   $("#main-recency").addClass("active");
   
   $scope.recency = $scope.recencyDetails;
@@ -315,8 +315,6 @@ app=angular.module('starter.editRecencyCtrl', ['starter.services'])
  
     $scope.getLatLong = function(){
       var options = {maximumAge: 20000,timeout: 30000, enableHighAccuracy: true};
-      $scope.recency.latitude="";
-      $scope.recency.longitude="";
       $cordovaGeolocation.getCurrentPosition(options).then(function(position){
 
         $scope.recency.latitude=position.coords.latitude;
@@ -405,159 +403,88 @@ app=angular.module('starter.editRecencyCtrl', ['starter.services'])
     }
 
   }
-  $scope.patientvalidation = function(sampleId,patientId,facilityId,hivDiagnosisDate,hivRecencyDate,dob,age,gender,location){
-    console.log(sampleId,patientId,facilityId,hivDiagnosisDate,hivRecencyDate,dob,age,gender,location)
-    if(sampleId == undefined & patientId == undefined){
-      $ionicPopup.alert({title:'Alert!',template:'Please Enter atleast Sample ID or Patient ID'});        
+  $scope.patientvalidation = function(){
+    console.log($scope.recency)
+    if( $scope.recency.riskPopulation == 'Other'){
+      $scope.recency.riskPopulation =  $scope.recency.otherriskPopulation;
+     }
+    for(i=0;i<$scope.mandatoryData.length;i++){
+      var id ="#"+$scope.mandatoryData[i];
+      var mandatoryname = $(id).attr("name");
+      var mandatorytitle = $(id).attr("title");
+      var mandatoryField=$scope.mandatoryData[i];
+      console.log(mandatoryField)
+      if($scope.mandatoryData[i]==mandatoryname && $scope.recency[mandatoryField]==""){
+        $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+        return false;
+      }
+    }
+    if($scope.recency.patientId=="" && $scope.recency.sampleId==""){
+      $ionicPopup.alert({title:'Alert!',template:'Please Choose Either Sample ID or Patient ID'});
       return false;
     }
-     if(facilityId == undefined){
-     $ionicPopup.alert({title:'Alert!',template:'Please Select Facility'});       
-       return false;
-    }
-     if(hivDiagnosisDate == undefined){
-      $ionicPopup.alert({title:'Alert!',template:'Please Enter HIV+ Diagnosis Date'});        
-       return false;
-    }
-     if(hivRecencyDate == undefined){
-      $ionicPopup.alert({title:'Alert!',template:'Please Enter HIV+ Recency Date'});        
-       return false;
-    }
-    //  if(hivRecencyResult == undefined){
-    //   $ionicPopup.alert({title:'Alert!',template:'Please Choose HIV+ Recency Result'});        
-    //    return false;
-    // }
-    if(dob == undefined & age == undefined){
-      $ionicPopup.alert({title:'Alert!',template:'Please Atleast Enter Date Of Birth or Age'});
-      return false;
-    }
-    if((sampleId == undefined & patientId == undefined) || facilityId == undefined || hivDiagnosisDate == undefined || hivRecencyDate == undefined || (dob == undefined & age == undefined))
+    if(($scope.recency.sampleId == "" && $scope.recency.patientId == "") || $scope.recency.facilityId == "" || $scope.recency.hivDiagnosisDate == "" || $scope.recency.hivRecencyDate == "" ||($scope.recency.dob == "" && $scope.recency.age == ""))
     {
     $scope.recencydisplay=true;
-    }
-    else{
+    }else{
       $scope.recencydisplay=false;
     }
     if($("#other-recency").hasClass('active')){
-      $("#other-recency").removeClass('active')
-  } else {
+    }
+    else
+    {
       $("#other-recency").addClass('active')
       $("#main-recency").removeClass('active')
-  }
+    }
   
   }
-    $scope.editRecency = function(sampleId,patientId,facilityId,hivDiagnosisDate,hivRecencyDate,ctrlLine,positiveLine,longTermLine,dob,age,gender,location,maritalStatus,residence,educationLevel,riskPopulation,otherriskPopulation,pregnancyStatus,currentSexualPartner,pastHivTesting,testLast12Month){
-      var count = localStorage.getItem('counter');
-      var selectfacilityname = $("#facility").find("option:selected").text();
-      var selectfacilityid =facilityId;
-      //console.log("Selected Text: " + selectfacilityname + " Value: " + selectfacilityid);
-     console.log($scope.recency.location)
-      $scope.counter  = parseInt(count) + 1;
-      if(sampleId == undefined & patientId == undefined){
-        $ionicPopup.alert({title:'Alert!',template:'Please Enter atleast Sample ID or Patient ID'});
+    $scope.editRecency = function(){
+      console.log($scope.recency);
+      if( $scope.recency.riskPopulation == 'Other'){
+        $scope.recency.riskPopulation =  $scope.recency.otherriskPopulation;
+       }
+      for(i=0;i<$scope.mandatoryData.length;i++){
+        var id ="#"+$scope.mandatoryData[i];
+        var mandatoryname = $(id).attr("name");
+        var mandatorytitle = $(id).attr("title");
+        var mandatoryField=$scope.mandatoryData[i];
+        console.log(mandatoryField)
+        if($scope.mandatoryData[i]==mandatoryname && $scope.recency[mandatoryField]==""){
+          $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+          return false;
+        }
+      }
+      if($scope.recency.patientId=="" && $scope.recency.sampleId==""){
+        $ionicPopup.alert({title:'Alert!',template:'Please Choose Either Sample ID or Patient ID'});
         return false;
       }
-      if(sampleId == undefined){
-        sampleId ="";
-      }
-       if(patientId == undefined){
-        patientId ="";
-      }
-       if(facilityId == undefined){
-       $ionicPopup.alert({title:'Alert!',template:'Please Select Facility'});
-         return false;
-      }
-       if(hivDiagnosisDate == undefined){
-        $ionicPopup.alert({title:'Alert!',template:'Please Enter HIV Diagnosis Date'});
-         return false;
-      }
-       if(hivRecencyDate == undefined){
-        $ionicPopup.alert({title:'Alert!',template:'Please Enter HIV Recency Date'});
-         return false;
-      }
-      //  if(hivRecencyResult == undefined){
-      //   $ionicPopup.alert({title:'Alert!',template:'Please Enter HIV Recency Result'});
-      //    return false;
-      // }
-      if(dob == undefined & age == undefined){
-        $ionicPopup.alert({title:'Alert!',template:'Please Atleast Enter Date Of Birth or Age'});
-        return false;
-      }
-      if(dob == undefined || dob == "Invalid Date"){
-        dob ="";
-      }
-      if(age == undefined ){
-        age ="";
-      }
-      if(gender == undefined){
-        gender ="";
-      }
-      if(maritalStatus == undefined){
-        maritalStatus ="";
-      }
-       if(residence == undefined){
-        residence ="";
-      }
-       if(educationLevel == undefined){
-        educationLevel ="";
-      }
-       if(riskPopulation == undefined){
-        riskPopulation ="";
-      }
-       if(pregnancyStatus == undefined){
-        pregnancyStatus ="";
-      }
-       if(currentSexualPartner == undefined){
-        currentSexualPartner ="";
-      }
-      if(pastHivTesting == undefined){
-        pastHivTesting ="";
-      }
-      if(testLast12Month == undefined){
-        testLast12Month ="";
-      }
-            $scope.recency.userId = localStorage.getItem('userId');
-            $scope.recency.sampleId =sampleId;
-            $scope.recency.patientId =patientId;
-            $scope.recency.facilityId =facilityId;  
-            $scope.recency.facility_name = selectfacilityname;
-             console.log( $scope.recency)
-             for(i=0;i<$scope.configdata.length;i++){
-               var key=$scope.configdata[i].global_name;
-               if( location[i]==undefined){
-                 $scope.recency[key] =""
-               }else{
-                 $scope.recency[key] =location[i];
-               }
-             }         
-     
-            $scope.recency.hivDiagnosisDate =  $filter('date')(hivDiagnosisDate , "dd-MM-yyyy");
-           $scope.recency.hivRecencyDate =  $filter('date')(hivRecencyDate, "dd-MM-yyyy");
-           if(dob =="" ){
-                $scope.recency.dob =""
-            }else{
-              $scope.recency.dob =  $filter('date')(dob, "dd-MM-yyyy");
-            }
-     $scope.recency.ctrlLineName =   $("#ctrlLine option:selected").text();
-     $scope.recency.positiveLineName =   $("#positiveLine option:selected").text();
-     $scope.recency.longTermLineName =   $("#longTermLine option:selected").text();
-     $scope.recency.age = age;
-     $scope.recency.gender = gender;
-     $scope.recency.ctrlLine =ctrlLine;
-     $scope.recency.positiveLine =positiveLine;
-     $scope.recency.longTermLine =longTermLine;
-     $scope.recency.maritalStatus =maritalStatus;
-     $scope.recency.residence =residence;
-     $scope.recency.educationLevel =educationLevel;
-     $scope.recency.riskPopulation =riskPopulation;
-     $scope.recency.pregnancyStatus =pregnancyStatus;
-     $scope.recency.currentSexualPartner =currentSexualPartner;
-     $scope.recency.pastHivTesting =pastHivTesting;
-     $scope.recency.testLast12Month =testLast12Month;
-     if( $scope.recency.riskPopulation == 'Other'){
-       $scope.recency.riskPopulation =otherriskPopulation;
-      }
-     console.log($scope.recency)
+ 
+      for(i=0;i<$scope.configdata.length;i++){
+        var key=$scope.configdata[i].global_name;
+        var  keyname = key +"_name";
+        var  keyId = "#" +$scope.configdata[i].global_name;
+        if($scope.recency.location[i]==undefined || $scope.recency.location[i]==""){
+          $scope.recency[key] ="";
+          $scope.recency[keyname] = "";
+        }else{
+          $scope.recency[key] =$scope.recency.location[i];
+          $scope.recency[keyname] =   $(keyId).find("option:selected").text();
+        }
+      }         
+
+  if($scope.recency.facilityId!=""){
+        $scope.recency.facility_name = $("#facilityId").find("option:selected").text();
+  }
+  if($scope.recency.ctrlLine!=""){
+    $scope.recency.ctrlLineName =   $("#ctrlLine").find("option:selected").text();
+  }
+  if($scope.recency.positiveLine!=""){
+    $scope.recency.positiveLineName =   $("#positiveLine").find("option:selected").text();
+  }
+  if($scope.recency.longTermLine!=""){
+    $scope.recency.longTermLineName =   $("#longTermLine").find("option:selected").text();
+  }
+    console.log($scope.recency)
      $scope.chkrecency = JSON.parse(localStorage.getItem('RecencyData'))
      $scope.chkrecency[$scope.index] = $scope.recency;
      console.log($scope.chkrecency)

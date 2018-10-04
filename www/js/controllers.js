@@ -13,7 +13,7 @@ angular.module('starter.controllers', [])
     $preLoader.hide();
 };
 var recencyList =   localStorage.getItem('RecencyData');
-console.log(recencyList)
+//console.log(recencyList)
 if(recencyList != null){
   recencyList    = JSON.parse(recencyList);
   $scope.unSyncCount = Object.keys(recencyList).length;
