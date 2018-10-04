@@ -56,9 +56,6 @@
                           <input id="hivDiagnosisDate" type="text" class="hivDiagnosisDate" name="hivDiagnosisDate"  ng-click="setDiagDate()" ng-model='recency.hivDiagnosisDate' placeholder="HIV+ Diag Date" readonly required>
                       </div>
                       <div class="input-field col " style="padding:0">
-                            <!-- <button class="button" style="background: #3592f0 !important;margin-bottom: 0;margin-top: 15px;border-radius: 4px;
-                            padding-left: 10px;margin-left: -3px;padding: -6px;width: 94%;font-size: 13px;" ng-click="recency.hivDiagnosisDate =''" type="button">Clear
-                        </button> -->
                         <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="recency.hivDiagnosisDate =''"><img src="img/clear.png" style="height: 26px;"></div> 
                        </div>
                   </div>
@@ -72,28 +69,55 @@
                          
                       </div>
                       <div class="input-field col " style="padding:0">
-                            <!-- <button class="button" style="background: #3592f0 !important;margin-bottom: 0;margin-top: 15px;border-radius: 4px;
-                            padding-left: 10px;margin-left: -3px;padding: -6px;width: 94%;font-size: 13px;" ng-click="recency.hivRecencyDate =''" type="button">Clear
-                        </button> -->
                         <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="recency.hivRecencyDate =''"><img src="img/clear.png" style="height: 26px;"></div> 
                        </div>
                   </div>
                   <div class="row">
-                      <div class="input-field col ">
-                            <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                    <p>HIV+ Recency Result<span style="color:#df3838;"> *</span></p>
-                                </span>
-                          <div class="form-logo"><img src="img/recencyresult.png"></div> 
-                          <select class="ng-valid" id="hivRecencyResult" ng-model="recency.hivRecencyResult" ng-change="GetRecencyResultValue()" required>
+                     <div class="input-field col ">
+                             <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                    <p>Control Line</p>
+                             </span>
+                             <div class="form-logo"><img src="img/recencyresult.png"></div> 
+                          <select class="ng-valid" id="ctrlLine" ng-model="recency.ctrlLine"  required>
                             <option value="">-- Select --</option>
-                            <option value="recent">Recent - Long Term Line Absent</option>
-                            <option value="long_term">Long Term - Long Term Line Present</option>
-                            <option value="invalid">Invalid - Control Line Absent</option>
-                         </select>   
-                          <!-- <input id="hivRecencyResult" type="text" class="hivRecencyResult" name="hivRecencyResult" ng-model='recency.hivRecencyResult' placeholder="HIV+ Recency Result"  required> -->
-                         
+                            <option value="present">Present(Positive/P)</option>
+                            <option value="absent">Absent(Negative/N)</option>
+                            <option value="invalid">Invalid</option>
+                            <option value="result_not_available">Result Not Available
+                            </option>
+                         </select>  
                       </div>
                   </div>
+                  <div class="row">
+                    <div class="input-field col ">
+                          <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                  <p>Positive Verification Line</p>
+                          </span>
+                        <div class="form-logo"><img src="img/recencyresult.png"></div> 
+                        <select class="ng-valid" id="positiveLine" ng-model="recency.positiveLine" ng-change="OnPositiveLineChange(recency.positiveLine)" required>
+                          <option value="">-- Select --</option>
+                          <option value="present">Present(Positive/P)</option>
+                          <option value="absent">Absent(Negative/N)</option>
+                          <option value="invalid">Invalid</option>
+                          <option value="result_not_available">Result Not Available</option>
+                       </select>   
+                    </div>
+                </div> 
+                <div class="row" ng-show="showLongTermLine">
+                    <div class="input-field col ">
+                          <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                  <p>Long Term Verification Line</p>
+                          </span>
+                        <div class="form-logo"><img src="img/recencyresult.png"></div> 
+                        <select class="ng-valid" id="longTermLine" ng-model="recency.longTermLine" required>
+                          <option value="">-- Select --</option>
+                          <option value="present">Present(Long Term/LT)</option>
+                          <option value="absent">Absent(Recent/R)</option>
+                          <option value="invalid">Invalid</option>
+                          <option value="result_not_available">Result Not Available</option>
+                       </select> 
+                    </div>
+                </div>
                   <div class="row">
                         <div class="input-field col col-90">
                               <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
@@ -172,13 +196,7 @@
                        
                     </div>
                 </div>
-                <div class="row">
-                    <div class=" input-field col">
-                       <p style="margin-left: 10px;" ng-show="giserror">GIS Information is Not Available</p>
-                           
-                        <p style="margin-left: 10px;" ng-show="gis">GIS Information Captured.<br> Latitude : &nbsp;&nbsp;{{recency.latitude}}<br> Longitude:&nbsp;&nbsp;{{recency.longitude}}</p>
-                    </div>
-                 </div>
+               
 
                 <div class="row" >
                     <div class="input-field col ">
@@ -313,7 +331,15 @@
                             </select>                               
                         </div>
                     </div>
-               </div>     
+                    <div class="row">
+                        <div class=" input-field col">
+                           <p style="margin-left: 10px;" ng-show="giserror">GIS Information is Not Available</p>
+                               
+                            <p style="margin-left: 10px;" ng-show="gis">GIS Information Captured.<br> Latitude : &nbsp;&nbsp;{{recency.latitude}}<br> Longitude:&nbsp;&nbsp;{{recency.longitude}}</p>
+                        </div>
+                     </div> 
+               </div>  
+             
                   <div class="row" ng-hide="recencydisplay">
                         <div class="input-field col ">
                                 <button class="button button-block  icon-left ion-chevron-left waves-effect waves-light" style="background: #3592f0 !important;font-size: 15px;" type="button"
@@ -323,7 +349,7 @@
                             </div>
                       <div class="input-field col savebtn ">
                           <button class="button button-block waves-effect waves-light" type="submit"
-                             ng-click="addRecency(recency.sampleId,recency.patientId,recency.facilityId,recency.hivDiagnosisDate,recency.hivRecencyDate,recency.hivRecencyResult,recency.dob,recency.age,recency.gender,recency.location,recency.maritalStatus,recency.residence,recency.educationLevel,recency.riskPopulation,recency.otherriskPopulation,recency.pregnancyStatus,recency.currentSexualPartner,recency.pastHivTesting,recency.testLast12Month)">
+                             ng-click="addRecency(recency.sampleId,recency.patientId,recency.facilityId,recency.hivDiagnosisDate,recency.hivRecencyDate,recency.ctrlLine,recency.positiveLine,recency.longTermLine,recency.dob,recency.age,recency.gender,recency.location,recency.maritalStatus,recency.residence,recency.educationLevel,recency.riskPopulation,recency.otherriskPopulation,recency.pregnancyStatus,recency.currentSexualPartner,recency.pastHivTesting,recency.testLast12Month)">
                              SAVE & CONTINUE
                           </button>
                       </div>

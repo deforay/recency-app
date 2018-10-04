@@ -5,13 +5,31 @@ angular.module('starter.controllers', [])
  //$rootScope.apiUrl = 'http://recency.deforay.in/';
  // $rootScope.apiUrl='http://recency-web/';
   $scope.loginData = {};
+  $scope.displaybadge=false;
 
   $scope.doRefresh = function() {
     $preLoader.show();
     $window.location.reload(true);
     $preLoader.hide();
 };
-
+var recencyList =   localStorage.getItem('RecencyData');
+console.log(recencyList)
+if(recencyList != null){
+  recencyList    = JSON.parse(recencyList);
+  $scope.unSyncCount = Object.keys(recencyList).length;
+  $scope.displaybadge=true;
+}  else{
+  $scope.displaybadge=false;
+}
+// if($scope.syncCount== undefined || $scope.syncCount == ""){
+//      $scope.syncCount = 0;
+//      localStorage.setItem('syncCount', $scope.syncCount);
+//     console.log($scope.syncCount);
+//     $scope.displaybadge=false;
+// }else{
+//   $scope.displaybadge=true;
+  
+// }
   $scope.logout = function() {
     var confirmPopup = $ionicPopup.confirm({
            title: 'Logout',

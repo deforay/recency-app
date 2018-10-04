@@ -3,6 +3,7 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
 
 .controller('recencyDataCtrl', function($scope,$rootScope,$cordovaToast,$localStorage,$http,$preLoader, $ionicPopup, $location,$window, $stateParams) {
    
+  $scope.displaybadge = false;
 
         $rootScope.apiUrl = localStorage.getItem('apiUrl');
         $scope.showauth = true;

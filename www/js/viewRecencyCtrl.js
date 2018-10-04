@@ -1,52 +1,66 @@
 
 app=angular.module('starter.viewRecencyCtrl', ['starter.services'])
 
-.controller('viewRecencyCtrl', function($scope,$rootScope,$http,$preLoader, $ionicPopup, $cordovaToast, $location,$window, $stateParams,$ionicPlatform, $cordovaBadge) {
+.controller('viewRecencyCtrl', function($scope,$rootScope,$http,$preLoader, $ionicPopup, $cordovaToast, $location,$window, $stateParams,$ionicPlatform,$cordovaLocalNotification, $cordovaBadge) {
     $rootScope.apiUrl = localStorage.getItem('apiUrl');
     var recencyList =   localStorage.getItem('RecencyData');
    // console.log(recencyList)
-//    $ionicPlatform.ready(function() {
-//    // $cordovaBadge.promptForPermission();
 
-// cordova.plugins.notification.badge.set(10);
-    // $scope.setBadge = function(value) {
-    //     $cordovaBadge.hasPermission().then(function(result) {
-    //         console.log(value)
-    //         $cordovaBadge.set(value);
-    //         console.log(value)
-    //     }, function(error) {
-    //         alert(error);
-    //     });
-    // }
+//document.addEventListener('deviceready', function () {
+
+    // $cordovaBadge.hasPermission().then(function(result) {
+    //     $cordovaBadge.set(5);
+    //     console.log($cordovaBadge.set(5));
+    //     console.log("hi")
+    // }, function(error) {
+    //     alert(error);
+    // });
+// console.log(cordova.plugins.notification.badge.set(5));
+// console.log(cordova.plugins.notification.local.getDefaults());
+// cordova.plugins.notification.local.setDefaults({
+//    badge:5,
+//     vibrate: false
 // });
-// document.addEventListener('deviceready', function () {
-
-//     $cordovaBadge.hasPermission().then(function(result) {
-//         $cordovaBadge.set(5);
-//     }, function(error) {
-//         alert(error);
-//     });
-// //cordova.plugins.notification.badge.set(10);
+// $cordovaLocalNotification.schedule({
+//     id: 1,
+//     badge:10,
+//     title: 'Title here',
+//     text: 'Text here',
+//     data: {
+//       customProperty: 'custom value'
+//     }
+//   }).then(function (result) {
+//       console.log(result)
+// cordova.plugins.notification.badge.set(10);
+//   });
 // }, false);
 
         if(recencyList != null){
         recencyList    = JSON.parse(recencyList);
         console.log(recencyList);
+        var unsyncount = Object.keys(recencyList).length;
+        $scope.unSyncCount ="("+unsyncount+")";
         var result = Object.keys(recencyList).map(function(key,value) {
              return [(key), recencyList[value]];
         });
         $scope.recencyList =[];
           for(i=0;i<result.length;i++){
           $scope.recencyList.push(result[i][1])
-      
-    }
+   
+            }
+
     $scope.displaymessage = false;
-}  
-else{
+
+    }  
+    else{
+        $scope.unSyncCount ="";
+
+
         $scope.syncCount =   localStorage.getItem('syncCount');
         if($scope.syncCount== undefined || $scope.syncCount == ""){
-             $scope.syncCount = 0;
-            console.log($scope.syncCount);
+            //  $scope.syncCount = 0;
+            //  localStorage.setItem('syncCount', $scope.syncCount);
+            // console.log($scope.syncCount);
         }
     $scope.displaymessage = true;
     }   

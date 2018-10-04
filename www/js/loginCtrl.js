@@ -20,29 +20,7 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
     $preLoader.show();
     $window.location.reload(true);
   }
-    // $scope.doAddPasswordLogin = function(data){
-    //  // console.log(data)
-    //     if(data.newapppswd !=data.confirmapppswd){
-    //     $ionicPopup.alert({title: 'Password Failed',template: "Passwords don't match."});
-
-    //     }else{
-    //     $localStorage.set('apppassword',data.newapppswd);
-    //     $localStorage.set('login','success');
-    //     //comment it under Development Mode
-    //     $cordovaToast
-    //     .show('App Password Created Successfully', 'long', 'center')
-    //     .then(function(success) {
-    //       // success
-    //     }, function (error) {
-    //       // error
-    //     });
-    //     $scope.viewLoginPassword =true;
-    //     $scope.viewAddPassword = false;
-    //     $scope.viewLoginPassword =false;
-
-    //      // $location.path('/app/addRecency');
-    //     } 
-    // }  
+  
     $scope.doPasswordLogin = function(password){
 
       if(password!=$localStorage.get('apppassword')){
