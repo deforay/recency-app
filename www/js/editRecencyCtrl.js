@@ -510,7 +510,7 @@ console.log( $scope.recencyDetails)
       if( $scope.recency.riskPopulation == 'Other'){
         $scope.recency.riskPopulation =  $scope.recency.otherriskPopulation;
        }
-       console.log($scope.mandatoryData.length)
+       //console.log($scope.mandatoryData.length)
        for(i=0;i<$scope.configdata.length;i++){
         var key=$scope.configdata[i].global_name;
         var  keyname = key +"_name";
@@ -528,7 +528,7 @@ console.log( $scope.recencyDetails)
         var mandatoryname = $(id).attr("name");
         var mandatorytitle = $(id).attr("title");
         var mandatoryField=$scope.mandatoryData[i];
-        console.log(mandatoryField)
+     //   console.log(mandatoryField)
         if($scope.mandatoryData[i]==mandatoryname && $scope.recency[mandatoryField]==""){
           $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
           return false;
@@ -553,10 +553,10 @@ console.log( $scope.recencyDetails)
   if($scope.recency.longTermLine!=""){
     $scope.recency.longTermLineName =   $("#longTermLine").find("option:selected").text();
   }
-    console.log($scope.recency)
+  //  console.log($scope.recency)
      $scope.chkrecency = JSON.parse(localStorage.getItem('RecencyData'))
      $scope.chkrecency[$scope.index] = $scope.recency;
-     console.log($scope.chkrecency)
+   //  console.log($scope.chkrecency)
      localStorage.setItem('RecencyData',JSON.stringify($scope.chkrecency));
     $scope.recency ={};
            $scope.recencydisplay=true;

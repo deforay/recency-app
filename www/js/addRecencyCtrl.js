@@ -146,11 +146,11 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
                  "province_id":localarr[i]['location_one'],
                  "province_name":localarr[i]['location_one_name']
                })
-               console.log($scope.freq_provinces)
+             //  console.log($scope.freq_provinces)
              } 
              for(i =0;i<Object.keys($scope.freq_provinces).length;i++){  
                $scope.allprovinces.unshift($scope.freq_provinces[i]);
-               console.log($scope.allprovinces)
+               //console.log($scope.allprovinces)
  
              }
              var trimmedArray1 = [];
@@ -164,15 +164,15 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
                }
              }
              $scope.provinceData = trimmedArray1;  
-             console.log($scope.provinceData)
+            // console.log($scope.provinceData)
 
 
         }else{
           $scope.facilityData =localfacility;
           $scope.provinceData = localprovince;  
-          console.log($scope.provinceData)
+         // console.log($scope.provinceData)
 
-          console.log( $scope.facilityData)
+          //console.log( $scope.facilityData)
         }
       }
   
@@ -229,8 +229,8 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
         $cordovaGeolocation.getCurrentPosition(options).then(function(position){
           $scope.recency.latitude=position.coords.latitude;
           $scope.recency.longitude=position.coords.longitude;
-          console.log( $scope.recency.latitude)
-          console.log( $scope.recency.longitude)
+        //  console.log( $scope.recency.latitude)
+        //  console.log( $scope.recency.longitude)
           $scope.gis = true;
           $scope.giserror = false;
           // $scope.gis = "GIS Information Captured."+

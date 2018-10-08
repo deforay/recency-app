@@ -35,30 +35,25 @@ app=angular.module('starter.viewRecencyCtrl', ['starter.services'])
 //   });
 // }, false);
 
-        if(recencyList != null){
-        recencyList    = JSON.parse(recencyList);
-        console.log(recencyList);
-        var unsyncount = Object.keys(recencyList).length;
-        $scope.unSyncCount ="("+unsyncount+")";
-        var result = Object.keys(recencyList).map(function(key,value) {
-             return [(key), recencyList[value]];
-        });
-        $scope.recencyList =[];
-          for(i=0;i<result.length;i++){
-          $scope.recencyList.push(result[i][1])
-   
-            }
-
-    $scope.displaymessage = false;
-
+   if(recencyList != null){
+     recencyList    = JSON.parse(recencyList);
+     console.log(recencyList);
+     var unsyncount = Object.keys(recencyList).length;
+     $scope.unSyncCount ="("+unsyncount+")";
+     var result = Object.keys(recencyList).map(function(key,value) {
+     return [(key), recencyList[value]];
+     });
+     $scope.recencyList =[];
+     for(i=0;i<result.length;i++){
+        $scope.recencyList.push(result[i][1])
+        }
+    $scope.displaymessage = false;        
     }  
     else{
         $scope.unSyncCount ="";
-
-
         $scope.syncCount =   localStorage.getItem('syncCount');
         if($scope.syncCount== undefined || $scope.syncCount == ""){
-            //  $scope.syncCount = 0;
+              $scope.syncCount = 0;
             //  localStorage.setItem('syncCount', $scope.syncCount);
             // console.log($scope.syncCount);
         }
