@@ -1,7 +1,7 @@
 
 <ion-view view-title="Edit Recency">
         <header class="row recency-tab" >
-                <button id="main-recency" class="col button recency-head " ng-click="setmainactive();">Recency Test</button>
+                <button id="main-recency" class="col button recency-head active" ng-click="setmainactive();">Recency Test</button>
                 <button id="other-recency" class="col button recency-head" ng-click="setothersactive();">Behaviour</button>
             </header>
 <div class="RecencyForm">        
@@ -141,7 +141,7 @@
                                     <p>Age<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='age'" style="color:#df3838;"> *</span></p>                                         
                                   </span>
                                 <div class="form-logo date-img"><img src="img/date.png"></div> 
-                                <input id="age" type="number" class="age" name="age" title="Please Enter Age" ng-model='recency.age' ng-change="cleardob()" placeholder="Age"  required>
+                                <input id="age" type="number" class="age" name="age" title="Please Enter Age" ng-model='recency.age' ng-change="cleardob(recency.age)" placeholder="Age"  required>
                                
                             </div>
                     </div>

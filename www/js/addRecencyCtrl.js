@@ -204,14 +204,15 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
       $http.get($localStorage.get('apiUrl')+'/api/global-config')
       .success(function(data) {
        $scope.configdata =data.config;
-       localStorage.setItem('GlobalConfig',JSON.stringify($scope.configdata)) 
          for(i=0;i<$scope.configdata.length;i++){        
             $scope.recency.location[i]="";
             if($scope.configdata[i].global_name =="mandatory_fields")   {
               $scope.configdata.splice(i);
             }    
          } 
-       //  console.log($scope.configdata)
+       localStorage.setItem('GlobalConfig',JSON.stringify($scope.configdata)) 
+
+        console.log($scope.configdata)
         });
       $http.get($localStorage.get('apiUrl')+'/api/risk-populations')
       .success(function(data) {
@@ -286,16 +287,6 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
     }
   }
 
-// $scope.GetFacilityValue = function(facility){
-//   if( $localStorage.set('offline')!=false){
-//     var facilityid = $scope.recency.facilityId;
-//     console.log(facilityid)
-//     $scope.recency.facility_name = $.grep($scope.facilityData, function (facility) {
-//       return facility.facility_id == facilityid;
-//     })[0].facility_name;
-//     console.log("Selected Value: " + facilityid + "\nSelected Text: " + $scope.recency.facility_name);
-//   }
-// }
 $scope.GetDistrictValue = function(province){
   if($localStorage.get('offline') == true){
     var localarr = [];
@@ -419,31 +410,96 @@ $scope.GetCityValue = function(district){
     //   onoffline();
     // }
     $scope.patientvalidation = function(){
-      console.log($scope.recency)
-      if( $scope.recency.riskPopulation == 'Other'){
-        $scope.recency.riskPopulation =  $scope.recency.otherriskPopulation;
-       }
+     // console.log($scope.recency)
+      // if($scope.recency.patientId=="" && $scope.recency.sampleId==""){
+      //   $ionicPopup.alert({title:'Alert!',template:'Please Choose Either Sample ID or Patient ID'});
+      //   return false;
+      // }
+  
       for(i=0;i<$scope.mandatoryData.length;i++){
         var id ="#"+$scope.mandatoryData[i];
         var mandatoryname = $(id).attr("name");
         var mandatorytitle = $(id).attr("title");
         var mandatoryField=$scope.mandatoryData[i];
-        console.log(mandatoryField)
-        if($scope.mandatoryData[i]==mandatoryname && $scope.recency[mandatoryField]==""){
-          $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
-          return false;
-        }
+      //  console.log(mandatoryField);
+               
+          if($scope.mandatoryData[i]=='sampleId' && $scope.recency.sampleId==""){
+            $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+            $scope.recencydisplay=true;
+            return false;
+          }
+           if($scope.mandatoryData[i]=='patientId' && $scope.recency.patientId==""){
+            $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+            $scope.recencydisplay=true;
+            return false;
+          }
+           if($scope.mandatoryData[i]=='facilityId' && $scope.recency.facilityId==""){
+            $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+            $scope.recencydisplay=true;
+            return false;
+          }
+           if($scope.mandatoryData[i]=='hivDiagnosisDate' && $scope.recency.hivDiagnosisDate==""){
+            $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+            $scope.recencydisplay=true;
+            return false;
+          }
+           if($scope.mandatoryData[i]=='hivRecencyDate' && $scope.recency.hivRecencyDate==""){
+            $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+            $scope.recencydisplay=true;
+            return false;
+          }
+           if($scope.mandatoryData[i]=='ctrlLine' && $scope.recency.ctrlLine==""){
+            $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+            $scope.recencydisplay=true;
+            return false;
+          }
+            if($scope.mandatoryData[i]=='positiveLine' && $scope.recency.positiveLine==""){
+            $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+            $scope.recencydisplay=true;
+            return false;
+          }  if($scope.mandatoryData[i]=='longTermLine' && $scope.recency.longTermLine==""){
+            $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+            $scope.recencydisplay=true;
+            return false;
+          }
+           if($scope.mandatoryData[i]=='dob' && $scope.recency.dob==""){
+            $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+            $scope.recencydisplay=true;
+            return false;
+          }
+           if($scope.mandatoryData[i]=='age' && $scope.recency.age==""){
+            $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+            $scope.recencydisplay=true;
+            return false;
+          }
+           if($scope.mandatoryData[i]=='gender' && $scope.recency.gender==""){
+            $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+            $scope.recencydisplay=true;
+            return false;
+          }
+          if($scope.mandatoryData[i]=='location_one' && $scope.recency.location_one==""){
+            $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+            $scope.recencydisplay=true;
+            return false;
+          }
+          if($scope.mandatoryData[i]=='location_two' && $scope.recency.location_two==""){
+            $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+            $scope.recencydisplay=true;
+            return false;
+          }
+          if($scope.mandatoryData[i]=='location_three' && $scope.recency.location_three==""){
+            $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+            $scope.recencydisplay=true;
+            return false;
+          }
+
+          if($scope.recency.sampleId!="" || $scope.recency.patientId!="" || $scope.recency.facilityId!="" ||$scope.recency.hivDiagnosisDate!="" ||$scope.recency.hivRecencyDate!="" ||$scope.recency.ctrlLine!="" ||
+          $scope.recency.positiveLine!="" || $scope.recency.longTermLine!="" || $scope.recency.dob!="" || $scope.recency.age!=""||$scope.recency.location_one!="" ||$scope.recency.location_two!="" ||$scope.recency.location_three!="" )
+          {
+            $scope.recencydisplay=false;
+          }
       }
-      if($scope.recency.patientId=="" && $scope.recency.sampleId==""){
-        $ionicPopup.alert({title:'Alert!',template:'Please Choose Either Sample ID or Patient ID'});
-        return false;
-      }
-      if(($scope.recency.sampleId == "" && $scope.recency.patientId == "") || $scope.recency.facilityId == "" || $scope.recency.hivDiagnosisDate == "" || $scope.recency.hivRecencyDate == "" ||($scope.recency.dob == "" && $scope.recency.age == ""))
-      {
-      $scope.recencydisplay=true;
-      }else{
-        $scope.recencydisplay=false;
-      }
+
       if($("#other-recency").hasClass('active')){
       }
       else
@@ -459,6 +515,10 @@ $scope.GetCityValue = function(district){
         if( $scope.recency.riskPopulation == 'Other'){
           $scope.recency.riskPopulation =  $scope.recency.otherriskPopulation;
          }
+        //  if($scope.recency.patientId=="" && $scope.recency.sampleId==""){
+        //   $ionicPopup.alert({title:'Alert!',template:'Please Choose Either Sample ID or Patient ID'});
+        //   return false;
+        // }
         for(i=0;i<$scope.mandatoryData.length;i++){
           var id ="#"+$scope.mandatoryData[i];
           var mandatoryname = $(id).attr("name");
@@ -470,10 +530,7 @@ $scope.GetCityValue = function(district){
             return false;
           }
         }
-        if($scope.recency.patientId=="" && $scope.recency.sampleId==""){
-          $ionicPopup.alert({title:'Alert!',template:'Please Choose Either Sample ID or Patient ID'});
-          return false;
-        }
+        
         var count = localStorage.getItem('counter');
         $scope.counter  = parseInt(count) + 1;
         for(i=0;i<$scope.configdata.length;i++){
