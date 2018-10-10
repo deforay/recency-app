@@ -4,7 +4,7 @@ app=angular.module('starter.viewRecencyCtrl', ['starter.services'])
 .controller('viewRecencyCtrl', function($scope,$rootScope,$http,$preLoader, $ionicPopup, $cordovaToast, $location,$window, $stateParams,$ionicPlatform,$cordovaLocalNotification, $cordovaBadge) {
     $rootScope.apiUrl = localStorage.getItem('apiUrl');
     var recencyList =   localStorage.getItem('RecencyData');
-   // console.log(recencyList)
+   console.log(recencyList)
 
 //document.addEventListener('deviceready', function () {
 
@@ -60,7 +60,7 @@ app=angular.module('starter.viewRecencyCtrl', ['starter.services'])
     $scope.displaymessage = true;
     }   
   var recencydatas = $scope.recencyList;
-      //  console.log(recencydatas)
+       console.log(recencydatas)
         $scope.doRefresh = function() {
             $preLoader.show();
             $window.location.reload(true);

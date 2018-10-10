@@ -2,6 +2,7 @@ app=angular.module('starter.editRecencyCtrl', ['starter.services'])
 .controller('editRecencyCtrl', function($scope, $http,$rootScope, $stateParams,ionicDatePicker,$cordovaToast,$location,  $ionicPopup,$preLoader,$localStorage, $cordovaGeolocation, $window,$filter,$cordovaNetwork) {
   $scope.recency = {};
   $scope.recencyData ={};
+  $scope.recencydisplay=true;  
   $scope.displaybadge = false;
   $scope.provinceData = JSON.parse(localStorage.getItem('ProvinceData'));
   $scope.recencyDetails = JSON.parse(localStorage.getItem('viewRecency'));
@@ -550,10 +551,10 @@ console.log( $scope.recencyDetails)
       //   $ionicPopup.alert({title:'Alert!',template:'Please Choose Either Sample ID or Patient ID'});
       //   return false;
       // }
- 
-      
+      console.log($scope.recency)
 
   if($scope.recency.facilityId!=""){
+    
         $scope.recency.facility_name = $("#facilityId").find("option:selected").text();
   }
   if($scope.recency.ctrlLine!=""){
@@ -565,7 +566,7 @@ console.log( $scope.recencyDetails)
   if($scope.recency.longTermLine!=""){
     $scope.recency.longTermLineName =   $("#longTermLine").find("option:selected").text();
   }
-  //  console.log($scope.recency)
+    console.log($scope.recency)
      $scope.chkrecency = JSON.parse(localStorage.getItem('RecencyData'))
      $scope.chkrecency[$scope.index] = $scope.recency;
    //  console.log($scope.chkrecency)
@@ -580,7 +581,7 @@ console.log( $scope.recencyDetails)
            });
            $("#main-recency").addClass("active");
            $("#other-recency").removeClass('active');
-           $window.location.reload(true);
+          $window.location.reload(true);
            $location.path('/app/viewRecency');
           // $window.location.reload(true);
          $preLoader.hide();
