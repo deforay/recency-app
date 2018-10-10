@@ -87,7 +87,7 @@
                                <option value="present">Present(Positive/P)</option>
                                <option value="absent">Absent(Negative/N)</option>
                                <option value="invalid">Invalid</option>
-                               <option value="result_not_available">Result Not Available
+                               <option value="no_result">Result Not Available
                                </option>
                             </select>  
                          </div>
@@ -103,7 +103,7 @@
                              <option value="present">Present(Positive/P)</option>
                              <option value="absent">Absent(Negative/N)</option>
                              <option value="invalid">Invalid</option>
-                             <option value="result_not_available">Result Not Available</option>
+                             <option value="no_result">Result Not Available</option>
                           </select>   
                        </div>
                    </div> 
@@ -118,7 +118,7 @@
                              <option value="present">Present(Long Term/LT)</option>
                              <option value="absent">Absent(Recent/R)</option>
                              <option value="invalid">Invalid</option>
-                             <option value="result_not_available">Result Not Available</option>
+                             <option value="no_result">Result Not Available</option>
                           </select> 
                        </div>
                    </div>
@@ -286,7 +286,7 @@
                             <select class="ng-valid" id="currentSexualPartner" name="currentSexualPartner" title="Please Choose Current Sexual Partner" ng-model="recency.currentSexualPartner">
                                     <option value="">-- Select --</option>
                                     <option value="1">1</option> 
-                                    <option value="2-3">2-3</option>
+                                    <option value="2_3">2-3</option>
                                     <option value=">3"> >3</option>
                             </select>                               
                         </div>
@@ -303,6 +303,32 @@
                                     <option value="no">No</option>
                                     <option value="not_known">Not Known</option>
                              
+                                  </select>                               
+                        </div>
+                    </div>
+                    <div class="row" ng-if="recency.pastHivTesting=='yes'">
+                        <div class="input-field col ">
+                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                      <p>What was the Last HIV Status?<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='pastHivTesting'" style="color:#df3838;"> *</span></p>
+                                  </span>
+                            <div class="form-logo "><img src="img/hiv-test.png"></div> 
+                            <select class="ng-valid" id="lastHivStatus" name="lastHivStatus" title="Please Choose Last HIV Status" ng-model="recency.lastHivStatus">
+                                    <option value="">-- Select --</option>
+                                    <option value="positive">Positive</option> 
+                                    <option value="negative">Negative</option>
+                                  </select>                               
+                        </div>
+                    </div>
+                    <div class="row" ng-if="recency.lastHivStatus=='positive' && recency.pastHivTesting=='yes'">
+                        <div class="input-field col ">
+                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                      <p>Is the Patient on ART ?<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='pastHivTesting'" style="color:#df3838;"> *</span></p>
+                                  </span>
+                            <div class="form-logo "><img src="img/hiv-test.png"></div> 
+                            <select class="ng-valid" id="patientOnArt" name="patientOnArt" title="Please Choose whether the Patient on ART" ng-model="recency.patientOnArt">
+                                    <option value="">-- Select --</option>
+                                    <option value="yes">Yes</option> 
+                                    <option value="no">No</option>
                                   </select>                               
                         </div>
                     </div>

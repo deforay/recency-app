@@ -40,6 +40,8 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
       $scope.recency.pregnancyStatus="";
       $scope.recency.currentSexualPartner="";
       $scope.recency.pastHivTesting="";
+      $scope.recency.lastHivStatus="";
+      $scope.recency.patientOnArt="";
       $scope.recency.testLast12Month="";
       $scope.recency.latitude="";
       $scope.recency.longitude="";
@@ -512,9 +514,6 @@ $scope.GetCityValue = function(district){
       $scope.addRecency = function()
       {
         console.log($scope.recency);
-        if( $scope.recency.riskPopulation == 'Other'){
-          $scope.recency.riskPopulation =  $scope.recency.otherriskPopulation;
-         }
         //  if($scope.recency.patientId=="" && $scope.recency.sampleId==""){
         //   $ionicPopup.alert({title:'Alert!',template:'Please Choose Either Sample ID or Patient ID'});
         //   return false;
@@ -524,13 +523,28 @@ $scope.GetCityValue = function(district){
           var mandatoryname = $(id).attr("name");
           var mandatorytitle = $(id).attr("title");
           var mandatoryField=$scope.mandatoryData[i];
+          
           console.log(mandatoryField)
           if($scope.mandatoryData[i]==mandatoryname && $scope.recency[mandatoryField]==""){
             $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
             return false;
           }
+          if($scope.mandatoryData[i]=='riskPopulation' && $scope.recency.riskPopulation == 'Other' && $scope.recency.otherriskPopulation==""){
+            $ionicPopup.alert({title:'Alert!',template:'Please Choose Other Risk Population'});
+            return false;
+          }
+          if($scope.mandatoryData[i]=='pastHivTesting' && $scope.recency.pastHivTesting == 'yes' && $scope.recency.lastHivStatus==""){
+            $ionicPopup.alert({title:'Alert!',template:'Please Choose Last HIV Status'});
+            return false;
+          }
+          if($scope.mandatoryData[i]=='pastHivTesting' && $scope.recency.lastHivStatus == 'positive' && $scope.recency.patientOnArt==""){
+            $ionicPopup.alert({title:'Alert!',template:'Please Choose whether the Patient on ART'});
+            return false;
+          }
         }
-        
+        // if( $scope.recency.riskPopulation == 'Other' && $scope.recency.otherriskPopulation!="" ){
+        //   $scope.recency.riskPopulation =  $scope.recency.otherriskPopulation;
+        //  }
         var count = localStorage.getItem('counter');
         $scope.counter  = parseInt(count) + 1;
         for(i=0;i<$scope.configdata.length;i++){
@@ -548,6 +562,7 @@ $scope.GetCityValue = function(district){
         } 
         if($scope.recency.facilityId!=""){
               $scope.recency.facility_name = $("#facilityId").find("option:selected").text();
+              console.log($scope.recency.facility_name)
         }
         if($scope.recency.ctrlLine!=""){
           $scope.recency.ctrlLineName =   $("#ctrlLine").find("option:selected").text();

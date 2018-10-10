@@ -157,7 +157,7 @@ console.log( $scope.recencyDetails)
     
   }
 //console.log($scope.recency.location[0])
- if( $scope.recency.riskPopulation =="Other" || $scope.recency.otherriskPopulation != undefined ||$scope.recency.otherriskPopulation!=""){
+ if( $scope.recency.riskPopulation =="Other" && ($scope.recency.otherriskPopulation != undefined ||$scope.recency.otherriskPopulation!="")){
   $scope.otherpopulation = true;
   $scope.recency.riskPopulation="Other"
  }
@@ -507,8 +507,8 @@ console.log( $scope.recencyDetails)
   }
     $scope.editRecency = function(){
       console.log($scope.recency);
-      if( $scope.recency.riskPopulation == 'Other'){
-        $scope.recency.riskPopulation =  $scope.recency.otherriskPopulation;
+      if( $scope.recency.riskPopulation != 'Other'){
+        $scope.recency.otherriskPopulation = "";
        }
        //console.log($scope.mandatoryData.length)
        for(i=0;i<$scope.configdata.length;i++){
@@ -533,11 +533,23 @@ console.log( $scope.recencyDetails)
           $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
           return false;
         }
+        if($scope.mandatoryData[i]=='riskPopulation' && $scope.recency.riskPopulation == 'Other' && $scope.recency.otherriskPopulation==""){
+          $ionicPopup.alert({title:'Alert!',template:'Please Choose Other Risk Population'});
+          return false;
+        }
+        if($scope.mandatoryData[i]=='pastHivTesting' && $scope.recency.pastHivTesting == 'yes' && $scope.recency.lastHivStatus==""){
+          $ionicPopup.alert({title:'Alert!',template:'Please Choose Last HIV Status'});
+          return false;
+        }
+        if($scope.mandatoryData[i]=='pastHivTesting' && $scope.recency.lastHivStatus == 'positive' && $scope.recency.patientOnArt==""){
+          $ionicPopup.alert({title:'Alert!',template:'Please Choose whether the Patient on ART'});
+          return false;
+        }
       }
-      if($scope.recency.patientId=="" && $scope.recency.sampleId==""){
-        $ionicPopup.alert({title:'Alert!',template:'Please Choose Either Sample ID or Patient ID'});
-        return false;
-      }
+      // if($scope.recency.patientId=="" && $scope.recency.sampleId==""){
+      //   $ionicPopup.alert({title:'Alert!',template:'Please Choose Either Sample ID or Patient ID'});
+      //   return false;
+      // }
  
       
 

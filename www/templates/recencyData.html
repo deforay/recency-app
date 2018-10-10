@@ -73,7 +73,9 @@
                 <th>Sample ID / Patient ID</th>
                 <th style="text-align: center">Facility</th>
                 <th>HIV+ Diag Date</th>
-                <!-- <th>HIV+ Rec Result</th> -->
+                <th>Control Line</th>
+                <th>Positive Verification Line</th>
+                <th>Long Term Verification Line</th>
               </tr>
               <tr ng-repeat="recency in recencyDatas " >
                 <td class="orderid">
@@ -84,7 +86,24 @@
 
                 <td>{{ recency['facility_name'] }}</td>
                 <td>{{ recency['hiv_diagnosis_date'] | date: "dd-MM-yyyy" }}</td>
-                <!-- <td >{{ recency['hiv_recency_result'] }}</td> -->
+                <td ng-if="recency['control_line']=='present'">Present(Positive/P)</td>
+                <td ng-if="recency['control_line']=='absent'">Absent(Negative/N)</td>
+                <td ng-if="recency['control_line']=='invalid'">Invalid</td>
+                <td ng-if="recency['control_line']=='no_result'">Result Not Available</td>
+                <td ng-if="recency['control_line']==''">{{ recency['control_line'] }}</td>
+
+                <td ng-if="recency['positive_verification_line']=='present'">Present(Positive/P)</td>
+                <td ng-if="recency['positive_verification_line']=='absent'">Absent(Negative/N)</td>
+                <td ng-if="recency['positive_verification_line']=='invalid'">Invalid</td>
+                <td ng-if="recency['positive_verification_line']=='no_result'">Result Not Available</td>
+                <td ng-if="recency['positive_verification_line']==''">{{ recency['positive_verification_line'] }}</td>
+
+                <td ng-if="recency['long_term_verification_line']=='present'">Present(Long Term/LT)</td>
+                <td ng-if="recency['long_term_verification_line']=='absent'">Absent(Recent/R)</td>
+                <td ng-if="recency['long_term_verification_line']=='invalid'">Invalid</td>
+                <td ng-if="recency['long_term_verification_line']=='no_result'">Result Not Available</td>
+                <td ng-if="recency['long_term_verification_line']==''">{{ recency['long_term_verification_line'] }}</td>
+               
               </tr>
               
               
