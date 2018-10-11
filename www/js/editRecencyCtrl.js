@@ -172,10 +172,8 @@ console.log( $scope.recencyDetails)
   $scope.index = $scope.recency.index;
   $(document).ready(function(){
      $scope.recencydisplay=true;
-  
       $("#main-recency").addClass("active");
 
-     
     });
 
   $scope.setmainactive = function(){
@@ -331,13 +329,38 @@ console.log( $scope.recencyDetails)
     }
     $scope.getLatLong();
     
-
+    $scope.getFacility=function(facilityid){
+  if(facilityid!=""){
+        $scope.recency.facility_name = $("#facilityId option:selected").text();
+      }
+    }
+    $scope.getControlLine=function(controlline){
+      if(controlline!=""){
+            $scope.recency.ctrlLineName = $("#ctrlLine option:selected").text();
+          }
+    }
+    $scope.OnPositiveLineChange = function(positiveline){
+      $scope.recency.positiveLineName = $("#positiveLine option:selected").text();
+      if(positiveline == "absent"){
+        $scope.recency.longTermLine ="";
+        $scope.showLongTermLine = false;
+      }
+      else{
+        $scope.showLongTermLine = true;
+  
+      }
+    }
+    $scope.OnLongtermChange = function(longterm){
+      if(longterm!=""){
+        $scope.recency.longTermLineName = $("#longTermLine option:selected").text();
+      }
+    }
     $scope.setDiagDate = function(val){
       var ipObj1 = {
         callback: function (val) {  //Mandatory
           var hivDiagnosisDate = new Date(val);
          // console.log(hivDiagnosisDate);
-          $scope.recency.hivDiagnosisDate =  $filter('date')(hivDiagnosisDate , "dd-MM-yyyy");
+          $scope.recency.hivDiagnosisDate =  $filter('date')(hivDiagnosisDate , "dd-MMM-yyyy");
         },
       }; 
         ionicDatePicker.openDatePicker(ipObj1);
@@ -350,7 +373,7 @@ console.log( $scope.recencyDetails)
          // console.log('Return value from the datepicker popup is : ' + val, new Date(val));
           var hivRecencyDate = new Date(val);
          // console.log(hivRecencyDate);
-          $scope.recency.hivRecencyDate =  $filter('date')(hivRecencyDate , "dd-MM-yyyy");
+          $scope.recency.hivRecencyDate =  $filter('date')(hivRecencyDate , "dd-MMM-yyyy");
         },
       }; 
         ionicDatePicker.openDatePicker(ipObj2);
@@ -362,7 +385,7 @@ console.log( $scope.recencyDetails)
           console.log(dob);
           var ageDifMs = Date.now() - dob.getTime();
           var ageDate = new Date(ageDifMs); // miliseconds from epoch
-          $scope.recency.dob =  $filter('date')(dob , "dd-MM-yyyy");
+          $scope.recency.dob =  $filter('date')(dob , "dd-MMM-yyyy");
           $scope.recency.age = Math.abs(ageDate.getUTCFullYear() - 1970);
         },
         to: new Date(),
@@ -384,17 +407,7 @@ console.log( $scope.recencyDetails)
      $scope.otherpopulation = false;
       }
   }
-  $scope.OnPositiveLineChange = function(positiveline){
-    if(positiveline == "absent"){
-      $scope.recency.longTermLine ="";
-      $scope.showLongTermLine = false;
-    }
-    else{
-      $scope.showLongTermLine = true;
-
-    }
-
-  }
+  
   $scope.patientvalidation = function(){
   //  console.log($scope.recency)
     // if($scope.recency.patientId=="" && $scope.recency.sampleId==""){
@@ -524,6 +537,21 @@ console.log( $scope.recencyDetails)
           $scope.recency[keyname] =   $(keyId).find("option:selected").text();
         }
       }   
+
+      console.log($scope.recency)
+
+      // if($scope.recency.facilityId!=""){
+      //   $scope.recency.facility_name = $("#facilityId option:selected").text();
+      // }
+      // if($scope.recency.ctrlLine!=""){
+      //   $scope.recency.ctrlLineName =   $("#ctrlLine option:selected").text();
+      // }
+      // if($scope.recency.positiveLine!=""){
+      //   $scope.recency.positiveLineName =   $("#positiveLine option:selected").text();
+      // }
+      // if($scope.recency.longTermLine!=""){
+      //   $scope.recency.longTermLineName =   $("#longTermLine option:selected").text();
+      // }
       for(i=0;i<$scope.mandatoryData.length;i++){
         var id ="#"+$scope.mandatoryData[i];
         var mandatoryname = $(id).attr("name");
@@ -551,27 +579,13 @@ console.log( $scope.recencyDetails)
       //   $ionicPopup.alert({title:'Alert!',template:'Please Choose Either Sample ID or Patient ID'});
       //   return false;
       // }
-      console.log($scope.recency)
 
-  if($scope.recency.facilityId!=""){
-    
-        $scope.recency.facility_name = $("#facilityId").find("option:selected").text();
-  }
-  if($scope.recency.ctrlLine!=""){
-    $scope.recency.ctrlLineName =   $("#ctrlLine").find("option:selected").text();
-  }
-  if($scope.recency.positiveLine!=""){
-    $scope.recency.positiveLineName =   $("#positiveLine").find("option:selected").text();
-  }
-  if($scope.recency.longTermLine!=""){
-    $scope.recency.longTermLineName =   $("#longTermLine").find("option:selected").text();
-  }
-    console.log($scope.recency)
-     $scope.chkrecency = JSON.parse(localStorage.getItem('RecencyData'))
-     $scope.chkrecency[$scope.index] = $scope.recency;
-   //  console.log($scope.chkrecency)
-     localStorage.setItem('RecencyData',JSON.stringify($scope.chkrecency));
-    $scope.recency ={};
+        console.log($scope.recency)
+        $scope.chkrecency = JSON.parse(localStorage.getItem('RecencyData'))
+        $scope.chkrecency[$scope.index] = $scope.recency;
+        //  console.log($scope.chkrecency)
+           localStorage.setItem('RecencyData',JSON.stringify($scope.chkrecency));
+            $scope.recency ={};
            $scope.recencydisplay=true;
            $cordovaToast.show('Edited Successfully', 'long', 'center')
            .then(function(success) {
@@ -581,9 +595,9 @@ console.log( $scope.recencyDetails)
            });
            $("#main-recency").addClass("active");
            $("#other-recency").removeClass('active');
-          $window.location.reload(true);
+         // $window.location.reload(true);
            $location.path('/app/viewRecency');
-          // $window.location.reload(true);
+           $window.location.reload(true);
          $preLoader.hide();
 
   

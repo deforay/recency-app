@@ -77,7 +77,7 @@ app=angular.module('starter.viewRecencyCtrl', ['starter.services'])
   
             })
             .success(function(data){
-               console.log(data.syncData.response);
+               console.log(data);
                 $scope.response =data.syncData.response;
                 $scope.syncCount =data.syncCount.response[0].Total;
                 localStorage.setItem('syncCount', $scope.syncCount)

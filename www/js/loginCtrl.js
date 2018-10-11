@@ -101,7 +101,6 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
             // error
           });
           $timeout(function() {
-           
             $location.path('/app/addRecency');
             $preLoader.hide();
         }, 500);

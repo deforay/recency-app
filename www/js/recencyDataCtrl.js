@@ -36,12 +36,12 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                    .then(function(response) {
                      if(response.data.status =="success"){
                       $preLoader.hide();
-                      $cordovaToast.show('Authentication is Sucess', 'long', 'bottom')
-                            .then(function(success) {
-                                 // success
-                             }, function (error) {
-                                 // error
-                             });
+                      // $cordovaToast.show('Authentication is Sucess', 'long', 'bottom')
+                      //       .then(function(success) {
+                      //            // success
+                      //        }, function (error) {
+                      //            // error
+                      //        });
                         $scope.showauth = false;   
                         console.log( response.data.recency) 
                         $preLoader.show()

@@ -36,6 +36,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
       $scope.recency.residence="";
       $scope.recency.educationLevel="";
       $scope.recency.riskPopulation="";
+      // $scope.recency.riskPopulationName="";
       $scope.recency.otherriskPopulation="";
       $scope.recency.pregnancyStatus="";
       $scope.recency.currentSexualPartner="";
@@ -251,7 +252,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
     callback: function (val) {  
       var hivDiagnosisDate = new Date(val);
       console.log(hivDiagnosisDate);
-      $scope.recency.hivDiagnosisDate =  $filter('date')(hivDiagnosisDate , "dd-MM-yyyy");
+      $scope.recency.hivDiagnosisDate =  $filter('date')(hivDiagnosisDate , "dd-MMM-yyyy");
     },
   }; 
     ionicDatePicker.openDatePicker(ipObj1);
@@ -263,7 +264,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
      
       var hivRecencyDate = new Date(val);
       console.log(hivRecencyDate);
-      $scope.recency.hivRecencyDate =  $filter('date')(hivRecencyDate , "dd-MM-yyyy");
+      $scope.recency.hivRecencyDate =  $filter('date')(hivRecencyDate , "dd-MMM-yyyy");
       },
     }; 
     ionicDatePicker.openDatePicker(ipObj2);
@@ -276,7 +277,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
       var ageDifMs = Date.now() - dob.getTime();
       var ageDate = new Date(ageDifMs); // miliseconds from epoch
      // console.log( Math.abs(ageDate.getUTCFullYear() - 1970));
-      $scope.recency.dob =  $filter('date')(dob , "dd-MM-yyyy");
+      $scope.recency.dob =  $filter('date')(dob , "dd-MMM-yyyy");
       $scope.recency.age = Math.abs(ageDate.getUTCFullYear() - 1970);
     },
     to: new Date(),
@@ -391,7 +392,9 @@ $scope.GetCityValue = function(district){
   
 }
     $scope.checkriskpopulation = function(populationid){
-      console.log(populationid)
+      console.log(populationid);
+     // $scope.recency.riskPopulationName = $("#riskPopulation").find("option:selected").text();
+      //console.log( $scope.recency.riskPopulationName);
       if(populationid=='Other'){
        $scope.otherpopulation = true;
         }
