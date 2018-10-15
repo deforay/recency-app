@@ -86,7 +86,13 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
           $scope.confirmpassword.four = value;
         if($scope.confirmpasscode!= $scope.createpasscode){
           $(".view-passcode-col").addClass('error')
-          $(".view-passcode-col").removeClass('valid')
+          $(".view-passcode-col").removeClass('valid');
+          $scope.confirmpassword.one="";
+          $scope.confirmpassword.two = "";
+          $scope.confirmpassword.three = "";
+          $scope.confirmpassword.four = "";
+          $scope.confirmpasscode = $scope.confirmpasscode.substring(0, $scope.confirmpasscode.length - 4);
+          $ionicPopup.alert({title:'Login Failed!',template:'Wrong App Password'});
         }else{
           $(".view-passcode-col").addClass('valid')
           $(".view-passcode-col").removeClass('error')
@@ -171,7 +177,14 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
             //  console.log("wrong app passcode");
               $scope.disablebtn = true;
               $(".passcode-col").addClass('error')
-              $(".passcode-col").removeClass('valid')
+              $(".passcode-col").removeClass('valid');
+              $scope.password.one="";
+              $scope.password.two = "";
+              $scope.password.three = "";
+              $scope.password.four = "";
+              $scope.passcode = $scope.passcode.substring(0, $scope.passcode.length - 4);
+              $ionicPopup.alert({title:'Login Failed!',template:'Wrong App Password'});
+
             }else{
               $(".passcode-col").addClass('valid')
               $(".passcode-col").removeClass('error')

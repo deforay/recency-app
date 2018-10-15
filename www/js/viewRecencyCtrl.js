@@ -81,13 +81,10 @@ app=angular.module('starter.viewRecencyCtrl', ['starter.services'])
                 $scope.response =data.syncData.response;
                 $scope.syncCount =data.syncCount.response[0].Total;
                 localStorage.setItem('syncCount', $scope.syncCount)
-               // console.log(data.syncCount.response[0].Total);
 
                 for(i=0;i< $scope.response.length;i++){
-                  //  console.log($scope.recencyList[i])
                   $scope.recencyList.splice(i);
                 }
-             //   console.log( $scope.recencyList)
                 localStorage.setItem('RecencyData',$scope.recencyList);
                          if(localStorage.getItem('RecencyData')=="")
                           {
@@ -100,7 +97,7 @@ app=angular.module('starter.viewRecencyCtrl', ['starter.services'])
                   }, function (error) {
                       // error
                   });
-                 $window.location.reload(true);
+                $window.location.reload(true);
             })
             .error(function(){
                 console.log(data);

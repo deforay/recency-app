@@ -524,7 +524,8 @@ background: url(../img/user.png) no-repeat left center rgba(255, 255, 255, 0.5)
         margin-bottom: 0 !important;
         margin-top: 0 !important;
         }   
-.RecencyForm .input-field  input,.RecencyForm .input-field select{
+.RecencyForm .input-field  input,.RecencyForm .input-field select,
+.RecencyForm .input-field .item-checkbox{
     border: 1px solid #ddd ! important;
     border-radius: 6px;
     display: block;

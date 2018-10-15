@@ -17,7 +17,7 @@
       <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
      
     <div class="recency-view" style="margin-bottom:45px">
-     <div class="card" style="border:none;padding-top: 0; padding-bottom: 0;" ng-repeat="recency in filtered = (recencyList) ">  
+     <div class="card" style="border:none;padding-top: 0; padding-bottom: 0;" ng-repeat="recency in filtered = (recencyList) track by recency.patientId  ">  
         <a ng-click="viewRecency(recency,$index)" class=" stable-bg ink ink-dark">
             <div class="table-header">
               <span style="float: left ">Recency Test</span>
@@ -25,12 +25,15 @@
             <div class="item item-text-wrap" style="border: 1px solid #e4e4e4;">
               <p><b>Sample ID :</b>&nbsp;&nbsp;&nbsp; {{recency.sampleId}} </p>
               <p><b>Patient ID :</b>&nbsp;&nbsp;&nbsp; {{recency.patientId}}</p>
-              <p><b>Facility :</b>&nbsp;&nbsp;&nbsp; {{recency.facility_name}}</p>
+              <p  ng-if="recency.facility_name!='Other'" ><b>Facility :</b>&nbsp;&nbsp;&nbsp; {{recency.facility_name}}</p>
+              <p  ng-if="recency.facility_name=='Other'" ><b>Facility :</b>&nbsp;&nbsp;&nbsp; {{recency.otherfacility}}</p>
+              <p ng-if="recency.testNotPerformed==true"><b>Recency Test not Performed :</b>&nbsp;&nbsp;&nbsp; Yes</p>
+              <div ng-if="recency.testNotPerformed!=true">
               <p><b>HIV+ Rec. Date :</b>&nbsp;&nbsp;&nbsp; {{recency.hivRecencyDate}}</p>
               <p style="text-transform: capitalize"><b>Control Line :</b>&nbsp;&nbsp;&nbsp; {{recency.ctrlLineName }}  </p>
               <p style="text-transform: capitalize"><b>Positive Verification Line :</b>&nbsp;&nbsp;&nbsp; {{recency.positiveLineName }}  </p>
               <p style="text-transform: capitalize"><b>Long Term Verification Line :</b>&nbsp;&nbsp;&nbsp; {{recency.longTermLineName }}  </p>
-              
+            </div>
              </div>
         </a>
       </div>
