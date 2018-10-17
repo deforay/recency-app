@@ -120,7 +120,7 @@
                               </select>                               
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" ng-if="recency.pastHivTesting=='yes' || recency.pastHivTesting==''">
                     <div class="input-field col ">
                           <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
                             <p>Tested in last 12Months<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testLast12Month'" style="color:#df3838;"> *</span></p>
@@ -166,6 +166,32 @@
                             <ion-list >
                                 <ion-checkbox style="padding-top: 16px;" ng-model="recency.testNotPerformed" >Recency Test not Performed</ion-checkbox>
                               </ion-list>                              
+                        </div>
+                    </div>
+                    <div class="row" ng-if="recency.testNotPerformed==true">
+                        <div class="input-field col ">
+                                <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                    <p>Reason of Rec.Test Not Performed<span style="color:#df3838;"> *</span></p>
+                                </span>
+                                <div class="form-logo"><img src="img/recencyresult.png"></div> 
+                             <select class="ng-valid" id="recencyreason" name="recencyreason" ng-model="recency.recencyreason" 
+                             title="Please Choose Reason of Recency Test Not Performed" ng-change="getReasonName(recency.recencyreason)" >
+                               <option value="">-- Select --</option>
+                               <option value="no_consent_from_the_client">No consent from the Client</option>
+                               <option value="sample_was_not_collected">Sample was not collected (Phlebotomy failure)</option>
+                               <option value="not_newly_diagnosed">Not newly diagnosed</option>
+                               <option value="other">Other, please specify</option>
+                            </select>  
+                         </div>
+                     </div>
+                    <div class="row" ng-if="recency.testNotPerformed==true && recency.recencyreason=='other'">
+                        <div class="input-field col ">
+                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                <p>Other Reasons<span style="color:#df3838;"> *</span></p>
+                                  </span>
+                            <div class="form-logo"><img src="img/population.png"></div> 
+                            <input id="otherreason" type="text" class="otherreason" name="otherreason" ng-model="recency.otherreason" placeholder="Other Reason"  >
+                           
                         </div>
                     </div>
                 <div class="card" style="margin-top:0;margin-bottom: 0;" ng-if="recency.testNotPerformed!=true">
@@ -258,7 +284,7 @@
                         <div class="row">
                                 <div class="input-field col ">
                                       <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                        <p>Age<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='age'" style="color:#df3838;"> *</span></p>                                         
+                                        <p>Age in Years<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='age'" style="color:#df3838;"> *</span></p>                                         
                                       </span>
                                     <div class="form-logo date-img"><img src="img/date.png"></div> 
                                     <input id="age" type="number" class="age" name="age" title="Please Enter Age" ng-model='recency.age' ng-change="cleardob(recency.age)" placeholder="Age"  required>
@@ -347,7 +373,7 @@
                            
                         </div>
                     </div>
-                     <div class="row">
+                     <div class="row" ng-if="recency.gender!='male'">
                         <div class="input-field col ">
                               <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
                                 <p>Pregnancy Status<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='pregnancyStatus'" style="color:#df3838;"> *</span></p>                                     
@@ -389,12 +415,22 @@
                                 </select>                               
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="input-field col "> 
+                                  <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                          <p>Notes<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='notes'"  style="color:#df3838;"> *</span></p>
+                                      </span>  
+                             <div class="form-logo"><img src="img/lab.png"></div> 
+                             <textarea id="notes" name="notes" title="Please Enter Notes" style="height: auto" rows=2 placeholder="Notes" ng-model="recency.notes"></textarea>
+
+                            </div>  
+                        </div>
      
                     <div class="row">
                         <div class=" input-field col">
-                                <p style="margin-left: 10px;" ng-show="giserror">GIS Information is Not Available  </p>
+                                <p style="margin-left: 10px;font-size: 13px;" ng-show="giserror">GIS Information is Not Available  </p>
                                     
-                                 <p style="margin-left: 10px;" ng-show="gis">GIS Information Captured.<br> Latitude :&nbsp;&nbsp; {{recency.latitude}}<br> Longitude:&nbsp;&nbsp;{{recency.longitude}}   {{recency.location[0]}} {{recency.location[1]}} {{recency.location[2]}}</p>
+                                 <p style="margin-left: 10px;font-size: 12px;" ng-show="gis"> Latitude :&nbsp; {{recency.latitude}}&nbsp;&nbsp; Longitude:&nbsp;{{recency.longitude}}</p>
                              </div>
                      </div> 
                </div>

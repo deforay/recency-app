@@ -13,12 +13,12 @@ app=angular.module('starter.viewRecencyDetailCtrl', ['starter.services'])
     };
   
     $scope.recencyDetail = JSON.parse(localStorage.getItem('viewRecency'));
-    console.log($scope.recencyDetail)
+   // console.log($scope.recencyDetail)
 
     $scope.editRecency = function(recency){
       //console.log(viewRecency);
       $scope.recencyDetail = recency;
-      console.log($scope.recencyDetail)
+    //  console.log($scope.recencyDetail)
       $window.location.href = '#/app/editRecency/'+recency.patientId;
   
   }

@@ -27,7 +27,14 @@
               <p><b>Patient ID :</b>&nbsp;&nbsp;&nbsp; {{recency.patientId}}</p>
               <p  ng-if="recency.facility_name!='Other'" ><b>Facility :</b>&nbsp;&nbsp;&nbsp; {{recency.facility_name}}</p>
               <p  ng-if="recency.facility_name=='Other'" ><b>Facility :</b>&nbsp;&nbsp;&nbsp; {{recency.otherfacility}}</p>
-              <p ng-if="recency.testNotPerformed==true"><b>Recency Test not Performed :</b>&nbsp;&nbsp;&nbsp; Yes</p>
+              <div ng-if="recency.testNotPerformed==true">
+                <p><b>Recency Test not Performed :</b>&nbsp;&nbsp;&nbsp; Yes</p>
+                <p ng-if="recency.recencyreason!='other'"> <b>Reason of Rec.Test not Performed :</b>&nbsp;&nbsp;&nbsp; {{recency.recencyreasonName}}</p>
+                <p ng-if="recency.recencyreason=='other'"><b>Reason of Rec.Test not Performed :</b>&nbsp;&nbsp;&nbsp; {{recency.otherreason}}</p>
+             
+
+              </div>
+
               <div ng-if="recency.testNotPerformed!=true">
               <p><b>HIV+ Rec. Date :</b>&nbsp;&nbsp;&nbsp; {{recency.hivRecencyDate}}</p>
               <p style="text-transform: capitalize"><b>Control Line :</b>&nbsp;&nbsp;&nbsp; {{recency.ctrlLineName }}  </p>

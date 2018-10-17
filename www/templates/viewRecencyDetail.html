@@ -51,7 +51,7 @@
                 <td>&nbsp;:&nbsp; </td>
                 <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.patientOnArt| replace: '_':' '}} </td>
               </tr>
-               <tr>
+               <tr ng-if="recencyDetail.pastHivTesting=='yes'|| recencyDetail.pastHivTesting==''">
                 <td style="font: size 14px;"><b>Tested in last 12 Months</b> </td>
                 <td>&nbsp;:&nbsp; </td>
                 <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.testLast12Month| replace: '_':' '}} </td>
@@ -60,6 +60,12 @@
                 <td style="font: size 14px;"><b>Is Recency Not Performed</b> </td>
                 <td>&nbsp;:&nbsp; </td>
                 <td style="font-size:14px;"> Yes </td>
+              </tr>
+              <tr ng-if="recencyDetail.testNotPerformed==true">
+                <td style="font: size 14px;"><b>Reason of Recency Not Performed</b> </td>
+                <td>&nbsp;:&nbsp; </td>
+                <td ng-if="recencyDetail.recencyreason!='other'" style="font-size:14px;"> {{recencyDetail.recencyreasonName}} </td>
+                <td ng-if="recencyDetail.recencyreason=='other'" style="font-size:14px;"> {{recencyDetail.otherreason}} </td>
               </tr>
               <div>              
               <tr  ng-if="recencyDetail.testNotPerformed!=true">
@@ -93,7 +99,7 @@
                   <td style="font-size:14px;"> {{recencyDetail.dob}} </td>
                 </tr>
                 <tr>
-                  <td style="font: size 14px;"><b>Age</b> </td>
+                  <td style="font: size 14px;"><b>Age in Years</b> </td>
                   <td>&nbsp;:&nbsp; </td>
                   <td style="font-size:14px;"> {{recencyDetail.age}} </td>
                 </tr>
@@ -123,7 +129,7 @@
                     <td ng-if="recencyDetail.riskPopulationName!='Other'" style="font-size:14px;text-transform: capitalize"> {{recencyDetail.riskPopulationName | replace: '_':' '}} </td>
                     <td ng-if="recencyDetail.riskPopulationName=='Other'" style="font-size:14px;text-transform: capitalize"> {{recencyDetail.otherriskPopulation| replace: '_':' '}} </td>
                   </tr>
-                   <tr>
+                   <tr ng-if="recencyDetail.gender!='male'">
                     <td style="font: size 14px;"><b>Pregnancy Status</b> </td>
                     <td>&nbsp;:&nbsp; </td>
                     <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.pregnancyStatus| replace: '_':' '}} </td>
@@ -134,12 +140,15 @@
 
                     <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.currentSexualPartner | replace: '_':' - '}} </td>
                   </tr>
-                 
-                
                   <tr>
                     <td style="font: size 14px;"><b>Experienced Violence in last 12 Months</b> </td>
                     <td>&nbsp;:&nbsp; </td>
                     <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.violenceLast12Month| replace: '_':' '}} </td>
+                  </tr>
+                  <tr ng-if="recencyDetail.notes!=''">
+                    <td style="font: size 14px;"><b>Notes</b> </td>
+                    <td>&nbsp;:&nbsp; </td>
+                    <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.notes| replace: '_':' '}} </td>
                   </tr>
             </table>
             

@@ -16,6 +16,17 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
      //   console.log(device)
 
       });
+      var recencyList =   localStorage.getItem('RecencyData');
+      //console.log(recencyList)
+      if(recencyList != null){
+        recencyList    = JSON.parse(recencyList);
+        $scope.unSyncCount = "("+Object.keys(recencyList).length+"  Not Synced)";
+ 
+      }  else{
+        $scope.unSyncCount="";
+      }
+//console.log(recencyList)
+ 
     $scope.recencyinit = function(){
       $scope.recency.userId = localStorage.getItem('userId');
       $scope.recency.sampleId ="";
@@ -32,6 +43,9 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
       $scope.recency.longTermLine="";
       $scope.recency.longTermLineName="";
       $scope.recency.recencyOutcome="";
+      $scope.recency.recencyreason="";
+      $scope.recency.recencyreasonName="";
+      $scope.recency.otherreason="";
       $scope.recency.dob="";
       $scope.recency.age="";
       $scope.recency.gender="";
@@ -52,10 +66,9 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
       $scope.recency.latitude="";
       $scope.recency.longitude="";
       $scope.recency.phoneNumber="";
-
-     localStorage.setItem
-      console.log($scope.recency);
-
+      $scope.recency.notes="";
+     
+   //   console.log($scope.recency);
     }
     $scope.setmainactive = function(){
       $scope.recencydisplay=true;
@@ -233,7 +246,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
       $http.get($localStorage.get('apiUrl')+'/api/facility')
       .success(function(data) {
        $scope.facilityData = data;
-       console.log(data)
+    //   console.log(data)
        var facilitylen = ($scope.facilityData.length+1).toString();
        $scope.facilityData.push({
           "facility_id": facilitylen,
@@ -241,13 +254,13 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
         })
         localStorage.setItem('FacilityData',JSON.stringify($scope.facilityData)) 
        
-       console.log($scope.facilityData)           
+    //   console.log($scope.facilityData)           
       });
       $http.get($localStorage.get('apiUrl')+'/api/recency-mandatory')
       .success(function(data) {
        $scope.mandatoryData =data.fields;
        localStorage.setItem('MandatoryData',JSON.stringify($scope.mandatoryData)) 
-       console.log( $scope.mandatoryData);           
+    //   console.log( $scope.mandatoryData);           
       });
       $http.get($localStorage.get('apiUrl')+'/api/province')
       .success(function(data) {
@@ -273,7 +286,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
          } 
        localStorage.setItem('GlobalConfig',JSON.stringify($scope.configdata)) 
 
-        console.log($scope.configdata)
+     //   console.log($scope.configdata)
         });
       $http.get($localStorage.get('apiUrl')+'/api/risk-populations')
       .success(function(data) {
@@ -284,7 +297,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
       })
       localStorage.setItem('RiskPopulations',JSON.stringify($scope.riskpopulations))       
 
-     console.log($scope.riskpopulations)  
+   //  console.log($scope.riskpopulations)  
       });
 
       // If Internet Connection Disconnected
@@ -293,8 +306,9 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
       $scope.getLatLong = function(){      
         var options = {maximumAge: 20000,timeout: 30000, enableHighAccuracy: true};
         $cordovaGeolocation.getCurrentPosition(options).then(function(position){
-          $scope.recency.latitude=position.coords.latitude;
-          $scope.recency.longitude=position.coords.longitude;
+          $scope.recency.latitude=parseFloat(position.coords.latitude).toFixed(3);
+          $scope.recency.longitude= parseFloat(position.coords.longitude).toFixed(3);
+         
           var currentdate = new Date(); 
 
         //  console.log( $scope.recency.latitude)
@@ -335,6 +349,24 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
         }
         if(controlLine==""|| positiveLine==""||longTermLine==""){
           $scope.recency.recencyOutcome="";
+        }
+      }
+      $scope.getReasonName = function(reason){
+        if(reason=='no_consent_from_the_client'){
+          $scope.recency.recencyreasonName ="No consent from the Client";
+        }else 
+        if(reason=='sample_was_not_collected'){
+          $scope.recency.recencyreasonName ="Sample was not collected (Phlebotomy failure)";
+        }else
+        if(reason=='not_newly_diagnosed'){
+          $scope.recency.recencyreasonName ="Not newly diagnosed";
+        }
+        else
+        if(reason=='other'){
+          $scope.recency.recencyreasonName ="Other, please specify";
+        }
+        else{
+          $scope.recency.recencyreasonName="";
         }
       }
      $scope.setDiagDate = function(val){
@@ -577,11 +609,14 @@ $scope.GetCityValue = function(district){
             $scope.recencydisplay=true;
             return false;
           }
-          if($scope.mandatoryData[i]=='testLast12Month' && $scope.recency.testLast12Month==""){
-            $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
-            $scope.recencydisplay=true;
-            return false;
+          if($scope.recency.pastHivTesting=='yes' || $scope.recency.pastHivTesting==''){
+            if($scope.mandatoryData[i]=='testLast12Month' && $scope.recency.testLast12Month==""){
+              $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+              $scope.recencydisplay=true;
+              return false;
+            }
           }
+         
           if($scope.mandatoryData[i]=='pastHivTesting' && $scope.recency.pastHivTesting == 'yes' && $scope.recency.lastHivStatus==""){
             $ionicPopup.alert({title:'Alert!',template:'Please Choose Last HIV Status'});
             $scope.recencydisplay=true;
@@ -591,6 +626,18 @@ $scope.GetCityValue = function(district){
             $ionicPopup.alert({title:'Alert!',template:'Please Choose whether the Patient on ART'});
             $scope.recencydisplay=true;
             return false;
+          }
+          if($scope.recency.testNotPerformed==true){
+            if( $scope.recency.recencyreason==""){
+              $ionicPopup.alert({title:'Alert!',template:"Please Choose Reason of Recency Test Not Performed"});
+              $scope.recencydisplay=true;
+              return false;
+            }
+            if( $scope.recency.recencyreason=="other" &&  $scope.recency.otherreason==""){
+              $ionicPopup.alert({title:'Alert!',template:"Please Enter Other Reason"});
+              $scope.recencydisplay=true;
+              return false;
+            }
           }
        if($scope.recency.testNotPerformed!=true){
         if($scope.mandatoryData[i]=='hivRecencyDate' && $scope.recency.hivRecencyDate==""){
