@@ -251,7 +251,7 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
                 $localStorage.set('email',response.data.userDetails['userEmailAddress']);
                 $localStorage.set('userId',response.data.userDetails['userId']);
                 $localStorage.set('userName',response.data.userDetails['userName']);
-              //Comment it under Developer Mode
+              
                 $cordovaToast.show('Successfully Logged in', 'long', 'bottom')
               .then(function(success) {
                 // success

@@ -11,11 +11,17 @@ angular.module('starter',  ['ionic',
                             'starter.controllers',
                             'starter.services',
                             'starter.loginCtrl',
-                            // 'starter.authCtrl',
+                            'starter.addQcAssuranceCtrl',
+                            'starter.addQcSettingsCtrl',
+                            'starter.viewQcSettingsCtrl',
+                            'starter.editTesterInfoCtrl',
+                            'starter.editLotInfoCtrl',
                             'starter.recencyDataCtrl',
                             'starter.addRecencyCtrl',
                             'starter.viewRecencyCtrl',
+                            'starter.viewQcAssuranceCtrl',
                             'starter.viewRecencyDetailCtrl',
+                            'starter.viewQcAssuranceDetailCtrl',
                             'starter.editRecencyCtrl'
                            ])
 .run(function($ionicPlatform,$ionicHistory, $localStorage,$ionicPopup,$state,$cordovaBadge) {
@@ -83,6 +89,7 @@ angular.module('starter',  ['ionic',
     .state('app', {
     url: '/app',
     abstract: true,
+    cache: false,
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
   })
@@ -120,6 +127,15 @@ angular.module('starter',  ['ionic',
         }
       }
     })
+    .state('app.viewQcAssurance', {
+      url: '/viewQcAssurance',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/viewQcAssurance.html',
+          controller:"viewQcAssuranceCtrl"
+        }
+      }
+    })
     .state('app.recencyData', {
       url: '/recencyData',
       views: {
@@ -129,12 +145,59 @@ angular.module('starter',  ['ionic',
         }
       }
     })
-    .state('app.auth', {
-      url: '/auth',
+    .state('app.addQcAssurance', {
+      url: '/addQcAssurance',
       views: {
         'menuContent': {
-          templateUrl: 'templates/auth.html',
-          controller:"authCtrl"
+          templateUrl: 'templates/addQcAssurance.html',
+          controller:"addQcAssuranceCtrl"
+        }
+      }
+    })
+  .state('app.addQcSettings', {
+      url: '/addQcSettings',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/addQcSettings.html',
+          controller:"addQcSettingsCtrl"
+        }
+      }
+    })
+    .state('app.editTesterInfo', {
+      url: '/editTesterInfo/:testerName',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/editTesterInfo.html',
+          controller:"editTesterInfoCtrl"
+        }
+      }
+    })
+    .state('app.editLotInfo', {
+      url: '/editLotInfo/:testKitLotNo',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/editLotInfo.html',
+          controller:"editLotInfoCtrl"
+        }
+      }
+    })
+    
+    .state('app.viewQcSettings', {
+      url: '/viewQcSettings',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/viewQcSettings.html',
+          controller:"viewQcSettingsCtrl"
+        }
+      }
+    })
+    
+    .state('app.viewQcAssuranceDetail', {
+      url: '/viewQcAssuranceDetail/:patientID',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/viewQcAssuranceDetail.html',
+          controller:"viewQcAssuranceDetailCtrl"
         }
       }
     })

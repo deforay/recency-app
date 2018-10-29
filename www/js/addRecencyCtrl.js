@@ -28,6 +28,61 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
 //console.log(recencyList)
  
     $scope.recencyinit = function(){
+      $scope.testkitlotObj1 =[];
+      $scope.testkitlotObj2 =[];
+      $scope.TestKitLotList = JSON.parse(localStorage.getItem('LotInfo'));
+      if( $scope.TestKitLotList!=null){
+        var TestKitLotListLen = Object.keys($scope.TestKitLotList).length;
+        for(i=0;i<TestKitLotListLen;i++){
+          if($scope.TestKitLotList[i].available!='yes'){
+            $scope.testkitlotObj1.push({
+              "testKitLotNo":$scope.TestKitLotList[i].testKitLotNo,
+              "testKitExpDate":$scope.TestKitLotList[i].testKitExpDate,
+              "label":$scope.TestKitLotList[i].label,
+              "available":$scope.TestKitLotList[i].available,
+            })
+          }else{
+            $scope.testkitlotObj2.push({
+              "testKitLotNo:":$scope.TestKitLotList[i].testKitLotNo,
+              "testKitExpDate":$scope.TestKitLotList[i].testKitExpDate,
+              "label":$scope.TestKitLotList[i].label,
+              "available":$scope.TestKitLotList[i].available,
+            })
+          }
+        }
+        for(i=0;i<$scope.testkitlotObj2.length;i++){
+          $scope.testkitlotObj1.unshift($scope.testkitlotObj2[i])
+        }
+        console.log($scope.testkitlotObj1)
+        $scope.TestKitLotList = $scope.testkitlotObj1;
+      }
+
+        $scope.testerNameObj1 =[];
+        $scope.testerNameObj2 =[];
+       $scope.TesterNameList = JSON.parse(localStorage.getItem('TesterInfo'));
+       if( $scope.TesterNameList!=null){
+         var TesterNameListLen = Object.keys($scope.TesterNameList).length;
+         for(i=0;i<TesterNameListLen;i++){
+           if($scope.TesterNameList[i].available!='yes'){
+             $scope.testerNameObj1.push({
+               "testerName":$scope.TesterNameList[i].testerName,
+               "label":$scope.TesterNameList[i].label,
+               "available":$scope.TesterNameList[i].available,
+             })
+           }else{
+             $scope.testerNameObj2.push({
+               "testerName":$scope.TesterNameList[i].testerName,
+               "label":$scope.TesterNameList[i].label,
+               "available":$scope.TesterNameList[i].available,
+             })
+           }
+         }
+         for(i=0;i<$scope.testerNameObj2.length;i++){
+           $scope.testerNameObj1.unshift($scope.testerNameObj2[i])
+         }
+         console.log($scope.testerNameObj1)
+         $scope.TesterNameList = $scope.testerNameObj1;
+       }
       $scope.recency.userId = localStorage.getItem('userId');
       $scope.recency.sampleId ="";
       $scope.recency.patientId="";
@@ -46,6 +101,9 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
       $scope.recency.recencyreason="";
       $scope.recency.recencyreasonName="";
       $scope.recency.otherreason="";
+      $scope.recency.testKitLotNo = "";
+      $scope.recency.testKitExpDate = "";
+      $scope.recency.testerName = "";
       $scope.recency.dob="";
       $scope.recency.age="";
       $scope.recency.gender="";
@@ -92,6 +150,60 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
       $window.location.reload(true);
       $preLoader.hide();
       
+    }
+    $scope.testKitLotAutoComplete = function(){
+      $scope.recency.testKitExpDate ="";
+      $scope.recency.testKitLotAvailability ="";
+
+      $( "#testKitLotNo").autocomplete({
+        minLength: 0,
+        source:
+          $scope.TestKitLotList
+        ,
+        select:function(event,ui){
+          if(ui.item.testKitLotNo!=''){
+           // $('#testKitLotNo').val(ui.item.testKitLotNo);
+             $('#testKitExpDate').val(ui.item.testKitExpDate);
+            // $('#testKitLotAvailability').val(ui.item.available);
+            $scope.recency.testKitLotNo = ui.item.testKitLotNo;
+            $scope.recency.testKitExpDate = ui.item.testKitExpDate;
+            $scope.recency.testKitLotAvailability = ui.item.testKitLotAvailability;
+          }
+      
+          console.log(ui.item)
+         
+        }
+      })
+      .autocomplete( "instance" )._renderItem = function( ul, item ) {
+        return $( "<li>" )
+          .append( "<div>" + item.label  + "</div>" )
+          .appendTo( ul );
+      };
+    }
+    $scope.testerNameAutoComplete = function(){
+      $( "#testerName").autocomplete({
+        minLength: 0,
+        source:
+          $scope.TesterNameList
+        ,
+        focus: function( event, ui ) {
+          $( "#testerName" ).val( ui.item.label );
+          return false;
+        },
+        select:function(event,ui){
+          if(ui.item.testerName!=''){
+            $('#testerName').val(ui.item.testerName);
+            $('#testerNameId').val(ui.item.testerName);
+            $scope.recency.testerNameAvailability = ui.item.available;
+          }
+          console.log(ui.item)
+        }
+      })
+      .autocomplete( "instance" )._renderItem = function( ul, item ) {
+        return $( "<li>" )
+          .append( "<div>" + item.label  + "</div>" )
+          .appendTo( ul );
+      };
     }
     document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -154,8 +266,8 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
         $localStorage.set('online',isOnline);
         $localStorage.set('offline','true');
         $scope.riskpopulations = JSON.parse(localStorage.getItem('RiskPopulations'));
-  $scope.mandatoryData = JSON.parse(localStorage.getItem('MandatoryData'));
-
+        $scope.mandatoryData = JSON.parse(localStorage.getItem('MandatoryData'));
+        $scope.testerNameObj = JSON.parse(localStorage.getItem('testerName'));
         $scope.configdata = JSON.parse(localStorage.getItem('GlobalConfig'));
         // $scope.provinceData =  JSON.parse(localStorage.getItem('ProvinceData'))      
        // $scope.districtData =  JSON.parse(localStorage.getItem('DistrictData'))      
@@ -232,35 +344,29 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
              }
              $scope.provinceData = trimmedArray1;  
             // console.log($scope.provinceData)
-
-
         }else{
           $scope.facilityData =localfacility;
           $scope.provinceData = localprovince;  
-         // console.log($scope.provinceData)
-
-          //console.log( $scope.facilityData)
         }
       }
       // $scope.facilityData=[];  
       $http.get($localStorage.get('apiUrl')+'/api/facility')
       .success(function(data) {
        $scope.facilityData = data;
-    //   console.log(data)
        var facilitylen = ($scope.facilityData.length+1).toString();
        $scope.facilityData.push({
           "facility_id": facilitylen,
           "facility_name":"Other"
         })
-        localStorage.setItem('FacilityData',JSON.stringify($scope.facilityData)) 
-       
+        localStorage.setItem('FacilityData',JSON.stringify($scope.facilityData))    
     //   console.log($scope.facilityData)           
       });
+
       $http.get($localStorage.get('apiUrl')+'/api/recency-mandatory')
       .success(function(data) {
        $scope.mandatoryData =data.fields;
        localStorage.setItem('MandatoryData',JSON.stringify($scope.mandatoryData)) 
-    //   console.log( $scope.mandatoryData);           
+       console.log( $scope.mandatoryData);           
       });
       $http.get($localStorage.get('apiUrl')+'/api/province')
       .success(function(data) {
@@ -391,11 +497,23 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
     }; 
     ionicDatePicker.openDatePicker(ipObj2);
   }
+  $scope.setTestKitExpDate = function(val){
+    var ipObj3 = {
+      callback: function (val) { 
+     
+      var testKitExpDate = new Date(val);
+      console.log(testKitExpDate);
+      $scope.recency.testKitExpDate =  $filter('date')(testKitExpDate , "dd-MMM-yyyy");
+      }
+     
+    }; 
+    ionicDatePicker.openDatePicker(ipObj3);
+  }
   $scope.setDob = function(val){
-   var ipObj3 = {
+   var ipObj4 = {
      callback: function (val) {  //Mandatory
       var dob = new Date(val);
-      console.log(dob);
+      //console.log(dob);
       var ageDifMs = Date.now() - dob.getTime();
       var ageDate = new Date(ageDifMs); // miliseconds from epoch
      // console.log( Math.abs(ageDate.getUTCFullYear() - 1970));
@@ -404,8 +522,9 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
     },
     to: new Date(),
   }; 
-    ionicDatePicker.openDatePicker(ipObj3);
+    ionicDatePicker.openDatePicker(ipObj4);
   }
+  
   $scope.cleardob = function(age){
     if(age!= null ){
     $scope.recency.dob ="";
@@ -660,13 +779,25 @@ $scope.GetCityValue = function(district){
           return false;
         }
        }
-        
-       
-
-          if($scope.recency.sampleId!="" || $scope.recency.patientId!="" || $scope.recency.facilityId!="" ||$scope.recency.hivDiagnosisDate!="" ||
+       if($scope.mandatoryData[i]=='testKitLotNo' && $scope.recency.testKitLotNo==""){
+        $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+        $scope.recencydisplay=true;
+        return false;
+        }
+        if($scope.mandatoryData[i]=='testKitExpDate' && $scope.recency.testKitExpDate==""){
+        $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+        $scope.recencydisplay=true;
+        return false;
+        }
+        if($scope.mandatoryData[i]=='testerName' && $scope.recency.testerName==""){
+        $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+        $scope.recencydisplay=true;
+        return false;
+        }
+      if($scope.recency.sampleId!="" || $scope.recency.patientId!="" || $scope.recency.facilityId!="" ||$scope.recency.hivDiagnosisDate!="" ||
           $scope.recency.hivRecencyDate!=""||$scope.recency.ctrlLine!="" ||$scope.recency.positiveLine!="" || $scope.recency.longTermLine!="" ||
           $scope.recency.pastHivTesting!="" || $scope.recency.lastHivStatus!=""|| $scope.recency.patientOnArt!=""||$scope.recency.location_one!=""||
-          $scope.recency.location_two!="" ||$scope.recency.location_three!="" )
+          $scope.recency.location_two!="" ||$scope.recency.location_three!="" || $scope.recency.testKitLotNo !=""|| $scope.recency.testKitExpDate !=""|| $scope.recency.testerName !="" )
           {
             $scope.recencydisplay=false;
           }
@@ -756,8 +887,8 @@ $scope.GetCityValue = function(district){
         + currentdate.getMinutes() + ":" 
         + currentdate.getSeconds();
 
-        console.log($scope.recency.formInitDateTime)
-        console.log($scope.recency);
+        // console.log($scope.recency.formInitDateTime)
+        // console.log($scope.recency);
         $preLoader.show();
         var recency = $scope.recency;
            if(JSON.parse(localStorage.getItem('RecencyData'))!=null){

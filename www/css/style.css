@@ -517,15 +517,18 @@ background: url(../img/user.png) no-repeat left center rgba(255, 255, 255, 0.5)
     width: 100%;
     overflow: auto;
 }
-.RecencyForm .row{
-    margin-bottom: 0 !important;
-    }  
-    .RecencyForm .row .input-field {
-        margin-bottom: 0 !important;
-        margin-top: 0 !important;
-        }   
-.RecencyForm .input-field  input,.RecencyForm .input-field select,
-.RecencyForm .input-field .item-checkbox,.RecencyForm .input-field  textarea{
+.RecencyForm .row,
+.QCForm .row
+{
+ margin-bottom: 0 !important;
+}  
+.RecencyForm .row .input-field,
+.QCForm .row .input-field
+{
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
+}   
+/* .RecencyForm .row .toggle-field .toggle{
     border: 1px solid #ddd ! important;
     border-radius: 6px;
     display: block;
@@ -538,14 +541,46 @@ background: url(../img/user.png) no-repeat left center rgba(255, 255, 255, 0.5)
     font-size: 13px;
     font-weight: 400;
     background-color: white !important;
+} */
+.RecencyForm .row  .toggle-div{
+    width: 100%;
+    border: 1px solid #ddd !important;
+height: 100%;
+    margin: 6px 4px 0 4px;
+    border-radius: 6px;
 }
-.RecencyForm .input-field  select:focus{
+.RecencyForm .input-field  input,
+.RecencyForm .input-field select,
+.RecencyForm .input-field .item-checkbox,
+.RecencyForm .input-field  textarea,
+.QCForm .input-field  input,
+.QCForm .input-field select,
+.QCForm .input-field .item-checkbox,
+.QCForm .input-field  textarea{
+    border: 1px solid #ddd ! important;
+    border-radius: 6px;
+    display: block;
+    padding: 20px 0px 0px 62px;
+    color: #333 !important;
+    width: 100%;
+    height: 3.2rem;
+    box-sizing: border-box;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    background-color: white ;
+}
+.RecencyForm .input-field  select:focus,
+.QCForm .input-field  select:focus
+{
     box-shadow: 0 1px 0 0 #26a69a;
     border-radius: 6px;
     outline: 0;
 
 }
-.RecencyForm  .input-field button ,.recency-view .editbtn {
+.RecencyForm  .input-field button ,.recency-view .editbtn, 
+.QCForm  .input-field button ,.recency-view .editbtn 
+{
     background-color: #FF6400 !important;
     color: #fff !important;
     margin-bottom: 60px;
@@ -554,58 +589,78 @@ background: url(../img/user.png) no-repeat left center rgba(255, 255, 255, 0.5)
     border-radius: 0;
     width: 100%;
 }
-.RecencyForm .input-field .input-label p {
+.RecencyForm .input-field .input-label p,
+.QCForm .input-field .input-label p
+ {
     width: 100%;
     margin: 3px 0 0 15px;
     color: #000;
     font-weight: 600;
     font-size: 13px;
 }
-.RecencyForm .input-field .input-label  {
+.RecencyForm .input-field .input-label,
+.QCForm .input-field .input-label
+{
   max-width: 300px;
   width: 100%;
   
 }
-.RecencyForm .input-field .form-logo{
+.RecencyForm .input-field .form-logo,
+.QCForm .input-field .form-logo
+{
     padding-top: 25px;
     width: 30px;
     padding-left: 15px;
     z-index: 1000;
     position: absolute;
 }
-.RecencyForm .input-field .form-logo img{
+.RecencyForm .input-field .form-logo img,
+.QCForm .input-field .form-logo img
+{
     padding-top: 2px;
     height: 20px;
 }
-.RecencyForm .input-field .date-img img{
+.RecencyForm .input-field .date-img img,
+.QCForm .input-field .date-img img{
    
     height: 17px;
 }
-.RecencyForm .input-field .recency-radio label{
+.RecencyForm .input-field .recency-radio label,
+.QCForm .input-field .recency-radio label
+{
     left: -10px;
     background: transparent;
     padding: 10px 10px 10px 60px;
     border: none;
 }
-.RecencyForm .radio-head .input-field.col{
+.RecencyForm .radio-head .input-field.col,
+.QCForm .radio-head .input-field.col
+{
     float: left;
     width: auto;
 }
 
-.RecencyForm .radio-head{
+.RecencyForm .radio-head,
+.QCForm .radio-head
+{
     width: 100%;
     margin-right: 10px;
     margin-left: 10px;
     border: 1px solid #ddd;
     border-radius: 6px;
 }
-.RecencyForm .radio-head p{
+.RecencyForm .radio-head p,
+.QCForm .radio-head p
+{
     margin: 0;
     padding-left: 15px;
     font-weight: 600;
 }
 
+input[readonly]#testKitExpDate{
+    background-color: #efefef  !important;
 
+}
 .recency-view .sync-button{
     left: 15%;
     right: 15%;
@@ -828,3 +883,29 @@ nav .brand-logo {
     border-bottom: 1px solid blue !important;
 }
 
+
+.autocomplete-items{
+    overflow-x: scroll;
+
+height: 100px;
+}
+  
+  .autocomplete-items div {
+    padding: 7px;
+    padding-left: 20px;
+    cursor: pointer;
+    background-color: #4a4a4a1a; 
+    border: 1px solid #d4d4d4; 
+    border-top:none;
+  }
+  
+  .autocomplete-items div:hover {
+    /*when hovering an item:*/
+   background-color: #b2d4f6;; 
+  }
+  
+  .autocomplete-active {
+    /*when navigating through the items using the arrow keys:*/
+    background-color: DodgerBlue !important; 
+    color: #ffffff; 
+  }

@@ -6,6 +6,7 @@ angular.module('starter.controllers', [])
  // $rootScope.apiUrl='http://recency-web/';
   $scope.loginData = {};
   $scope.displaybadge=false;
+  $scope.displayqcbadge= false;
 
   $scope.doRefresh = function() {
     $preLoader.show();
@@ -13,6 +14,7 @@ angular.module('starter.controllers', [])
     $preLoader.hide();
 };
 var recencyList =   localStorage.getItem('RecencyData');
+var QCDataList =   localStorage.getItem('QCData');
 //console.log(recencyList)
 if(recencyList != null){
   recencyList    = JSON.parse(recencyList);
@@ -20,6 +22,13 @@ if(recencyList != null){
   $scope.displaybadge=true;
 }  else{
   $scope.displaybadge=false;
+}
+if(QCDataList != null){
+  QCDataList    = JSON.parse(QCDataList);
+  $scope.unSyncQcCount = Object.keys(QCDataList).length;
+  $scope.displayqcbadge=true;
+}  else{
+  $scope.displayqcbadge=false;
 }
 // if($scope.syncCount== undefined || $scope.syncCount == ""){
 //      $scope.syncCount = 0;
