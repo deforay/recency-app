@@ -78,6 +78,9 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
       $scope.qcAssurance.testKitLotNo="";
       $scope.qcAssurance.testKitExpDate="";
       $scope.qcAssurance.testKitLotAvailability="";
+      // $scope.qcAssurance.recencyreason="";
+      // $scope.qcAssurance.recencyreasonName="";
+      // $scope.qcAssurance.otherreason ="";
       $scope.qcAssurance.hivRecencyDate="";
       $scope.qcAssurance.ctrlLine="";
       $scope.qcAssurance.ctrlLineName="";
@@ -159,7 +162,25 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
           .appendTo( ul );
       };
     }
-    document.addEventListener("deviceready", onDeviceReady, false);
+    $scope.getReasonName = function(reason){
+      if(reason=='no_consent_from_the_client'){
+        $scope.qcAssurance.recencyreasonName ="No consent from the Client";
+      }else 
+      if(reason=='sample_was_not_collected'){
+        $scope.qcAssurance.recencyreasonName ="Sample was not collected (Phlebotomy failure)";
+      }else
+      if(reason=='not_newly_diagnosed'){
+        $scope.qcAssurance.recencyreasonName ="Not newly diagnosed";
+      }
+      else
+      if(reason=='other'){
+        $scope.qcAssurance.recencyreasonName ="Other, please specify";
+      }
+      else{
+        $scope.qcAssurance.recencyreasonName="";
+      }
+    }
+        document.addEventListener("deviceready", onDeviceReady, false);
 
     // Cordova is ready
     //
@@ -292,14 +313,26 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
           $ionicPopup.alert({title:'Alert!',template:'Please Choose Reference Result'});
           return false;
         }
-        if($scope.qcAssurance.hivRecencyDate==""){
-          $ionicPopup.alert({title:'Alert!',template:'Please Choose HIV+ Recency Date'});
-          return false;
-        }
+       
         if($scope.qcAssurance.testKitExpDate==""){
           $ionicPopup.alert({title:'Alert!',template:'Please Choose Test Kit Expiry Date'});
           return false;
         }
+        // if($scope.qcAssurance.testNotPerformed==true){
+        //   if( $scope.qcAssurance.recencyreason==""){
+        //     $ionicPopup.alert({title:'Alert!',template:"Please Choose Reason of Recency Test Not Performed"});
+        //     return false;
+        //   }
+        //   if( $scope.qcAssurance.recencyreason=="other" &&  $scope.qcAssurance.otherreason==""){
+        //     $ionicPopup.alert({title:'Alert!',template:"Please Enter Other Reason"});
+        //     return false;
+        //   }
+        // }
+        // if($scope.qcAssurance.testNotPerformed!=true){
+          if($scope.qcAssurance.hivRecencyDate==""){
+            $ionicPopup.alert({title:'Alert!',template:'Please Choose HIV+ Recency Date'});
+            return false;
+          }
         if($scope.qcAssurance.ctrlLine!=""){
           $scope.qcAssurance.ctrlLineName =   $("#ctrlLine").find("option:selected").text();
         }
@@ -321,7 +354,7 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
           $ionicPopup.alert({title:'Alert!',template:'Please Choose Long Term Line'});
           return false;
         }
-
+      // }
         var currentdate = new Date();
         $scope.qcAssurance.formInitDateTime = currentdate.getFullYear() + "-"
         + (currentdate.getMonth()+1)  + "-" 

@@ -35,10 +35,19 @@
                     <td>&nbsp;:&nbsp; </td>
                     <td style="font-size:14px;"> {{viewqcDetail.testKitExpDate}} </td>
                   </tr>
-             
-          
-             
-                <div>              
+                  <tr ng-if="viewqcDetail.testNotPerformed==true">
+                    <td style="font: size 14px;"><b>Is Recency Not Performed</b> </td>
+                    <td>&nbsp;:&nbsp; </td>
+                    <td style="font-size:14px;"> Yes </td>
+                  </tr>
+                  <!-- <tr ng-if="viewqcDetail.testNotPerformed==true">
+                    <td style="font: size 14px;"><b>Reason of Recency Not Performed</b> </td>
+                    <td>&nbsp;:&nbsp; </td>
+                    <td ng-if="viewqcDetail.recencyreason!='other'" style="font-size:14px;"> {{viewqcDetail.recencyreasonName}} </td>
+                    <td ng-if="viewqcDetail.recencyreason=='other'" style="font-size:14px;"> {{viewqcDetail.otherreason}} </td>
+                  </tr>
+           -->
+              <div >              
                 <tr>
                   <td style="font: size 14px;"><b>HIV+ Rec. Date</b> </td>
                   <td>&nbsp;:&nbsp; </td>
@@ -59,13 +68,35 @@
                     <td>&nbsp;:&nbsp; </td>
                     <td style="font-size:14px;"> {{viewqcDetail.longTermLineName}} </td>
                   </tr>
-            
+                </div>
+                <!-- <div>              
+                <tr ng-if="viewqcDetail.testNotPerformed!=true">
+                  <td style="font: size 14px;"><b>HIV+ Rec. Date</b> </td>
+                  <td>&nbsp;:&nbsp; </td>
+                  <td style="font-size:14px;"> {{viewqcDetail.hivRecencyDate}} </td>
+                </tr>
+                <tr ng-if="viewqcDetail.testNotPerformed!=true">
+                  <td style="font: size 14px;"><b>Control Line</b> </td>
+                  <td>&nbsp;:&nbsp; </td>
+                  <td style="font-size:14px;"> {{viewqcDetail.ctrlLineName}} </td>
+                </tr>
+                <tr ng-if="viewqcDetail.testNotPerformed!=true"> 
+                    <td style="font: size 14px;"><b>Positive Verification Line</b> </td>
+                    <td>&nbsp;:&nbsp; </td>
+                    <td style="font-size:14px;"> {{viewqcDetail.positiveLineName}} </td>
+                  </tr>
+                <tr ng-if="viewqcDetail.testNotPerformed!=true">
+                    <td style="font: size 14px;"><b>Long Term Verification Line</b> </td>
+                    <td>&nbsp;:&nbsp; </td>
+                    <td style="font-size:14px;"> {{viewqcDetail.longTermLineName}} </td>
+                  </tr>
+                </div> -->
                   <tr>
                     <td style="font: size 14px;"><b>Tester Name</b> </td>
                     <td>&nbsp;:&nbsp; </td>
                     <td style="font-size:14px;"> {{viewqcDetail.testerName}} </td>
                   </tr>
-                </div>
+                
                   </table>        
               
             </div>  
