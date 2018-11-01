@@ -4,7 +4,13 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
     $scope.qcLotObj ={};
     $scope.TesterListData ={};
     $scope.LotListData ={};
+
+
+    $scope.qcTesterInfo ={};
+    $scope.qcLotInfo ={};
+
     $scope.recencydisplay = true;
+
     $("#main-addqcsetting").addClass("active");
     
     $(document).ready(function(){
@@ -18,23 +24,42 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
             $scope.Lotcounter =0;
              localStorage.setItem('Lotcounter',$scope.Lotcounter);
         }
-
       });
-      var TesterInfoList =   localStorage.getItem('TesterInfo');
-      if(TesterInfoList != null){
-         TesterInfoList    = JSON.parse(TesterInfoList);
-      }
-      console.log(TesterInfoList)
 
-      var LotInfoList =   localStorage.getItem('LotInfo');
-      if(LotInfoList != null){
-         LotInfoList  = JSON.parse(LotInfoList);
+      $scope.displayQcSettings = function(){
+        var TesterInfoList =   localStorage.getItem('TesterInfo');
+        // if(TesterInfoList != null){
+        //    TesterInfoList    = JSON.parse(TesterInfoList);
+        //   $scope.isVisibleTester = false;
+        // }else{
+        //   $scope.isVisibleTester = true;
+        // }
+        if(TesterInfoList == null || TesterInfoList.length==0 ){
+          $scope.isVisibleTester = true;
+        }else{
+          TesterInfoList    = JSON.parse(TesterInfoList);
+          $scope.isVisibleTester = false;
+        $scope.TesterInfoList = TesterInfoList;
+
+        }
+     //   console.log(TesterInfoList)
+  
+        var LotInfoList =   localStorage.getItem('LotInfo');
+      //  console.log(LotInfoList)
+        if(LotInfoList == null || LotInfoList==""){
+          $scope.isVisibleLot = true;
+        }else{
+          LotInfoList  = JSON.parse(LotInfoList);
+        $scope.LotInfoList =LotInfoList;
+
+          $scope.isVisibleLot = false;
+        }
+     //   console.log(LotInfoList)
       }
-      console.log(LotInfoList)
+      $scope.displayQcSettings();
 
     $scope.testerinit = function(){
     $("#main-addqcsetting").addClass("active");
-
       $scope.qcTester.testerName = "";
       $scope.qcTester.available = true   
       $scope.qcLotObj.testKitLotNo = "";
@@ -42,6 +67,7 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
       $scope.qcLotObj.available = true;     
     }
 
+  
     $scope.setmainactive = function(){
       $scope.recencydisplay=true;
       if($("#main-addqcsetting").hasClass('active')){
@@ -71,7 +97,7 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
         var ipObj3 = {
            callback: function (val) { 
             var testKitExpDate = new Date(val);
-            console.log(testKitExpDate);
+         //   console.log(testKitExpDate);
             $scope.qcLotObj.testKitExpDate =  $filter('date')(testKitExpDate , "dd-MMM-yyyy");
             }
         }; 
@@ -88,14 +114,19 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
        $scope.qcTester.label = $scope.qcTester.testerName;
        var count = localStorage.getItem('Testercounter');
        $scope.Testercounter  = parseInt(count) + 1;
-       console.log($scope.qcTester);
+      // console.log($scope.qcTester);
 
         var qcTester = $scope.qcTester;
         $preLoader.show();
-
-       if(JSON.parse(localStorage.getItem('TesterInfo'))!=null){
-        $scope.TesterListData =JSON.parse(localStorage.getItem('TesterInfo'));
-        }     
+        if(localStorage.getItem('TesterInfo')==null || (localStorage.getItem('TesterInfo'))==""){
+       //   console.log(localStorage.getItem('TesterInfo'))
+          }
+          else{
+          $scope.TesterListData =JSON.parse(localStorage.getItem('TesterInfo'));
+        }
+      //  if(JSON.parse(localStorage.getItem('TesterInfo'))!=null){
+      //   $scope.TesterListData =JSON.parse(localStorage.getItem('TesterInfo'));
+      //   }     
 
         $scope.TesterListData[$scope.Testercounter-1] = qcTester;      
         localStorage.setItem('TesterInfo',JSON.stringify($scope.TesterListData)) 
@@ -111,6 +142,8 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
 
          $("#main-addqcsetting").addClass("active");
          $("#other-addqcsetting").removeClass('active')
+      $scope.displayQcSettings();
+
          $preLoader.hide();
       }
       $scope.addLotInfo = function()
@@ -124,31 +157,115 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
 
        var lotcount = localStorage.getItem('Lotcounter');
        $scope.Lotcounter  = parseInt(lotcount) + 1;
-       console.log($scope.qcLotObj);
+       //console.log($scope.qcLotObj);
 
         var qcLotObj = $scope.qcLotObj;
         $preLoader.show();
-
-       if(JSON.parse(localStorage.getItem('LotInfo'))!=null){
-        $scope.LotListData =JSON.parse(localStorage.getItem('LotInfo'));
-        }     
-
-        $scope.LotListData[$scope.Lotcounter-1] = qcLotObj;      
+        
+        if(localStorage.getItem('LotInfo')==null || (localStorage.getItem('LotInfo'))==""){
+          console.log(localStorage.getItem('LotInfo'))
+          }
+          else{
+          $scope.LotListData =JSON.parse(localStorage.getItem('LotInfo'));
+        }
+        $scope.LotListData[$scope.Lotcounter-1] = qcLotObj;
+     //   console.log($scope.LotListData)
         localStorage.setItem('LotInfo',JSON.stringify($scope.LotListData)) 
         localStorage.setItem('Lotcounter',$scope.Lotcounter);  
         $scope.qcLotObj ={};
         $scope.recencydisplay=false;
+         $scope.displayQcSettings();
+
          $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
          .then(function(success) {
            // success
          }, function (error) {
            // error
          });
-
-        //  $("#main-addqcsetting").addClass("active");
-        //  $("#other-addqcsetting").removeClass('active')
+        $("#other-addqcsetting").addClass('active')
+         $("#main-addqcsetting").removeClass("active");
          $preLoader.hide();
       }
+      $scope.editTesterInfo = function(qc,index){
+        console.log(qc);
+        qc.index = index;
+          $scope.qcTesterInfo = qc;
+          localStorage.setItem('viewTesterInfo',JSON.stringify(qc));
+          $window.location.href = '#/app/editTesterInfo/'+qc.testerName;
+      
+      }
+      $scope.editLotInfo = function(lotInfo,index){
+      //  console.log(lotInfo);
+        lotInfo.index = index;
+        $scope.qcLotInfo = lotInfo;
+        localStorage.setItem('viewLotInfo',JSON.stringify(lotInfo));
+        $window.location.href = '#/app/editLotInfo/'+lotInfo.testKitLotNo;
+      
+      }
+
+    
+      $scope.deleteTesterInfo = function(qc,index){
+        $preLoader.show();
+        $scope.testinfo =[];
+        qc.index= index;
+        $scope.qcTesterObj = JSON.parse(localStorage.getItem('TesterInfo'));
+        for(i=0;i<Object.keys($scope.qcTesterObj).length;i++){
+           $scope.testinfo.push({
+            "testerName":$scope.qcTesterObj[i].testerName,
+            "available":$scope.qcTesterObj[i].available,
+           "label":$scope.qcTesterObj[i].label
+           });
+        }
+        $scope.testinfo.splice(index,1);
+    if($scope.testinfo.length==0){
+      localStorage.setItem('TesterInfo','');
+
+     localStorage.setItem('Testercounter',JSON.stringify( $scope.testinfo.length));
+      $scope.testinfo = "";
+    }else{
+      localStorage.setItem('TesterInfo',JSON.stringify( $scope.testinfo));
+      localStorage.setItem('Testercounter',JSON.stringify( $scope.testinfo.length));
+    } 
+     
+       
+        // localStorage.setItem('TesterInfo',JSON.stringify( $scope.testinfo));
+        // localStorage.setItem('Testercounter',JSON.stringify( $scope.testinfo.length));
+    
+        $preLoader.hide();
+        $window.location.reload(true);
+      }
+      $scope.deleteLotInfo = function(lotInfo,index){
+       // console.log(lotInfo);
+        $scope.lotinfo =[];
+        lotInfo.index= index;
+        $scope.lotInfoObj = JSON.parse(localStorage.getItem('LotInfo'));
+        for(i=0;i<Object.keys($scope.lotInfoObj).length;i++){
+        $scope.lotinfo.push({
+           "testKitLotNo":$scope.lotInfoObj[i].testKitLotNo,
+           "testKitExpDate":$scope.lotInfoObj[i].testKitExpDate,
+           "available":$scope.lotInfoObj[i].available,
+           "label":$scope.lotInfoObj[i].label
+        });
+    }
+    $scope.lotinfo.splice(index,1);
+ 
+    if($scope.lotinfo.length==0){
+      localStorage.setItem('LotInfo','');
+
+     localStorage.setItem('Lotcounter',JSON.stringify( $scope.lotinfo.length));
+      $scope.lotinfo = "";
+    }else{
+      localStorage.setItem('LotInfo',JSON.stringify( $scope.lotinfo));
+      localStorage.setItem('Lotcounter',JSON.stringify( $scope.lotinfo.length));
+    } 
+    $preLoader.hide();
+
+     $window.location.reload(true);
+     $("#other-addqcsetting").addClass('active')
+     $("#main-addqcsetting").removeClass("active");
+    }
+
+
 })
 
 

@@ -52,6 +52,33 @@
               </div>
 
 
+              <ion-list type="list-inset" >
+                <h3 style="font-size:17px"> Tester Name List</h3>
+              <div style="overflow-x:auto;margin-bottom: 30px;">
+            <table class="table table-bordered table-striped order-table" style="width: 100%;white-space: nowrap;" id="ordertable">
+              <tr style="white-space: nowrap">
+                <th>Tester Name</th>
+                <th style="text-align: center">Available</th>
+                <th style="text-align: center">Action</th>
+              </tr>
+              <tr ng-repeat="qctester in TesterInfoList " >
+                <td style="padding-left: 10px;">{{ qctester['testerName'] }}</td>
+                <td style="text-transform: capitalize;text-align: center">{{ qctester['available']  }}</td>
+                <td style="text-align: center">
+                        <a style="font-size: 15px;min-height: 21px;margin-left:5px;height:35px;line-height:30px;background-color: #3592f0;" class="button  button-calm" ng-click="editTesterInfo(qctester,$index)"><div class="form-logo" style="line-height: 35px;"><img src="img/edit.png" style="height:14px"></div></a>
+                        <a style="font-size: 15px;min-height: 21px;margin-left:5px;height:35px;line-height:30px;" class="button  button-assertive" ng-click="deleteTesterInfo(qctester,$index)"><div class="form-logo" style="line-height: 35px;"><img src="img/delete.png" style="height:17px"></div></a>
+                 </td>
+              </tr>
+      
+              <tr ng-show="isVisibleTester">
+                <td  colspan="3"><p  style="text-align:center">No data available</p> </td>
+              </tr>
+              
+              
+            </table>
+          </div>
+         </ion-list>
+
         </div>
         <div ng-hide="recencydisplay"> 
             <div class="row">
@@ -103,6 +130,35 @@
                         </button>
                     </div>
             </div>
+            <ion-list type="list-inset" >
+                <h3 style="font-size:17px"> Lot Number List</h3>
+              <div style="overflow-x:auto;margin-bottom: 30px;">
+            <table class="table table-bordered table-striped order-table" style="width: 100%;white-space: nowrap;" id="ordertable">
+              <tr style="white-space: nowrap">
+                <th>Test Kit Lot No</th>
+                <th>Test Kit Exp Date</th>
+                <th style="text-align: center">Available</th>
+                <th style="text-align: center">Action</th>
+              </tr>
+              <tr ng-repeat="qclot in LotInfoList " >
+
+                <td style="padding-left: 10px;">{{ qclot['testKitLotNo'] }}</td>
+                <td style="text-align: center">{{ qclot['testKitExpDate'] | date: "dd-MM-yyyy" }}</td>
+                <td style="text-transform: capitalize;text-align: center">{{ qclot['available']  }}</td>
+                <td style="text-align: center">
+                        <a style="font-size: 15px;min-height: 21px;margin-left:5px;height:35px;line-height:30px;background-color: #3592f0;" class="button  button-calm" ng-click="editLotInfo(qclot,$index)"><div class="form-logo" style="line-height: 35px;"><img src="img/edit.png" style="height:14px"></div></a>
+                        <a style="font-size: 15px;min-height: 21px;margin-left:5px;height:35px;line-height:30px;" class="button  button-assertive" ng-click="deleteLotInfo(qclot,$index)"><div class="form-logo" style="line-height: 35px;"><img src="img/delete.png" style="height:17px"></div></a>
+                 </td>
+              </tr>
+              <tr ng-show="isVisibleLot">
+                <td  colspan="4"><p  style="text-align:center">No data available</p> </td>
+              </tr>
+              
+              
+              
+            </table>
+          </div>
+         </ion-list>    
         </div>  
          
               <!-- <div class="row" ng-hide="recencydisplay">

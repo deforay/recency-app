@@ -249,7 +249,7 @@
                     </div>
                  </div> 
                 </div>
-                <div class="row">
+                <!-- <div class="row">
                     <div class="input-field col "> 
                           <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
                                   <p>Test Kit Lot Number<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testKitLotNo'"  style="color:#df3838;"> *</span></p>
@@ -258,20 +258,42 @@
                         <input id="testKitLotNo" type="text" class="testKitLotNo" name="testKitLotNo" title="Please Enter Test Kit Lot Number" ng-keyup="testKitLotAutoComplete()" ng-model='recency.testKitLotNo' placeholder="Test Kit Lot Number" > 
                         <input  type="hidden" id="testKitLotAvailability" />
                     </div>  
+                </div> -->
+                <div class="row">
+                    <div class="input-field col ">
+                          <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                            <p>Test Kit Lot Number<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testKitLotNo'"  style="color:#df3838;"> *</span></p>
+                              </span>
+                        <div class="form-logo "><img src="img/lab.png"></div> 
+                        <select class="ng-valid" id="testKitLotNo"  name="testKitLotNo"  title="Please Enter Test Kit Lot Number" ng-model="recency.testKitLotNo" ng-change="getTestKitExpDate(recency.testKitLotNo)">
+                                <option value="">-- Select --</option>
+                                <option ng-repeat="lot in TestKitLotList" value="{{lot['testKitLotNo']}}">{{lot['testKitLotNo']}}</option>
+                        </select>   
+                    </div>
                 </div>
                 <div class="row">
-                    <div class="input-field col col-90">
+                    <div class="input-field col">
                           <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
                                   <p>Test Kit Expiry Date<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testKitExpDate'"  style="color:#df3838;"> *</span></p>
                               </span>
                         <div class="form-logo date-img"><img src="img/date.png"></div> 
-                        <input id="testKitExpDate" type="text" class="testKitExpDate" name="testKitExpDate" title="Please Enter Test Kit Expiry Date"   placeholder="Test Kit Expiry Date" readonly >
+                        <input id="testKitExpDate" type="text" class="testKitExpDate" name="testKitExpDate" title="Please Enter Test Kit Expiry Date" ng-model="recency.testKitExpDate"   placeholder="Test Kit Expiry Date" readonly >
                     </div>
-                    <div class="input-field col " style="padding:0">
-                      <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="recency.testKitExpDate =''"><img src="img/clear.png" style="height: 26px;"></div> 
-                     </div>
                 </div>
                 <div class="row">
+                    <div class="input-field col ">
+                          <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                            <p>Tester Name</p>
+                              </span>
+                        <div class="form-logo "><img src="img/doctor.png"></div> 
+                        <select class="ng-valid" id="testerName"  name="testerName"  title="Please Enter Tester Name" ng-model="recency.testerName">
+                                <option value="">-- Select --</option>
+                                <option ng-repeat="test in TesterNameList" value="{{test['testerName']}}">{{test['testerName']}}</option>
+                        </select>   
+                    </div>
+                </div>
+    
+                <!-- <div class="row">
                     <div class="input-field col "> 
                           <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
                                   <p>Tester Name<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testerName'"  style="color:#df3838;"> *</span></p>
@@ -281,7 +303,7 @@
                         <input  type="hidden" id="testerNameId" />
                         <input  type="hidden" id="testerNameAvailability" />
                     </div>  
-                </div>
+                </div> -->
 
                 <div class="row" >
                     <div class="input-field col ">

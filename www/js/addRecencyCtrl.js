@@ -43,7 +43,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
             })
           }else{
             $scope.testkitlotObj2.push({
-              "testKitLotNo:":$scope.TestKitLotList[i].testKitLotNo,
+              "testKitLotNo":$scope.TestKitLotList[i].testKitLotNo,
               "testKitExpDate":$scope.TestKitLotList[i].testKitExpDate,
               "label":$scope.TestKitLotList[i].label,
               "available":$scope.TestKitLotList[i].available,
@@ -151,60 +151,22 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
       $preLoader.hide();
       
     }
-    $scope.testKitLotAutoComplete = function(){
-      $scope.recency.testKitExpDate ="";
-      $scope.recency.testKitLotAvailability ="";
+    $scope.getTestKitExpDate = function(lotNo){
+      console.log(lotNo)
+      if(lotNo!=""){
+        for(i=0;i<$scope.TestKitLotList.length;i++){
+          if(lotNo==$scope.TestKitLotList[i].testKitLotNo){
+            $scope.ExpDate = $scope.TestKitLotList[i].testKitExpDate
+          }
+        }
+        $scope.recency.testKitExpDate = $scope.ExpDate
+        console.log($scope.recency.testKitExpDate)
+      }else{
+        $scope.recency.testKitExpDate=""; 
+      }
+    }
 
-      $( "#testKitLotNo").autocomplete({
-        minLength: 0,
-        source:
-          $scope.TestKitLotList
-        ,
-        select:function(event,ui){
-          if(ui.item.testKitLotNo!=''){
-           // $('#testKitLotNo').val(ui.item.testKitLotNo);
-             $('#testKitExpDate').val(ui.item.testKitExpDate);
-            // $('#testKitLotAvailability').val(ui.item.available);
-            $scope.recency.testKitLotNo = ui.item.testKitLotNo;
-            $scope.recency.testKitExpDate = ui.item.testKitExpDate;
-            $scope.recency.testKitLotAvailability = ui.item.testKitLotAvailability;
-          }
-      
-          console.log(ui.item)
-         
-        }
-      })
-      .autocomplete( "instance" )._renderItem = function( ul, item ) {
-        return $( "<li>" )
-          .append( "<div>" + item.label  + "</div>" )
-          .appendTo( ul );
-      };
-    }
-    $scope.testerNameAutoComplete = function(){
-      $( "#testerName").autocomplete({
-        minLength: 0,
-        source:
-          $scope.TesterNameList
-        ,
-        focus: function( event, ui ) {
-          $( "#testerName" ).val( ui.item.label );
-          return false;
-        },
-        select:function(event,ui){
-          if(ui.item.testerName!=''){
-            $('#testerName').val(ui.item.testerName);
-            $('#testerNameId').val(ui.item.testerName);
-            $scope.recency.testerNameAvailability = ui.item.available;
-          }
-          console.log(ui.item)
-        }
-      })
-      .autocomplete( "instance" )._renderItem = function( ul, item ) {
-        return $( "<li>" )
-          .append( "<div>" + item.label  + "</div>" )
-          .appendTo( ul );
-      };
-    }
+
     document.addEventListener("deviceready", onDeviceReady, false);
 
     // Cordova is ready

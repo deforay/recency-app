@@ -44,7 +44,18 @@ app=angular.module('starter.editLotInfoCtrl', ['starter.services'])
 
     }
 
-
+    $scope.setTestKitExpDate = function(val){
+      var ipObj3 = {
+        callback: function (val) { 
+       
+        var testKitExpDate = new Date(val);
+        console.log(testKitExpDate);
+        $scope.qcLotKit.testKitExpDate =  $filter('date')(testKitExpDate , "dd-MMM-yyyy");
+        }
+       
+      }; 
+      ionicDatePicker.openDatePicker(ipObj3);
+    }
 
     $scope.updateLotKit = function()
       { 
@@ -72,7 +83,7 @@ app=angular.module('starter.editLotInfoCtrl', ['starter.services'])
            // error
          });
   
-         $location.path('/app/viewQcSettings');
+         $location.path('/app/addQcSettings');
          $window.location.reload(true);
          $preLoader.hide();
 

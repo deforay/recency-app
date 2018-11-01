@@ -60,7 +60,7 @@ app=angular.module('starter.editTesterInfoCtrl', ['starter.services'])
        console.log($scope.qcTester);
        $scope.chkTesterInfo = JSON.parse(localStorage.getItem('TesterInfo'))
        $scope.chkTesterInfo[$scope.index] = $scope.qcTester;
-console.log( $scope.chkTesterInfo)
+       console.log( $scope.chkTesterInfo)
        localStorage.setItem('TesterInfo',JSON.stringify($scope.chkTesterInfo));
        $scope.qcTester ={};
 
@@ -71,7 +71,7 @@ console.log( $scope.chkTesterInfo)
            // error
          });
   
-         $location.path('/app/viewQcSettings');
+         $location.path('/app/addQcSettings');
          $window.location.reload(true);
          $preLoader.hide();
 

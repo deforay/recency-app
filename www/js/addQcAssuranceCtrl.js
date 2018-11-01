@@ -30,7 +30,7 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
            })
          }else{
            $scope.testkitlotObj2.push({
-             "testKitLotNo:":$scope.TestKitLotList[i].testKitLotNo,
+             "testKitLotNo":$scope.TestKitLotList[i].testKitLotNo,
              "testKitExpDate":$scope.TestKitLotList[i].testKitExpDate,
              "label":$scope.TestKitLotList[i].label,
              "available":$scope.TestKitLotList[i].available,
@@ -101,67 +101,80 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
       
     }
 
-    $scope.testKitLotAutoComplete = function(){
-      $scope.qcAssurance.testKitExpDate ="";
-      $scope.qcAssurance.testKitLotAvailability ="";
+    // $scope.testKitLotAutoComplete = function(){
+    //   $scope.qcAssurance.testKitExpDate ="";
+    //   $scope.qcAssurance.testKitLotAvailability ="";
 
-      $( "#testKitLotNo").autocomplete({
-        minLength: 0,
-        source:
-          $scope.TestKitLotList
-        ,
-        // focus: function( event, ui ) {
-        //   $( "#testKitLotNo" ).val( ui.item.label );
-        //   return false;
-        // },
-        select:function(event,ui){
-          if(ui.item.testKitLotNo!=''){
-            // $('#testKitLotNo').val(ui.item.testKitLotNo);
-            $('#testKitExpDate').val(ui.item.testKitExpDate);
-            // $('#testKitLotAvailability').val(ui.item.available);
-            $scope.qcAssurance.testKitLotNo = ui.item.testKitLotNo;
-            $scope.qcAssurance.testKitExpDate = ui.item.testKitExpDate;
-            $scope.qcAssurance.testKitLotAvailability = ui.item.available;
-          }
+    //   $( "#testKitLotNo").autocomplete({
+    //     minLength: 0,
+    //     source:
+    //       $scope.TestKitLotList
+    //     ,
+    //     // focus: function( event, ui ) {
+    //     //   $( "#testKitLotNo" ).val( ui.item.label );
+    //     //   return false;
+    //     // },
+    //     select:function(event,ui){
+    //       if(ui.item.testKitLotNo!=''){
+    //         // $('#testKitLotNo').val(ui.item.testKitLotNo);
+    //         $('#testKitExpDate').val(ui.item.testKitExpDate);
+    //         // $('#testKitLotAvailability').val(ui.item.available);
+    //         $scope.qcAssurance.testKitLotNo = ui.item.testKitLotNo;
+    //         $scope.qcAssurance.testKitExpDate = ui.item.testKitExpDate;
+    //         $scope.qcAssurance.testKitLotAvailability = ui.item.available;
+    //       }
       
-          console.log(ui.item)
+    //       console.log(ui.item)
          
-        }
-      })
-      .autocomplete( "instance" )._renderItem = function( ul, item ) {
-        return $( "<li>" )
-          .append( "<div>" + item.label  + "</div>" )
-          .appendTo( ul );
-      };
-    }
-    $scope.testerNameAutoComplete = function(){
- 
+    //     }
+    //   })
+    //   .autocomplete( "instance" )._renderItem = function( ul, item ) {
+    //     return $( "<li>" )
+    //       .append( "<div>" + item.label  + "</div>" )
+    //       .appendTo( ul );
+    //   };
+    // }
 
-      $( "#testerName").autocomplete({
-        minLength: 0,
-        source:
-          $scope.TesterNameList
-        ,
-        focus: function( event, ui ) {
-          $( "#testerName" ).val( ui.item.label );
-          return false;
-        },
-        select:function(event,ui){
-          if(ui.item.testerName!=''){
-            $('#testerName').val(ui.item.testerName);
-            $('#testerNameId').val(ui.item.testerName);
-            $scope.qcAssurance.testerNameAvailability = ui.item.available;
+    $scope.getTestKitExpDate = function(lotNo){
+      console.log(lotNo)
+      if(lotNo!=""){
+        for(i=0;i<$scope.TestKitLotList.length;i++){
+          if(lotNo==$scope.TestKitLotList[i].testKitLotNo){
+            $scope.ExpDate = $scope.TestKitLotList[i].testKitExpDate
           }
-          console.log(ui.item)
-         
         }
-      })
-      .autocomplete( "instance" )._renderItem = function( ul, item ) {
-        return $( "<li>" )
-          .append( "<div>" + item.label  + "</div>" )
-          .appendTo( ul );
-      };
+        $scope.qcAssurance.testKitExpDate = $scope.ExpDate
+      }else{
+        $scope.qcAssurance.testKitExpDate=""; 
+      }
     }
+
+    // $scope.testerNameAutoComplete = function(){
+    //   $( "#testerName").autocomplete({
+    //     minLength: 0,
+    //     source:
+    //       $scope.TesterNameList
+    //     ,
+    //     focus: function( event, ui ) {
+    //       $( "#testerName" ).val( ui.item.label );
+    //       return false;
+    //     },
+    //     select:function(event,ui){
+    //       if(ui.item.testerName!=''){
+    //         $('#testerName').val(ui.item.testerName);
+    //         $('#testerNameId').val(ui.item.testerName);
+    //         $scope.qcAssurance.testerNameAvailability = ui.item.available;
+    //       }
+    //       console.log(ui.item)
+         
+    //     }
+    //   })
+    //   .autocomplete( "instance" )._renderItem = function( ul, item ) {
+    //     return $( "<li>" )
+    //       .append( "<div>" + item.label  + "</div>" )
+    //       .appendTo( ul );
+    //   };
+    // }
     $scope.getReasonName = function(reason){
       if(reason=='no_consent_from_the_client'){
         $scope.qcAssurance.recencyreasonName ="No consent from the Client";
