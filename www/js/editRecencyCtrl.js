@@ -104,7 +104,6 @@ console.log( $scope.recencyDetails)
     $( "#testerName").autocomplete({
       source: $scope.testerNameObj,
     })
-
   }
   $scope.GetDistrictValue = function(province){
     var localDistrict = JSON.parse(localStorage.getItem('DistrictData'));
@@ -433,6 +432,16 @@ if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != u
         $scope.recency.recencyreasonName="";
       }
     }
+    $scope.getTestKitName = function(kitname){
+      if(kitname=='sedia_bioscience'){
+        $scope.recency.testKitValueName ="SEDIA Bioscience (SED)";
+      }else
+      if(kitname=='maxim_biomedical'){
+        $scope.recency.testKitValueName ="Maxim Biomedical (MAX)";
+      }else{
+        $scope.recency.testKitValueName="";
+      }
+    }
     $scope.getFacility=function(facilityid){
      // console.log(facilityid)
 
@@ -493,6 +502,7 @@ if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != u
          // console.log(hivDiagnosisDate);
           $scope.recency.hivDiagnosisDate =  $filter('date')(hivDiagnosisDate , "dd-MMM-yyyy");
         },
+    to: new Date(),
       }; 
         ionicDatePicker.openDatePicker(ipObj1);
      
@@ -506,6 +516,7 @@ if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != u
          // console.log(hivRecencyDate);
           $scope.recency.hivRecencyDate =  $filter('date')(hivRecencyDate , "dd-MMM-yyyy");
         },
+        to: new Date(),
       }; 
         ionicDatePicker.openDatePicker(ipObj2);
     }

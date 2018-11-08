@@ -1,5 +1,5 @@
 
-<ion-view view-title="Add Recency {{unSyncCount}}">
+<ion-view view-title="Add Recency Test {{unSyncCount}}">
         <header class="row recency-tab" >
                 <button id="main-recency" class="col button recency-head " ng-click="setmainactive();">Recency Test</button>
                 <button id="other-recency" class="col button recency-head" ng-click="setothersactive();">Behaviour</button>
@@ -171,8 +171,8 @@
                            <option value="">-- Select --</option>
                            <option value="no_consent_from_the_client">No consent from the Client</option>
                            <option value="sample_was_not_collected">Sample was not collected (Phlebotomy failure)</option>
-                           <option value="not_newly_diagnosed">Not newly diagnosed</option>
-                           <option value="other">Other, please specify</option>
+                           <option value="not_newly_diagnosed">Not Newly Diagnosed</option>
+                           <option value="other">Other, Please Specify</option>
                         </select>  
                      </div>
                  </div>
@@ -262,6 +262,19 @@
                 <div class="row">
                     <div class="input-field col ">
                           <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                            <p>Test Kit Name<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testKitName'"  style="color:#df3838;"> *</span></p>
+                              </span>
+                        <div class="form-logo "><img src="img/doctor.png"></div> 
+                        <select class="ng-valid" id="testKitName" name="testKitName" title="Please Choose Test Kit Name" ng-model="recency.testKitName" ng-change="getTestKitName(recency.testKitName)" >
+                            <option value="">-- Select --</option>
+                            <option value="sedia_bioscience">SEDIA Bioscience (SED)</option>
+                            <option value="maxim_biomedical">Maxim Biomedical (MAX)</option>
+                        </select>     
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col ">
+                          <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
                             <p>Test Kit Lot Number<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testKitLotNo'"  style="color:#df3838;"> *</span></p>
                               </span>
                         <div class="form-logo "><img src="img/lab.png"></div> 
@@ -283,7 +296,7 @@
                 <div class="row">
                     <div class="input-field col ">
                           <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                            <p>Tester Name</p>
+                            <p>Tester Name<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testerName'"  style="color:#df3838;"> *</span></p>
                               </span>
                         <div class="form-logo "><img src="img/doctor.png"></div> 
                         <select class="ng-valid" id="testerName"  name="testerName"  title="Please Enter Tester Name" ng-model="recency.testerName">
@@ -351,7 +364,6 @@
                                   <option value="male">Male</option>
                                   <option value="female">Female</option>
                                   <option value="not_reported">Not Reported</option>
-                                 
                                </select>                               
                         </div>
                       </div>
@@ -394,7 +406,7 @@
                                     <option value="">-- Select --</option>
                                     <option value="primary">Primary</option> 
                                     <option value="secondary">Secondary</option> 
-                                    <option value="university_or_higher">University or Higher</option>
+                                    <option value="university_or_higher">   </option>
                              
                                   </select>                               
                         </div>

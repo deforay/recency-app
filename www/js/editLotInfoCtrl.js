@@ -2,7 +2,6 @@ app=angular.module('starter.editLotInfoCtrl', ['starter.services'])
 .controller('editLotInfoCtrl', function($scope, $http, $timeout, $stateParams,$cordovaToast,  $location,$window, ionicDatePicker,  $ionicPopup,$preLoader,$localStorage, $cordovaGeolocation, $window,$filter,$cordovaNetwork) {
     $scope.qcLotKit = {};
 
-
     $scope.TesterListData ={};
     
       $scope.qcLotKit = JSON.parse(localStorage.getItem('viewLotInfo'));
@@ -88,7 +87,6 @@ app=angular.module('starter.editLotInfoCtrl', ['starter.services'])
          $preLoader.hide();
 
       }
-
 })
 
 

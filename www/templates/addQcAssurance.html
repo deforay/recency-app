@@ -1,5 +1,5 @@
 
-<ion-view view-title="QC Assurance">
+<ion-view view-title="Add QC Data{{unSyncCount}}">
  
 <div class="QCForm">        
 <ion-content >
@@ -32,6 +32,19 @@
                        </select>   
                     </div>
                 </div> 
+                <div class="row">
+                    <div class="input-field col ">
+                          <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                            <p>Test Kit Name</p>
+                          </span>
+                        <div class="form-logo "><img src="img/doctor.png"></div> 
+                        <select class="ng-valid" id="testKitName" name="testKitName" title="Please Choose Test Kit Name" ng-model="qcAssurance.testKitName" ng-change="getTestKitName(qcAssurance.testKitName)" >
+                            <option value="">-- Select --</option>
+                            <option value="sedia_bioscience">SEDIA Bioscience (SED)</option>
+                            <option value="maxim_biomedical">Maxim Biomedical (MAX)</option>
+                        </select>     
+                    </div>
+                </div>
                 <div class="row">
                     <div class="input-field col ">
                           <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
@@ -97,7 +110,6 @@
                 </div>
             </div> -->
             <div class="card" style="margin-top:0;margin-bottom: 0;" >
-
             <h4 style="font-size: 14px;margin-left: 12px;margin-bottom: 0;font-weight: bold;">Recency Test Result</h4>
               <div class="row">
                   <div class="input-field col col-90">

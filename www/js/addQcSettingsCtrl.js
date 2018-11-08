@@ -61,12 +61,12 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
     $scope.testerinit = function(){
     $("#main-addqcsetting").addClass("active");
       $scope.qcTester.testerName = "";
-      $scope.qcTester.available = true   
+      $scope.qcTester.available = true;   
       $scope.qcLotObj.testKitLotNo = "";
       $scope.qcLotObj.testKitExpDate = "";
       $scope.qcLotObj.available = true;     
     }
-
+    $scope.testerinit();
   
     $scope.setmainactive = function(){
       $scope.recencydisplay=true;
@@ -131,21 +131,21 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
         $scope.TesterListData[$scope.Testercounter-1] = qcTester;      
         localStorage.setItem('TesterInfo',JSON.stringify($scope.TesterListData)) 
         localStorage.setItem('Testercounter',$scope.Testercounter);  
-        $scope.qcTester ={};
+        $scope.qcTester.testerName = "";
+        $scope.qcTester.available = true; 
         $scope.recencydisplay=true;
-         $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
-         .then(function(success) {
-           // success
-         }, function (error) {
-           // error
-         });
-
+        //  $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
+        //  .then(function(success) {
+        //    // success
+        //  }, function (error) {
+        //    // error
+        //  });
          $("#main-addqcsetting").addClass("active");
          $("#other-addqcsetting").removeClass('active')
-      $scope.displayQcSettings();
-
+        $scope.displayQcSettings();
          $preLoader.hide();
       }
+      
       $scope.addLotInfo = function()
       { 
        if($scope.qcLotObj.available==true){
@@ -154,14 +154,11 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
         $scope.qcLotObj.available = 'no';    
        }
        $scope.qcLotObj.label = $scope.qcLotObj.testKitLotNo;
-
        var lotcount = localStorage.getItem('Lotcounter');
        $scope.Lotcounter  = parseInt(lotcount) + 1;
        //console.log($scope.qcLotObj);
-
         var qcLotObj = $scope.qcLotObj;
-        $preLoader.show();
-        
+        $preLoader.show();        
         if(localStorage.getItem('LotInfo')==null || (localStorage.getItem('LotInfo'))==""){
           console.log(localStorage.getItem('LotInfo'))
           }
@@ -172,16 +169,18 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
      //   console.log($scope.LotListData)
         localStorage.setItem('LotInfo',JSON.stringify($scope.LotListData)) 
         localStorage.setItem('Lotcounter',$scope.Lotcounter);  
-        $scope.qcLotObj ={};
+        $scope.qcLotObj.testKitLotNo = "";
+        $scope.qcLotObj.testKitExpDate = "";
+        $scope.qcLotObj.available = true;
         $scope.recencydisplay=false;
-         $scope.displayQcSettings();
+        $scope.displayQcSettings();
 
-         $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
-         .then(function(success) {
-           // success
-         }, function (error) {
-           // error
-         });
+        //  $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
+        //  .then(function(success) {
+        //    // success
+        //  }, function (error) {
+        //    // error
+        //  });
         $("#other-addqcsetting").addClass('active')
          $("#main-addqcsetting").removeClass("active");
          $preLoader.hide();

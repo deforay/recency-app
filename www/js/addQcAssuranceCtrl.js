@@ -13,7 +13,16 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
         }
 
       });
-
+      var qcList =   localStorage.getItem('QCData');
+      //console.log(qcList)
+      if(qcList != null){
+        qcList    = JSON.parse(qcList);
+        $scope.unSyncCount = "("+Object.keys(qcList).length+"  Not Synced)";
+ 
+      }  else{
+        $scope.unSyncCount="";
+      }
+//console.log(qcList)
     $scope.qcAssuranceinit = function(){
       $scope.testkitlotObj1 =[];
       $scope.testkitlotObj2 =[];
@@ -75,6 +84,8 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
       $scope.qcAssurance.userId = localStorage.getItem('userId');
       $scope.qcAssurance.qcsampleId ="";
       $scope.qcAssurance.referenceResult="";
+      $scope.qcAssurance.testKitName="";
+      $scope.qcAssurance.testKitValueName="";
       $scope.qcAssurance.testKitLotNo="";
       $scope.qcAssurance.testKitExpDate="";
       $scope.qcAssurance.testKitLotAvailability="";
@@ -134,7 +145,16 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
     //       .appendTo( ul );
     //   };
     // }
-
+    $scope.getTestKitName = function(kitname){
+      if(kitname=='sedia_bioscience'){
+        $scope.qcAssurance.testKitValueName ="SEDIA Bioscience (SED)";
+      }else
+      if(kitname=='maxim_biomedical'){
+        $scope.qcAssurance.testKitValueName ="Maxim Biomedical (MAX)";
+      }else{
+        $scope.qcAssurance.testKitValueName="";
+      }
+    }
     $scope.getTestKitExpDate = function(lotNo){
       console.log(lotNo)
       if(lotNo!=""){
@@ -303,6 +323,8 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
       console.log(hivRecencyDate);
       $scope.qcAssurance.hivRecencyDate =  $filter('date')(hivRecencyDate , "dd-MMM-yyyy");
       },
+    to: new Date(),
+
     }; 
     ionicDatePicker.openDatePicker(ipObj2);
   }

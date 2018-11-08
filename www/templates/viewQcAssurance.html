@@ -1,5 +1,5 @@
 
-<ion-view view-title="QC Assurance Data{{unSyncQcCount}}">
+<ion-view view-title="QC Data{{unSyncQcCount}}">
     <!-- <div class="badge badge-assertive" style="    top: 1px;
     right: 0;
     z-index: 1000000;
@@ -25,6 +25,7 @@
             <div class="item item-text-wrap" style="border: 1px solid #e4e4e4;">
               <p><b>QC Sample ID :</b>&nbsp;&nbsp;&nbsp; {{qc.qcsampleId}} </p>
               <p style="text-transform: capitalize"><b>Reference Result :</b>&nbsp;&nbsp;&nbsp; {{qc.referenceResult | replace: '_':' '}} </p>
+              <!-- <p><b>Test Kit Name :</b>&nbsp;&nbsp;&nbsp; {{qc.testKitValueName}} </p> -->
               <p><b>Test Kit Lot Number :</b>&nbsp;&nbsp;&nbsp; {{qc.testKitLotNo}} </p>
               <p><b>Test Kit Expiry Date :</b>&nbsp;&nbsp;&nbsp; {{qc.testKitExpDate}} </p>
               <p><b>Tester Name :</b>&nbsp;&nbsp;&nbsp; {{qc.testerName}} </p>

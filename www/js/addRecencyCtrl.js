@@ -14,7 +14,6 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
         }
        // console.log(getDevice());
      //   console.log(device)
-
       });
       var recencyList =   localStorage.getItem('RecencyData');
       //console.log(recencyList)
@@ -101,6 +100,8 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
       $scope.recency.recencyreason="";
       $scope.recency.recencyreasonName="";
       $scope.recency.otherreason="";
+      $scope.recency.testKitName = "";
+      $scope.recency.testKitValueName = "";
       $scope.recency.testKitLotNo = "";
       $scope.recency.testKitExpDate = "";
       $scope.recency.testerName = "";
@@ -437,6 +438,16 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
           $scope.recency.recencyreasonName="";
         }
       }
+      $scope.getTestKitName = function(kitname){
+        if(kitname=='sedia_bioscience'){
+          $scope.recency.testKitValueName ="SEDIA Bioscience (SED)";
+        }else
+        if(kitname=='maxim_biomedical'){
+          $scope.recency.testKitValueName ="Maxim Biomedical (MAX)";
+        }else{
+          $scope.recency.testKitValueName="";
+        }
+      }
      $scope.setDiagDate = function(val){
          var ipObj1 = {
           callback: function (val) {  
@@ -444,6 +455,8 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
             console.log(hivDiagnosisDate);
             $scope.recency.hivDiagnosisDate =  $filter('date')(hivDiagnosisDate , "dd-MMM-yyyy");
            },
+    to: new Date(),
+
           }; 
       ionicDatePicker.openDatePicker(ipObj1);
     }
@@ -456,6 +469,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
       console.log(hivRecencyDate);
       $scope.recency.hivRecencyDate =  $filter('date')(hivRecencyDate , "dd-MMM-yyyy");
       },
+      to: new Date(),
     }; 
     ionicDatePicker.openDatePicker(ipObj2);
   }
@@ -466,7 +480,8 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
       var testKitExpDate = new Date(val);
       console.log(testKitExpDate);
       $scope.recency.testKitExpDate =  $filter('date')(testKitExpDate , "dd-MMM-yyyy");
-      }
+      },
+      
      
     }; 
     ionicDatePicker.openDatePicker(ipObj3);
@@ -741,6 +756,11 @@ $scope.GetCityValue = function(district){
           return false;
         }
        }
+       if($scope.mandatoryData[i]=='testKitName' && $scope.recency.testKitName==""){
+        $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+        $scope.recencydisplay=true;
+        return false;
+        }
        if($scope.mandatoryData[i]=='testKitLotNo' && $scope.recency.testKitLotNo==""){
         $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
         $scope.recencydisplay=true;

@@ -1,4 +1,4 @@
-<ion-view view-title="QC Assurance Detail">
+<ion-view view-title="QC Detail">
     <ion-content class="animate-fade-slide-in">
       <div class="recency-view">
           <!-- <div class="row">
@@ -26,6 +26,11 @@
                   <td style="font-size:14px;text-transform: capitalize;"> {{viewqcDetail.referenceResult| replace: '_':' '}}</td>
                 </tr>
                 <tr>
+                  <td style="font: size 14px;"><b>Test Kit Name</b> </td>
+                  <td>&nbsp;:&nbsp; </td>
+                  <td style="font-size:14px;"> {{viewqcDetail.testKitValueName}} </td>
+                </tr>
+                  <tr>
                     <td style="font: size 14px;"><b>Test Kit Lot Number</b> </td>
                     <td>&nbsp;:&nbsp; </td>
                     <td style="font-size:14px;"> {{viewqcDetail.testKitLotNo}} </td>
