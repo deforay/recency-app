@@ -8,14 +8,27 @@
     <div class="loginFields">
         <div class="row">
         <form class="col loginForm" name="editLot" >
-            <div >    
+            <div >
+                <div class="row">
+                    <div class="input-field col ">
+                                  <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                    <p>Test Kit Manufacturers</p>
+                                      </span>
+                                <div class="form-logo "><img src="img/doctor.png"></div> 
+                                <select class="ng-valid" id="testKitManufacturer" name="testKitManufacturer" title="Please Choose Test Manufacturers" ng-model="qcLotKit.testKitManufacturer" ng-change="gettestKitManufacturer(qcLotKit.testKitManufacturer)">
+                                    <option value="">-- Select --</option>
+                                    <option value="SED">SEDIA Bioscience (SED)</option>
+                                    <option value="MAX">Maxim Biomedical (MAX)</option>
+                                </select>     
+                    </div>
+                </div>    
                 <div class="row">
                     <div class="input-field col "> 
                           <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
                                   <p>Test Kit Lot Number</p>
                               </span>  
                      <div class="form-logo"><img src="img/lab.png"></div> 
-                        <input id="testKitLotNo" type="text" class="testKitLotNo" name="testKitLotNo" title="Please Enter Test Kit Lot Number" ng-model='qcLotKit.testKitLotNo' placeholder="Test Kit Lot Number" > 
+                        <input id="LotNumber" type="text" class="LotNumber" name="LotNumber" title="Please Enter Test Kit Lot Number" ng-model='qcLotKit.LotNumber' placeholder="Test Kit Lot Number" > 
                     </div>  
                 </div>
                 <div class="row">

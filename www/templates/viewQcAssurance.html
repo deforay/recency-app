@@ -25,21 +25,14 @@
             <div class="item item-text-wrap" style="border: 1px solid #e4e4e4;">
               <p><b>QC Sample ID :</b>&nbsp;&nbsp;&nbsp; {{qc.qcsampleId}} </p>
               <p style="text-transform: capitalize"><b>Reference Result :</b>&nbsp;&nbsp;&nbsp; {{qc.referenceResult | replace: '_':' '}} </p>
-              <!-- <p><b>Test Kit Name :</b>&nbsp;&nbsp;&nbsp; {{qc.testKitValueName}} </p> -->
               <p><b>Test Kit Lot Number :</b>&nbsp;&nbsp;&nbsp; {{qc.testKitLotNo}} </p>
               <p><b>Test Kit Expiry Date :</b>&nbsp;&nbsp;&nbsp; {{qc.testKitExpDate}} </p>
               <p><b>Tester Name :</b>&nbsp;&nbsp;&nbsp; {{qc.testerName}} </p>
-            <!-- 
-              <p><b>HIV+ Rec. Date :</b>&nbsp;&nbsp;&nbsp; {{qc.hivRecencyDate}}</p>
-              <p style="text-transform: capitalize"><b>Control Line :</b>&nbsp;&nbsp;&nbsp; {{qc.ctrlLineName }}  </p>
-              <p style="text-transform: capitalize"><b>Positive Verification Line :</b>&nbsp;&nbsp;&nbsp; {{qc.positiveLineName }}  </p>
-              <p style="text-transform: capitalize"><b>Long Term Verification Line :</b>&nbsp;&nbsp;&nbsp; {{qc.longTermLineName }}  </p>
-             -->
              </div>
         </a>
       </div>
-      <p style="text-align: center;margin: 10px;" ng-show="displaymessage">No Records Found.</p>
-      <!-- <p style="text-align: center;margin: 10px;" ng-show="displaymessage">No Records Found. Total {{syncCount}} Datas has been Synced.</p> -->
+      <!-- <p style="text-align: center;margin: 10px;" ng-show="displaymessage">No Records Found.</p> -->
+      <p style="text-align: center;margin: 10px;" ng-show="displaymessage">No Records Found. Total {{syncQcCount}} Datas has been Synced.</p>
     </div>
     
   </ion-content>

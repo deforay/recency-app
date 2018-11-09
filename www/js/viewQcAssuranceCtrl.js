@@ -50,25 +50,25 @@ app=angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
             .success(function(data){
                console.log(data);
                  $scope.response =data.syncData.response;
-                //  $scope.syncQcCount =data.syncCount.response[0].Total;
-                // localStorage.setItem('syncQcCount', $scope.syncQcCount)
+                  $scope.syncQcCount =data.syncCount.response[0].Total;
+                 localStorage.setItem('syncQcCount', $scope.syncQcCount)
 
-                // for(i=0;i< $scope.response.length;i++){
-                //   $scope.QCDataList.splice(i);
-                // }
-                // localStorage.setItem('QCData',$scope.QCDataList);
-                //          if(localStorage.getItem('QCData')=="")
-                //           {
-                //          localStorage.removeItem('QCData');
-                //           } 
-                //  localStorage.setItem('qccounter',0);
-                // //  $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
-                // //  .then(function(success) {
-                // //       // success
-                // //   }, function (error) {
-                // //       // error
-                // //   });
-                // $window.location.reload(true);
+                 for(i=0;i< $scope.response.length;i++){
+                  $scope.QCDataList.splice(i);
+                }
+                localStorage.setItem('QCData',$scope.QCDataList);
+                         if(localStorage.getItem('QCData')=="")
+                          {
+                         localStorage.removeItem('QCData');
+                          } 
+                 localStorage.setItem('qccounter',0);
+                 $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
+                 .then(function(success) {
+                      // success
+                  }, function (error) {
+                      // error
+                  });
+                $window.location.reload(true);
             })
             .error(function(){
                 console.log(data);

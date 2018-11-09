@@ -1,8 +1,8 @@
 
 <ion-view view-title="Add Recency Test {{unSyncCount}}">
         <header class="row recency-tab" >
-                <button id="main-recency" class="col button recency-head " ng-click="setmainactive();">Recency Test</button>
-                <button id="other-recency" class="col button recency-head" ng-click="setothersactive();">Behaviour</button>
+                <button id="main-recency" class="col button recency-head " ng-click="setmainactive();">Section 1/2</button>
+                <button id="other-recency" class="col button recency-head" ng-click="setothersactive();">Section 2/2</button>
             </header>
 <div class="RecencyForm">        
   <ion-content style="top:0!important;bottom: 100px;">
@@ -244,7 +244,8 @@
                 </div>
                 <div class="row" ng-if="recency.testNotPerformed!=true">
                     <div class=" input-field col">
-                        <span ng-if="recency.recencyOutcome!=''">Outcome:    <span class="outcome" style="margin-left: 10px;" >{{recency.recencyOutcome}}  </span></span> 
+                        <span ng-if="outcomered==true">Outcome:    <span class="outcome" style="margin-left: 10px;color:red;" >{{recency.recencyOutcome}}  </span></span> 
+                        <span ng-if="outcomeblack==true">Outcome:    <span class="outcome" style="margin-left: 10px;color:#000;" >{{recency.recencyOutcome}}  </span></span> 
                             
                     </div>
                  </div> 
@@ -259,19 +260,7 @@
                         <input  type="hidden" id="testKitLotAvailability" />
                     </div>  
                 </div> -->
-                <div class="row">
-                    <div class="input-field col ">
-                          <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                            <p>Test Kit Name<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testKitName'"  style="color:#df3838;"> *</span></p>
-                              </span>
-                        <div class="form-logo "><img src="img/doctor.png"></div> 
-                        <select class="ng-valid" id="testKitName" name="testKitName" title="Please Choose Test Kit Name" ng-model="recency.testKitName" ng-change="getTestKitName(recency.testKitName)" >
-                            <option value="">-- Select --</option>
-                            <option value="sedia_bioscience">SEDIA Bioscience (SED)</option>
-                            <option value="maxim_biomedical">Maxim Biomedical (MAX)</option>
-                        </select>     
-                    </div>
-                </div>
+            
                 <div class="row">
                     <div class="input-field col ">
                           <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
@@ -406,7 +395,7 @@
                                     <option value="">-- Select --</option>
                                     <option value="primary">Primary</option> 
                                     <option value="secondary">Secondary</option> 
-                                    <option value="university_or_higher">   </option>
+                                    <option value="university_or_higher">University Or Higher</option>
                              
                                   </select>                               
                         </div>

@@ -24,6 +24,9 @@ console.log( $scope.recencyDetails)
     for(i=0;i<TestKitLotListLen;i++){
       if($scope.TestKitLotList[i].available!='yes'){
         $scope.testkitlotObj1.push({
+          "testKitManufacturer":$scope.TestKitLotList[i].testKitManufacturer,
+          "testKitManufacturerName":$scope.TestKitLotList[i].testKitManufacturerName,
+          "LotNumber":$scope.TestKitLotList[i].LotNumber,
           "testKitLotNo":$scope.TestKitLotList[i].testKitLotNo,
           "testKitExpDate":$scope.TestKitLotList[i].testKitExpDate,
           "label":$scope.TestKitLotList[i].label,
@@ -31,6 +34,9 @@ console.log( $scope.recencyDetails)
         })
       }else{
         $scope.testkitlotObj2.push({
+          "testKitManufacturer":$scope.TestKitLotList[i].testKitManufacturer,
+          "testKitManufacturerName":$scope.TestKitLotList[i].testKitManufacturerName,
+          "LotNumber":$scope.TestKitLotList[i].LotNumber,
           "testKitLotNo":$scope.TestKitLotList[i].testKitLotNo,
           "testKitExpDate":$scope.TestKitLotList[i].testKitExpDate,
           "label":$scope.TestKitLotList[i].label,
@@ -359,12 +365,15 @@ if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != u
         for(i=0;i<$scope.TestKitLotList.length;i++){
           if(lotNo==$scope.TestKitLotList[i].testKitLotNo){
             $scope.ExpDate = $scope.TestKitLotList[i].testKitExpDate
-          }
+            $scope.ManufacturerName = $scope.TestKitLotList[i].testKitManufacturerName;         
+         }
         }
-        $scope.recency.testKitExpDate = $scope.ExpDate
+        $scope.recency.testKitExpDate = $scope.ExpDate;
+        $scope.recency.ManufacturerName = $scope.ManufacturerName;            
         console.log($scope.recency.testKitExpDate)
       }else{
         $scope.recency.testKitExpDate=""; 
+        $scope.recency.ManufacturerName="";
       }
     }
 
@@ -401,10 +410,10 @@ if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != u
         $scope.recency.recencyOutcome="Invalid-Please Verify";
       }
       if(controlLine=='present'&& positiveLine=='absent'&& longTermLine=='absent'){
-        $scope.recency.recencyOutcome="HIV Negative";
+        $scope.recency.recencyOutcome="Assay HIV Negative";
       }
       if(controlLine=='present'&& positiveLine=='present'&& longTermLine=='absent'){
-        $scope.recency.recencyOutcome="Preliminary Recent";
+        $scope.recency.recencyOutcome="Assay Recent";
       }
       if(controlLine=='present'&& positiveLine=='present'&& longTermLine=='present'){
         $scope.recency.recencyOutcome="Long Term";
@@ -432,16 +441,7 @@ if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != u
         $scope.recency.recencyreasonName="";
       }
     }
-    $scope.getTestKitName = function(kitname){
-      if(kitname=='sedia_bioscience'){
-        $scope.recency.testKitValueName ="SEDIA Bioscience (SED)";
-      }else
-      if(kitname=='maxim_biomedical'){
-        $scope.recency.testKitValueName ="Maxim Biomedical (MAX)";
-      }else{
-        $scope.recency.testKitValueName="";
-      }
-    }
+
     $scope.getFacility=function(facilityid){
      // console.log(facilityid)
 

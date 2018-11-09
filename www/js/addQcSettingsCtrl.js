@@ -45,7 +45,7 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
      //   console.log(TesterInfoList)
   
         var LotInfoList =   localStorage.getItem('LotInfo');
-      //  console.log(LotInfoList)
+       console.log(LotInfoList)
         if(LotInfoList == null || LotInfoList==""){
           $scope.isVisibleLot = true;
         }else{
@@ -62,7 +62,10 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
     $("#main-addqcsetting").addClass("active");
       $scope.qcTester.testerName = "";
       $scope.qcTester.available = true;   
-      $scope.qcLotObj.testKitLotNo = "";
+      $scope.qcLotObj.testKitManufacturer="";
+      $scope.qcLotObj.testKitManufacturerName="";
+      $scope.qcLotObj.testKitLotNo ="";
+      $scope.qcLotObj.LotNumber = "";
       $scope.qcLotObj.testKitExpDate = "";
       $scope.qcLotObj.available = true;     
     }
@@ -103,6 +106,16 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
         }; 
          ionicDatePicker.openDatePicker(ipObj3);
     }
+     $scope.gettestKitManufacturer   = function(manufacturer){
+        if(manufacturer=='SED'){
+          $scope.qcLotObj.testKitManufacturerName ="SEDIA Bioscience (SED)";
+        }else
+        if(manufacturer=='MAX'){
+          $scope.qcLotObj.testKitManufacturerName ="Maxim Biomedical (MAX)";
+        }else{
+          $scope.qcLotObj.testKitManufacturerName="";
+        }
+      }
 
     $scope.addTesterName = function()
       { 
@@ -134,12 +147,12 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
         $scope.qcTester.testerName = "";
         $scope.qcTester.available = true; 
         $scope.recencydisplay=true;
-        //  $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
-        //  .then(function(success) {
-        //    // success
-        //  }, function (error) {
-        //    // error
-        //  });
+         $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
+         .then(function(success) {
+           // success
+         }, function (error) {
+           // error
+         });
          $("#main-addqcsetting").addClass("active");
          $("#other-addqcsetting").removeClass('active')
         $scope.displayQcSettings();
@@ -148,15 +161,21 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
       
       $scope.addLotInfo = function()
       { 
+        console.log($scope.qcLotObj)
        if($scope.qcLotObj.available==true){
         $scope.qcLotObj.available = 'yes';    
        }else{
         $scope.qcLotObj.available = 'no';    
        }
        $scope.qcLotObj.label = $scope.qcLotObj.testKitLotNo;
+       if($scope.qcLotObj.LotNumber!="" && $scope.qcLotObj.testKitManufacturer!=""){
+        $scope.qcLotObj.testKitLotNo = $scope.qcLotObj.testKitManufacturer +" - " + $scope.qcLotObj.LotNumber;
+       }else{
+        $scope.qcLotObj.testKitLotNo="";
+       }
        var lotcount = localStorage.getItem('Lotcounter');
        $scope.Lotcounter  = parseInt(lotcount) + 1;
-       //console.log($scope.qcLotObj);
+       console.log($scope.qcLotObj);
         var qcLotObj = $scope.qcLotObj;
         $preLoader.show();        
         if(localStorage.getItem('LotInfo')==null || (localStorage.getItem('LotInfo'))==""){
@@ -170,17 +189,20 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
         localStorage.setItem('LotInfo',JSON.stringify($scope.LotListData)) 
         localStorage.setItem('Lotcounter',$scope.Lotcounter);  
         $scope.qcLotObj.testKitLotNo = "";
+        $scope.qcLotObj.testKitManufacturer="";
+        $scope.qcLotObj.testKitManufacturerName="";
+        $scope.qcLotObj.LotNumber = "";
         $scope.qcLotObj.testKitExpDate = "";
         $scope.qcLotObj.available = true;
         $scope.recencydisplay=false;
         $scope.displayQcSettings();
 
-        //  $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
-        //  .then(function(success) {
-        //    // success
-        //  }, function (error) {
-        //    // error
-        //  });
+         $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
+         .then(function(success) {
+           // success
+         }, function (error) {
+           // error
+         });
         $("#other-addqcsetting").addClass('active')
          $("#main-addqcsetting").removeClass("active");
          $preLoader.hide();
@@ -225,8 +247,6 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
       localStorage.setItem('TesterInfo',JSON.stringify( $scope.testinfo));
       localStorage.setItem('Testercounter',JSON.stringify( $scope.testinfo.length));
     } 
-     
-       
         // localStorage.setItem('TesterInfo',JSON.stringify( $scope.testinfo));
         // localStorage.setItem('Testercounter',JSON.stringify( $scope.testinfo.length));
     
@@ -240,10 +260,13 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
         $scope.lotInfoObj = JSON.parse(localStorage.getItem('LotInfo'));
         for(i=0;i<Object.keys($scope.lotInfoObj).length;i++){
         $scope.lotinfo.push({
-           "testKitLotNo":$scope.lotInfoObj[i].testKitLotNo,
-           "testKitExpDate":$scope.lotInfoObj[i].testKitExpDate,
-           "available":$scope.lotInfoObj[i].available,
-           "label":$scope.lotInfoObj[i].label
+          "testKitManufacturer":$scope.lotInfoObj[i].testKitManufacturer,
+          "testKitManufacturerName":$scope.lotInfoObj[i].testKitManufacturerName,
+          "LotNumber":$scope.lotInfoObj[i].LotNumber,
+          "testKitLotNo":$scope.lotInfoObj[i].testKitLotNo,
+          "testKitExpDate":$scope.lotInfoObj[i].testKitExpDate,
+          "available":$scope.lotInfoObj[i].available,
+          "label":$scope.lotInfoObj[i].label
         });
     }
     $scope.lotinfo.splice(index,1);

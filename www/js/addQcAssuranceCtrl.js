@@ -32,6 +32,9 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
        for(i=0;i<TestKitLotListLen;i++){
          if($scope.TestKitLotList[i].available!='yes'){
            $scope.testkitlotObj1.push({
+            "testKitManufacturer":$scope.TestKitLotList[i].testKitManufacturer,
+            "testKitManufacturerName":$scope.TestKitLotList[i].testKitManufacturerName,
+            "LotNumber":$scope.TestKitLotList[i].LotNumber,
              "testKitLotNo":$scope.TestKitLotList[i].testKitLotNo,
              "testKitExpDate":$scope.TestKitLotList[i].testKitExpDate,
              "label":$scope.TestKitLotList[i].label,
@@ -39,6 +42,9 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
            })
          }else{
            $scope.testkitlotObj2.push({
+            "testKitManufacturer":$scope.TestKitLotList[i].testKitManufacturer,
+            "testKitManufacturerName":$scope.TestKitLotList[i].testKitManufacturerName,
+            "LotNumber":$scope.TestKitLotList[i].LotNumber,
              "testKitLotNo":$scope.TestKitLotList[i].testKitLotNo,
              "testKitExpDate":$scope.TestKitLotList[i].testKitExpDate,
              "label":$scope.TestKitLotList[i].label,
@@ -84,7 +90,6 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
       $scope.qcAssurance.userId = localStorage.getItem('userId');
       $scope.qcAssurance.qcsampleId ="";
       $scope.qcAssurance.referenceResult="";
-      $scope.qcAssurance.testKitName="";
       $scope.qcAssurance.testKitValueName="";
       $scope.qcAssurance.testKitLotNo="";
       $scope.qcAssurance.testKitExpDate="";
@@ -145,27 +150,21 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
     //       .appendTo( ul );
     //   };
     // }
-    $scope.getTestKitName = function(kitname){
-      if(kitname=='sedia_bioscience'){
-        $scope.qcAssurance.testKitValueName ="SEDIA Bioscience (SED)";
-      }else
-      if(kitname=='maxim_biomedical'){
-        $scope.qcAssurance.testKitValueName ="Maxim Biomedical (MAX)";
-      }else{
-        $scope.qcAssurance.testKitValueName="";
-      }
-    }
+
     $scope.getTestKitExpDate = function(lotNo){
       console.log(lotNo)
       if(lotNo!=""){
         for(i=0;i<$scope.TestKitLotList.length;i++){
           if(lotNo==$scope.TestKitLotList[i].testKitLotNo){
-            $scope.ExpDate = $scope.TestKitLotList[i].testKitExpDate
+            $scope.ExpDate = $scope.TestKitLotList[i].testKitExpDate;
+            $scope.ManufacturerName = $scope.TestKitLotList[i].testKitManufacturerName;
           }
         }
-        $scope.qcAssurance.testKitExpDate = $scope.ExpDate
+        $scope.qcAssurance.testKitExpDate = $scope.ExpDate;
+        $scope.qcAssurance.ManufacturerName = $scope.ManufacturerName;
       }else{
         $scope.qcAssurance.testKitExpDate=""; 
+        $scope.qcAssurance.ManufacturerName="";
       }
     }
 
@@ -277,22 +276,37 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
         (controlLine=='absent'&& positiveLine=='present'&& longTermLine=='present')||
         (controlLine=='present'&& positiveLine=='absent'&& longTermLine=='present'))
         {
-          $(".outcome").css("color","red");
-
+          // $(".outcome").css("color","red");
           $scope.qcAssurance.recencyOutcome="Invalid-Please Verify";
+          $scope.outcomered = true;
+          $scope.outcomeblack = false;
+
         }
         if(controlLine=='present'&& positiveLine=='absent'&& longTermLine=='absent'){
-          $scope.qcAssurance.recencyOutcome="HIV Negative";
-          $(".outcome").css("color","red");
+          $scope.qcAssurance.recencyOutcome="Assay HIV Negative";
+          // $(".outcome").css("color","red");
+          $scope.outcomered = true;
+          $scope.outcomeblack = false;
+
+
         }
         if(controlLine=='present'&& positiveLine=='present'&& longTermLine=='absent'){
-          $scope.qcAssurance.recencyOutcome="Preliminary Recent";
+          $scope.qcAssurance.recencyOutcome="Assay Recent";
+          $scope.outcomeblack = true;
+          $scope.outcomered = false;
+
         }
         if(controlLine=='present'&& positiveLine=='present'&& longTermLine=='present'){
           $scope.qcAssurance.recencyOutcome="Long Term";
+          $scope.outcomeblack = true;
+          $scope.outcomered = false;
         }
         if(controlLine==""|| positiveLine==""||longTermLine==""){
           $scope.qcAssurance.recencyOutcome="";
+          $scope.outcomeblack = false;
+          $scope.outcomered = false;
+
+
         }
       }
       // $scope.getReasonName = function(reason){

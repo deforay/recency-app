@@ -82,12 +82,25 @@
         </div>
         <div ng-hide="recencydisplay"> 
             <div class="row">
+                        <div class="input-field col ">
+                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                <p>Test Kit Manufacturers</p>
+                                  </span>
+                            <div class="form-logo "><img src="img/doctor.png"></div> 
+                            <select class="ng-valid" id="testKitManufacturer" name="testKitManufacturer" title="Please Choose Test Manufacturers" ng-model="qcLotObj.testKitManufacturer" ng-change="gettestKitManufacturer(qcLotObj.testKitManufacturer)">
+                                <option value="">-- Select --</option>
+                                <option value="SED">SEDIA Bioscience (SED)</option>
+                                <option value="MAX">Maxim Biomedical (MAX)</option>
+                            </select>     
+                        </div>
+            </div>
+            <div class="row">
                 <div class="input-field col "> 
                       <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
                               <p>Test Kit Lot Number</p>
                           </span>  
                  <div class="form-logo"><img src="img/lab.png"></div> 
-                    <input id="testKitLotNo" type="text" class="testKitLotNo" name="testKitLotNo" title="Please Enter Test Kit Lot Number" ng-model='qcLotObj.testKitLotNo' placeholder="Test Kit Lot Number" > 
+                    <input id="LotNumber" type="text" class="LotNumber" name="LotNumber" title="Please Enter Test Kit Lot Number" ng-model='qcLotObj.LotNumber' placeholder="Test Kit Lot Number" > 
                 </div>  
             </div>
             <div class="row">
@@ -135,14 +148,15 @@
               <div style="overflow-x:auto;margin-bottom: 30px;">
             <table class="table table-bordered table-striped order-table" style="width: 100%;white-space: nowrap;" id="ordertable">
               <tr style="white-space: nowrap">
+                <th>Test Kit Manufacturers</th>
                 <th>Test Kit Lot No</th>
                 <th>Test Kit Exp Date</th>
                 <th style="text-align: center">Available</th>
                 <th style="text-align: center">Action</th>
               </tr>
               <tr ng-repeat="qclot in LotInfoList " >
-
-                <td style="padding-left: 10px;">{{ qclot['testKitLotNo'] }}</td>
+                <td style="padding-left: 10px;">{{ qclot['testKitManufacturerName'] }}</td>
+                <td style="padding-left: 10px;">{{ qclot['LotNumber'] }}</td>
                 <td style="text-align: center">{{ qclot['testKitExpDate'] | date: "dd-MM-yyyy" }}</td>
                 <td style="text-transform: capitalize;text-align: center">{{ qclot['available']  }}</td>
                 <td style="text-align: center">
@@ -151,7 +165,7 @@
                  </td>
               </tr>
               <tr ng-show="isVisibleLot">
-                <td  colspan="4"><p  style="text-align:center">No data available</p> </td>
+                <td  colspan="5"><p  style="text-align:center">No data available</p> </td>
               </tr>
               
               

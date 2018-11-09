@@ -1,8 +1,8 @@
 
 <ion-view view-title="Edit Recency">
         <header class="row recency-tab" >
-                <button id="main-recency" class="col button recency-head active" ng-click="setmainactive();">Recency Test</button>
-                <button id="other-recency" class="col button recency-head" ng-click="setothersactive();">Behaviour</button>
+                <button id="main-recency" class="col button recency-head active" ng-click="setmainactive();">Section 1/2</button>
+                <button id="other-recency" class="col button recency-head" ng-click="setothersactive();">Section 2/2</button>
             </header>
 <div class="RecencyForm">        
   <ion-content style="top:0!important;bottom: 100px;">
@@ -266,19 +266,7 @@
                     <input id="testKitLotNo" type="text" class="testKitLotNo" name="testKitLotNo" title="Please Enter Test Kit Lot Number" ng-model='recency.testKitLotNo' ng-keyup="testKitLotAutoComplete()" placeholder="Test Kit Lot Number" > 
                 </div>  
             </div> -->
-            <div class="row">
-                <div class="input-field col ">
-                      <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                        <p>Test Kit Name<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testKitName'"  style="color:#df3838;"> *</span><</p>
-                          </span>
-                    <div class="form-logo "><img src="img/doctor.png"></div> 
-                    <select class="ng-valid" id="testKitName" name="testKitName" title="Please Choose Test Kit Name" ng-model="recency.testKitName" ng-change="getTestKitName(recency.testKitName)" >
-                        <option value="">-- Select --</option>
-                        <option value="sedia_bioscience">SEDIA Bioscience (SED)</option>
-                        <option value="maxim_biomedical">Maxim Biomedical (MAX)</option>
-                    </select>     
-                </div>
-            </div>
+      
             <div class="row">
                 <div class="input-field col ">
                       <span class="input-label item-stacked-label" style="margin-bottom: -30px;">

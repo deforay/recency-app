@@ -55,14 +55,27 @@ app=angular.module('starter.editLotInfoCtrl', ['starter.services'])
       }; 
       ionicDatePicker.openDatePicker(ipObj3);
     }
-
+    $scope.gettestKitManufacturer   = function(manufacturer){
+      if(manufacturer=='SED'){
+        $scope.qcLotKit.testKitManufacturerName ="SEDIA Bioscience (SED)";
+      }else
+      if(manufacturer=='MAX'){
+        $scope.qcLotKit.testKitManufacturerName ="Maxim Biomedical (MAX)";
+      }else{
+        $scope.qcLotKit.testKitManufacturerName="";
+      }
+    }
     $scope.updateLotKit = function()
       { 
         $preLoader.show();
 
         $scope.index  = $scope.qcLotKit.index;
-        $scope.qcLotKit.label = $scope.qcLotKit.testKitLotNo 
-
+        $scope.qcLotKit.label = $scope.qcLotKit.LotNumber 
+        if($scope.qcLotKit.LotNumber!="" && $scope.qcLotKit.testKitManufacturer!=""){
+          $scope.qcLotKit.testKitLotNo = $scope.qcLotKit.testKitManufacturer +" - " + $scope.qcLotKit.LotNumber;
+         }else{
+          $scope.qcLotKit.testKitLotNo="";
+         }
        if($scope.qcLotKit.available==true){
         $scope.qcLotKit.available = 'yes';    
        }else{
