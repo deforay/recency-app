@@ -88,6 +88,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
          console.log($scope.testerNameObj1)
          $scope.TesterNameList = $scope.testerNameObj1;
        }
+      $scope.recency.appVersion = localStorage.getItem('AppVersion');      
       $scope.recency.userId = localStorage.getItem('userId');
       $scope.recency.sampleId ="";
       $scope.recency.patientId="";

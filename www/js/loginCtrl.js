@@ -231,20 +231,25 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
 
       }
       else{
-         if(credentials.serverHost.indexOf("http://") == -1){
+         if(credentials.serverHost.indexOf("https://") == 0){
+          console.log(credentials.serverHost);
+          credentials.serverHost =credentials.serverHost;
+         }
+         else if(credentials.serverHost.indexOf("http://") == 0){
+          credentials.serverHost =credentials.serverHost;
+         }else{
           credentials.serverHost ="http://"+credentials.serverHost;
+
          }
           $localStorage.set('apiUrl',credentials.serverHost);       
-           $preLoader.show();
-      
+          $preLoader.show();      
        $http({
           url: credentials.serverHost+"/api/login",
           method: "POST",
           data: { "email": credentials.email, "password" : credentials.serverpassword }
       }).then(function successCallback(response) {
-             // console.log(response.data);
+             console.log(response.data);
              if(response.data.status =="success"){
-             // console.log(response.data.userDetails);
               $preLoader.hide();
               $localStorage.set('login','success');
                 $localStorage.set('authToken',response.data.userDetails['authToken']);
@@ -268,7 +273,11 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
               $ionicPopup.alert({title:'Login Failed!',template:response.data.message});
              }    
         
-      });
+      }, function (error) {
+        $preLoader.hide();
+        $ionicPopup.alert({title:'Login Failed!',template:'Please Check Your Login Credentials'});
+     }
+    );
     }
   }
   

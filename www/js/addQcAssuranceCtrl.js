@@ -86,7 +86,7 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
         console.log($scope.testerNameObj1)
         $scope.TesterNameList = $scope.testerNameObj1;
       }
-      
+      $scope.qcAssurance.appVersion = localStorage.getItem('AppVersion');
       $scope.qcAssurance.userId = localStorage.getItem('userId');
       $scope.qcAssurance.qcsampleId ="";
       $scope.qcAssurance.referenceResult="";

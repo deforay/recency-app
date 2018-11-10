@@ -30,6 +30,9 @@ if(QCDataList != null){
 }  else{
   $scope.displayqcbadge=false;
 }
+
+$scope.appVersion = 0.1;
+localStorage.setItem('AppVersion',$scope.appVersion);
 // if($scope.syncCount== undefined || $scope.syncCount == ""){
 //      $scope.syncCount = 0;
 //      localStorage.setItem('syncCount', $scope.syncCount);

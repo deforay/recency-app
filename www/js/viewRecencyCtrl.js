@@ -68,10 +68,18 @@ app=angular.module('starter.viewRecencyCtrl', ['starter.services'])
             
           }
         $scope.syncnow = function(){
-            console.log($scope.recencyList)
-            if($scope.displaymessage== true){
+           if($scope.displaymessage== true){
                 $ionicPopup.alert({title:'Alert!',template:'<center>No Records to Sync </center>'});
             }
+            console.log($scope.recencyList)
+
+            // for(i=0;i<$scope.recencyList.length;i++){
+            //     $scope.noOfItemsToSync = 2;
+            //     $scope.recencyList.slice()
+
+
+            // }
+         
             $http.post( $rootScope.apiUrl+"/api/recency",{
                 "form":$scope.recencyList
   
