@@ -1,11 +1,13 @@
 
 app=angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
 
-.controller('viewQcAssuranceCtrl', function($scope,$rootScope,$http,$preLoader, $ionicPopup, $cordovaToast, $location,$window, $stateParams,$ionicPlatform,$cordovaLocalNotification, $cordovaBadge) {
+.controller('viewQcAssuranceCtrl', function($scope,$rootScope,$http,$q,$preLoader, $ionicPopup, $cordovaToast, $location,$window, $stateParams,$ionicPlatform,$cordovaLocalNotification, $cordovaBadge) {
     $rootScope.apiUrl = localStorage.getItem('apiUrl');
     var QCDataList =   localStorage.getItem('QCData');
-  console.log(QCDataList)
-
+  //console.log(QCDataList)
+  $scope.NewQcDataList = [];
+  $scope.NewQcObj = [];
+  $scope.limitTo = 2;
    if(QCDataList != null){
      QCDataList    = JSON.parse(QCDataList);
     // console.log(QCDataList);
@@ -31,49 +33,114 @@ app=angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
     $scope.displaymessage = true;
     }   
   var qcdatas = $scope.QCDataList;
-    //   console.log(qcdatas)
+
+  $scope.NewQcDataList = Object.assign({}, $scope.QCDataList);
+
+//  console.log( $scope.QCDataList)
+//  console.log( $scope.NewQcDataList)
+  
+
+
         $scope.doRefresh = function() {
             $preLoader.show();
             $window.location.reload(true);
             $preLoader.hide();
             
           }
-        $scope.syncnow = function(){
-            console.log($scope.QCDataList)
+
+          $scope.syncnow = function(){
             if($scope.displaymessage== true){
                 $ionicPopup.alert({title:'Alert!',template:'<center>No Records to Sync </center>'});
             }
-            $http.post( $rootScope.apiUrl+"/api/quality-check",{
+            console.log($scope.QCDataList);
+                 $http.post( $rootScope.apiUrl+"/api/quality-check",{
                 "qc":$scope.QCDataList
   
             })
             .success(function(data){
                console.log(data);
-                 $scope.response =data.syncData.response;
-                  $scope.syncQcCount =data.syncCount.response[0].Total;
-                 localStorage.setItem('syncQcCount', $scope.syncQcCount)
-
-                 for(i=0;i< $scope.response.length;i++){
-                  $scope.QCDataList.splice(i);
-                }
-                localStorage.setItem('QCData',$scope.QCDataList);
-                         if(localStorage.getItem('QCData')=="")
-                          {
-                         localStorage.removeItem('QCData');
-                          } 
-                 localStorage.setItem('qccounter',0);
-                 $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
-                 .then(function(success) {
-                      // success
-                  }, function (error) {
-                      // error
-                  });
+             if(data.status=='failed'){
+                $ionicPopup.alert({title:'Failed',template:data.message});                
+             }
+             else
+             {
+                $scope.response =data.syncData.response;
+                $scope.syncQcCount =data.syncCount.response[0].Total;
+               localStorage.setItem('syncQcCount', $scope.syncQcCount)
+                    for(i=0;i< $scope.response.length;i++){
+                          $scope.QCDataList.splice(i);
+                     }
+              localStorage.setItem('QCData',$scope.QCDataList);
+                       if(localStorage.getItem('QCData')=="")
+                        {
+                       localStorage.removeItem('QCData');
+                        } 
+               localStorage.setItem('qccounter',0);
+                 //  $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
+                 //  .then(function(success) {
+                 //       // success
+                 //   }, function (error) {
+                  //       // error
+                 //   });
                 $window.location.reload(true);
+             }
             })
-            .error(function(){
+            .error(function(data){
                 console.log(data);
                 $ionicPopup.alert({title:data.response});
             });
+          }
+
+
+        $scope.syncnows = function(){
+            if($scope.displaymessage== true){
+                $ionicPopup.alert({title:'Alert!',template:'<center>No Records to Sync </center>'});
+            }
+            console.log($scope.QCDataList)
+            var loopCount = Math.floor($scope.QCDataList.length / $scope.limitTo);
+            var loopReminder = $scope.QCDataList.length % $scope.limitTo;
+            console.log(loopReminder);
+         for(i=0;i<=loopCount;i++){
+           //  console.log(loopCount);  
+           var deferred = $q.defer();
+  
+           if(loopReminder == $scope.QCDataList.length){
+            $scope.NewQcObj = $scope.QCDataList.splice(0,loopReminder);
+           }else{
+            $scope.NewQcObj = $scope.QCDataList.splice(0,loopCount);
+           }
+            console.log($scope.NewQcObj);
+            console.log($scope.QCDataList);
+
+            $http.post( $rootScope.apiUrl+"/api/quality-check",{
+                "qc":$scope.NewQcObj
+            })
+            .success(function(data){
+                console.log(data);
+            //console.log($scope.NewQcObj);
+
+                // $scope.NewQcObj = [];
+              if(data.status=='failed'){
+                 $ionicPopup.alert({title:'Failed',template:data.message});                
+              }
+              else
+              {
+                 $scope.response =data.syncData.response;
+                 $scope.syncQcCount =data.syncCount.response[0].Total;
+                 deferred.resolve();
+
+                localStorage.setItem('syncQcCount', $scope.syncQcCount);
+                for(i=0;i<$scope.response.length;i++){
+                    console.log("hi");
+                }
+              }
+             })
+             .error(function(data){
+                 console.log(data);
+                 $ionicPopup.alert({title:data.response});
+             });
+        }
+        return deferred.promise;
         }
         
 

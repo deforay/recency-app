@@ -85,7 +85,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
          for(i=0;i<$scope.testerNameObj2.length;i++){
            $scope.testerNameObj1.unshift($scope.testerNameObj2[i])
          }
-         console.log($scope.testerNameObj1)
+         //console.log($scope.testerNameObj1)
          $scope.TesterNameList = $scope.testerNameObj1;
        }
       $scope.recency.appVersion = localStorage.getItem('AppVersion');      
@@ -356,6 +356,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
       });
       $http.get($localStorage.get('apiUrl')+'/api/global-config')
       .success(function(data) {
+        console.log(data);
        $scope.configdata =data.config;
          for(i=0;i<$scope.configdata.length;i++){        
             $scope.recency.location[i]="";

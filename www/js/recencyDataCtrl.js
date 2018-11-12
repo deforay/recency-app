@@ -3,12 +3,64 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
 
 .controller('recencyDataCtrl', function($scope,$rootScope,$cordovaToast,$localStorage,$http,$preLoader, $ionicPopup, $location,$window, $stateParams) {
    
-  $scope.displaybadge = false;
+  // $scope.displaybadge = false;
 
         $rootScope.apiUrl = localStorage.getItem('apiUrl');
-        $scope.showauth = true;
-      //  console.log( $scope.showauth)
+        $scope.init = function(){
+          if(localStorage.getItem('ServerRecencyData')=='logout' || localStorage.getItem('ServerRecencyData')=='success' ){
+            $scope.showauth = true;
+          }else
+          {
+   
+            $preLoader.show();
+          $http({
+            url: $rootScope.apiUrl+"/api/login",
+            method: "POST",
+            data: { "email": $localStorage.get('email'), "password" : $localStorage.get('serverpassword') }
+        }).then(function successCallback(response) {
+               console.log(response.data);
+               if(response.data.status =="success"){
+                  $localStorage.set('authToken',response.data.userDetails['authToken']);
+                  
+                 $http.get($localStorage.get('apiUrl')+'/api/recency?authToken='+$localStorage.get('authToken'))
+                 .then(function(response) {
+                   if(response.data.status =="success"){
+                    $localStorage.set('ServerRecencyData','login');
+                    $preLoader.hide();
+                      $scope.showauth = false;   
+                      console.log( response.data.recency) 
+                      $preLoader.show();
+                      $scope.recencyDatas =response.data.recency;
+                      for(i=0;i<$scope.recencyDatas.length;i++)
+                      {
+                        $scope.recencyDatas[i].patient_id = "Xx" + $scope.recencyDatas[i].patient_id.slice(2);
+                      }
+                      $preLoader.hide()
+                   }
+                   else{
+                    $preLoader.hide();
+                    $scope.showauth = true;
+                    $ionicPopup.alert({title:"Authentication Failed !",template:'<center>'+response.data.message+'</center>'});
+                       }
+                 })
+               }
+               else{
+                console.log(response.data);
+                $preLoader.hide();
+                $ionicPopup.alert({title:'Authentication Failed!',template:response.data.message});
 
+               }
+        });
+            $scope.showauth = false;
+          }
+         console.log( $scope.showauth)
+        }
+        $scope.init();
+        $scope.doRefresh = function() {
+          $preLoader.show();
+          $window.location.reload(true);
+          $preLoader.hide(); 
+        }
 
     $scope.doLogin = function(credentials) {
        if(!credentials.email){
@@ -16,9 +68,7 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
         }
         else if(!credentials.serverpassword){
           $ionicPopup.alert({title: 'Login Failed',template: 'Please Enter the Server Password'});
-    
           }
-          
           else{
             // console.log(credentials);
              credentials.serverHost= $localStorage.get('apiUrl');    
@@ -35,16 +85,17 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                    $http.get($localStorage.get('apiUrl')+'/api/recency?authToken='+$localStorage.get('authToken'))
                    .then(function(response) {
                      if(response.data.status =="success"){
+                      $localStorage.set('ServerRecencyData','login');
                       $preLoader.hide();
-                      $cordovaToast.show('Authentication is Sucess', 'long', 'bottom')
-                            .then(function(success) {
-                                 // success
-                             }, function (error) {
-                                 // error
-                             });
+                      // $cordovaToast.show('Authentication is Sucess', 'long', 'bottom')
+                      //       .then(function(success) {
+                      //            // success
+                      //        }, function (error) {
+                      //            // error
+                      //        });
                         $scope.showauth = false;   
                         console.log( response.data.recency) 
-                        $preLoader.show()
+                        $preLoader.show();
                         $scope.recencyDatas =response.data.recency;
                         for(i=0;i<$scope.recencyDatas.length;i++)
                         {

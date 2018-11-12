@@ -76,8 +76,6 @@ app=angular.module('starter.viewRecencyCtrl', ['starter.services'])
             // for(i=0;i<$scope.recencyList.length;i++){
             //     $scope.noOfItemsToSync = 2;
             //     $scope.recencyList.slice()
-
-
             // }
          
             $http.post( $rootScope.apiUrl+"/api/recency",{
@@ -86,26 +84,32 @@ app=angular.module('starter.viewRecencyCtrl', ['starter.services'])
             })
             .success(function(data){
                console.log(data);
+               if(data.status=='failed'){
+                $ionicPopup.alert({title:'Failed!',template:data.message});
+               }
+               else{
                 $scope.response =data.syncData.response;
-                $scope.syncCount =data.syncCount.response[0].Total;
-                localStorage.setItem('syncCount', $scope.syncCount)
+                    $scope.syncCount =data.syncCount.response[0].Total;
+                    localStorage.setItem('syncCount', $scope.syncCount)
 
-                for(i=0;i< $scope.response.length;i++){
-                  $scope.recencyList.splice(i);
-                }
-                localStorage.setItem('RecencyData',$scope.recencyList);
-                         if(localStorage.getItem('RecencyData')=="")
-                          {
-                         localStorage.removeItem('RecencyData');
-                          } 
-                 localStorage.setItem('counter',0);
-                 $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
-                 .then(function(success) {
-                      // success
-                  }, function (error) {
-                      // error
-                  });
-                $window.location.reload(true);
+                    for(i=0;i< $scope.response.length;i++){
+                      $scope.recencyList.splice(i);
+                    }
+                    localStorage.setItem('RecencyData',$scope.recencyList);
+                             if(localStorage.getItem('RecencyData')=="")
+                              {
+                             localStorage.removeItem('RecencyData');
+                              } 
+                     localStorage.setItem('counter',0);
+                    //  $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
+                    //  .then(function(success) {
+                    //       // success
+                    //   }, function (error) {
+                    //       // error
+                    //   });
+                    $window.location.reload(true);
+               }
+                    
             })
             .error(function(){
                 console.log(data);
