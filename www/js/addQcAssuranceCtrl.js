@@ -426,12 +426,12 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
             localStorage.setItem('qccounter', $scope.counter);
         
              $scope.qcAssurance ={};
-              // $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
-              // .then(function(success) {
-              //   // success
-              // }, function (error) {
-              //   // error
-              // });
+              $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
+              .then(function(success) {
+                // success
+              }, function (error) {
+                // error
+              });
               $window.location.reload(true);
             $preLoader.hide();
       }

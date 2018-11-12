@@ -147,12 +147,12 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
         $scope.qcTester.testerName = "";
         $scope.qcTester.available = true; 
         $scope.recencydisplay=true;
-        //  $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
-        //  .then(function(success) {
-        //    // success
-        //  }, function (error) {
-        //    // error
-        //  });
+         $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
+         .then(function(success) {
+           // success
+         }, function (error) {
+           // error
+         });
          $("#main-addqcsetting").addClass("active");
          $("#other-addqcsetting").removeClass('active')
         $scope.displayQcSettings();
@@ -197,12 +197,12 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
         $scope.recencydisplay=false;
         $scope.displayQcSettings();
 
-        //  $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
-        //  .then(function(success) {
-        //    // success
-        //  }, function (error) {
-        //    // error
-        //  });
+         $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
+         .then(function(success) {
+           // success
+         }, function (error) {
+           // error
+         });
         $("#other-addqcsetting").addClass('active')
          $("#main-addqcsetting").removeClass("active");
          $preLoader.hide();

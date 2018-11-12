@@ -101,12 +101,12 @@ app=angular.module('starter.viewRecencyCtrl', ['starter.services'])
                              localStorage.removeItem('RecencyData');
                               } 
                      localStorage.setItem('counter',0);
-                    //  $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
-                    //  .then(function(success) {
-                    //       // success
-                    //   }, function (error) {
-                    //       // error
-                    //   });
+                     $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
+                     .then(function(success) {
+                          // success
+                      }, function (error) {
+                          // error
+                      });
                     $window.location.reload(true);
                }
                     
