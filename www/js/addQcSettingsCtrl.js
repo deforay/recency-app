@@ -249,7 +249,12 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
     } 
         // localStorage.setItem('TesterInfo',JSON.stringify( $scope.testinfo));
         // localStorage.setItem('Testercounter',JSON.stringify( $scope.testinfo.length));
-    
+        $cordovaToast.show('Deleted Successfully', 'long', 'center')
+        .then(function(success) {
+          // success
+        }, function (error) {
+          // error
+        });
         $preLoader.hide();
         $window.location.reload(true);
       }
@@ -280,6 +285,12 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
       localStorage.setItem('LotInfo',JSON.stringify( $scope.lotinfo));
       localStorage.setItem('Lotcounter',JSON.stringify( $scope.lotinfo.length));
     } 
+    $cordovaToast.show('Deleted Successfully', 'long', 'center')
+         .then(function(success) {
+           // success
+         }, function (error) {
+           // error
+         });
     $preLoader.hide();
 
      $window.location.reload(true);

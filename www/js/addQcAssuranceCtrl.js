@@ -426,8 +426,8 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
         + currentdate.getSeconds();
 
         console.log($scope.qcAssurance.formInitDateTime);
-        //  $scope.noOfDays = localStorage.getItem('noOfDays');
-        $scope.noOfDays = 0;
+         $scope.noOfDays = localStorage.getItem('noOfDays');
+        //$scope.noOfDays = 0;
      $scope.QCDatas =  localStorage.getItem('QCData');
 
       if($scope.QCDatas == null){

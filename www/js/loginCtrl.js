@@ -99,13 +99,13 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
           $localStorage.set('apppassword',$scope.confirmpasscode);
           
           $preLoader.show();
-          // $cordovaToast
-          // .show('App Password Created Successfully', 'long', 'center')
-          // .then(function(success) {
-          //   // success
-          // }, function (error) {
-          //   // error
-          // });
+          $cordovaToast
+          .show('App Password Created Successfully', 'long', 'center')
+          .then(function(success) {
+            // success
+          }, function (error) {
+            // error
+          });
           $timeout(function() {
             $location.path('/app/addRecency');
             $preLoader.hide();
