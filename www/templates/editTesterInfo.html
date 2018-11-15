@@ -67,7 +67,7 @@
 
 
 
-<ion-view view-title="Edit Tester">
+<ion-view view-title="Edit Tester Information">
 
       
 <ion-content >
@@ -109,7 +109,7 @@
                 </div> 
             <div class="row" >
                 <div class="input-field col savebtn ">
-                    <button class="button button-block waves-effect waves-light" type="submit"
+                    <button class="button button-block waves-effect waves-light" ng-disabled="qcTester.testerName==''" type="submit"
                        ng-click="updateTesterName()">
                        SAVE
                     </button>

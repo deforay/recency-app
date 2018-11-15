@@ -557,7 +557,131 @@ if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != u
       $('#testKitExpDate').val("")
 
     }
-  
+  $scope.onLoadMandatoryCheck = function(){
+    for(i=0;i<$scope.mandatoryData.length;i++){
+      var id ="#"+$scope.mandatoryData[i];
+      var mandatoryname = $(id).attr("name");
+      var mandatorytitle = $(id).attr("title");
+      var mandatoryField=$scope.mandatoryData[i];
+    //  console.log(mandatoryField);
+             
+    if($scope.mandatoryData[i]=='sampleId' && $scope.recency.sampleId==""){
+      $scope.showRecencyTick = false;
+      return false;
+    }
+     if($scope.mandatoryData[i]=='patientId' && $scope.recency.patientId==""){
+      $scope.showRecencyTick = false;
+      return false;
+    }
+    if( $scope.recency.patientId=="" && $scope.recency.sampleId==""){
+      $ionicPopup.alert({title:'Alert!',template:'Please Choose Either Sample ID or Patient ID'});
+      $scope.showRecencyTick = false;
+      return false;
+    }
+     if($scope.mandatoryData[i]=='facilityId' && $scope.recency.facilityId==""){
+      $scope.showRecencyTick = false;
+      return false;
+    }
+    if($scope.mandatoryData[i]=='location_one' && $scope.recency.location_one==""){
+      $scope.showRecencyTick = false;
+      return false;
+    }
+    if($scope.mandatoryData[i]=='location_two' && $scope.recency.location_two==""){
+      $scope.showRecencyTick = false;
+      return false;
+    }
+    if($scope.mandatoryData[i]=='location_three' && $scope.recency.location_three==""){
+      $scope.showRecencyTick = false;
+      return false;
+    }
+     if($scope.mandatoryData[i]=='hivDiagnosisDate' && $scope.recency.hivDiagnosisDate==""){
+      $scope.showRecencyTick = false;
+      return false;
+    }
+
+    if($scope.mandatoryData[i]=='pastHivTesting' && $scope.recency.pastHivTesting==""){
+      $scope.showRecencyTick = false;
+      return false;
+    }
+    if($scope.recency.pastHivTesting=='yes' || $scope.recency.pastHivTesting==''){
+      if($scope.mandatoryData[i]=='testLast12Month' && $scope.recency.testLast12Month==""){
+        $scope.showRecencyTick = false;
+        return false;
+      }
+    }
+    if($scope.mandatoryData[i]=='pastHivTesting' && $scope.recency.pastHivTesting == 'yes' && $scope.recency.lastHivStatus==""){
+      $scope.showRecencyTick = false;
+      return false;
+    }
+    if($scope.mandatoryData[i]=='pastHivTesting' && $scope.recency.lastHivStatus == 'positive' && $scope.recency.patientOnArt==""){
+      $scope.showRecencyTick = false;
+      return false;
+    }
+    if($scope.recency.testNotPerformed==true){
+      if( $scope.recency.recencyreason==""){
+        $scope.showRecencyTick = false;
+        return false;
+      }
+      if( $scope.recency.recencyreason=="other" &&  $scope.recency.otherreason==""){
+        $scope.showRecencyTick = false;
+        return false;
+      }
+    }
+    if($scope.recency.testNotPerformed!=true){
+    if($scope.mandatoryData[i]=='hivRecencyDate' && $scope.recency.hivRecencyDate==""){
+      $scope.showRecencyTick = false;
+      return false;
+    }
+     if($scope.mandatoryData[i]=='ctrlLine' && $scope.recency.ctrlLine==""){
+      $scope.showRecencyTick = false;
+      return false;
+    }
+      if($scope.mandatoryData[i]=='positiveLine' && $scope.recency.positiveLine==""){
+      $scope.showRecencyTick = false;
+      return false;
+    } 
+     if($scope.mandatoryData[i]=='longTermLine' && $scope.recency.longTermLine==""){
+      $scope.showRecencyTick = false;
+      return false;
+    }
+  }
+  if($scope.mandatoryData[i]=='testKitLotNo' && $scope.recency.testKitLotNo==""){
+    $scope.showRecencyTick = false;
+    return false;
+  } 
+   if($scope.mandatoryData[i]=='testKitExpDate' && $scope.recency.testKitExpDate==""){
+    $scope.showRecencyTick = false;
+    return false;
+  } 
+   if($scope.mandatoryData[i]=='testerName' && $scope.recency.testerName==""){
+    $scope.showRecencyTick = false;
+    return false;
+  }
+  if($scope.mandatoryData[i]==mandatoryname && $scope.recency[mandatoryField]==""){
+    $scope.showBehaviourTick = false;
+    return false;
+  }
+  if($scope.mandatoryData[i]=='riskPopulation' && $scope.recency.riskPopulationName == 'Other' && $scope.recency.otherriskPopulation==""){
+    $scope.showBehaviourTick = false; 
+    return false;
+  }
+    if($scope.recency.sampleId!="" || $scope.recency.patientId!="" || $scope.recency.facilityId!="" ||$scope.recency.hivDiagnosisDate!="" ||
+    $scope.recency.hivRecencyDate!=""||$scope.recency.ctrlLine!="" ||$scope.recency.positiveLine!="" || $scope.recency.longTermLine!="" ||
+    $scope.recency.pastHivTesting!="" || $scope.recency.lastHivStatus!=""|| $scope.recency.patientOnArt!=""||$scope.recency.location_one!=""||
+    $scope.recency.location_two!="" ||$scope.recency.location_three!="" || $scope.recency.testKitLotNo !=""|| $scope.recency.testKitExpDate !=""|| $scope.recency.testerName !="")
+    {
+    $scope.showRecencyTick = true;
+
+    }
+    if($scope.showBehaviourTick != false){
+      $scope.showBehaviourTick = true;
+
+    }
+  }
+  }
+  $scope.onLoadMandatoryCheck ();
+
+
   $scope.patientvalidation = function(){
   //  console.log($scope.recency)
     for(i=0;i<$scope.configdata.length;i++){
@@ -583,11 +707,13 @@ if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != u
     if($scope.mandatoryData[i]=='sampleId' && $scope.recency.sampleId==""){
       $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
       $scope.recencydisplay=true;
+      $scope.showRecencyTick = false;
       return false;
     }
      if($scope.mandatoryData[i]=='patientId' && $scope.recency.patientId==""){
       $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
       $scope.recencydisplay=true;
+      $scope.showRecencyTick = false;
       return false;
     }
     if( $scope.recency.patientId=="" && $scope.recency.sampleId==""){
@@ -597,60 +723,81 @@ if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != u
      if($scope.mandatoryData[i]=='facilityId' && $scope.recency.facilityId==""){
       $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
       $scope.recencydisplay=true;
+      $scope.showRecencyTick = false;
+      return false;
+    }
+    if($scope.mandatoryData[i]=='facilityId' && $scope.recency.facility_name == 'Other' && $scope.recency.otherfacility==""){
+      $ionicPopup.alert({title:'Alert!',template:'Please Enter Other Facility'});
+      $scope.recencydisplay=true;
+      $scope.showRecencyTick = false;
       return false;
     }
     if($scope.mandatoryData[i]=='location_one' && $scope.recency.location_one==""){
       $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
       $scope.recencydisplay=true;
+      $scope.showRecencyTick = false;
       return false;
     }
     if($scope.mandatoryData[i]=='location_two' && $scope.recency.location_two==""){
       $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
       $scope.recencydisplay=true;
+      $scope.showRecencyTick = false;
       return false;
     }
     if($scope.mandatoryData[i]=='location_three' && $scope.recency.location_three==""){
       $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
       $scope.recencydisplay=true;
+      $scope.showRecencyTick = false;
       return false;
     }
      if($scope.mandatoryData[i]=='hivDiagnosisDate' && $scope.recency.hivDiagnosisDate==""){
       $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
       $scope.recencydisplay=true;
+      $scope.showRecencyTick = false;
       return false;
     }
 
     if($scope.mandatoryData[i]=='pastHivTesting' && $scope.recency.pastHivTesting==""){
       $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
       $scope.recencydisplay=true;
+      $scope.showRecencyTick = false;
       return false;
     }
     if($scope.recency.pastHivTesting=='yes' || $scope.recency.pastHivTesting==''){
       if($scope.mandatoryData[i]=='testLast12Month' && $scope.recency.testLast12Month==""){
         $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
         $scope.recencydisplay=true;
+        $scope.showRecencyTick = false;
         return false;
       }
     }
     if($scope.mandatoryData[i]=='pastHivTesting' && $scope.recency.pastHivTesting == 'yes' && $scope.recency.lastHivStatus==""){
       $ionicPopup.alert({title:'Alert!',template:'Please Choose Last HIV Status'});
       $scope.recencydisplay=true;
+      $scope.showRecencyTick = false;
+
       return false;
     }
     if($scope.mandatoryData[i]=='pastHivTesting' && $scope.recency.lastHivStatus == 'positive' && $scope.recency.patientOnArt==""){
       $ionicPopup.alert({title:'Alert!',template:'Please Choose whether the Patient on ART'});
       $scope.recencydisplay=true;
+      $scope.showRecencyTick = false;
+
       return false;
     }
     if($scope.recency.testNotPerformed==true){
       if( $scope.recency.recencyreason==""){
         $ionicPopup.alert({title:'Alert!',template:"Please Choose Reason of Recency Test Not Performed"});
         $scope.recencydisplay=true;
+        $scope.showRecencyTick = false;
+
         return false;
       }
       if( $scope.recency.recencyreason=="other" &&  $scope.recency.otherreason==""){
         $ionicPopup.alert({title:'Alert!',template:"Please Enter Other Reason"});
         $scope.recencydisplay=true;
+        $scope.showRecencyTick = false;
+
         return false;
       }
     }
@@ -658,34 +805,48 @@ if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != u
     if($scope.mandatoryData[i]=='hivRecencyDate' && $scope.recency.hivRecencyDate==""){
       $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
       $scope.recencydisplay=true;
+      $scope.showRecencyTick = false;
+
       return false;
     }
      if($scope.mandatoryData[i]=='ctrlLine' && $scope.recency.ctrlLine==""){
       $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
       $scope.recencydisplay=true;
+      $scope.showRecencyTick = false;
+
       return false;
     }
       if($scope.mandatoryData[i]=='positiveLine' && $scope.recency.positiveLine==""){
       $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
       $scope.recencydisplay=true;
+      $scope.showRecencyTick = false;
+
       return false;
     }  if($scope.mandatoryData[i]=='longTermLine' && $scope.recency.longTermLine==""){
       $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
       $scope.recencydisplay=true;
+      $scope.showRecencyTick = false;
+
       return false;
     }
   }
   if($scope.mandatoryData[i]=='testKitLotNo' && $scope.recency.testKitLotNo==""){
     $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
     $scope.recencydisplay=true;
+    $scope.showRecencyTick = false;
+
     return false;
   }  if($scope.mandatoryData[i]=='testKitExpDate' && $scope.recency.testKitExpDate==""){
     $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
     $scope.recencydisplay=true;
+    $scope.showRecencyTick = false;
+
     return false;
   }  if($scope.mandatoryData[i]=='testerName' && $scope.recency.testerName==""){
     $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
     $scope.recencydisplay=true;
+    $scope.showRecencyTick = false;
+
     return false;
   }
 
@@ -697,14 +858,51 @@ if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != u
       $scope.recencydisplay=false;
     }
   }
-    if($("#other-recency").hasClass('active')){
-    }
-    else
-    {
-      $("#other-recency").addClass('active')
-      $("#main-recency").removeClass('active')
-    }
+  if($scope.recencydisplay == false){
+    $scope.showRecencyTick = true;
+    $("#other-recency").addClass('active')
+   $("#main-recency").removeClass('active')
+  }else{
+    $scope.showRecencyTick = false;
+    $("#main-recency").addClass('active')
+    $("#other-recency").removeClass('active')
+  }
   
+  }
+
+  $scope.behaviourValidation = function(){
+    for(i=0;i<$scope.mandatoryData.length;i++){
+      var id ="#"+$scope.mandatoryData[i];
+      var mandatoryname = $(id).attr("name");
+      var mandatorytitle = $(id).attr("title");
+      var mandatoryField=$scope.mandatoryData[i];
+      
+      console.log(mandatoryField)
+   
+      if($scope.mandatoryData[i]==mandatoryname && $scope.recency[mandatoryField]==""){
+        $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+        $scope.showBehaviourTick = false;
+        $scope.recencydisplay=false;
+        return false;
+      }
+      if($scope.mandatoryData[i]=='riskPopulation' && $scope.recency.riskPopulationName == 'Other' && $scope.recency.otherriskPopulation==""){
+        $ionicPopup.alert({title:'Alert!',template:'Please Choose Other Risk Population'});
+        $scope.showBehaviourTick = false;
+        $scope.recencydisplay=false;   
+        return false;
+      }else{
+        $scope.recencydisplay=true; 
+      }
+  if($scope.recency[mandatoryField]!=""){
+    $scope.recencydisplay=true; 
+  }
+    }
+
+    if($scope.recencydisplay == true){
+      $scope.showBehaviourTick = true;
+      $("#main-recency").addClass('active')
+      $("#other-recency").removeClass('active')
+    }
   }
     $scope.editRecency = function(){
       console.log($scope.recency);

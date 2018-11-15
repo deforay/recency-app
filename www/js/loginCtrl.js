@@ -4,7 +4,7 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
 .controller('loginCtrl', function($scope,$ionicPopup,$state, $cordovaToast,$timeout,$localStorage,$rootScope,$todo,$window,$location,$preLoader,$http) {
   $scope.loginData = {};
 
-  if($localStorage.get('logout')=='true' || $localStorage.get('login')=='success'){
+  if($localStorage.get('logout')=='true' || $localStorage.get('login')=='success' && $localStorage.get('apppassword')!=null){
    $scope.viewLogin = false;
    $scope.viewAddPassword = false;
    $scope.viewConfirmPassword = false;
@@ -187,13 +187,39 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
 
             }else{
               $(".passcode-col").addClass('valid')
-              $(".passcode-col").removeClass('error')
-              $preLoader.show();
-              $timeout(function() {
-               
-                $location.path('/app/addRecency');
-                $preLoader.hide();
-            }, 500);
+              $(".passcode-col").removeClass('error');
+                var QcStartDate = localStorage.getItem('QcStartDate');
+                var QcAlertDate = localStorage.getItem('QcAlertDate');
+                var QCDatas =  localStorage.getItem('QCData');
+                var testerName =  localStorage.getItem('LastTesterName');
+                var lastTestDate =  localStorage.getItem('LastTestDate');
+              lastTestDate = new Date(lastTestDate);
+                console.log(lastTestDate)
+
+                if( QcStartDate!=null && QcAlertDate!= null && QCDatas != null){
+                  var QcStartDate = new Date(QcStartDate);
+                  console.log(QcStartDate)
+                  var QcAlertDate = new Date(QcAlertDate);
+                  console.log(QcAlertDate)
+                   if((Date.parse(QcStartDate)>=Date.parse(QcAlertDate))&& localStorage.getItem('QcAlerted')!='yes'){
+                     
+                      $ionicPopup.alert({title:'Alert!',template:'Last QC done was on ' + lastTestDate + ' by Tester '+   testerName +'. Please perform QC test as recommended in SOP'});
+                      localStorage.setItem('QcAlerted','yes');
+                     
+                  } 
+                  $location.path('/app/addRecency');
+
+                }
+                else{
+                  $preLoader.show();
+                  $timeout(function() {
+                   
+                    $location.path('/app/addRecency');
+                    $preLoader.hide();
+                }, 500);
+                }
+              
+           
              
             }
         }else{
@@ -231,13 +257,17 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
 
       }
       else{
-         if(credentials.serverHost.indexOf("https://") == 0){
+         if(credentials.serverHost.indexOf("https://") == 0 || credentials.serverHost.indexOf("Https://") == 0){
           console.log(credentials.serverHost);
           credentials.serverHost =credentials.serverHost;
          }
-         else if(credentials.serverHost.indexOf("http://") == 0){
+         else if(credentials.serverHost.indexOf("http://") == 0 ||  credentials.serverHost.indexOf("Http://") == 0 ){
           credentials.serverHost =credentials.serverHost;
-         }else{
+         }
+        //  else if(credentials.serverHost.indexOf("Http://") == 0  || credentials.serverHost.indexOf("https://") != 0){
+        //   credentials.serverHost = credentials.serverHost;
+        //  }
+         else {
           credentials.serverHost ="http://"+credentials.serverHost;
 
          }
@@ -255,6 +285,8 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
                 $localStorage.set('authToken',response.data.userDetails['authToken']);
                 $localStorage.set('ServerRecencyData','success');
                 $localStorage.set('email',response.data.userDetails['userEmailAddress']);
+                // $localStorage.set('noOfDays',response.data.userDetails['noOfDays']);
+                $localStorage.set('noOfDays','2');
               $localStorage.set('serverpassword',credentials.serverpassword);
                 $localStorage.set('userId',response.data.userDetails['userId']);
                 $localStorage.set('userName',response.data.userDetails['userName']);  

@@ -21,6 +21,11 @@ app=angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
         $scope.QCDataList.push(result[i][1])
         }
     $scope.displaymessage = false;        
+var qclen = $scope.QCDataList.length
+    console.log($scope.QCDataList[qclen-1]);
+
+
+
     }  
     else{
         $scope.unSyncQcCount ="";
@@ -34,8 +39,7 @@ app=angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
     }   
   var qcdatas = $scope.QCDataList;
 
-  $scope.NewQcDataList = Object.assign({}, $scope.QCDataList);
-
+//   $scope.NewQcDataList = Object.assign({}, $scope.QCDataList);
 //  console.log( $scope.QCDataList)
 //  console.log( $scope.NewQcDataList)
   
@@ -66,14 +70,26 @@ app=angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
              {
                 $scope.response =data.syncData.response;
                 $scope.syncQcCount =data.syncCount.response[0].Total;
+                $scope.tenRecord = data.syncCount.tenRecord;
+                console.log($scope.tenRecord)
+                localStorage.setItem('lastTenQcData',JSON.stringify($scope.tenRecord) )
                localStorage.setItem('syncQcCount', $scope.syncQcCount)
+               var responselen = $scope.response.length ;
+               console.log($scope.QCDataList[responselen - 1].testerName);
+               var currentdate = new Date();
+               localStorage.setItem('LastTesterName',$scope.QCDataList[responselen - 1].testerName)
+               localStorage.setItem('LastTestDate',currentdate)
+ 
                     for(i=0;i< $scope.response.length;i++){
                           $scope.QCDataList.splice(i);
                      }
+                     console.log( $scope.QCDataList)
               localStorage.setItem('QCData',$scope.QCDataList);
                        if(localStorage.getItem('QCData')=="")
                         {
                        localStorage.removeItem('QCData');
+                       localStorage.removeItem('QcStartDate');
+                       localStorage.removeItem('QcAlertDate');
                         } 
                localStorage.setItem('qccounter',0);
                   $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
@@ -82,7 +98,7 @@ app=angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
                    }, function (error) {
                         // error
                    });
-                $window.location.reload(true);
+                 $window.location.reload(true);
              }
             })
             .error(function(data){

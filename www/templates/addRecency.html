@@ -2,9 +2,11 @@
 <ion-view view-title="Add Recency Test {{unSyncCount}}">
         <header class="row recency-tab" >
                 <button id="main-recency" class="col button recency-head " ng-click="setmainactive();">Section 1/2
-                     <!-- <span><i class="icon ion-checkmark"></i></span> -->
+                     <span ng-show="showRecencyTick" class="tickMark"><i class="icon ion-checkmark"></i></span>
                     </button>
-                <button id="other-recency" class="col button recency-head" ng-click="setothersactive();">Section 2/2</button>
+                <button id="other-recency" class="col button recency-head" ng-click="patientvalidation();">Section 2/2
+                    <span ng-show="showBehaviourTick" class="tickMark"><i class="icon ion-checkmark"></i></span>
+                </button>
             </header>
 <div class="RecencyForm">        
   <ion-content style="top:0!important;bottom: 100px;">
@@ -82,7 +84,6 @@
                             <select id="{{loc.global_name}}" ng-if="loc.global_name=='location_three'" name="{{loc.global_name}}"   title="Please Choose {{loc.global_value}}" ng-model='recency.location[2]' ng-options="city.city_id as city.city_name for city in cityData track by city.city_id"   >
                                      <option value="">-- Select --</option>
                             </select>                      
-                            <!-- <input id="{{loc.global_value}}" type="text" class="{{loc.global_value}}" name="{{loc.global_value}}" ng-model='recency.location[$index]' ng-change="chk(loc.loc.global_name)" placeholder="{{loc.global_value}}"  required> -->
                         </div>
                     </div>
              </div>
@@ -489,7 +490,7 @@
                   <div class="row" ng-hide="recencydisplay">
                         <div class="input-field col ">
                                 <button class="button button-block  icon-left ion-chevron-left waves-effect waves-light" style="background: #3592f0 !important;font-size: 15px;" type="button"
-                                   ng-click="setmainactive();">
+                                   ng-click="behaviourValidation();">
                                   PREVIOUS
                                 </button>
                             </div>

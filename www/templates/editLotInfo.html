@@ -65,7 +65,7 @@
                 </div> 
                 <div class="row" >
                     <div class="input-field col savebtn ">
-                        <button class="button button-block waves-effect waves-light" type="submit"
+                        <button class="button button-block waves-effect waves-light" ng-disabled="qcLotKit.testKitManufacturer=='' || qcLotKit.LotNumber=='' || qcLotKit.testKitExpDate==''" type="submit"
                            ng-click="updateLotKit()">
                            SAVE
                         </button>

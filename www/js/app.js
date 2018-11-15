@@ -17,6 +17,7 @@ angular.module('starter',  ['ionic',
                             'starter.editTesterInfoCtrl',
                             'starter.editLotInfoCtrl',
                             'starter.recencyDataCtrl',
+                            'starter.serverQcDataCtrl',
                             'starter.addRecencyCtrl',
                             'starter.viewRecencyCtrl',
                             'starter.viewQcAssuranceCtrl',
@@ -145,6 +146,16 @@ angular.module('starter',  ['ionic',
         }
       }
     })
+    .state('app.serverQcData', {
+      url: '/serverQcData',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/serverQcData.html',
+          controller:"serverQcDataCtrl"
+        }
+      }
+    })
+    
     .state('app.addQcAssurance', {
       url: '/addQcAssurance',
       views: {

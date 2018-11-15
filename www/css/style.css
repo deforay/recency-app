@@ -485,11 +485,10 @@ background: url(../img/user.png) no-repeat left center rgba(255, 255, 255, 0.5)
 }
 .recency-tab .recency-head{
     font-weight: bold;
-   
-  /* border-bottom: 4px solid darkblue; */
     font-size: 13px;
     text-transform: uppercase;
-    background: #c5c5c5;
+    /* background: #c5c5c5; */
+    background: #e8e8e8;
     color: #3592f0;
    
     cursor: pointer;
@@ -510,6 +509,13 @@ background: url(../img/user.png) no-repeat left center rgba(255, 255, 255, 0.5)
     background: #3592f0;
     color: #fafafa;
     /* border-bottom: 4px solid#1969a7; */
+}
+.recency-tab .tickMark {
+    margin-left: 15px;
+}
+.recency-tab .tickMark .icon::before{
+    font-size: 16px;
+    color:#41de6e;
 }
 .RecencyForm{
     position: absolute;

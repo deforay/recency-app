@@ -1,0 +1,43 @@
+<ion-view view-title="Server QC Data" >
+
+
+      <ion-content class="animate-fade-slide-in"  >
+
+            <ion-list type="list-inset"  >
+                <h3 style="font-size:17px"> QC Testing</h3>
+              <div style="overflow-x:auto;margin-bottom: 30px;">
+            <table class="table table-bordered table-striped order-table" style="width: 100%" id="ordertable">
+              <tr style="white-space: nowrap">
+                <th>QC Date</th>
+                <th>Assay Recent</th>
+                <th>Final Test Result</th>
+                <th>Tester Name</th>
+              </tr>
+              <tr ng-repeat="recency in lastQCDatas " >
+                <td>{{ recency['kit_expiry_date']| date: "dd-MMM-yyyy"}}</td>
+             
+                <!-- <td> 
+                  <p style="color:red"  ng-if="recency['term_outcome']!='Long Term' && recency['term_outcome']!='Assay Recent'">{{recency['term_outcome']}}</p>
+                  <p ng-if="recency['term_outcome']=='Long Term' || recency['term_outcome']=='Assay Recent'">{{recency['term_outcome']}}</p>
+                </td> -->
+                <td style="text-transform: capitalize;">{{recency['reference_result']  | replace: '_':' '}}</td>
+      
+                <td style="text-transform: capitalize;">{{ recency['reference_result'] | replace: '_':' ' }}</td>
+                <td>{{ recency['tester_name'] }}</td>
+               
+               
+              </tr>
+              <tr>
+                <td colspan="4" style="text-align: center;margin: 10px;" ng-show="displaymessage">No Records Found.</td>
+
+              </tr>
+              
+            </table>
+          </div>
+         </ion-list>
+          </ion-content>
+</ion-view>
+
+
+     
+     

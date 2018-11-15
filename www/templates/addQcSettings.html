@@ -44,7 +44,7 @@
                 </div> 
             <div class="row" >
                 <div class="input-field col savebtn ">
-                    <button class="button button-block waves-effect waves-light" type="submit"
+                    <button class="button button-block waves-effect waves-light" ng-disabled="qcTester.testerName==''" type="submit"
                        ng-click="addTesterName()">
                        SAVE
                     </button>
@@ -137,7 +137,7 @@
             </div>            
             <div class="row">
                     <div class="input-field col savebtn ">
-                        <button class="button button-block waves-effect waves-light" type="submit"
+                        <button class="button button-block waves-effect waves-light"  ng-disabled="qcLotObj.testKitManufacturer=='' || qcLotObj.LotNumber=='' || qcLotObj.testKitExpDate==''" type="submit"
                            ng-click="addLotInfo()">
                            SAVE
                         </button>

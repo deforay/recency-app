@@ -27,6 +27,7 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
       $scope.testkitlotObj1 =[];
       $scope.testkitlotObj2 =[];
      $scope.TestKitLotList = JSON.parse(localStorage.getItem('LotInfo'));
+
      if( $scope.TestKitLotList!=null){
        var TestKitLotListLen = Object.keys($scope.TestKitLotList).length;
        for(i=0;i<TestKitLotListLen;i++){
@@ -90,6 +91,7 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
       $scope.qcAssurance.userId = localStorage.getItem('userId');
       $scope.qcAssurance.qcsampleId ="";
       $scope.qcAssurance.referenceResult="";
+      $scope.qcAssurance.qcTestDate ="";
       $scope.qcAssurance.testKitValueName="";
       $scope.qcAssurance.testKitLotNo="";
       $scope.qcAssurance.testKitExpDate="";
@@ -328,7 +330,17 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
       //   }
       // }
 
-
+      $scope.setqcTestDate = function(val){
+        var ipObj1 = {
+          callback: function (val) { 
+          var qcTestDate = new Date(val);
+          console.log(qcTestDate);
+          $scope.qcAssurance.qcTestDate =  $filter('date')(qcTestDate , "dd-MMM-yyyy");
+          },
+        to: new Date(),
+        }; 
+        ionicDatePicker.openDatePicker(ipObj1);
+      }
   $scope.setRecencyDate = function(val){
     var ipObj2 = {
       callback: function (val) { 
@@ -358,15 +370,16 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
       $scope.addQcAssurance = function()
       {
         console.log($scope.qcAssurance);
+
+        if($scope.qcAssurance.qcTestDate==""){
+          $ionicPopup.alert({title:'Alert!',template:'Please Enter Date Of QC Test'});
+          return false;
+        }
         if($scope.qcAssurance.referenceResult==""){
           $ionicPopup.alert({title:'Alert!',template:'Please Choose Reference Result'});
           return false;
         }
        
-        if($scope.qcAssurance.testKitExpDate==""){
-          $ionicPopup.alert({title:'Alert!',template:'Please Choose Test Kit Expiry Date'});
-          return false;
-        }
         // if($scope.qcAssurance.testNotPerformed==true){
         //   if( $scope.qcAssurance.recencyreason==""){
         //     $ionicPopup.alert({title:'Alert!',template:"Please Choose Reason of Recency Test Not Performed"});
@@ -413,6 +426,22 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
         + currentdate.getSeconds();
 
         console.log($scope.qcAssurance.formInitDateTime);
+        //  $scope.noOfDays = localStorage.getItem('noOfDays');
+        $scope.noOfDays = 0;
+     $scope.QCDatas =  localStorage.getItem('QCData');
+
+      if($scope.QCDatas == null){
+      
+         if(localStorage.getItem('QcStartDate')==null && localStorage.getItem('QcAlertDate')==null ){
+          var currentDate1 = new Date();
+          console.log(currentDate1);
+            localStorage.setItem('QcStartDate',currentDate1);
+            var alertdate = new Date(Date.now()+$scope.noOfDays *24*60*60*1000);
+            console.log(alertdate);
+            localStorage.setItem('QcAlertDate',alertdate);
+           }
+        
+      }
         var count = localStorage.getItem('qccounter');
         $scope.counter  = parseInt(count) + 1;
      
