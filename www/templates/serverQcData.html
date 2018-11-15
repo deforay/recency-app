@@ -10,17 +10,17 @@
               <tr style="white-space: nowrap">
                 <th>QC Date</th>
                 <th>Assay Recent</th>
-                <th>Final Test Result</th>
+                <!-- <th>Final Test Result</th> -->
                 <th>Tester Name</th>
               </tr>
               <tr ng-repeat="recency in lastQCDatas " >
-                <td>{{ recency['kit_expiry_date']| date: "dd-MMM-yyyy"}}</td>
+                <td>{{ recency['qc_test_date']| date: "dd-MMM-yyyy"}}</td>
              
                 <!-- <td> 
                   <p style="color:red"  ng-if="recency['term_outcome']!='Long Term' && recency['term_outcome']!='Assay Recent'">{{recency['term_outcome']}}</p>
                   <p ng-if="recency['term_outcome']=='Long Term' || recency['term_outcome']=='Assay Recent'">{{recency['term_outcome']}}</p>
                 </td> -->
-                <td style="text-transform: capitalize;">{{recency['reference_result']  | replace: '_':' '}}</td>
+                <!-- <td style="text-transform: capitalize;">{{recency['reference_result']  | replace: '_':' '}}</td> -->
       
                 <td style="text-transform: capitalize;">{{ recency['reference_result'] | replace: '_':' ' }}</td>
                 <td>{{ recency['tester_name'] }}</td>

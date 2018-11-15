@@ -88,11 +88,11 @@
                 <p>
                   {{ recency['patient_id'] }}</p>
                </td>
-                <td> 
+                <!-- <td> 
                   <p style="color:red"  ng-if="recency['term_outcome']!='Long Term' && recency['term_outcome']!='Assay Recent'">{{recency['term_outcome']}}</p>
                   <p ng-if="recency['term_outcome']=='Long Term' || recency['term_outcome']=='Assay Recent'">{{recency['term_outcome']}}</p>
-                </td>
-                <!-- <td>{{recency['term_outcome']}}</td> -->
+                </td> -->
+                <td>{{recency['term_outcome']}}</td>
                 <!-- <td>{{recency['final_outcome']}}</td> -->
                 <td>{{ recency['facility_name'] }}</td>
                 <td>{{ recency['hiv_diagnosis_date'] | date: "dd-MMM-yyyy" }}</td>

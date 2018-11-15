@@ -1,7 +1,7 @@
 
 app=angular.module('starter.loginCtrl', ['starter.services'])
 
-.controller('loginCtrl', function($scope,$ionicPopup,$state, $cordovaToast,$timeout,$localStorage,$rootScope,$todo,$window,$location,$preLoader,$http) {
+.controller('loginCtrl', function($scope,$ionicPopup,$state, $cordovaToast,$filter,$timeout,$localStorage,$rootScope,$todo,$window,$location,$preLoader,$http) {
   $scope.loginData = {};
 
   if($localStorage.get('logout')=='true' || $localStorage.get('login')=='success' && $localStorage.get('apppassword')!=null){
@@ -99,13 +99,13 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
           $localStorage.set('apppassword',$scope.confirmpasscode);
           
           $preLoader.show();
-          $cordovaToast
-          .show('App Password Created Successfully', 'long', 'center')
-          .then(function(success) {
-            // success
-          }, function (error) {
-            // error
-          });
+          // $cordovaToast
+          // .show('App Password Created Successfully', 'long', 'center')
+          // .then(function(success) {
+          //   // success
+          // }, function (error) {
+          //   // error
+          // });
           $timeout(function() {
             $location.path('/app/addRecency');
             $preLoader.hide();
@@ -192,8 +192,17 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
                 var QcAlertDate = localStorage.getItem('QcAlertDate');
                 var QCDatas =  localStorage.getItem('QCData');
                 var testerName =  localStorage.getItem('LastTesterName');
+                if(testerName==null){
+                  testerName = '';
+                }
                 var lastTestDate =  localStorage.getItem('LastTestDate');
-              lastTestDate = new Date(lastTestDate);
+                if(lastTestDate == null){
+                  lastTestDate ='';
+                }else{
+                  lastTestDate = new Date(lastTestDate);
+                  lastTestDate = $filter('date')(lastTestDate , "dd-MMM-yyyy")
+                }
+             
                 console.log(lastTestDate)
 
                 if( QcStartDate!=null && QcAlertDate!= null && QCDatas != null){
@@ -201,10 +210,19 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
                   console.log(QcStartDate)
                   var QcAlertDate = new Date(QcAlertDate);
                   console.log(QcAlertDate)
-                   if((Date.parse(QcStartDate)>=Date.parse(QcAlertDate))&& localStorage.getItem('QcAlerted')!='yes'){
-                     
-                      $ionicPopup.alert({title:'Alert!',template:'Last QC done was on ' + lastTestDate + ' by Tester '+   testerName +'. Please perform QC test as recommended in SOP'});
-                      localStorage.setItem('QcAlerted','yes');
+                  //  if((Date.parse(QcStartDate)>=Date.parse(QcAlertDate))&& localStorage.getItem('QcAlerted')!='yes'){
+                    if((Date.parse(QcStartDate)>=Date.parse(QcAlertDate))){
+                      var currentDate =  new Date();
+                      currentDate = $filter('date')(currentDate , "dd-MMM-yyyy");
+                      if( currentDate == localStorage.getItem('TodayAlertDate')){
+                     console.log(currentDate)
+                      }else{
+                        var today = new Date();
+                         today = $filter('date')(today , "dd-MMM-yyyy");
+                         localStorage.setItem('TodayAlertDate',today);
+                        $ionicPopup.alert({title:'Alert!',template:'Last QC done was on ' + lastTestDate + ' by Tester '+   testerName +'. Please perform QC test as recommended in SOP'});
+
+                      }
                      
                   } 
                   $location.path('/app/addRecency');
