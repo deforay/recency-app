@@ -1,10 +1,10 @@
 
-<ion-view view-title="Add Recency Test {{unSyncCount}}">
+<ion-view view-title="Add Recency Test {{unSyncCount}}" >
         <header class="row recency-tab" >
                 <button id="main-recency" class="col button recency-head " ng-click="setmainactive();">Section 1/2
                      <span ng-show="showRecencyTick" class="tickMark"><i class="icon ion-checkmark"></i></span>
                     </button>
-                <button id="other-recency" class="col button recency-head" ng-click="patientvalidation();">Section 2/2
+                <button id="other-recency" class="col button recency-head" ng-click="patientvalidation();setothersactive();">Section 2/2
                     <span ng-show="showBehaviourTick" class="tickMark"><i class="icon ion-checkmark"></i></span>
                 </button>
             </header>
@@ -15,7 +15,7 @@
 
     <div class="loginFields">
         <div class="row">
-        <form class="col loginForm" name="addform" ng-init="recencyinit()">
+        <form class="col loginForm" name="addform" >
             <div ng-show="recencydisplay">    
                   <div class="row">
                       <div class="input-field col "> 
@@ -211,10 +211,10 @@
                                     <p>Control Line<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='ctrlLine'" style="color:#df3838;"> *</span></p>
                              </span>
                              <div class="form-logo"><img src="img/recencyresult.png"></div> 
-                          <select class="ng-valid" id="ctrlLine" name="ctrlLine" ng-model="recency.ctrlLine" title="Please Choose Control Line" ng-change="getOutcome(recency.ctrlLine,recency.positiveLine,recency.longTermLine)">
+                          <select class="ng-valid" id="ctrlLine" name="ctrlLine" ng-model="recency.ctrlLine" title="Please Choose Control Line" ng-change="getControlLine(recency.ctrlLine);getOutcome(recency.ctrlLine,recency.positiveLine,recency.longTermLine)">
                             <option value="">-- Select --</option>
-                            <option value="present">Present(Positive/P)</option>
-                            <option value="absent">Absent(Negative/N)</option>
+                            <option value="present">Present</option>
+                            <option value="absent">Absent</option>
                          </select>  
                       </div>
                   </div>
@@ -237,7 +237,7 @@
                                   <p>Long Term Line<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='longTermLine'" style="color:#df3838;"> *</span></p>
                           </span>
                         <div class="form-logo"><img src="img/recencyresult.png"></div> 
-                        <select class="ng-valid" id="longTermLine" name="longTermLine" title="Please Choose LongTerm Line" ng-model="recency.longTermLine" ng-change="getOutcome(recency.ctrlLine,recency.positiveLine,recency.longTermLine)" >
+                        <select class="ng-valid" id="longTermLine" name="longTermLine" title="Please Choose LongTerm Line" ng-model="recency.longTermLine" ng-change="OnLongtermChange(recency.longTermLine);getOutcome(recency.ctrlLine,recency.positiveLine,recency.longTermLine)" >
                           <option value="">-- Select --</option>
                           <option value="present">Present(Long Term/LT)</option>
                           <option value="absent">Absent(Recent/R)</option>
@@ -313,7 +313,7 @@
                 <div class="row" >
                     <div class="input-field col ">
                         <button class="button button-block  icon-right ion-chevron-right button-calm waves-effect waves-light" style="background:#3592f0 !important;" type="button"
-                        ng-click="patientvalidation();">  
+                        ng-click="patientvalidation();setothersactive();">  
                            NEXT
                         </button>
                     </div>
@@ -490,7 +490,7 @@
                   <div class="row" ng-hide="recencydisplay">
                         <div class="input-field col ">
                                 <button class="button button-block  icon-left ion-chevron-left waves-effect waves-light" style="background: #3592f0 !important;font-size: 15px;" type="button"
-                                   ng-click="behaviourValidation();">
+                                   ng-click="behaviourValidation();setmainactive();">
                                   PREVIOUS
                                 </button>
                             </div>

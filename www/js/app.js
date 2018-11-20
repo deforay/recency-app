@@ -103,6 +103,7 @@ angular.module('starter',  ['ionic',
 
   .state('app.addRecency', {
     url: '/addRecency',
+    cache: false,
     views: {
       'menuContent': {
         templateUrl: 'templates/addRecency.html',
@@ -121,6 +122,7 @@ angular.module('starter',  ['ionic',
   })
   .state('app.viewRecency', {
       url: '/viewRecency',
+    cache: false,
       views: {
         'menuContent': {
           templateUrl: 'templates/viewRecency.html',
@@ -130,6 +132,7 @@ angular.module('starter',  ['ionic',
     })
     .state('app.viewQcAssurance', {
       url: '/viewQcAssurance',
+    cache: false,
       views: {
         'menuContent': {
           templateUrl: 'templates/viewQcAssurance.html',

@@ -1,5 +1,5 @@
 
-<ion-view view-title="Add QC Data{{unSyncCount}}">
+<ion-view view-title="Add QC Data{{unSyncAddQcCount}}">
  
 <div class="QCForm">        
 <ion-content >
@@ -8,7 +8,7 @@
 
 <div class="loginFields">
     <div class="row">
-    <form class="col loginForm" name="addqcform" ng-init="qcAssuranceinit()"> 
+    <form class="col loginForm" name="addqcform" > 
             <div class="row">
                     <div class="input-field col col-90">
                           <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
@@ -131,10 +131,10 @@
                                 <p>Control Line<span style="color:#df3838;"> *</span></p>
                          </span>
                          <div class="form-logo"><img src="img/recencyresult.png"></div> 
-                      <select class="ng-valid" id="ctrlLine" name="ctrlLine" ng-model="qcAssurance.ctrlLine" title="Please Choose Control Line" ng-change="getOutcome(qcAssurance.ctrlLine,qcAssurance.positiveLine,qcAssurance.longTermLine)">
+                      <select class="ng-valid" id="ctrlLine" name="ctrlLine" ng-model="qcAssurance.ctrlLine" title="Please Choose Control Line" ng-change="getControlLine(qcAssurance.ctrlLine);getOutcome(qcAssurance.ctrlLine,qcAssurance.positiveLine,qcAssurance.longTermLine)">
                         <option value="">-- Select --</option>
-                        <option value="present">Present(Positive/P)</option>
-                        <option value="absent">Absent(Negative/N)</option>
+                        <option value="present">Present</option>
+                        <option value="absent">Absent</option>
                      </select>  
                   </div>
               </div>
@@ -157,7 +157,7 @@
                               <p>Long Term Line<span style="color:#df3838;"> *</span></p>
                       </span>
                     <div class="form-logo"><img src="img/recencyresult.png"></div> 
-                    <select class="ng-valid" id="longTermLine" name="longTermLine" title="Please Choose LongTerm Line" ng-model="qcAssurance.longTermLine" ng-change="getOutcome(qcAssurance.ctrlLine,qcAssurance.positiveLine,qcAssurance.longTermLine)" >
+                    <select class="ng-valid" id="longTermLine" name="longTermLine" title="Please Choose LongTerm Line" ng-model="qcAssurance.longTermLine" ng-change="OnLongtermChange(recency.longTermLine);getOutcome(qcAssurance.ctrlLine,qcAssurance.positiveLine,qcAssurance.longTermLine)" >
                       <option value="">-- Select --</option>
                       <option value="present">Present(Long Term/LT)</option>
                       <option value="absent">Absent(Recent/R)</option>

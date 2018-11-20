@@ -1,5 +1,5 @@
 
-<ion-view view-title="Local Recency Data{{unSyncCount}}">
+<ion-view view-title="Local Recency Data {{unSyncCount}}">
     <!-- <div class="badge badge-assertive" style="    top: 1px;
     right: 0;
     z-index: 1000000;
@@ -17,7 +17,7 @@
       <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
      
     <div class="recency-view" style="margin-bottom:45px">
-     <div class="card" style="border:none;padding-top: 0; padding-bottom: 0;" ng-repeat="recency in filtered = (recencyList) track by recency.patientId  ">  
+     <div class="card" style="border:none;padding-top: 0; padding-bottom: 0;" ng-repeat="recency in filtered = (recencyList)  ">  
         <a ng-click="viewRecency(recency,$index)" class=" stable-bg ink ink-dark">
             <div class="table-header">
               <span style="float: left ">Recency Test</span>

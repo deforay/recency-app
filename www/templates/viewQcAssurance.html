@@ -1,5 +1,6 @@
 
-<ion-view view-title="QC Data{{unSyncQcCount}}">
+<ion-view  view-title="QC Data  {{unSyncQcCount}}">
+ 
     <!-- <div class="badge badge-assertive" style="    top: 1px;
     right: 0;
     z-index: 1000000;
@@ -17,7 +18,7 @@
       <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
      
     <div class="recency-view" style="margin-bottom:45px">
-     <div class="card" style="border:none;padding-top: 0; padding-bottom: 0;" ng-repeat="qc in filtered = (QCDataList) track by qc.qcsampleId  ">  
+     <div class="card" style="border:none;padding-top: 0; padding-bottom: 0;" ng-repeat="qc in filtered = (QCDataList)   ">  
         <a ng-click="viewqc(qc,$index)" class=" stable-bg ink ink-dark">
             <div class="table-header">
               <span style="float: left ">QC Test</span>

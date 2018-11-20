@@ -13,16 +13,106 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
         }
 
       });
-      var qcList =   localStorage.getItem('QCData');
-      //console.log(qcList)
-      if(qcList != null){
-        qcList    = JSON.parse(qcList);
-        $scope.unSyncCount = "("+Object.keys(qcList).length+"  Not Synced)";
- 
-      }  else{
-        $scope.unSyncCount="";
-      }
+     
 //console.log(qcList)
+$scope.$on("$ionicView.beforeEnter", function(event, data){
+
+  $scope.testkitlotObj1 =[];
+      $scope.testkitlotObj2 =[];
+     $scope.TestKitLotList = JSON.parse(localStorage.getItem('LotInfo'));
+
+     if( $scope.TestKitLotList!=null){
+       var TestKitLotListLen = Object.keys($scope.TestKitLotList).length;
+       for(i=0;i<TestKitLotListLen;i++){
+         if($scope.TestKitLotList[i].available!='yes'){
+           $scope.testkitlotObj1.push({
+            "testKitManufacturer":$scope.TestKitLotList[i].testKitManufacturer,
+            "testKitManufacturerName":$scope.TestKitLotList[i].testKitManufacturerName,
+            "LotNumber":$scope.TestKitLotList[i].LotNumber,
+             "testKitLotNo":$scope.TestKitLotList[i].testKitLotNo,
+             "testKitExpDate":$scope.TestKitLotList[i].testKitExpDate,
+             "label":$scope.TestKitLotList[i].label,
+             "available":$scope.TestKitLotList[i].available,
+           })
+         }else{
+           $scope.testkitlotObj2.push({
+            "testKitManufacturer":$scope.TestKitLotList[i].testKitManufacturer,
+            "testKitManufacturerName":$scope.TestKitLotList[i].testKitManufacturerName,
+            "LotNumber":$scope.TestKitLotList[i].LotNumber,
+             "testKitLotNo":$scope.TestKitLotList[i].testKitLotNo,
+             "testKitExpDate":$scope.TestKitLotList[i].testKitExpDate,
+             "label":$scope.TestKitLotList[i].label,
+             "available":$scope.TestKitLotList[i].available,
+           })
+         }
+       }
+       for(i=0;i<$scope.testkitlotObj2.length;i++){
+         $scope.testkitlotObj1.unshift($scope.testkitlotObj2[i])
+       }
+       console.log($scope.testkitlotObj1)
+       $scope.TestKitLotList = $scope.testkitlotObj1;
+     }
+
+
+       $scope.testerNameObj1 =[];
+       $scope.testerNameObj2 =[];
+      $scope.TesterNameList = JSON.parse(localStorage.getItem('TesterInfo'));
+      if( $scope.TesterNameList!=null){
+        var TesterNameListLen = Object.keys($scope.TesterNameList).length;
+        for(i=0;i<TesterNameListLen;i++){
+          if($scope.TesterNameList[i].available!='yes'){
+            $scope.testerNameObj1.push({
+              "testerName":$scope.TesterNameList[i].testerName,
+              "label":$scope.TesterNameList[i].label,
+              "available":$scope.TesterNameList[i].available,
+            })
+          }else{
+            $scope.testerNameObj2.push({
+              "testerName":$scope.TesterNameList[i].testerName,
+              "label":$scope.TesterNameList[i].label,
+              "available":$scope.TesterNameList[i].available,
+            })
+          }
+        }
+        for(i=0;i<$scope.testerNameObj2.length;i++){
+          $scope.testerNameObj1.unshift($scope.testerNameObj2[i])
+        }
+        console.log($scope.testerNameObj1)
+        $scope.TesterNameList = $scope.testerNameObj1;
+      }
+      $scope.qcAssurance.appVersion = localStorage.getItem('AppVersion');
+      $scope.qcAssurance.userId = localStorage.getItem('userId');
+      $scope.qcAssurance.qcsampleId ="";
+      $scope.qcAssurance.referenceResult="";
+      $scope.qcAssurance.qcTestDate ="";
+      $scope.qcAssurance.testKitValueName="";
+      $scope.qcAssurance.testKitLotNo="";
+      $scope.qcAssurance.testKitExpDate="";
+      $scope.qcAssurance.testKitLotAvailability="";
+      // $scope.qcAssurance.recencyreason="";
+      // $scope.qcAssurance.recencyreasonName="";
+      // $scope.qcAssurance.otherreason ="";
+      $scope.qcAssurance.hivRecencyDate="";
+      $scope.qcAssurance.ctrlLine="";
+      $scope.qcAssurance.ctrlLineName="";
+      $scope.qcAssurance.positiveLine="";
+      $scope.qcAssurance.positiveLineName=""
+      $scope.qcAssurance.longTermLine="";
+      $scope.qcAssurance.longTermLineName="";
+      $scope.qcAssurance.recencyOutcome="";
+      $scope.qcAssurance.testerName = "";
+      $scope.qcAssurance.testerNameAvailability = "";
+   //   console.log($scope.qcAssurance);
+   var qcList =   localStorage.getItem('QCData');
+   //console.log(qcList)
+   if(qcList != null){
+     qcList    = JSON.parse(qcList);
+     $scope.unSyncAddQcCount = "("+Object.keys(qcList).length+"  Not Synced)";
+console.log($scope.unSyncAddQcCount)
+   }  else{
+     $scope.unSyncAddQcCount="";
+   }
+});
     $scope.qcAssuranceinit = function(){
       $scope.testkitlotObj1 =[];
       $scope.testkitlotObj2 =[];
@@ -110,6 +200,15 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
       $scope.qcAssurance.testerName = "";
       $scope.qcAssurance.testerNameAvailability = "";
    //   console.log($scope.qcAssurance);
+   var qcList =   localStorage.getItem('QCData');
+   //console.log(qcList)
+   if(qcList != null){
+     qcList    = JSON.parse(qcList);
+     $scope.unSyncAddQcCount = "("+Object.keys(qcList).length+"  Not Synced)";
+
+   }  else{
+     $scope.unSyncAddQcCount="";
+   }
     }
 
     $scope.doRefresh = function() {
@@ -119,39 +218,6 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
       
     }
 
-    // $scope.testKitLotAutoComplete = function(){
-    //   $scope.qcAssurance.testKitExpDate ="";
-    //   $scope.qcAssurance.testKitLotAvailability ="";
-
-    //   $( "#testKitLotNo").autocomplete({
-    //     minLength: 0,
-    //     source:
-    //       $scope.TestKitLotList
-    //     ,
-    //     // focus: function( event, ui ) {
-    //     //   $( "#testKitLotNo" ).val( ui.item.label );
-    //     //   return false;
-    //     // },
-    //     select:function(event,ui){
-    //       if(ui.item.testKitLotNo!=''){
-    //         // $('#testKitLotNo').val(ui.item.testKitLotNo);
-    //         $('#testKitExpDate').val(ui.item.testKitExpDate);
-    //         // $('#testKitLotAvailability').val(ui.item.available);
-    //         $scope.qcAssurance.testKitLotNo = ui.item.testKitLotNo;
-    //         $scope.qcAssurance.testKitExpDate = ui.item.testKitExpDate;
-    //         $scope.qcAssurance.testKitLotAvailability = ui.item.available;
-    //       }
-      
-    //       console.log(ui.item)
-         
-    //     }
-    //   })
-    //   .autocomplete( "instance" )._renderItem = function( ul, item ) {
-    //     return $( "<li>" )
-    //       .append( "<div>" + item.label  + "</div>" )
-    //       .appendTo( ul );
-    //   };
-    // }
 
     $scope.getTestKitExpDate = function(lotNo){
       console.log(lotNo)
@@ -170,32 +236,30 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
       }
     }
 
-    // $scope.testerNameAutoComplete = function(){
-    //   $( "#testerName").autocomplete({
-    //     minLength: 0,
-    //     source:
-    //       $scope.TesterNameList
-    //     ,
-    //     focus: function( event, ui ) {
-    //       $( "#testerName" ).val( ui.item.label );
-    //       return false;
-    //     },
-    //     select:function(event,ui){
-    //       if(ui.item.testerName!=''){
-    //         $('#testerName').val(ui.item.testerName);
-    //         $('#testerNameId').val(ui.item.testerName);
-    //         $scope.qcAssurance.testerNameAvailability = ui.item.available;
-    //       }
-    //       console.log(ui.item)
-         
-    //     }
-    //   })
-    //   .autocomplete( "instance" )._renderItem = function( ul, item ) {
-    //     return $( "<li>" )
-    //       .append( "<div>" + item.label  + "</div>" )
-    //       .appendTo( ul );
-    //   };
-    // }
+    $scope.getControlLine=function(controlline){
+      if(controlline=='present'){
+            $scope.qcAssurance.ctrlLineName = 'Present';  
+          }
+          if(controlline=='absent'){
+            $scope.qcAssurance.ctrlLineName = 'Absent';
+          }
+    }
+    $scope.OnPositiveLineChange = function(positiveline){
+      if(positiveline=='present'){
+        $scope.qcAssurance.positiveLineName = 'Present(Positive/P)';
+      }
+      if(positiveline=='absent'){
+        $scope.qcAssurance.positiveLineName = 'Absent(Negative/N)';
+      }  
+    }
+    $scope.OnLongtermChange = function(longterm){
+      if(longterm!='present'){
+        $scope.qcAssurance.longTermLineName = 'Present(Long Term/LT)';
+      }
+      if(longterm!='absent'){
+        $scope.qcAssurance.longTermLineName = 'Absent(Recent/R)';
+      }
+    }
     $scope.getReasonName = function(reason){
       if(reason=='no_consent_from_the_client'){
         $scope.qcAssurance.recencyreasonName ="No consent from the Client";
@@ -380,17 +444,7 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
           return false;
         }
        
-        // if($scope.qcAssurance.testNotPerformed==true){
-        //   if( $scope.qcAssurance.recencyreason==""){
-        //     $ionicPopup.alert({title:'Alert!',template:"Please Choose Reason of Recency Test Not Performed"});
-        //     return false;
-        //   }
-        //   if( $scope.qcAssurance.recencyreason=="other" &&  $scope.qcAssurance.otherreason==""){
-        //     $ionicPopup.alert({title:'Alert!',template:"Please Enter Other Reason"});
-        //     return false;
-        //   }
-        // }
-        // if($scope.qcAssurance.testNotPerformed!=true){
+       
           if($scope.qcAssurance.hivRecencyDate==""){
             $ionicPopup.alert({title:'Alert!',template:'Please Choose HIV+ Recency Date'});
             return false;
@@ -416,7 +470,7 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
           $ionicPopup.alert({title:'Alert!',template:'Please Choose Long Term Line'});
           return false;
         }
-      // }
+
         var currentdate = new Date();
         $scope.qcAssurance.formInitDateTime = currentdate.getFullYear() + "-"
         + (currentdate.getMonth()+1)  + "-" 
@@ -450,8 +504,12 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
            if(JSON.parse(localStorage.getItem('QCData'))!=null){
             $scope.qcData =JSON.parse(localStorage.getItem('QCData'));
             }       
-            $scope.qcData[$scope.counter-1] =qcAssurance;        
+            $scope.qcData[$scope.counter-1] =qcAssurance;  
+            console.log($scope.qcData)      
+           var unsynDatacount = Object.keys($scope.qcData).length;     
+            $scope.unsyncDatacount = ' - '+ unsynDatacount;
             localStorage.setItem('QCData',JSON.stringify($scope.qcData)) 
+            localStorage.setItem('QcUnsynCount',$scope.unsyncDatacount) 
             localStorage.setItem('qccounter', $scope.counter);
         
              $scope.qcAssurance ={};
@@ -461,7 +519,9 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
               }, function (error) {
                 // error
               });
-              $window.location.reload(true);
+              $scope.qcAssuranceinit();
+
+             // $window.location.reload(true);
             $preLoader.hide();
       }
 })

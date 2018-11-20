@@ -88,32 +88,17 @@
                 <p>
                   {{ recency['patient_id'] }}</p>
                </td>
-                <!-- <td> 
+                <td> 
                   <p style="color:red"  ng-if="recency['term_outcome']!='Long Term' && recency['term_outcome']!='Assay Recent'">{{recency['term_outcome']}}</p>
                   <p ng-if="recency['term_outcome']=='Long Term' || recency['term_outcome']=='Assay Recent'">{{recency['term_outcome']}}</p>
-                </td> -->
-                <td>{{recency['term_outcome']}}</td>
+                </td>
+                <!-- <td>{{recency['term_outcome']}}</td> -->
                 <!-- <td>{{recency['final_outcome']}}</td> -->
                 <td>{{ recency['facility_name'] }}</td>
                 <td>{{ recency['hiv_diagnosis_date'] | date: "dd-MMM-yyyy" }}</td>
-                <td ng-if="recency['control_line']=='present'">Present(Positive/P)</td>
-                <td ng-if="recency['control_line']=='absent'">Absent(Negative/N)</td>
-                <td ng-if="recency['control_line']=='invalid'">Invalid</td>
-                <td ng-if="recency['control_line']=='no_result'">Result Not Available</td>
-                <td ng-if="recency['control_line']=='' || recency['control_line']== 'null'">{{ recency['control_line'] }}</td>
-
-                <td ng-if="recency['positive_verification_line']=='present'">Present(Positive/P)</td>
-                <td ng-if="recency['positive_verification_line']=='absent'">Absent(Negative/N)</td>
-                <td ng-if="recency['positive_verification_line']=='invalid'">Invalid</td>
-                <td ng-if="recency['positive_verification_line']=='no_result'">Result Not Available</td>
-                <td ng-if="recency['positive_verification_line']==''  || recency['positive_verification_line']== 'null'">{{ recency['positive_verification_line'] }}</td>
-
-                <td ng-if="recency['long_term_verification_line']=='present'">Present(Long Term/LT)</td>
-                <td ng-if="recency['long_term_verification_line']=='absent'">Absent(Recent/R)</td>
-                <td ng-if="recency['long_term_verification_line']=='invalid'">Invalid</td>
-                <td ng-if="recency['long_term_verification_line']=='no_result'">Result Not Available</td>
-                <td ng-if="recency['long_term_verification_line']=='' || recency['long_term_verification_line']== 'null'">{{ recency['long_term_verification_line'] }}</td>
-               
+                <td style="text-transform: capitalize;">{{recency['control_line']}}</td>
+                <td style="text-transform: capitalize;">{{recency['positive_verification_line']}}</td>
+                <td style="text-transform: capitalize;">{{recency['long_term_verification_line']}}</td>               
               </tr>
               
               

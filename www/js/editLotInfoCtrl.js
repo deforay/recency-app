@@ -96,7 +96,7 @@ app=angular.module('starter.editLotInfoCtrl', ['starter.services'])
          });
   
          $location.path('/app/addQcSettings');
-         $window.location.reload(true);
+        //  $window.location.reload(true);
          $preLoader.hide();
 
       }

@@ -14,8 +14,14 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
     $("#main-addqcsetting").addClass("active");
     
     $(document).ready(function(){
-       $scope.recencydisplay=true;  
+   
+      });
+
+      $scope.$on("$ionicView.beforeEnter", function(event, data){
+        
+        $scope.recencydisplay=true;  
         $("#main-addqcsetting").addClass("active");
+        $("#other-addqcsetting").removeClass("active");
         if(!localStorage.getItem('Testercounter')){
          $scope.Testercounter =0;
           localStorage.setItem('Testercounter',$scope.Testercounter);
@@ -24,16 +30,8 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
             $scope.Lotcounter =0;
              localStorage.setItem('Lotcounter',$scope.Lotcounter);
         }
-      });
-
-      $scope.displayQcSettings = function(){
         var TesterInfoList =   localStorage.getItem('TesterInfo');
-        // if(TesterInfoList != null){
-        //    TesterInfoList    = JSON.parse(TesterInfoList);
-        //   $scope.isVisibleTester = false;
-        // }else{
-        //   $scope.isVisibleTester = true;
-        // }
+   
         if(TesterInfoList == null || TesterInfoList.length==0 ){
           $scope.isVisibleTester = true;
         }else{
@@ -42,10 +40,9 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
         $scope.TesterInfoList = TesterInfoList;
 
         }
-     //   console.log(TesterInfoList)
-  
-        var LotInfoList =   localStorage.getItem('LotInfo');
-       console.log(LotInfoList)
+      console.log(TesterInfoList)
+          var LotInfoList =   localStorage.getItem('LotInfo');
+      // console.log(LotInfoList)
         if(LotInfoList == null || LotInfoList==""){
           $scope.isVisibleLot = true;
         }else{
@@ -54,10 +51,33 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
 
           $scope.isVisibleLot = false;
         }
-     //   console.log(LotInfoList)
-      }
-      $scope.displayQcSettings();
+       console.log(LotInfoList)
+      });
+      $scope.displayQcSettings = function(){
+        var TesterInfoList =   localStorage.getItem('TesterInfo');
+   
+        if(TesterInfoList == null || TesterInfoList.length==0 ){
+          $scope.isVisibleTester = true;
+        }else{
+          TesterInfoList    = JSON.parse(TesterInfoList);
+          $scope.isVisibleTester = false;
+        $scope.TesterInfoList = TesterInfoList;
 
+        }
+      console.log(TesterInfoList)
+          var LotInfoList =   localStorage.getItem('LotInfo');
+      // console.log(LotInfoList)
+        if(LotInfoList == null || LotInfoList==""){
+          $scope.isVisibleLot = true;
+        }else{
+          LotInfoList  = JSON.parse(LotInfoList);
+        $scope.LotInfoList =LotInfoList;
+
+          $scope.isVisibleLot = false;
+        }
+       console.log(LotInfoList)
+      };
+      $scope.displayQcSettings();
     $scope.testerinit = function(){
     $("#main-addqcsetting").addClass("active");
       $scope.qcTester.testerName = "";
@@ -247,8 +267,10 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
       localStorage.setItem('TesterInfo',JSON.stringify( $scope.testinfo));
       localStorage.setItem('Testercounter',JSON.stringify( $scope.testinfo.length));
     } 
-        // localStorage.setItem('TesterInfo',JSON.stringify( $scope.testinfo));
-        // localStorage.setItem('Testercounter',JSON.stringify( $scope.testinfo.length));
+   
+$scope.TesterInfoList = [];
+    $scope.displayQcSettings();
+
         $cordovaToast.show('Deleted Successfully', 'long', 'center')
         .then(function(success) {
           // success
@@ -256,7 +278,7 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
           // error
         });
         $preLoader.hide();
-        $window.location.reload(true);
+      //  $window.location.reload(true);
       }
       $scope.deleteLotInfo = function(lotInfo,index){
        // console.log(lotInfo);
@@ -285,6 +307,9 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
       localStorage.setItem('LotInfo',JSON.stringify( $scope.lotinfo));
       localStorage.setItem('Lotcounter',JSON.stringify( $scope.lotinfo.length));
     } 
+    $scope.LotInfoList = [];
+    $scope.displayQcSettings();
+  
     $cordovaToast.show('Deleted Successfully', 'long', 'center')
          .then(function(success) {
            // success
@@ -293,7 +318,7 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
          });
     $preLoader.hide();
 
-     $window.location.reload(true);
+    //  $window.location.reload(true);
      $("#other-addqcsetting").addClass('active')
      $("#main-addqcsetting").removeClass("active");
     }

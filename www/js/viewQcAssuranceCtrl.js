@@ -2,17 +2,23 @@
 app=angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
 
 .controller('viewQcAssuranceCtrl', function($scope,$rootScope,$http,$q,$preLoader, $ionicPopup, $cordovaToast, $location,$window, $stateParams,$ionicPlatform,$cordovaLocalNotification, $cordovaBadge) {
-    $rootScope.apiUrl = localStorage.getItem('apiUrl');
-    var QCDataList =   localStorage.getItem('QCData');
+   
+ $scope.onLoadQc = function(){
+
+  $rootScope.apiUrl = localStorage.getItem('apiUrl');
+  var QCDataList =   localStorage.getItem('QCData');
   //console.log(QCDataList)
   $scope.NewQcDataList = [];
   $scope.NewQcObj = [];
   $scope.limitTo = 2;
    if(QCDataList != null){
      QCDataList    = JSON.parse(QCDataList);
-    // console.log(QCDataList);
-     var unsyncount = Object.keys(QCDataList).length;
-     $scope.unSyncQcCount ="("+unsyncount+")";
+    console.log(QCDataList);
+    //  var unsyncount = Object.keys(QCDataList).length;
+    //  $scope.unSyncQcCount = "("+unsyncount+")";
+    $scope.unSyncQcCount = localStorage.getItem('QcUnsynCount')
+     console.log($scope.unSyncQcCount)
+     $scope.ss = true;
      var result = Object.keys(QCDataList).map(function(key,value) {
      return [(key), QCDataList[value]];
      });
@@ -21,14 +27,13 @@ app=angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
         $scope.QCDataList.push(result[i][1])
         }
     $scope.displaymessage = false;        
-var qclen = $scope.QCDataList.length
+    var qclen = $scope.QCDataList.length
     console.log($scope.QCDataList[qclen-1]);
-
-
-
     }  
     else{
         $scope.unSyncQcCount ="";
+     $scope.ss = false;
+
         $scope.syncQcCount =   localStorage.getItem('syncQcCount');
         if($scope.syncQcCount== undefined || $scope.syncQcCount == ""){
               $scope.syncQcCount = 0;
@@ -37,13 +42,59 @@ var qclen = $scope.QCDataList.length
         }
     $scope.displaymessage = true;
     }   
+}
+
+$scope.$on("$ionicView.beforeEnter", function(event, data){
+    $rootScope.apiUrl = localStorage.getItem('apiUrl');
+  var QCDataList =   localStorage.getItem('QCData');
+  //console.log(QCDataList)
+  $scope.NewQcDataList = [];
+  $scope.NewQcObj = [];
+  $scope.limitTo = 2;
+   if(QCDataList != null){
+     QCDataList    = JSON.parse(QCDataList);
+    console.log(QCDataList);
+    //  var unsyncount = Object.keys(QCDataList).length;     
+    //  $scope.unSyncQcCount = "("+unsyncount+")";
+    $scope.unSyncQcCount = localStorage.getItem('QcUnsynCount')
+    $scope.ss = true;
+
+     console.log($scope.unSyncQcCount)
+
+     var result = Object.keys(QCDataList).map(function(key,value) {
+     return [(key), QCDataList[value]];
+     });
+     $scope.QCDataList =[];
+     for(i=0;i<result.length;i++){
+        $scope.QCDataList.push(result[i][1])
+        }
+    $scope.displaymessage = false;        
+    var qclen = $scope.QCDataList.length
+    console.log($scope.QCDataList[qclen-1]);
+    }  
+    else{
+        $scope.unSyncQcCount ="";
+     $scope.ss = false;
+
+        $scope.syncQcCount =   localStorage.getItem('syncQcCount');
+        if($scope.syncQcCount== undefined || $scope.syncQcCount == ""){
+              $scope.syncQcCount = 0;
+            //  localStorage.setItem('syncQcCount', $scope.syncQcCount);
+            // console.log($scope.syncQcCount);
+        }
+    $scope.displaymessage = true;
+    }   
+});
   var qcdatas = $scope.QCDataList;
 
 //   $scope.NewQcDataList = Object.assign({}, $scope.QCDataList);
 //  console.log( $scope.QCDataList)
 //  console.log( $scope.NewQcDataList)
   
+$scope.$on("$ionicView.Enter", function(event, data){
+    console.log($scope.unSyncQcCount)
 
+});
 
         $scope.doRefresh = function() {
             $preLoader.show();
@@ -98,7 +149,9 @@ var qclen = $scope.QCDataList.length
                    }, function (error) {
                         // error
                    });
-                 $window.location.reload(true);
+                    $scope.onLoadQc();
+
+                //  $window.location.reload(true);
              }
             })
             .error(function(data){

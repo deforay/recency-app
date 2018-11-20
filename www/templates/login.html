@@ -8,7 +8,7 @@
                 <form class="col loginForm" name="loginForm" ng-show="viewLogin">
                       <div class="row">
                           <div class="input-field col ">
-                              <input id="serverHost" type="text" class="serverHost" name="serverHost" ng-model='loginData.serverHost' placeholder="http://deforay" required>
+                              <input id="serverHost" type="text" class="serverHost" name="serverHost" ng-model='loginData.serverHost' placeholder="https://recency.deforay.in" required>
                               <span style="color:red" ng-show="loginForm.serverHost.$dirty && loginForm.serverHost.$invalid">
                                     <span ng-show="loginForm.serverHost.$error.required">Server Host is required.</span>
                                     </span>
@@ -72,7 +72,7 @@
                           </div>
                     </form> -->
                     <form class="col AddPasswordForm" name="AddPasswordForm" ng-show="viewAddPassword" novalidate>
-                        <div  ng-init="initCreateApp()" > 
+                        <div  ng-init="initCreateApp()" class="passlock"> 
                                 <h3 style="font-size: 15px;color: #000;text-align: center;">Choose App Password </h3>
                                 <p style="color: #000;text-align: center;">This will be used each time you login to the app.</p>
                             <div >
@@ -140,7 +140,7 @@
                       </div>
                   </form>
                   <form class="col ConfirmPasswordForm" name="ConfirmPasswordForm" ng-show="viewConfirmPassword" novalidate>
-                        <div  ng-init="initConfirmApp()" > 
+                        <div  ng-init="initConfirmApp()" class="passlock" > 
                                 <h3 style="font-size: 15px;color: #000;text-align: center;">Confirm App Password </h3>
                                 <!-- <p style="color: #000;text-align: center;">This will be used each time you login to the app.</p> -->
                             <div >
@@ -209,7 +209,9 @@
                       </div>
                   </form>    
                     <form class="col LoginPasswordForm" name="LoginPasswordForm"  ng-show="viewLoginPassword" novalidate>
-                          <div  ng-init="initAppLogin()"> 
+                          <div  ng-init="initAppLogin()" class="passlock"> 
+                                <h3 style="font-size: 15px;color: #000;text-align: center;">Login App Password </h3>
+
                               <div >
                                 <div class="row passcode-tab" >
                                     <div class="col col-10 col-offset-15 passcode-col" >

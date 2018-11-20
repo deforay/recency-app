@@ -5,7 +5,7 @@
       </ion-nav-back-button>
      
       <ion-nav-buttons side="left">
-        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left" ng-click="updateBadge()">
         </button>
       </ion-nav-buttons>
 
@@ -29,11 +29,11 @@
     <ion-content  class="menucontent">
       <ion-list>
 
-        <ion-item menu-close href="#/app/addRecency" ng-click="doRefresh()">
+        <ion-item menu-close href="#/app/addRecency" >
           <span><img style="height:20px;" src=" img/add-recency.png" ><div style="margin-left: 35px;margin-top: -25px;" >Add Recency Test</div></span>
 
         </ion-item>
-        <ion-item menu-close href="#/app/addQcAssurance" ng-click="doRefresh()">
+        <ion-item menu-close href="#/app/addQcAssurance" >
           <span><img style="height:20px;" src=" img/qa.png" ><div style="margin-left: 35px;margin-top: -25px;" >Add QC Data</div></span>
 
         </ion-item>
@@ -41,7 +41,7 @@
           <!-- <span class="badge badge-assertive">3</span> -->
           <span><img style="height:20px;" src=" img/settings.png"><div style="margin-left: 35px;margin-top: -25px;">QC Settings</div></span>
         </ion-item>
-        <ion-item menu-close href="#/app/viewRecency" ng-click="doRefresh()" >
+        <ion-item menu-close href="#/app/viewRecency" >
           <!-- <span class="badge badge-assertive">3</span> -->
           <span><img style="height:20px;" src=" img/lab.png"><div style="margin-left: 35px;margin-top: -25px;"  > Local Recency Data</div><span ng-show="displaybadge" class="badge badge-assertive" style="right: 75px;top: 1px;">{{unSyncCount}}</span></span>
         </ion-item>

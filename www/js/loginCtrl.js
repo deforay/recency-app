@@ -236,9 +236,7 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
                     $preLoader.hide();
                 }, 500);
                 }
-              
-           
-             
+
             }
         }else{
           $scope.disablebtn = true;
@@ -286,7 +284,7 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
         //   credentials.serverHost = credentials.serverHost;
         //  }
          else {
-          credentials.serverHost ="http://"+credentials.serverHost;
+          credentials.serverHost ="https://"+credentials.serverHost;
 
          }
           $localStorage.set('apiUrl',credentials.serverHost);       
@@ -303,8 +301,8 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
                 $localStorage.set('authToken',response.data.userDetails['authToken']);
                 $localStorage.set('ServerRecencyData','success');
                 $localStorage.set('email',response.data.userDetails['userEmailAddress']);
-                // $localStorage.set('noOfDays',response.data.userDetails['noOfDays']);
-                $localStorage.set('noOfDays','2');
+                 $localStorage.set('noOfDays',response.data.userDetails['noOfDays']);
+                // $localStorage.set('noOfDays','2');
               $localStorage.set('serverpassword',credentials.serverpassword);
                 $localStorage.set('userId',response.data.userDetails['userId']);
                 $localStorage.set('userName',response.data.userDetails['userName']);  

@@ -1,49 +1,26 @@
 
 app=angular.module('starter.viewRecencyCtrl', ['starter.services'])
 
-.controller('viewRecencyCtrl', function($scope,$rootScope,$http,$preLoader, $ionicPopup, $cordovaToast, $location,$window, $stateParams,$ionicPlatform,$cordovaLocalNotification, $cordovaBadge) {
+.controller('viewRecencyCtrl', function($scope,$rootScope,$http,$preLoader,$state, $ionicPopup, $cordovaToast, $location,$window, $stateParams,$ionicPlatform,$cordovaLocalNotification, $cordovaBadge) {
+   $scope.onLoadRecency = function(){
+     $scope.recencyList =[];
+     $scope.unSyncCount ='';
+
     $rootScope.apiUrl = localStorage.getItem('apiUrl');
     var recencyList =   localStorage.getItem('RecencyData');
-  console.log(recencyList)
-
-//document.addEventListener('deviceready', function () {
-
-    // $cordovaBadge.hasPermission().then(function(result) {
-    //     $cordovaBadge.set(5);
-    //     console.log($cordovaBadge.set(5));
-    //     console.log("hi")
-    // }, function(error) {
-    //     alert(error);
-    // });
-// console.log(cordova.plugins.notification.badge.set(5));
-// console.log(cordova.plugins.notification.local.getDefaults());
-// cordova.plugins.notification.local.setDefaults({
-//    badge:5,
-//     vibrate: false
-// });
-// $cordovaLocalNotification.schedule({
-//     id: 1,
-//     badge:10,
-//     title: 'Title here',
-//     text: 'Text here',
-//     data: {
-//       customProperty: 'custom value'
-//     }
-//   }).then(function (result) {
-//       console.log(result)
-// cordova.plugins.notification.badge.set(10);
-//   });
-// }, false);
-
+  //console.log(recencyList)
    if(recencyList != null){
      recencyList    = JSON.parse(recencyList);
-    // console.log(recencyList);
+    console.log(recencyList);
      var unsyncount = Object.keys(recencyList).length;
-     $scope.unSyncCount ="("+unsyncount+")";
+     var ss = '-'
+     $scope.unSyncCount = ss+unsyncount;
+     $scope.unSyncCount1 ='(2)';
+     console.log($scope.unSyncCount1)
+
      var result = Object.keys(recencyList).map(function(key,value) {
      return [(key), recencyList[value]];
      });
-     $scope.recencyList =[];
      for(i=0;i<result.length;i++){
         $scope.recencyList.push(result[i][1])
         }
@@ -59,6 +36,47 @@ app=angular.module('starter.viewRecencyCtrl', ['starter.services'])
         }
     $scope.displaymessage = true;
     }   
+}
+$scope.$on("$ionicView.beforeEnter", function(event, data){
+    $scope.recencyList =[];
+    $scope.unSyncCount ='';
+
+    $rootScope.apiUrl = localStorage.getItem('apiUrl');
+    var recencyList =   localStorage.getItem('RecencyData');
+//  console.log(recencyList)
+   if(recencyList != null){
+     recencyList    = JSON.parse(recencyList);
+    console.log(recencyList);
+     var unsyncount = Object.keys(recencyList).length;
+     var ss = '-'
+     $scope.unSyncCount = ss+unsyncount;
+     $scope.unSyncCount1 ='(2)';
+     console.log($scope.unSyncCount1)
+     var result = Object.keys(recencyList).map(function(key,value) {
+     return [(key), recencyList[value]];
+     });
+     for(i=0;i<result.length;i++){
+        $scope.recencyList.push(result[i][1])
+        }
+    $scope.displaymessage = false;        
+    }  
+    else{
+        $scope.unSyncCount ="";
+        $scope.syncCount =   localStorage.getItem('syncCount');
+        if($scope.syncCount== undefined || $scope.syncCount == ""){
+              $scope.syncCount = 0;
+            //  localStorage.setItem('syncCount', $scope.syncCount);
+            // console.log($scope.syncCount);
+        }
+    $scope.displaymessage = true;
+    }   
+});
+
+$scope.$on('$ionicView.afterEnter', function(){
+  // Anything you can think of
+  $scope.unSyncCount1 ='(2)';
+console.log($scope.unSyncCount1)
+});
   var recencydatas = $scope.recencyList;
     //   console.log(recencydatas)
         $scope.doRefresh = function() {
@@ -107,7 +125,11 @@ app=angular.module('starter.viewRecencyCtrl', ['starter.services'])
                       }, function (error) {
                           // error
                       });
-                    $window.location.reload(true);
+                 
+                    $scope.onLoadRecency();
+                    //Do not use Reload
+                     // $window.location.reload(true);
+                    
                }
                     
             })
