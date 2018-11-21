@@ -547,8 +547,11 @@ if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != u
     }
 
     $scope.cleardob = function(age){
-      if(age!= null ){
+      console.log(age)
+      if(age!= null || age!=undefined ){
         $scope.recency.dob ="";
+      }else{
+        $scope.recency.age ="";
       }
       }
     $scope.clearTestKitExpDate= function(){
@@ -681,7 +684,7 @@ if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != u
   $scope.onLoadMandatoryCheck ();
 
   $scope.showToastAlert = function(mandatorytitle){
-    // $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+ //    $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
   $cordovaToast.show(mandatorytitle, 'long', 'center')
             .then(function(success) {
               // success
@@ -857,17 +860,6 @@ if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != u
      
     console.log($scope.mandatoryData)
     console.log($scope.showRecencyTick)
-    // if($scope.recencydisplay == false ){
-    //   $("#other-recency").addClass('active')
-    //  $("#main-recency").removeClass('active')
-    // }else if($scope.recencydisplay == true){
-    //   $("#main-recency").addClass('active')
-    //   $("#other-recency").removeClass('active')
-    // }else{
-    //   $scope.showRecencyTick = false;
-    //   $("#main-recency").addClass('active')
-    //   $("#other-recency").removeClass('active')
-    // }
   }
   $scope.behaviourValidation = function(){
     if($scope.mandatoryData.length>0){
@@ -878,11 +870,20 @@ if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != u
         var mandatoryField=$scope.mandatoryData[i];
         
         console.log(mandatoryField)
-        if($scope.mandatoryData[i]=='dob' && $scope.recency.dob==""){
-          $scope.showBehaviourTick = false;
-          $scope.showToastAlert(mandatorytitle); 
-          return false;
-        }
+
+        if(($scope.mandatoryData[i]=='dob' && $scope.recency.dob=="" &&  $scope.recency.age=="")){
+          var mandatorytitle = 'Please Enter Date Of Birth or Age';
+           $scope.showBehaviourTick = false;
+           $scope.showToastAlert(mandatorytitle); 
+           return false;
+         }
+
+         if(($scope.mandatoryData[i]=='age' && $scope.recency.dob=="" &&  $scope.recency.age=="")){
+          var mandatorytitle = 'Please Enter Date Of Birth or Age';
+           $scope.showBehaviourTick = false;
+           $scope.showToastAlert(mandatorytitle); 
+           return false;
+         }
         if($scope.mandatoryData[i]=='gender' && $scope.recency.gender==""){
           $scope.showBehaviourTick = false;
           $scope.showToastAlert(mandatorytitle); 
@@ -984,7 +985,19 @@ if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != u
         var mandatoryField=$scope.mandatoryData[i];
         
         console.log(mandatoryField)
-    
+        if(($scope.mandatoryData[i]=='dob' && $scope.recency.dob=="" &&  $scope.recency.age=="")){
+          var mandatorytitle = 'Please Enter Date Of Birth or Age';
+           $scope.showBehaviourTick = false;
+           $scope.showToastAlert(mandatorytitle); 
+           return false;
+         }
+
+         if(($scope.mandatoryData[i]=='age' && $scope.recency.dob=="" &&  $scope.recency.age=="")){
+          var mandatorytitle = 'Please Enter Date Of Birth or Age';
+           $scope.showBehaviourTick = false;
+           $scope.showToastAlert(mandatorytitle); 
+           return false;
+         }
         if($scope.mandatoryData[i]==mandatoryname && $scope.recency[mandatoryField]==""){
           $scope.showBehaviourTick = false;
           $scope.showToastAlert(mandatorytitle);
@@ -1059,6 +1072,7 @@ if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != u
            return false;
          }
         }
+      
         if($scope.mandatoryData[i]=='riskPopulation' && $scope.recency.riskPopulationName == 'Other' && $scope.recency.otherriskPopulation==""){
           var mandatorytitle = 'Please Choose Other Risk Population';
           $scope.showBehaviourTick = false;
@@ -1067,6 +1081,15 @@ if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != u
         }
     
       }
+      $scope.recency.addedBy = localStorage.getItem('userId');
+      var currentdate = new Date();
+      $scope.recency.addedOn = currentdate.getFullYear() + "-"
+      + (currentdate.getMonth()+1)  + "-" 
+      + currentdate.getDate() + " "
+      + currentdate.getHours() + ":"  
+      + currentdate.getMinutes() + ":" 
+      + currentdate.getSeconds();
+
         console.log($scope.recency)
         $scope.chkrecency = JSON.parse(localStorage.getItem('RecencyData'))
         $scope.chkrecency[$scope.index] = $scope.recency;

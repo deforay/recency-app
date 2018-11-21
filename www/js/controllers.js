@@ -20,6 +20,7 @@ $scope.updateBadge = function(){
   if(recencyList != null){
     recencyList    = JSON.parse(recencyList);
     $scope.unSyncCount = Object.keys(recencyList).length;
+    $rootScope.recencyUnsyncCount = '('+$scope.unSyncCount+')';
     $scope.displaybadge=true;
   }  else{
     $scope.displaybadge=false;
@@ -27,8 +28,13 @@ $scope.updateBadge = function(){
   if(QCDataList != null){
     QCDataList    = JSON.parse(QCDataList);
     $scope.unSyncQcCount = Object.keys(QCDataList).length;
+    $rootScope.qcUnsynCount = '('+$scope.unSyncQcCount+')';
+    $rootScope.unSyncAddQcCount = "("+$scope.unSyncQcCount +"  Not Synced)";
+    
     $scope.displayqcbadge=true;
   }  else{
+    $rootScope.unSyncAddQcCount = '';
+    $rootScope.qcUnsynCount = '';
     $scope.displayqcbadge=false;
   }
   
@@ -99,12 +105,16 @@ $scope.addRecency = function(){
                  onTap: function(e) {
                   $preLoader.show();
      
-                 $localStorage.set('ServerRecencyData','logout');
-                  // $window.localStorage.clear();
-              //  $state.go('app.addRecency');
+                //  $localStorage.set('ServerRecencyData','logout');
 
-          $location.path('/app/addRecency');     
-          $refresh.page();
+              $localStorage.set('login',false);
+              $localStorage.set('logout',false);
+              $localStorage.remove('apppassword');
+
+              $state.go('login');
+
+          // $location.path('/app/addRecency');     
+          // $refresh.page();
           $preLoader.hide(); 
                               
                  }

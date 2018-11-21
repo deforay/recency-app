@@ -29,6 +29,8 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                     $preLoader.hide();
                       $scope.showauth = false;   
                       console.log( response.data.recency) 
+                      if(response.data.recency.length>0){
+                        $scope.displaymessage = false;
                       $preLoader.show();
                       $scope.recencyDatas =response.data.recency;
                       for(i=0;i<$scope.recencyDatas.length;i++)
@@ -36,6 +38,9 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                         $scope.recencyDatas[i].patient_id = "Xx" + $scope.recencyDatas[i].patient_id.slice(2);
                       }
                       $preLoader.hide()
+                    }else{
+                      $scope.displaymessage = true;
+                    }
                    }
                    else{
                     $preLoader.hide();
@@ -93,16 +98,22 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                              }, function (error) {
                                  // error
                              });
-                        $scope.showauth = false;   
-                        console.log( response.data.recency) 
-                        $preLoader.show();
-                        $scope.recencyDatas =response.data.recency;
-                        for(i=0;i<$scope.recencyDatas.length;i++)
-                        {
-                          $scope.recencyDatas[i].patient_id = "Xx" + $scope.recencyDatas[i].patient_id.slice(2);
-                          // console.log($scope.recencyDatas[i].patient_id);
+                        $scope.showauth = false;  
+                        console.log( response.data.recency)  
+                        if(response.data.recency.length>0){
+                          $scope.displaymessage = false;
+                          $preLoader.show();
+                          $scope.recencyDatas =response.data.recency;
+                          for(i=0;i<$scope.recencyDatas.length;i++)
+                          {
+                            $scope.recencyDatas[i].patient_id = "Xx" + $scope.recencyDatas[i].patient_id.slice(2);
+                            // console.log($scope.recencyDatas[i].patient_id);
+                          }
+                          $preLoader.hide()
+                        }else{
+                          $scope.displaymessage = true;
                         }
-                        $preLoader.hide()
+                        
                      }
                      else{
                       $preLoader.hide();

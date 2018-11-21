@@ -1,5 +1,5 @@
 app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
-.controller('addQcAssuranceCtrl', function($scope, $http, $timeout, $stateParams,$cordovaToast, ionicDatePicker,  $ionicPopup,$preLoader,$localStorage, $cordovaGeolocation, $window,$filter,$cordovaNetwork) {
+.controller('addQcAssuranceCtrl', function($scope,$rootScope,$http, $timeout, $stateParams,$cordovaToast, ionicDatePicker,  $ionicPopup,$preLoader,$localStorage, $cordovaGeolocation, $window,$filter,$cordovaNetwork) {
     $scope.qcAssurance = {};
     $scope.qcData ={};
     $scope.showLongTermLine = true;
@@ -81,7 +81,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
         $scope.TesterNameList = $scope.testerNameObj1;
       }
       $scope.qcAssurance.appVersion = localStorage.getItem('AppVersion');
-      $scope.qcAssurance.userId = localStorage.getItem('userId');
+      $scope.qcAssurance.addedBy = localStorage.getItem('userId');
       $scope.qcAssurance.qcsampleId ="";
       $scope.qcAssurance.referenceResult="";
       $scope.qcAssurance.qcTestDate ="";
@@ -107,10 +107,10 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
    //console.log(qcList)
    if(qcList != null){
      qcList    = JSON.parse(qcList);
-     $scope.unSyncAddQcCount = "("+Object.keys(qcList).length+"  Not Synced)";
-console.log($scope.unSyncAddQcCount)
+     $rootScope.unSyncAddQcCount = "("+Object.keys(qcList).length+"  Not Synced)";
+      console.log($scope.unSyncAddQcCount)
    }  else{
-     $scope.unSyncAddQcCount="";
+     $rootScope.unSyncAddQcCount="";
    }
 });
     $scope.qcAssuranceinit = function(){
@@ -178,7 +178,7 @@ console.log($scope.unSyncAddQcCount)
         $scope.TesterNameList = $scope.testerNameObj1;
       }
       $scope.qcAssurance.appVersion = localStorage.getItem('AppVersion');
-      $scope.qcAssurance.userId = localStorage.getItem('userId');
+      $scope.qcAssurance.addedBy = localStorage.getItem('userId');
       $scope.qcAssurance.qcsampleId ="";
       $scope.qcAssurance.referenceResult="";
       $scope.qcAssurance.qcTestDate ="";
@@ -204,10 +204,10 @@ console.log($scope.unSyncAddQcCount)
    //console.log(qcList)
    if(qcList != null){
      qcList    = JSON.parse(qcList);
-     $scope.unSyncAddQcCount = "("+Object.keys(qcList).length+"  Not Synced)";
+     $rootScope.unSyncAddQcCount = "("+Object.keys(qcList).length+"  Not Synced)";
 
    }  else{
-     $scope.unSyncAddQcCount="";
+     $rootScope.unSyncAddQcCount="";
    }
     }
 
@@ -472,14 +472,14 @@ console.log($scope.unSyncAddQcCount)
         }
 
         var currentdate = new Date();
-        $scope.qcAssurance.formInitDateTime = currentdate.getFullYear() + "-"
+        $scope.qcAssurance.addedOn = currentdate.getFullYear() + "-"
         + (currentdate.getMonth()+1)  + "-" 
         + currentdate.getDate() + " "
         + currentdate.getHours() + ":"  
         + currentdate.getMinutes() + ":" 
         + currentdate.getSeconds();
 
-        console.log($scope.qcAssurance.formInitDateTime);
+        console.log($scope.qcAssurance.addedOn);
          $scope.noOfDays = localStorage.getItem('noOfDays');
         //$scope.noOfDays = 0;
      $scope.QCDatas =  localStorage.getItem('QCData');
@@ -506,10 +506,8 @@ console.log($scope.unSyncAddQcCount)
             }       
             $scope.qcData[$scope.counter-1] =qcAssurance;  
             console.log($scope.qcData)      
-           var unsynDatacount = Object.keys($scope.qcData).length;     
-            $scope.unsyncDatacount = ' - '+ unsynDatacount;
+
             localStorage.setItem('QCData',JSON.stringify($scope.qcData)) 
-            localStorage.setItem('QcUnsynCount',$scope.unsyncDatacount) 
             localStorage.setItem('qccounter', $scope.counter);
         
              $scope.qcAssurance ={};

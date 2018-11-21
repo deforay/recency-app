@@ -161,6 +161,8 @@ angular.module('starter',  ['ionic',
     
     .state('app.addQcAssurance', {
       url: '/addQcAssurance',
+    cache: false,
+
       views: {
         'menuContent': {
           templateUrl: 'templates/addQcAssurance.html',

@@ -82,7 +82,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
          $scope.TesterNameList = $scope.testerNameObj1;
        }
       $scope.recency.appVersion = localStorage.getItem('AppVersion');      
-      $scope.recency.userId = localStorage.getItem('userId');
+      $scope.recency.addedBy = localStorage.getItem('userId');
       $scope.recency.sampleId ="";
       $scope.recency.patientId="";
       $scope.recency.facilityId="";
@@ -216,7 +216,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
          $scope.TesterNameList = $scope.testerNameObj1;
        }
       $scope.recency.appVersion = localStorage.getItem('AppVersion');      
-      $scope.recency.userId = localStorage.getItem('userId');
+      $scope.recency.addedBy = localStorage.getItem('userId');
       $scope.recency.sampleId ="";
       $scope.recency.patientId="";
       $scope.recency.facilityId="";
@@ -812,7 +812,7 @@ $scope.GetCityValue = function(district){
     //   onoffline();
     // }
     $scope.showToastAlert = function(mandatorytitle){
-      // $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+   //  $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
     $cordovaToast.show(mandatorytitle, 'long', 'center')
               .then(function(success) {
                 // success
@@ -1010,15 +1010,28 @@ $scope.GetCityValue = function(district){
         var mandatoryField=$scope.mandatoryData[i];
         
         console.log(mandatoryField)
-        if($scope.mandatoryData[i]=='dob' && $scope.recency.dob==""){
-          $scope.showBehaviourTick = false;
-          $scope.showToastAlert(mandatorytitle); 
-          return false;
-        }
+        if(($scope.mandatoryData[i]=='dob' && $scope.recency.dob=="" &&  $scope.recency.age=="")){
+          var mandatorytitle = 'Please Enter Date Of Birth or Age';
+           $scope.showBehaviourTick = false;
+           $scope.showToastAlert(mandatorytitle); 
+           return false;
+         }
+
+         if(($scope.mandatoryData[i]=='age' && $scope.recency.dob=="" &&  $scope.recency.age=="")){
+          var mandatorytitle = 'Please Enter Date Of Birth or Age';
+           $scope.showBehaviourTick = false;
+           $scope.showToastAlert(mandatorytitle); 
+           return false;
+         }
         if($scope.mandatoryData[i]=='gender' && $scope.recency.gender==""){
           $scope.showBehaviourTick = false;
           $scope.showToastAlert(mandatorytitle); 
-          return false;
+          $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
+          .then(function(success) {
+            // success
+          }, function (error) {
+            // error
+          }); return false;
         }
         if($scope.mandatoryData[i]=='maritalStatus' && $scope.recency.maritalStatus==""){
           $scope.showBehaviourTick = false;
@@ -1097,7 +1110,19 @@ $scope.GetCityValue = function(district){
           var mandatoryField=$scope.mandatoryData[i];
           
           console.log(mandatoryField)
-      
+          if(($scope.mandatoryData[i]=='dob' && $scope.recency.dob=="" &&  $scope.recency.age=="")){
+            var mandatorytitle = 'Please Enter Date Of Birth or Age';
+             $scope.showBehaviourTick = false;
+             $scope.showToastAlert(mandatorytitle); 
+             return false;
+           }
+  
+           if(($scope.mandatoryData[i]=='age' && $scope.recency.dob=="" &&  $scope.recency.age=="")){
+            var mandatorytitle = 'Please Enter Date Of Birth or Age';
+             $scope.showBehaviourTick = false;
+             $scope.showToastAlert(mandatorytitle); 
+             return false;
+           }
           if($scope.mandatoryData[i]==mandatoryname && $scope.recency[mandatoryField]==""){
             $scope.showBehaviourTick = false;
             $scope.showToastAlert(mandatorytitle);
@@ -1172,6 +1197,7 @@ $scope.GetCityValue = function(district){
              return false;
            }
           }
+    
           if($scope.mandatoryData[i]=='riskPopulation' && $scope.recency.riskPopulationName == 'Other' && $scope.recency.otherriskPopulation==""){
             var mandatorytitle = 'Please Choose Other Risk Population';
             $scope.showBehaviourTick = false;
@@ -1199,14 +1225,14 @@ $scope.GetCityValue = function(district){
         // }
 
         var currentdate = new Date();
-        $scope.recency.formInitDateTime = currentdate.getFullYear() + "-"
+        $scope.recency.addedOn = currentdate.getFullYear() + "-"
         + (currentdate.getMonth()+1)  + "-" 
         + currentdate.getDate() + " "
         + currentdate.getHours() + ":"  
         + currentdate.getMinutes() + ":" 
         + currentdate.getSeconds();
 
-        // console.log($scope.recency.formInitDateTime)
+         console.log($scope.recency.addedOn)
         // console.log($scope.recency);
         $preLoader.show();
         var recency = $scope.recency;

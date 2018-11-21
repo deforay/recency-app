@@ -13,11 +13,10 @@ app=angular.module('starter.viewRecencyCtrl', ['starter.services'])
      recencyList    = JSON.parse(recencyList);
     console.log(recencyList);
      var unsyncount = Object.keys(recencyList).length;
-     var ss = '-'
-     $scope.unSyncCount = ss+unsyncount;
-     $scope.unSyncCount1 ='(2)';
-     console.log($scope.unSyncCount1)
-
+     if($rootScope.recencyUnsyncCount!= undefined){    
+    }else{
+        $rootScope.recencyUnsyncCount = '(' + unsyncount + ')';
+    }
      var result = Object.keys(recencyList).map(function(key,value) {
      return [(key), recencyList[value]];
      });
@@ -27,7 +26,7 @@ app=angular.module('starter.viewRecencyCtrl', ['starter.services'])
     $scope.displaymessage = false;        
     }  
     else{
-        $scope.unSyncCount ="";
+        $rootScope.recencyUnsyncCount ="";
         $scope.syncCount =   localStorage.getItem('syncCount');
         if($scope.syncCount== undefined || $scope.syncCount == ""){
               $scope.syncCount = 0;
@@ -48,10 +47,11 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
      recencyList    = JSON.parse(recencyList);
     console.log(recencyList);
      var unsyncount = Object.keys(recencyList).length;
-     var ss = '-'
-     $scope.unSyncCount = ss+unsyncount;
-     $scope.unSyncCount1 ='(2)';
-     console.log($scope.unSyncCount1)
+        if($rootScope.recencyUnsyncCount!= undefined){
+    console.log($rootScope.recencyUnsyncCount)
+        }else{
+    $rootScope.recencyUnsyncCount = '(' + unsyncount + ')';
+        }
      var result = Object.keys(recencyList).map(function(key,value) {
      return [(key), recencyList[value]];
      });
@@ -61,7 +61,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
     $scope.displaymessage = false;        
     }  
     else{
-        $scope.unSyncCount ="";
+        $rootScope.recencyUnsyncCount ="";
         $scope.syncCount =   localStorage.getItem('syncCount');
         if($scope.syncCount== undefined || $scope.syncCount == ""){
               $scope.syncCount = 0;
@@ -72,11 +72,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
     }   
 });
 
-$scope.$on('$ionicView.afterEnter', function(){
-  // Anything you can think of
-  $scope.unSyncCount1 ='(2)';
-console.log($scope.unSyncCount1)
-});
+
   var recencydatas = $scope.recencyList;
     //   console.log(recencydatas)
         $scope.doRefresh = function() {
@@ -89,12 +85,10 @@ console.log($scope.unSyncCount1)
            if($scope.displaymessage== true){
                 $ionicPopup.alert({title:'Alert!',template:'<center>No Records to Sync </center>'});
             }
-            console.log($scope.recencyList)
-
-            // for(i=0;i<$scope.recencyList.length;i++){
-            //     $scope.noOfItemsToSync = 2;
-            //     $scope.recencyList.slice()
-            // }
+                for(i=0;i<$scope.recencyList.length;i++){
+                    $scope.recencyList[i].syncedBy = localStorage.getItem('userId');
+                }
+                console.log($scope.recencyList)
          
             $http.post( $rootScope.apiUrl+"/api/recency",{
                 "form":$scope.recencyList
@@ -109,7 +103,6 @@ console.log($scope.unSyncCount1)
                 $scope.response =data.syncData.response;
                     $scope.syncCount =data.syncCount.response[0].Total;
                     localStorage.setItem('syncCount', $scope.syncCount)
-
                     for(i=0;i< $scope.response.length;i++){
                       $scope.recencyList.splice(i);
                     }
@@ -127,8 +120,7 @@ console.log($scope.unSyncCount1)
                       });
                  
                     $scope.onLoadRecency();
-                    //Do not use Reload
-                     // $window.location.reload(true);
+
                     
                }
                     
