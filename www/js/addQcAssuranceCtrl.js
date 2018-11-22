@@ -15,6 +15,51 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
       });
      
 //console.log(qcList)
+$scope.qcOutcomeCheck = function(){
+  var qcLocalDatas = JSON.parse(localStorage.getItem('QCData'));
+  console.log(qcLocalDatas);
+  if(qcLocalDatas !=null){
+    $scope.termOutcome = [];
+    var qcLocalDatasLen = Object.keys(qcLocalDatas).length;
+    for(i=0;i<qcLocalDatasLen;i++){
+  $scope.termOutcome.push(qcLocalDatas[i].recencyOutcome)
+    }
+  console.log($scope.termOutcome);
+
+  for(i=0;i<$scope.termOutcome.length;i++){
+    if($scope.termOutcome[i]=='Assay Recent'){
+      $scope.firstConditon ='Assay Recent';
+    }
+    else if($scope.termOutcome[i]=='Assay HIV Negative'){
+      $scope.secondConditon ='Assay HIV Negative';
+    }else if($scope.termOutcome[i]=='Long Term'){
+      $scope.thirdConditon ='Long Term';
+    }
+  }
+  console.log($scope.firstConditon, $scope.secondConditon,$scope.thirdConditon)
+  if($scope.firstConditon=='Assay Recent' &&  $scope.secondConditon =='Assay HIV Negative' && $scope.thirdConditon=='Long Term'){
+    
+  }
+  $scope.noOfDays = localStorage.getItem('noOfDays');
+        //$scope.noOfDays = 0;
+     $scope.QCDatas =  localStorage.getItem('QCData');
+
+      // if($scope.QCDatas == null){      
+      //    if(localStorage.getItem('QcStartDate')==null && localStorage.getItem('QcAlertDate')==null ){
+      //     var currentDate1 = new Date();
+      //     console.log(currentDate1);
+      //       localStorage.setItem('QcStartDate',currentDate1);
+      //       var alertdate = new Date(Date.now()+$scope.noOfDays *24*60*60*1000);
+      //       console.log(alertdate);
+      //       localStorage.setItem('QcAlertDate',alertdate);
+      //      }
+        
+      // }
+  }
+  
+
+}
+$scope.qcOutcomeCheck();
 $scope.$on("$ionicView.beforeEnter", function(event, data){
 
   $scope.testkitlotObj1 =[];
@@ -480,22 +525,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
         + currentdate.getSeconds();
 
         console.log($scope.qcAssurance.addedOn);
-         $scope.noOfDays = localStorage.getItem('noOfDays');
-        //$scope.noOfDays = 0;
-     $scope.QCDatas =  localStorage.getItem('QCData');
-
-      if($scope.QCDatas == null){
-      
-         if(localStorage.getItem('QcStartDate')==null && localStorage.getItem('QcAlertDate')==null ){
-          var currentDate1 = new Date();
-          console.log(currentDate1);
-            localStorage.setItem('QcStartDate',currentDate1);
-            var alertdate = new Date(Date.now()+$scope.noOfDays *24*60*60*1000);
-            console.log(alertdate);
-            localStorage.setItem('QcAlertDate',alertdate);
-           }
-        
-      }
+         
         var count = localStorage.getItem('qccounter');
         $scope.counter  = parseInt(count) + 1;
      
@@ -518,6 +548,8 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
                 // error
               });
               $scope.qcAssuranceinit();
+              $scope.qcOutcomeCheck();
+
 
              // $window.location.reload(true);
             $preLoader.hide();

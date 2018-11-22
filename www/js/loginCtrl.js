@@ -188,6 +188,7 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
             }else{
               $(".passcode-col").addClass('valid')
               $(".passcode-col").removeClass('error');
+                var noOfDays = localStorage.getItem('noOfDays');
                 var QcStartDate = localStorage.getItem('QcStartDate');
                 var QcAlertDate = localStorage.getItem('QcAlertDate');
                 var QCDatas =  localStorage.getItem('QCData');
@@ -201,16 +202,13 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
                 }else{
                   lastTestDate = new Date(lastTestDate);
                   lastTestDate = $filter('date')(lastTestDate , "dd-MMM-yyyy")
-                }
-             
+                }             
                 console.log(lastTestDate)
-
-                if( QcStartDate!=null && QcAlertDate!= null && QCDatas != null){
+              
+                if( QcStartDate!=null && QcAlertDate!= null && QCDatas != null && (noOfDays!=null && noOfDays!=0)){
                   var QcStartDate = new Date(QcStartDate);
-                  console.log(QcStartDate)
                   var QcAlertDate = new Date(QcAlertDate);
-                  console.log(QcAlertDate)
-                  //  if((Date.parse(QcStartDate)>=Date.parse(QcAlertDate))&& localStorage.getItem('QcAlerted')!='yes'){
+                  console.log(QcStartDate , QcAlertDate)
                     if((Date.parse(QcStartDate)>=Date.parse(QcAlertDate))){
                       var currentDate =  new Date();
                       currentDate = $filter('date')(currentDate , "dd-MMM-yyyy");
@@ -221,9 +219,7 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
                          today = $filter('date')(today , "dd-MMM-yyyy");
                          localStorage.setItem('TodayAlertDate',today);
                         $ionicPopup.alert({title:'Alert!',template:'Last QC done was on ' + lastTestDate + ' by Tester '+   testerName +'. Please perform QC test as recommended in SOP'});
-
-                      }
-                     
+                      }              
                   } 
                   $location.path('/app/addRecency');
 

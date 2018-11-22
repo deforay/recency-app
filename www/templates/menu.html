@@ -10,7 +10,7 @@
       </ion-nav-buttons>
 
    <ion-nav-buttons side="right" >
-        <div class="item-icon-right" style="padding-right:10px;" ng-click="logout()">
+        <div class="item-icon-right" style="padding-right:10px;" ng-click="applogout()">
             <i class="icon ion-log-out"></i>	
         </div>
        
@@ -63,9 +63,9 @@
           <span><img style="height:20px;" src=" img/labresult.png"><div style="margin-left: 35px;margin-top: -25px;">Server Recency Data</div></span>
         </ion-item>
        
-        <!-- <ion-item menu-close ng-click="logout()">
-            <span><img style="height:20px;" src=" img/viewlab.png"><div style="margin-left: 35px;margin-top: -25px;">  Logout</div></span>
-          </ion-item> -->
+        <ion-item menu-close  href="" ng-click="serverlogout()">
+            <span><img style="height:20px;" src=" img/logout.png"><div style="margin-left: 35px;margin-top: -25px;">Server Logout</div></span>
+          </ion-item>
       </ion-list>
     </ion-content>
     <ion-footer-bar style="border:none">

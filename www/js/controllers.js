@@ -91,8 +91,72 @@ $scope.addRecency = function(){
   
   
 }
+$scope.serverlogout = function(){
+  var confirmPopup1 = $ionicPopup.confirm({
+    title: 'Server Logout',
+    template: '<center>Are you sure want to Logout?<center>',
+    buttons: [
+          {
+            text: '<b>Yes</b>',
+            type: 'button-positive',
+            onTap: function(e) {
+             $preLoader.show();
+
+           //  $localStorage.set('ServerRecencyData','logout');
+
+         $localStorage.set('login',false);
+         $localStorage.set('logout',false);
+         $localStorage.remove('apppassword');
+
+         $state.go('login');
+
+     // $location.path('/app/addRecency');     
+     // $refresh.page();
+     $preLoader.hide(); 
+                         
+            }
+          },
+          { text: 'Cancel', type: 'button-assertive',onTap: function(e) { return true; } },
+        ]
+   });
+   confirmPopup1.then(function(res) {
+    if(res) {
+     // console.log('Yes');
+   } else {
+     //console.log('No!');
+    }
+  });
+}
+$scope.applogout = function(){
+  var confirmPopup = $ionicPopup.confirm({
+    title: 'App Logout',
+    template: '<center>Are you sure want to Logout?<center>',
+     buttons: [
+           {
+             text: '<b>Yes</b>',
+             type: 'button-positive',
+             onTap: function(e) {
+                 $preLoader.show();
+ 
+             $localStorage.set('logout',true);
+              // $window.localStorage.clear();
+              // $refresh.page();
+              $preLoader.hide(); 
+              $state.go('login');
+             }
+           },
+           { text: 'Cancel', type: 'button-assertive',onTap: function(e) { return true; } },
+         ]
+     });
+        confirmPopup.then(function(res) {
+          if(res) {
+          // console.log('Yes');
+         } else {
+          //console.log('No!');
+          }
+         });
+}
   $scope.logout = function() {
-  // console.log($state.current.name);
    if($state.current.name=='app.recencyData'){
      if($localStorage.get('ServerRecencyData')=='login'){
        var confirmPopup1 = $ionicPopup.confirm({
@@ -104,19 +168,11 @@ $scope.addRecency = function(){
                  type: 'button-positive',
                  onTap: function(e) {
                   $preLoader.show();
-     
-                //  $localStorage.set('ServerRecencyData','logout');
-
               $localStorage.set('login',false);
               $localStorage.set('logout',false);
               $localStorage.remove('apppassword');
-
               $state.go('login');
-
-          // $location.path('/app/addRecency');     
-          // $refresh.page();
-          $preLoader.hide(); 
-                              
+          $preLoader.hide();                           
                  }
                },
                { text: 'Cancel', type: 'button-assertive',onTap: function(e) { return true; } },
@@ -143,8 +199,6 @@ $scope.addRecency = function(){
                      $preLoader.show();
      
                  $localStorage.set('logout',true);
-                  // $window.localStorage.clear();
-                  // $refresh.page();
                   $preLoader.hide(); 
                   $state.go('login');
                  }
@@ -163,7 +217,7 @@ $scope.addRecency = function(){
    }
    else{
     var confirmPopup = $ionicPopup.confirm({
-      title: 'Logout',
+      title: 'App Logout',
       template: '<center>Are you sure want to Logout?<center>',
        buttons: [
              {
