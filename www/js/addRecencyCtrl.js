@@ -18,7 +18,6 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
      //   console.log(device)
       });
 
- 
 $scope.$on("$ionicView.beforeEnter", function(event, data){
       $scope.testkitlotObj1 =[];
       $scope.testkitlotObj2 =[];
@@ -51,7 +50,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
         for(i=0;i<$scope.testkitlotObj2.length;i++){
           $scope.testkitlotObj1.unshift($scope.testkitlotObj2[i])
         }
-        console.log($scope.testkitlotObj1)
+       // console.log($scope.testkitlotObj1)
         $scope.TestKitLotList = $scope.testkitlotObj1;
       }
 
@@ -81,6 +80,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
          //console.log($scope.testerNameObj1)
          $scope.TesterNameList = $scope.testerNameObj1;
        }
+       if(JSON.parse(localStorage.getItem('PartialRecencyData'))==null){
       $scope.recency.appVersion = localStorage.getItem('AppVersion');      
       $scope.recency.addedBy = localStorage.getItem('userId');
       $scope.recency.sampleId ="";
@@ -125,15 +125,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
       $scope.recency.longitude="";
       $scope.recency.phoneNumber="";
       $scope.recency.notes="";
-
-      var recencyList =   localStorage.getItem('RecencyData');
-      if(recencyList != null){
-        recencyList    = JSON.parse(recencyList);
-        $scope.unSyncCount = "("+Object.keys(recencyList).length+"  Not Synced)";
-      }  else{
-        $scope.unSyncCount="";
-      }
-      //console.log(recencyList)      
+   
       var options = {maximumAge: 20000,timeout: 30000, enableHighAccuracy: true};
         $cordovaGeolocation.getCurrentPosition(options).then(function(position)
         {
@@ -151,6 +143,39 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
         $scope.giserror = true;
         $preLoader.hide();
       })
+    }else{
+      $scope.recency = JSON.parse(localStorage.getItem('PartialRecencyData'));
+      $scope.recency.location[0] = ($scope.recency.location_one);
+      $scope.recency.location[1] = $scope.recency.location_two;
+      $scope.recency.location[2] = $scope.recency.location_three;
+    
+     console.log($scope.recency)
+    
+       if($scope.recency.location_two){
+        var localDistrict = JSON.parse(localStorage.getItem('DistrictData'));
+        var result = localDistrict.filter(obj => {
+          return obj.province_id === $scope.recency.location_one
+        })
+        $scope.districtData = result;
+        $scope.recency.location[1] = $scope.recency.location_two;
+        console.log( $scope.districtData)
+      }
+      if($scope.recency.location_three){
+        var localCity = JSON.parse(localStorage.getItem('CityData'));
+        var cityresult = localCity.filter(obj => {
+          return obj.district_id === $scope.recency.location_two
+        })
+        $scope.cityData = cityresult;
+      }
+
+    }
+    var recencyList =   localStorage.getItem('RecencyData');
+    if(recencyList != null){
+      recencyList    = JSON.parse(recencyList);
+      $scope.unSyncCount = "("+Object.keys(recencyList).length+"  Not Synced)"; 
+    }  else{
+      $scope.unSyncCount="";
+    }
     });
     // $scope.recencyinit();
     $scope.getLatLong = function(){
@@ -185,7 +210,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
         for(i=0;i<$scope.testkitlotObj2.length;i++){
           $scope.testkitlotObj1.unshift($scope.testkitlotObj2[i])
         }
-        console.log($scope.testkitlotObj1)
+        //console.log($scope.testkitlotObj1)
         $scope.TestKitLotList = $scope.testkitlotObj1;
       }
 
@@ -215,6 +240,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
          //console.log($scope.testerNameObj1)
          $scope.TesterNameList = $scope.testerNameObj1;
        }
+       if(JSON.parse(localStorage.getItem('PartialRecencyData'))==null){
       $scope.recency.appVersion = localStorage.getItem('AppVersion');      
       $scope.recency.addedBy = localStorage.getItem('userId');
       $scope.recency.sampleId ="";
@@ -259,14 +285,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
       $scope.recency.longitude="";
       $scope.recency.phoneNumber="";
       $scope.recency.notes="";
-      var recencyList =   localStorage.getItem('RecencyData');
-      //console.log(recencyList)
-      if(recencyList != null){
-        recencyList    = JSON.parse(recencyList);
-        $scope.unSyncCount = "("+Object.keys(recencyList).length+"  Not Synced)"; 
-      }  else{
-        $scope.unSyncCount="";
-      }
+  
       //console.log(recencyList)      
       var options = {maximumAge: 20000,timeout: 30000, enableHighAccuracy: true};
       $cordovaGeolocation.getCurrentPosition(options).then(function(position){
@@ -284,8 +303,59 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
         $scope.giserror = true;
         $preLoader.hide();
       })
+    }else{
+      $scope.recency = JSON.parse(localStorage.getItem('PartialRecencyData'));
+      $scope.recency.location[0] = ($scope.recency.location_one);
+      $scope.recency.location[1] = $scope.recency.location_two;
+      $scope.recency.location[2] = $scope.recency.location_three;
+    
+     console.log($scope.recency)
+    
+       if($scope.recency.location_two){
+        var localDistrict = JSON.parse(localStorage.getItem('DistrictData'));
+        var result = localDistrict.filter(obj => {
+          return obj.province_id === $scope.recency.location_one
+        })
+        $scope.districtData = result;
+        $scope.recency.location[1] = $scope.recency.location_two;
+        console.log( $scope.districtData)
+      }
+      if($scope.recency.location_three){
+        var localCity = JSON.parse(localStorage.getItem('CityData'));
+        var cityresult = localCity.filter(obj => {
+          return obj.district_id === $scope.recency.location_two
+        })
+        $scope.cityData = cityresult;
+      }
+    }
+    var recencyList =   localStorage.getItem('RecencyData');
+    if(recencyList != null){
+      recencyList    = JSON.parse(recencyList);
+      $scope.unSyncCount = "("+Object.keys(recencyList).length+"  Not Synced)"; 
+    }  else{
+      $scope.unSyncCount="";
+    }
     }
     $scope.getLatLong();
+
+    $scope.partialRecencyData = function(){
+      console.log($scope.recency)
+      var partialData = $scope.recency;
+      for(i=0;i<$scope.configdata.length;i++){
+        var key=$scope.configdata[i].global_name;
+        var  keyname = key +"_name";
+        var  keyId = "#" +$scope.configdata[i].global_name;
+        if( $scope.recency.location[i]==undefined || $scope.recency.location[i]==""){
+            $scope.recency[key] =""
+            $scope.recency[keyname] = "";
+        }else{
+            $scope.recency[key] =$scope.recency.location[i];
+            $scope.recency[keyname] =   $(keyId).find("option:selected").text();
+            console.log( $scope.recency[keyname])     
+        }
+      }   
+       localStorage.setItem('PartialRecencyData',JSON.stringify(partialData)) ;
+       }
     $scope.setmainactive = function(){
       $scope.recencydisplay=true;
       if($("#main-recency").hasClass('active')){
@@ -486,27 +556,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
         localStorage.setItem('FacilityData',JSON.stringify($scope.facilityData))    
     //   console.log($scope.facilityData)           
       });
-
-      $http.get($localStorage.get('apiUrl')+'/api/recency-mandatory')
-      .success(function(data) {
-       $scope.mandatoryData =data.fields;
-       console.log(data)
-       localStorage.setItem('MandatoryData',JSON.stringify($scope.mandatoryData)) 
-       console.log( $scope.mandatoryData);           
-      });
-      $http.get($localStorage.get('apiUrl')+'/api/province')
-      .success(function(data) {
-       $scope.provinceData =data.province;
-       localStorage.setItem('ProvinceData',JSON.stringify(data.province))      
-      });
-      $http.get($localStorage.get('apiUrl')+'/api/district')
-      .success(function(data) {
-       localStorage.setItem('DistrictData',JSON.stringify(data.district))           
-      });
-      $http.get($localStorage.get('apiUrl')+'/api/city')
-      .success(function(data) {     
-       localStorage.setItem('CityData',JSON.stringify(data.city))           
-      });
+      if(JSON.parse(localStorage.getItem('PartialRecencyData'))==null){
       $http.get($localStorage.get('apiUrl')+'/api/global-config')
       .success(function(data) {
         console.log(data);
@@ -516,13 +566,40 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
               $scope.configdata.splice(i);
             }    
          } 
-         for(i=0;i<$scope.configdata.length;i++){
-          $scope.recency.location[i]="";
-
-         }
+        for(i=0;i<$scope.configdata.length;i++){
+              $scope.recency.location[i]="";
+             }
        localStorage.setItem('GlobalConfig',JSON.stringify($scope.configdata)) 
         console.log($scope.configdata)
         });
+        $http.get($localStorage.get('apiUrl')+'/api/recency-mandatory')
+        .success(function(data) {
+         $scope.mandatoryData =data.fields;
+         //console.log(data)
+         localStorage.setItem('MandatoryData',JSON.stringify($scope.mandatoryData)) 
+        // console.log( $scope.mandatoryData);           
+        });
+        $http.get($localStorage.get('apiUrl')+'/api/province')
+        .success(function(data) {
+         $scope.provinceData =data.province;
+         localStorage.setItem('ProvinceData',JSON.stringify(data.province))      
+        });
+        $http.get($localStorage.get('apiUrl')+'/api/district')
+        .success(function(data) {
+         localStorage.setItem('DistrictData',JSON.stringify(data.district))           
+        });
+        $http.get($localStorage.get('apiUrl')+'/api/city')
+        .success(function(data) {     
+         localStorage.setItem('CityData',JSON.stringify(data.city))           
+        });
+      }else{
+        $scope.mandatoryData = JSON.parse(localStorage.getItem('MandatoryData'));
+        $scope.configdata = JSON.parse(localStorage.getItem('GlobalConfig'));
+        $scope.provinceData = JSON.parse(localStorage.getItem('ProvinceData'));
+
+      }
+  
+    
       $http.get($localStorage.get('apiUrl')+'/api/risk-populations')
       .success(function(data) {
        $scope.riskpopulations =data;
@@ -534,6 +611,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
 
    //  console.log($scope.riskpopulations)  
       });
+      console.log($scope.recency.location)
     }
     $scope.getApiCalls();
       // If Internet Connection Disconnected
@@ -592,6 +670,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
         else{
           $scope.recency.recencyreasonName="";
         }
+        console.log($scope.recency.recencyreasonName)
       }
       // $scope.getTestKitName = function(kitname){
       //   if(kitname=='sedia_bioscience'){
@@ -649,6 +728,10 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
       $scope.recency.hivRecencyDate =  $filter('date')(hivRecencyDate , "dd-MMM-yyyy");
       },
       to: new Date(),
+      weeksList: [],
+    dateFormat: 'MMMM yyyy',
+
+
     }; 
     ionicDatePicker.openDatePicker(ipObj2);
   }
@@ -1241,6 +1324,7 @@ $scope.GetCityValue = function(district){
             }       
             $scope.recencyData[$scope.counter-1] =recency;        
             localStorage.setItem('RecencyData',JSON.stringify($scope.recencyData)) 
+            localStorage.removeItem('PartialRecencyData');
             localStorage.setItem('counter', $scope.counter);
         
              $scope.recency ={};
@@ -1262,6 +1346,7 @@ $scope.GetCityValue = function(district){
               // $window.location.reload(true);
             $preLoader.hide();
       }
+      console.log($scope.recency.location)
 })
 
 

@@ -69,36 +69,73 @@
             <ion-list type="list-inset"  ng-hide="showauth">
                 <h3 style="font-size:17px"> Recency Reporting</h3>
               <div style="overflow-x:auto;margin-bottom: 30px;">
+                    <!-- <div class="row responsive-xs  wrap-list">
+                            <div class="col col-33"><div style="padding-top:5px">Month :</div></div>
+                              <div class="col">
+                                  <div class="item item-input item-select wrap-dropdown" style="height: 35px">
+                                      
+                                          <input id="fromMonth" type="month"  name="fromMonth"  ng-model='fromMonth' > 
+                                     </div>
+                                   </div>
+                                </div>
+                          <div class="row responsive-xs  wrap-list">
+                              <div class="col col-33"><div style="padding-top:5px"> Year :</div></div>
+                                   <div class="col">
+                                     <div class="item item-input item-select wrap-dropdown" style="height: 35px">
+                                     
+                                        <select class="ng-valid" id="searchYear" ng-model="netprofit.searchYear" ng-change="netprofitlist();">
+                                            <option value=""> << Select >> </option>
+                                            <option ng-repeat="period in year" value="{{period['year']}}">{{period['year']}}</option>
+                                           </select>
+                                       
+                                     </div>
+                                   </div>
+                           </div> -->
             <table class="table table-bordered table-striped order-table" style="width: 100%" id="ordertable">
               <tr style="white-space: nowrap">
-                <th>Date Of Testing</th>
-                <th>Sample ID / Patient ID</th>
-                <th>Assay Test Result</th>
-                <!-- <th>Final Test Result with VL</th> -->
-                <th style="text-align: center">Facility</th>
-                <th>HIV+ Diag Date</th>
-                <th>Control Line</th>
-                <th>Positive Verification Line</th>
-                <th>Long Term Verification Line</th>
+                <th style="text-align: center" ng-click="sortByDate('hiv_recency_date')">Date Of Testing
+                    <span class="sortorder" ng-show="propertyName === 'hiv_recency_date'" ng-class="{reverse: reverse}"></span>
+                </th>
+                <th style="text-align: center" ng-click="sortBy('sample_id')">Sample ID / Patient ID
+                    <span class="sortorder" ng-show="propertyName === 'sample_id'" ng-class="{reverse: reverse}"></span>
+
+                </th>
+                <th style="text-align: center" ng-click="sortBy('term_outcome','hiv_recency_date')">Assay Test Result
+                    <span class="sortorder" ng-show="propertyName === 'term_outcome'" ng-class="{reverse: reverse}"></span>
+                </th>
+
+                <th style="text-align: center" ng-click="sortBy('facility_name','hiv_recency_date')">Facility
+                    <span class="sortorder" ng-show="propertyName === 'facility_name'" ng-class="{reverse: reverse}"></span>
+                </th>
+                <th style="text-align: center"  ng-click="sortBy('hiv_diagnosis_date','hiv_recency_date')">HIV+ Diag Date
+                    <span class="sortorder" ng-show="propertyName === 'hiv_diagnosis_date'" ng-class="{reverse: reverse}"></span>
+                </th>
+                <th style="text-align: center" ng-click="sortBy('control_line','hiv_recency_date')">Control Line
+                    <span class="sortorder" ng-show="propertyName === 'control_line'" ng-class="{reverse: reverse}"></span>
+                </th>
+                <th style="text-align: center" ng-click="sortBy('positive_verification_line','hiv_recency_date')">Positive Verification Line
+                    <span class="sortorder" ng-show="propertyName === 'positive_verification_line'" ng-class="{reverse: reverse}"></span>
+                </th>
+                <th style="text-align: center" ng-click="sortBy('long_term_verification_line','hiv_recency_date')">Long Term Verification Line
+                    <span class="sortorder" ng-show="propertyName === 'long_term_verification_line'" ng-class="{reverse: reverse}"></span>
+                </th>
               </tr>
-              <tr ng-repeat="recency in recencyDatas " >
-                <td>{{ recency['hiv_recency_date']| date: "dd-MMM-yyyy"}}</td>
-                <td class="orderid">
-                <p>{{ recency['sample_id'] }} </p> 
-                <p>
-                  {{ recency['patient_id'] }}</p>
+              <tr ng-repeat="recency in recencyDatas | orderBy:'hiv_recency_date' | orderBy:propertyName:reverse " >
+                <td style="text-align: center">{{ recency['hiv_recency_date']| date: "dd-MMM-yyyy"}}</td>
+                <td style="text-align: center" class="orderid">
+                    <p>{{ recency['sample_id'] }} </p> 
+                    <p>{{recency['patient_id'] }}</p>
                </td>
-                <td> 
-                  <p style="color:red"  ng-if="recency['term_outcome']!='Long Term' && recency['term_outcome']!='Assay Recent'">{{recency['term_outcome']}}</p>
-                  <p ng-if="recency['term_outcome']=='Long Term' || recency['term_outcome']=='Assay Recent'">{{recency['term_outcome']}}</p>
+                <td style="text-align: center"> 
+                    <p style="color:red"  ng-if="recency['term_outcome']!='Long Term' && recency['term_outcome']!='Assay Recent'">{{recency['term_outcome']}}</p>
+                    <p ng-if="recency['term_outcome']=='Long Term' || recency['term_outcome']=='Assay Recent'">{{recency['term_outcome']}}</p>
                 </td>
-                <!-- <td>{{recency['term_outcome']}}</td> -->
-                <!-- <td>{{recency['final_outcome']}}</td> -->
-                <td>{{ recency['facility_name'] }}</td>
-                <td>{{ recency['hiv_diagnosis_date'] | date: "dd-MMM-yyyy" }}</td>
-                <td style="text-transform: capitalize;">{{recency['control_line']}}</td>
-                <td style="text-transform: capitalize;">{{recency['positive_verification_line']}}</td>
-                <td style="text-transform: capitalize;">{{recency['long_term_verification_line']}}</td>               
+
+                <td style="text-align: center;white-space: nowrap;">{{ recency['facility_name'] }}</td>
+                <td style="text-align: center">{{ recency['hiv_diagnosis_date'] | date: "dd-MMM-yyyy" }}</td>
+                <td style="text-transform: capitalize;text-align: center">{{recency['control_line']}}</td>
+                <td style="text-transform: capitalize;text-align: center">{{recency['positive_verification_line']}}</td>
+                <td style="text-transform: capitalize;text-align: center">{{recency['long_term_verification_line']}}</td>               
               </tr>
               
               <tr ng-show="displaymessage">

@@ -4,6 +4,7 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
 .controller('recencyDataCtrl', function($scope,$rootScope,$cordovaToast,$localStorage,$http,$preLoader, $ionicPopup, $location,$window, $stateParams) {
    
   // $scope.displaybadge = false;
+ // $scope.propertyName = 'hiv_recency_date';
 
         $rootScope.apiUrl = localStorage.getItem('apiUrl');
         $scope.init = function(){
@@ -137,6 +138,20 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
     
         }
       }  
+      $scope.sortByDate = function(propertyName) {
+        $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
+        console.log($scope.reverse)
+
+        $scope.propertyName = propertyName;
+      };   
+      $scope.sortBy = function(propertyName,propertyName1){
+          console.log($scope.propertyName)
+        $scope.reverse = ($scope.propertyName === propertyName && $scope.propertyName1 === propertyName1) ? !$scope.reverse : false;
+        console.log($scope.reverse)
+        $scope.propertyName = propertyName;
+        $scope.propertyName1 = propertyName1;
+
+      }
 })
 
 

@@ -251,12 +251,7 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
         qc.index= index;
         $scope.qcTesterObj = JSON.parse(localStorage.getItem('TesterInfo'));
         for(i=0;i<Object.keys($scope.qcTesterObj).length;i++){
-           $s$cordovaToast.show('Deleted Successfully', 'long', 'center')
-           .then(function(success) {
-             // success
-           }, function (error) {
-             // error
-           });cope.testinfo.push({
+           $scope.testinfo.push({
             "testerName":$scope.qcTesterObj[i].testerName,
             "available":$scope.qcTesterObj[i].available,
            "label":$scope.qcTesterObj[i].label

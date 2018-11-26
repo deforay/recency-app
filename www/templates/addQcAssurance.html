@@ -25,7 +25,7 @@
               <div class="row">
                   <div class="input-field col "> 
                         <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                <p>QC Sample ID</p>
+                                <p>QC Sample ID <span style="color:#df3838;"> *</span></p>
                             </span>  
                    <div class="form-logo"><img src="img/lab.png"></div> 
                       <input id="qcsampleId" type="text" class="qcsampleId" name="qcsampleId" title="Please Enter QC Sample ID" ng-model='qcAssurance.qcsampleId' placeholder="QC Sample ID" > 
@@ -49,7 +49,7 @@
                 <div class="row">
                     <div class="input-field col ">
                           <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                            <p>Test Kit Lot Number</p>
+                            <p>Test Kit Lot Number<span style="color:#df3838;"> *</span></p>
                               </span>
                         <div class="form-logo "><img src="img/lab.png"></div> 
                         <select class="ng-valid" id="testKitLotNo"  name="testKitLotNo"  title="Please Enter Test Kit Lot Number" ng-model="qcAssurance.testKitLotNo" ng-change="getTestKitExpDate(qcAssurance.testKitLotNo)">
@@ -71,7 +71,7 @@
             <div class="row">
                 <div class="input-field col ">
                       <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                              <p>Test Kit Expiry Date</p>
+                              <p>Test Kit Expiry Date<span style="color:#df3838;"> *</span></p>
                           </span>
                     <div class="form-logo date-img"><img src="img/date.png"></div> 
                     <input id="testKitExpDate" type="text" class="testKitExpDate" name="testKitExpDate" title="Please Enter Test Kit Expiry Date"  ng-model='qcAssurance.testKitExpDate' placeholder="Test Kit Expiry Date" readonly required>
@@ -188,7 +188,7 @@
             <div class="row">
                 <div class="input-field col ">
                       <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                        <p>Tester Name</p>
+                        <p>Tester Name<span style="color:#df3838;"> *</span></p>
                           </span>
                     <div class="form-logo "><img src="img/doctor.png"></div> 
                     <select class="ng-valid" id="testerName"  name="testerName"  title="Please Enter Tester Name" ng-model="qcAssurance.testerName">

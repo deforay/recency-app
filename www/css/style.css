@@ -44,6 +44,9 @@ table th,table td{
 .popup-head {
     border-bottom: 1px solid #ccc !important;
 }
+.popup-buttons  .button{
+    font-size:14px;
+}
 .item-icon-right .icon {
 
     color: #fafafa !important;
@@ -818,6 +821,9 @@ nav .brand-logo {
     border:none;
     padding: 4px 4px;
 }
+tbody tr:nth-child(odd) {
+    background: #f1f1f0;
+  }
 .card .table-header {
     height: 35px;
     padding: 0;
@@ -830,7 +836,12 @@ nav .brand-logo {
     padding-left: 7px;
     padding-right: 7px;
 }
-
+.sortorder:after {
+    content: '\25b2';  
+  }
+  .sortorder.reverse:after {
+    content: '\25bc';   
+  }
 .card {
     border-radius: 6px;
     padding-top: 0;

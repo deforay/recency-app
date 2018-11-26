@@ -7,6 +7,8 @@ app=angular.module('starter.serverQcDataCtrl', ['starter.services'])
 
         $rootScope.apiUrl = localStorage.getItem('apiUrl');
     var lastQCDatas =   localStorage.getItem('lastTenQcData');
+    $scope.propertyName = 'qc_test_date';
+
   if(lastQCDatas != null){
     lastQCDatas    = JSON.parse(lastQCDatas);
     var result = Object.keys(lastQCDatas).map(function(key,value) {
@@ -80,7 +82,20 @@ console.log($scope.lastQCDatas)
           $preLoader.hide(); 
         }
 
-
+        $scope.sortByDate = function(propertyName) {
+          $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
+          console.log($scope.reverse)
+  
+          $scope.propertyName = propertyName;
+        };   
+        $scope.sortBy = function(propertyName,propertyName1){
+            console.log($scope.propertyName)
+          $scope.reverse = ($scope.propertyName === propertyName && $scope.propertyName1 === propertyName1) ? !$scope.reverse : false;
+          console.log($scope.reverse)
+          $scope.propertyName = propertyName;
+          $scope.propertyName1 = propertyName1;
+  
+        }
 })
 
 

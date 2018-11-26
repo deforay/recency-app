@@ -17,14 +17,16 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
 //console.log(qcList)
 $scope.qcOutcomeCheck = function(){
   var qcLocalDatas = JSON.parse(localStorage.getItem('QCData'));
-  console.log(qcLocalDatas);
+ // console.log(qcLocalDatas);
   if(qcLocalDatas !=null){
     $scope.termOutcome = [];
     var qcLocalDatasLen = Object.keys(qcLocalDatas).length;
+    console.log(qcLocalDatas[qcLocalDatasLen - 1].testerName);
     for(i=0;i<qcLocalDatasLen;i++){
-  $scope.termOutcome.push(qcLocalDatas[i].recencyOutcome)
+  $scope.termOutcome.push(qcLocalDatas[i].recencyOutcome);
+
     }
-  console.log($scope.termOutcome);
+  //console.log($scope.termOutcome);
 
   for(i=0;i<$scope.termOutcome.length;i++){
     if($scope.termOutcome[i]=='Assay Recent'){
@@ -38,26 +40,22 @@ $scope.qcOutcomeCheck = function(){
   }
   console.log($scope.firstConditon, $scope.secondConditon,$scope.thirdConditon)
   if($scope.firstConditon=='Assay Recent' &&  $scope.secondConditon =='Assay HIV Negative' && $scope.thirdConditon=='Long Term'){
-    
+    var lastQcDate = new Date();
+    localStorage.setItem('LastQcDate',lastQcDate);
+  }else{
+      $scope.noOfDays = localStorage.getItem('noOfDays');
+      if($scope.noOfDays == null || $scope.noOfDays == 'null' ||  $scope.noOfDays == 0 || $scope.noOfDays == ''){
+       console.log("No alert")
+      }
+      else{
+      var currentDate = new Date();
+      localStorage.setItem('QcStartDate',currentDate);
+      var alertdate = new Date(Date.now()+$scope.noOfDays *24*60*60*1000);
+      localStorage.setItem('QcAlertDate',alertdate);
+      //console.log("Current Date:" +currentDate+ " and Alert Date: " +alertdate);
+     }  
   }
-  $scope.noOfDays = localStorage.getItem('noOfDays');
-        //$scope.noOfDays = 0;
-     $scope.QCDatas =  localStorage.getItem('QCData');
-
-      // if($scope.QCDatas == null){      
-      //    if(localStorage.getItem('QcStartDate')==null && localStorage.getItem('QcAlertDate')==null ){
-      //     var currentDate1 = new Date();
-      //     console.log(currentDate1);
-      //       localStorage.setItem('QcStartDate',currentDate1);
-      //       var alertdate = new Date(Date.now()+$scope.noOfDays *24*60*60*1000);
-      //       console.log(alertdate);
-      //       localStorage.setItem('QcAlertDate',alertdate);
-      //      }
-        
-      // }
-  }
-  
-
+}
 }
 $scope.qcOutcomeCheck();
 $scope.$on("$ionicView.beforeEnter", function(event, data){
@@ -484,13 +482,23 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
           $ionicPopup.alert({title:'Alert!',template:'Please Enter Date Of QC Test'});
           return false;
         }
+        if($scope.qcAssurance.qcsampleId==""){
+          $ionicPopup.alert({title:'Alert!',template:'Please Enter QC Sample ID'});
+          return false;
+        }
         if($scope.qcAssurance.referenceResult==""){
           $ionicPopup.alert({title:'Alert!',template:'Please Choose Reference Result'});
           return false;
         }
-       
-       
-          if($scope.qcAssurance.hivRecencyDate==""){
+        if($scope.qcAssurance.testKitLotNo==""){
+          $ionicPopup.alert({title:'Alert!',template:'Please Enter Test Kit Lot Number'});
+          return false;
+        }
+        if($scope.qcAssurance.testKitExpDate==""){
+          $ionicPopup.alert({title:'Alert!',template:'Please Enter Test Kit Expiry Date'});
+          return false;
+        }
+         if($scope.qcAssurance.hivRecencyDate==""){
             $ionicPopup.alert({title:'Alert!',template:'Please Choose HIV+ Recency Date'});
             return false;
           }
@@ -515,7 +523,10 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
           $ionicPopup.alert({title:'Alert!',template:'Please Choose Long Term Line'});
           return false;
         }
-
+        if($scope.qcAssurance.testerName==""){
+          $ionicPopup.alert({title:'Alert!',template:'Please Enter Tester Name'});
+          return false;
+        }
         var currentdate = new Date();
         $scope.qcAssurance.addedOn = currentdate.getFullYear() + "-"
         + (currentdate.getMonth()+1)  + "-" 

@@ -191,19 +191,47 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
                 var noOfDays = localStorage.getItem('noOfDays');
                 var QcStartDate = localStorage.getItem('QcStartDate');
                 var QcAlertDate = localStorage.getItem('QcAlertDate');
-                var QCDatas =  localStorage.getItem('QCData');
-                var testerName =  localStorage.getItem('LastTesterName');
-                if(testerName==null){
-                  testerName = '';
-                }
-                var lastTestDate =  localStorage.getItem('LastTestDate');
-                if(lastTestDate == null){
-                  lastTestDate ='';
+                var LastQCDate = localStorage.getItem('LastQcDate');
+                if(LastQCDate == null){
+                  LastQCDate  = '';
                 }else{
-                  lastTestDate = new Date(lastTestDate);
-                  lastTestDate = $filter('date')(lastTestDate , "dd-MMM-yyyy")
-                }             
-                console.log(lastTestDate)
+                  LastQCDate = new Date(LastQCDate);
+                  LastQCDate = $filter('date')(LastQCDate , "dd-MMM-yyyy")
+                }
+                var QCDatas =  localStorage.getItem('QCData');
+
+               if(QCDatas == null || noOfDays==null || noOfDays ==''|| noOfDays=='null' || noOfDays==0){
+                 console.log("No Alert");
+               }else{
+                 if(QcStartDate!=null && QcAlertDate!= null){
+                  var QcStartDate = new Date(QcStartDate);
+                  var QcAlertDate = new Date(QcAlertDate);
+                     if((Date.parse(QcStartDate)>=Date.parse(QcAlertDate))){
+                        var currentDate =  new Date();
+                        currentDate = $filter('date')(currentDate , "dd-MMM-yyyy");
+                        if( currentDate == localStorage.getItem('TodayAlertDate')){
+                            console.log(currentDate)
+                        }else{
+                            var today = new Date();
+                            today = $filter('date')(today , "dd-MMM-yyyy");
+                            localStorage.setItem('TodayAlertDate',today);
+                            $ionicPopup.alert({title:'Alert!',template:'Last QC done was on ' + lastTestDate + ' by Tester '+   testerName +'. Please perform QC test as recommended in SOP'});
+                          }              
+                      }
+                  }
+                }
+                // var testerName =  localStorage.getItem('LastTesterName');
+                // if(testerName==null){
+                //   testerName = '';
+                // }
+                // var lastTestDate =  localStorage.getItem('LastTestDate');
+                // if(lastTestDate == null){
+                //   lastTestDate ='';
+                // }else{
+                //   lastTestDate = new Date(lastTestDate);
+                //   lastTestDate = $filter('date')(lastTestDate , "dd-MMM-yyyy")
+                // }             
+                // console.log(lastTestDate)
               
                 if( QcStartDate!=null && QcAlertDate!= null && QCDatas != null && (noOfDays!=null && noOfDays!=0)){
                   var QcStartDate = new Date(QcStartDate);
