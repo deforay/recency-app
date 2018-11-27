@@ -128,7 +128,34 @@ $scope.groups = [
         "id": 12,
     "name": "Server Recency Data",
     "iconURL": "img/serverrecency.png",
-    "menuhref":"#/app/recencyData",
+    "menuhref":"",
+    "subMenuItems":[
+      {
+        "id":121,
+        "name":"All Server Data",
+        "iconURL":"img/serverrecency.png",
+         "menuhref":"#/app/recencyData",
+      },
+      // {
+      //   "id":122,
+      //   "name":"Recency Result With VL",
+      //   "iconURL":"img/serverrecency.png",
+      //    "menuhref":"#/app/recencyDataWithVl",
+      // },
+      // {
+      //   "id":123,
+      //   "name":"Pending Results",
+      //   "iconURL":"img/serverrecency.png",
+      //    "menuhref":"#/app/pendingRecencyResult",
+      // },
+      // {
+      //   "id":124,
+      //   "name":"TAT Report",
+      //   "iconURL":"img/serverrecency.png",
+      //    "menuhref":"#/app/tatRecencyReport",
+      // },
+
+    ]
       }
     ]
     
@@ -137,10 +164,20 @@ $scope.groups = [
 $scope.toggleGroup = function(group) {
   group.show = !group.show;
 };
+$scope.toggleSubGroup = function(item) {
+  if ($scope.isSubGroupShown(item)) {
+    $scope.shownChild = null;
+  } else {
+    $scope.shownChild = item;
+  }
+  // $ionicScrollDelegate.resize();
+}
 $scope.isGroupShown = function(group) {
   return group.show;
 };
-
+$scope.isSubGroupShown = function(item) {
+  return $scope.shownChild === item;
+}
 $scope.serverlogout = function(){
   var confirmPopup1 = $ionicPopup.confirm({
     title: 'Server Logout',
@@ -189,7 +226,7 @@ $scope.serverlogout = function(){
     }
   });
 }
-$scope.applogout = function(){
+$scope.applogout1 = function(){
   var confirmPopup = $ionicPopup.confirm({
     title: 'App Logout',
     template: '<center>Are you sure want to Logout?<center>',
@@ -218,6 +255,100 @@ $scope.applogout = function(){
           }
          });
 }
+$scope.applogout = function() {
+  if($state.current.name=='app.recencyData'){
+    if($localStorage.get('ServerRecencyData')=='login'){
+      var confirmPopup1 = $ionicPopup.confirm({
+        title: 'Logout',
+        template: '<center>Are you sure want to Logout?<center>',
+        buttons: [
+              {
+                text: '<b>Yes</b>',
+                type: 'button-positive',
+                onTap: function(e) {
+                 $preLoader.show();
+                 $localStorage.set('ServerRecencyData','logout');
+               $preLoader.hide(); 
+               $state.go('app.addRecency');
+               $refresh.page();
+        //      $localStorage.set('login',false);
+        //      $localStorage.set('logout',false);
+        //      $localStorage.remove('apppassword');
+        //      $state.go('login');
+        //  $preLoader.hide();                           
+                }
+              },
+              { text: 'Cancel', type: 'button-assertive',onTap: function(e) { return true; } },
+            ]
+       });
+       confirmPopup1.then(function(res) {
+        if(res) {
+         // console.log('Yes');
+       } else {
+         //console.log('No!');
+        }
+      });
+    }  
+    else
+    {
+     var confirmPopup2 = $ionicPopup.confirm({
+       title: 'Logout',
+       template: '<center>Are you sure want to Logout?<center>',
+        buttons: [
+              {
+                text: '<b>Yes</b>',
+                type: 'button-positive',
+                onTap: function(e) {
+                    $preLoader.show();
+    
+                $localStorage.set('logout',true);
+                 $preLoader.hide(); 
+                 $state.go('login');
+                }
+              },
+              { text: 'Cancel', type: 'button-assertive',onTap: function(e) { return true; } },
+            ]
+        });
+           confirmPopup2.then(function(res) {
+             if(res) {
+             // console.log('Yes');
+            } else {
+             //console.log('No!');
+             }
+            });
+    }
+  }
+  else{
+   var confirmPopup = $ionicPopup.confirm({
+     title: 'App Logout',
+     template: '<center>Are you sure want to Logout?<center>',
+      buttons: [
+            {
+              text: '<b>Yes</b>',
+              type: 'button-positive',
+              onTap: function(e) {
+                  $preLoader.show();
+  
+              $localStorage.set('logout',true);
+               // $window.localStorage.clear();
+               // $refresh.page();
+               $preLoader.hide(); 
+               $state.go('login');
+              }
+            },
+            { text: 'Cancel', type: 'button-assertive',onTap: function(e) { return true; } },
+          ]
+      });
+         confirmPopup.then(function(res) {
+           if(res) {
+           // console.log('Yes');
+          } else {
+           //console.log('No!');
+           }
+          });
+  }
+ 
+ }
 
  
 })

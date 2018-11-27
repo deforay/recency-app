@@ -1,0 +1,120 @@
+<ion-view view-title="Recency Result With VL" >
+
+        
+          <div class="RecencyForm">
+          <ion-content class="animate-fade-slide-in"  ng-hide="showauth">
+                  
+                <ion-list type="list-inset"  ng-hide="showauth">
+                    <h3 style="font-size:17px"> Recency Reporting</h3>
+                  <div style="overflow-x:auto;margin-bottom: 30px;" class="">
+                       <div class="loginFields">  
+                    <div class="row">
+                                <div class="input-field col col-90">
+                                      <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                              <p>From :</p>
+                                          </span>
+                                    <div class="form-logo date-img"><img src="img/date.png"></div> 
+                                    <input id="fromDate" type="text" class="fromDate" name="fromDate" title="Please Enter From Date"  ng-click="setFromDate();" ng-model='fromDate' placeholder="From Date" readonly required>
+                                </div>
+                                <div class="input-field col " style="padding:0">
+                                  <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="clearFromDate()"><img src="img/clear.png" style="height: 26px;"></div> 
+                                 </div>
+                   </div>
+                   <div class="row">
+                        <div class="input-field col col-90">
+                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                      <p>To :</p>
+                                  </span>
+                            <div class="form-logo date-img"><img src="img/date.png"></div> 
+                            <input id="toDate" type="text" class="toDate" name="toDate" title="Please Enter To Date"  ng-click="settoDate();" ng-model='toDate' placeholder="To Date" readonly required>
+                        </div>
+                        <div class="input-field col " style="padding:0">
+                          <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="cleartoDate()"><img src="img/clear.png" style="height: 26px;"></div> 
+                         </div>
+                    </div>
+                </div>   
+                        <!-- <div class="row responsive-xs  wrap-list">
+                                <div class="col col-33"><div style="padding-top:5px">Month :</div></div>
+                                  <div class="col">
+                                      <div class="item item-input item-select wrap-dropdown" style="height: 35px">
+                                          
+                                              <input id="fromMonth" type="month"  name="fromMonth"  ng-model='fromMonth' > 
+                                         </div>
+                                       </div>
+                                    </div>
+                              <div class="row responsive-xs  wrap-list">
+                                  <div class="col col-33"><div style="padding-top:5px"> Year :</div></div>
+                                       <div class="col">
+                                         <div class="item item-input item-select wrap-dropdown" style="height: 35px">
+                                         
+                                            <select class="ng-valid" id="searchYear" ng-model="netprofit.searchYear" ng-change="netprofitlist();">
+                                                <option value=""> << Select >> </option>
+                                                <option ng-repeat="period in year" value="{{period['year']}}">{{period['year']}}</option>
+                                               </select>
+                                           
+                                         </div>
+                                       </div>
+                               </div> -->
+                          
+                <table class="table table-bordered table-striped order-table" style="width: 100%" id="ordertable">
+                  <tr style="white-space: nowrap">
+                    <th style="text-align: center" ng-click="sortByDate('hiv_recency_date')">Date Of Testing
+                        <span class="sortorder" ng-show="propertyName === 'hiv_recency_date'" ng-class="{reverse: reverse}"></span>
+                    </th>
+                    <th style="text-align: center" ng-click="sortBy('sample_id')">Sample ID / Patient ID
+                        <span class="sortorder" ng-show="propertyName === 'sample_id'" ng-class="{reverse: reverse}"></span>
+    
+                    </th>
+                    <th style="text-align: center" ng-click="sortBy('term_outcome','hiv_recency_date')">Assay Test Result
+                        <span class="sortorder" ng-show="propertyName === 'term_outcome'" ng-class="{reverse: reverse}"></span>
+                    </th>
+    
+                    <th style="text-align: center" ng-click="sortBy('facility_name','hiv_recency_date')">Facility
+                        <span class="sortorder" ng-show="propertyName === 'facility_name'" ng-class="{reverse: reverse}"></span>
+                    </th>
+                    <th style="text-align: center"  ng-click="sortBy('hiv_diagnosis_date','hiv_recency_date')">HIV+ Diag Date
+                        <span class="sortorder" ng-show="propertyName === 'hiv_diagnosis_date'" ng-class="{reverse: reverse}"></span>
+                    </th>
+                    <th style="text-align: center" ng-click="sortBy('control_line','hiv_recency_date')">Control Line
+                        <span class="sortorder" ng-show="propertyName === 'control_line'" ng-class="{reverse: reverse}"></span>
+                    </th>
+                    <th style="text-align: center" ng-click="sortBy('positive_verification_line','hiv_recency_date')">Positive Verification Line
+                        <span class="sortorder" ng-show="propertyName === 'positive_verification_line'" ng-class="{reverse: reverse}"></span>
+                    </th>
+                    <th style="text-align: center" ng-click="sortBy('long_term_verification_line','hiv_recency_date')">Long Term Verification Line
+                        <span class="sortorder" ng-show="propertyName === 'long_term_verification_line'" ng-class="{reverse: reverse}"></span>
+                    </th>
+                  </tr>
+                  <tr ng-repeat="recency in recencyDatas | orderBy:'hiv_recency_date' | orderBy:propertyName:reverse " >
+                    <td style="text-align: center">{{ recency['hiv_recency_date']| date: "dd-MMM-yyyy"}}</td>
+                    <td style="text-align: center" class="orderid">
+                        <p>{{ recency['sample_id'] }} </p> 
+                        <p>{{recency['patient_id'] }}</p>
+                   </td>
+                    <td style="text-align: center"> 
+                        <p style="color:red"  ng-if="recency['term_outcome']!='Long Term' && recency['term_outcome']!='Assay Recent'">{{recency['term_outcome']}}</p>
+                        <p ng-if="recency['term_outcome']=='Long Term' || recency['term_outcome']=='Assay Recent'">{{recency['term_outcome']}}</p>
+                    </td>
+    
+                    <td style="text-align: center;white-space: nowrap;">{{ recency['facility_name'] }}</td>
+                    <td style="text-align: center">{{ recency['hiv_diagnosis_date'] | date: "dd-MMM-yyyy" }}</td>
+                    <td style="text-transform: capitalize;text-align: center">{{recency['control_line']}}</td>
+                    <td style="text-transform: capitalize;text-align: center">{{recency['positive_verification_line']}}</td>
+                    <td style="text-transform: capitalize;text-align: center">{{recency['long_term_verification_line']}}</td>               
+                  </tr>
+                  
+                  <tr ng-show="displaymessage">
+                    <td colspan="8" style="text-align: center;margin: 10px;" >No Records Found.</td>
+    
+                  </tr>
+                </table>
+              </div>
+             </ion-list>
+              </ion-content>
+              </div>
+    </ion-view>
+    
+    
+         
+         
+    

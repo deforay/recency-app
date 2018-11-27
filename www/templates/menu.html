@@ -62,21 +62,33 @@
                float: right;
                padding-left: 40px;" ng-class="isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i>
                 </span>
-
-                <!-- <i class="icon" ng-class="isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i> -->
-              <!-- &nbsp; -->
-
             </ion-item>
-            <ion-item menu-close  href="{{item.menuhref}}" class="item-accordion" ng-repeat="item in group.items" ng-show="isGroupShown(group)">
+            <div ng-repeat="item in group.items">
+
+            <ion-item menu-close  ng-if="item.name!='Server Recency Data'" href="{{item.menuhref}}" class="item-accordion" ng-click="toggleSubGroup(item)" ng-show="isGroupShown(group)">
                 <span><img style="height:20px;" src="{{item.iconURL}}">
                   <div ng-if="item.name=='Local Recency Data'" style="margin-left: 35px;margin-top: -25px;"> {{item.name}}<span ng-show="displaybadge" class="badge badge-assertive" style="right: 75px;top: 1px;">{{unSyncCount}}</span>
                   </div>
                   <div ng-if="item.name=='Local QC Data'" style="margin-left: 35px;margin-top: -25px;"> {{item.name}}<span ng-show="displayqcbadge" class="badge badge-assertive" style="right: 75px;top: 1px;">{{unSyncQcCount}}</span>
                   </div>
-                  <div ng-if="item.name!='Local QC Data' && item.name!='Local Recency Data'" style="margin-left: 35px;margin-top: -25px;"> {{item.name}}
+                  <div ng-if="item.name!='Local QC Data' && item.name!='Local Recency Data' && item.name!='Server Recency Data'" style="margin-left: 35px;margin-top: -25px;"> {{item.name}}
                   </div>
+                  <i class="icon" ng-if="item.name=='Server Recency Data'" style=" margin-top: -22px;float: right;padding-left: 40px;" 
+                  ng-class="isSubGroupShown(item) ? 'ion-minus' : 'ion-plus'"></i>
                 </span>
             </ion-item>
+            <ion-item  ng-if="item.name=='Server Recency Data'" href="{{item.menuhref}}" class="item-accordion" ng-click="toggleSubGroup(item)" ng-show="isGroupShown(group)">
+                <span><img style="height:20px;" src="{{item.iconURL}}">
+                  <div  style="margin-left: 35px;margin-top: -25px;"> {{item.name}}
+                  </div>
+                  <i class="icon" ng-if="item.name=='Server Recency Data'" style=" margin-top: -22px;float: right;padding-left: 40px;" 
+                  ng-class="isSubGroupShown(item) ? 'ion-minus' : 'ion-plus'"></i>
+                </span>
+            </ion-item>
+            <ion-item menu-close  href="{{child.menuhref}}" ng-repeat="child in item.subMenuItems" ng-show="isSubGroupShown(item)" >
+              <span><img style="height:20px;" src="{{child.iconURL}}"><div style="margin-left: 35px;margin-top: -25px;">{{child.name}}</div></span>
+            </ion-item>
+            </div>
           </div>
         <ion-item menu-close  href="" ng-click="serverlogout()">
             <span><img style="height:20px;" src="img/logout.png"><div style="margin-left: 35px;margin-top: -25px;">Server Logout</div></span>

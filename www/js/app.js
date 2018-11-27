@@ -17,6 +17,9 @@ angular.module('starter',  ['ionic',
                             'starter.editTesterInfoCtrl',
                             'starter.editLotInfoCtrl',
                             'starter.recencyDataCtrl',
+                            'starter.tatRecencyReportCtrl',
+                            'starter.recencyDataWithVlCtrl',
+                            'starter.pendingRecencyResultCtrl',
                             'starter.serverQcDataCtrl',
                             'starter.addRecencyCtrl',
                             'starter.viewRecencyCtrl',
@@ -149,6 +152,33 @@ angular.module('starter',  ['ionic',
         }
       }
     })
+    .state('app.tatRecencyReport', {
+      url: '/tatRecencyReport',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/tatRecencyReport.html',
+          controller:"tatRecencyReportCtrl"
+        }
+      }
+    })
+    .state('app.recencyDataWithVl', {
+      url: '/recencyDataWithVl',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/recencyDataWithVl.html',
+          controller:"recencyDataWithVlCtrl"
+        }
+      }
+    })
+    .state('app.pendingRecencyResult', {
+      url: '/pendingRecencyResult',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/pendingRecencyResult.html',
+          controller:"pendingRecencyResultCtrl"
+        }
+      }
+    }) 
     .state('app.serverQcData', {
       url: '/serverQcData',
       views: {

@@ -728,8 +728,8 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
       $scope.recency.hivRecencyDate =  $filter('date')(hivRecencyDate , "dd-MMM-yyyy");
       },
       to: new Date(),
-      weeksList: [],
-    dateFormat: 'MMMM yyyy',
+    //   weeksList: [],
+    // dateFormat: 'MMMM yyyy',
 
 
     }; 

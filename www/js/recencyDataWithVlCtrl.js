@@ -1,7 +1,6 @@
+app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
 
-app=angular.module('starter.recencyDataCtrl', ['starter.services'])
-
-.controller('recencyDataCtrl', function($scope,$rootScope,$filter,$cordovaToast,ionicDatePicker,$localStorage,$http,$preLoader, $ionicPopup, $location,$window, $stateParams) {
+.controller('recencyDataWithVlCtrl', function($scope,$rootScope,$filter,$cordovaToast,ionicDatePicker,$localStorage,$http,$preLoader, $ionicPopup, $location,$window, $stateParams) {
    
   // $scope.displaybadge = false;
  // $scope.propertyName = 'hiv_recency_date';
@@ -19,7 +18,6 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
             $scope.showauth = true;
           }else
           {
-   
             $preLoader.show();
           $http({
             url: $rootScope.apiUrl+"/api/login",
@@ -29,7 +27,7 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                console.log(response.data);
                if(response.data.status =="success"){
                   $localStorage.set('authToken',response.data.userDetails['authToken']);                  
-                  $http.get($localStorage.get('apiUrl')+'/api/recency?authToken='+$localStorage.get('authToken')+'&start='+$rootScope.fromDate+'&end='+$rootScope.toDate)
+                  $http.get($localStorage.get('apiUrl')+'/api/recency?authToken='+$localStorage.get('authToken')+'&startMonth='+$rootScope.fromDate+'&endMonth='+$rootScope.toDate)
                  .then(function(response) {
                    console.log(response)
                    if(response.data.status =="success"){
@@ -40,7 +38,6 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                       if(response.data.recency.length>0){
                         $scope.displaymessage = false;
                       $preLoader.show();
-                      console.log($scope.recencyDatas);
                       $scope.recencyDatas =response.data.recency;
                       for(i=0;i<$scope.recencyDatas.length;i++)
                       {
@@ -53,10 +50,8 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                    }
                    else{
                     $preLoader.hide();
-                    $scope.recencyDatas = [];
-                    $scope.displaymessage = true;
-                    // $scope.showauth = true;
-                    // $ionicPopup.alert({title:"Authentication Failed !",template:'<center>'+response.data.message+'</center>'});
+                    $scope.showauth = true;
+                    $ionicPopup.alert({title:"Authentication Failed !",template:'<center>'+response.data.message+'</center>'});
                        }
                  })
                }
@@ -88,7 +83,7 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                console.log(response.data);
                if(response.data.status =="success"){
                   $localStorage.set('authToken',response.data.userDetails['authToken']);                  
-                  $http.get($localStorage.get('apiUrl')+'/api/recency?authToken='+$localStorage.get('authToken')+'&start='+$rootScope.fromDate+'&end='+$rootScope.toDate)
+                  $http.get($localStorage.get('apiUrl')+'/api/recency?authToken='+$localStorage.get('authToken')+'&startMonth='+$rootScope.fromDate+'&endMonth='+$rootScope.toDate)
                  .then(function(response) {
                    console.log(response)
                    if(response.data.status =="success"){
@@ -99,8 +94,6 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                       if(response.data.recency.length>0){
                         $scope.displaymessage = false;
                       $preLoader.show();
-                      console.log($scope.recencyDatas);
-
                       $scope.recencyDatas =response.data.recency;
                       for(i=0;i<$scope.recencyDatas.length;i++)
                       {
@@ -113,17 +106,13 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                    }
                    else{
                     $preLoader.hide();
-                    // $scope.showauth = true;
-                    $scope.recencyDatas = [];
-                    $scope.displaymessage = true;
-
-                    // $ionicPopup.alert({title:"Authentication Failed 1 !",template:'<center>'+response.data.message+'</center>'});
+                    $scope.showauth = true;
+                    $ionicPopup.alert({title:"Authentication Failed !",template:'<center>'+response.data.message+'</center>'});
                        }
                  })
                }
                else{
                 console.log(response.data);
-                
                 $preLoader.hide();
                 $ionicPopup.alert({title:'Authentication Failed!',template:response.data.message});
 
@@ -166,18 +155,18 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                  if(response.data.status =="success"){
                     $localStorage.set('authToken',response.data.userDetails['authToken']);
                     
-                   $http.get($localStorage.get('apiUrl')+'/api/recency?authToken='+$localStorage.get('authToken')+'&start='+$rootScope.fromDate+'&end='+$rootScope.toDate)
+                   $http.get($localStorage.get('apiUrl')+'/api/recency?authToken='+$localStorage.get('authToken')+'&startMonth='+$rootScope.fromDate+'&endMonth='+$rootScope.toDate)
                    .then(function(response) {
                      console.log(response);
                      if(response.data.status =="success"){
                       $localStorage.set('ServerRecencyData','login');
                       $preLoader.hide();
-                      $cordovaToast.show('Authentication is Sucess', 'long', 'bottom')
-                            .then(function(success) {
-                                 // success
-                             }, function (error) {
-                                 // error
-                             });
+                      // $cordovaToast.show('Authentication is Sucess', 'long', 'bottom')
+                      //       .then(function(success) {
+                      //            // success
+                      //        }, function (error) {
+                      //            // error
+                      //        });
                         $scope.showauth = false;  
                         console.log( response.data.recency)  
                         console.log($rootScope.fromDate)
@@ -198,11 +187,9 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                      }
                      else{
                       $preLoader.hide();
-                      $scope.recencyDatas = [];
-                      $scope.displaymessage = true;
 
-                      // $scope.showauth = true;
-                      // $ionicPopup.alert({title:"Authentication Failed1 !",template:'<center>'+response.data.message+'</center>'});
+                      $scope.showauth = true;
+                      $ionicPopup.alert({title:"Authentication Failed !",template:'<center>'+response.data.message+'</center>'});
                          }
                    })
                  }
@@ -272,5 +259,6 @@ $scope.cleartoDate = function(){
 
       }
 })
+
 
 
