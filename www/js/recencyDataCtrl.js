@@ -10,7 +10,7 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
         $scope.init = function(){
           var fromdate = new Date();
           var todate = new Date();
-          var intYear = fromdate.getFullYear() - 1; 
+          var intYear = fromdate.getFullYear() - 1;   
           fromdate = fromdate.setFullYear(intYear);
           $rootScope.fromDate =  $filter('date')(fromdate , "dd-MMM-yyyy");
           $rootScope.toDate =  $filter('date')(todate , "dd-MMM-yyyy");
@@ -42,19 +42,31 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                       $preLoader.show();
                       console.log($scope.recencyDatas);
                       $scope.recencyDatas =response.data.recency;
+                      $scope.recencyCount = $scope.recencyDatas.length;
                       for(i=0;i<$scope.recencyDatas.length;i++)
                       {
                         $scope.recencyDatas[i].patient_id = "Xx" + $scope.recencyDatas[i].patient_id.slice(2);
+                     
                       }
+                      $scope.displayCount = true;
                       $preLoader.hide()
                     }else{
+                      $scope.recencyDatas = [];
                       $scope.displaymessage = true;
+                      $scope.recencyCount ="";
+                      $scope.displayCount = false;
+  
                     }
                    }
                    else{
                     $preLoader.hide();
+                    $localStorage.set('ServerRecencyData','login');
+                    $scope.showauth = false;  
                     $scope.recencyDatas = [];
                     $scope.displaymessage = true;
+                    $scope.recencyCount ="";
+                    $scope.displayCount = false;
+
                     // $scope.showauth = true;
                     // $ionicPopup.alert({title:"Authentication Failed !",template:'<center>'+response.data.message+'</center>'});
                        }
@@ -74,7 +86,7 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
         $scope.init();
         $scope.getRecencyData = function(){
           console.log($rootScope.fromDate,$rootScope.toDate)
-          $scope.fromDate = $rootScope.fromDate;
+          
           if(localStorage.getItem('ServerRecencyData')=='logout' || localStorage.getItem('ServerRecencyData')=='success' ){
             $scope.showauth = true;
           }else
@@ -102,20 +114,29 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                       console.log($scope.recencyDatas);
 
                       $scope.recencyDatas =response.data.recency;
+                      $scope.recencyCount = $scope.recencyDatas.length;
+
                       for(i=0;i<$scope.recencyDatas.length;i++)
                       {
                         $scope.recencyDatas[i].patient_id = "Xx" + $scope.recencyDatas[i].patient_id.slice(2);
                       }
+                      $scope.displayCount = true;
                       $preLoader.hide()
                     }else{
+                      $scope.recencyDatas = [];
                       $scope.displaymessage = true;
+                      $scope.recencyCount ="";
+                      $scope.displayCount = false;
                     }
                    }
                    else{
                     $preLoader.hide();
-                    // $scope.showauth = true;
+                    $localStorage.set('ServerRecencyData','login');
+                    $scope.showauth = false;  
                     $scope.recencyDatas = [];
                     $scope.displaymessage = true;
+                    $scope.recencyCount ="";
+                    $scope.displayCount = false;
 
                     // $ionicPopup.alert({title:"Authentication Failed 1 !",template:'<center>'+response.data.message+'</center>'});
                        }
@@ -185,21 +206,30 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                           $scope.displaymessage = false;
                           $preLoader.show();
                           $scope.recencyDatas =response.data.recency;
+                          $scope.recencyCount = $scope.recencyDatas.length;
+
                           for(i=0;i<$scope.recencyDatas.length;i++)
                           {
                             $scope.recencyDatas[i].patient_id = "Xx" + $scope.recencyDatas[i].patient_id.slice(2);
                             // console.log($scope.recencyDatas[i].patient_id);
                           }
-                          $preLoader.hide()
+                          $scope.displayCount = true;
+                          $preLoader.hide();
                         }else{
+                          $scope.recencyDatas = [];
                           $scope.displaymessage = true;
-                        }
+                          $scope.recencyCount ="";
+                          $scope.displayCount = false;                        }
                         
                      }
                      else{
                       $preLoader.hide();
+                      $localStorage.set('ServerRecencyData','login');
+                      $scope.showauth = false;  
                       $scope.recencyDatas = [];
                       $scope.displaymessage = true;
+                      $scope.recencyCount ="";
+                      $scope.displayCount = false;
 
                       // $scope.showauth = true;
                       // $ionicPopup.alert({title:"Authentication Failed1 !",template:'<center>'+response.data.message+'</center>'});
@@ -252,6 +282,7 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
 }
 $scope.clearFromDate = function(){
   $rootScope.fromDate ="";
+  console.log($rootScope.fromDate)
 }
 $scope.cleartoDate = function(){
   $rootScope.toDate ="";

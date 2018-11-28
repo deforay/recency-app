@@ -28,7 +28,7 @@ angular.module('starter',  ['ionic',
                             'starter.viewQcAssuranceDetailCtrl',
                             'starter.editRecencyCtrl'
                            ])
-.run(function($ionicPlatform,$ionicHistory, $localStorage,$ionicPopup,$state,$cordovaBadge) {
+.run(function($ionicPlatform,$ionicHistory,$refresh, $localStorage,$ionicPopup,$state,$cordovaBadge) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs).
@@ -52,6 +52,24 @@ angular.module('starter',  ['ionic',
 
    
   });
+
+  $ionicPlatform.on('pause', function() {
+    // alert("pause")
+    //  console.log("pause");
+    if( $localStorage.get('ServerRecencyData')=='login' ){
+      $state.go('app.addRecency');
+
+      $localStorage.set('ServerRecencyData','logout');
+      $refresh.page();
+    }
+     })
+    //  $ionicPlatform.on('resume', function() {
+    //   //console.log("resume");
+    //   alert("resume")
+    //   $state.go('app.addRecency');
+
+    //   $localStorage.set('ServerRecencyData','logout');    
+    //  })
   // $ionicPlatform.registerBackButtonAction(function(e) {
   //   e.preventDefault();
   //   function showConfirm() {

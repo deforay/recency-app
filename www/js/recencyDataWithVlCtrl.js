@@ -4,7 +4,7 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
 .controller('recencyDataWithVlCtrl', function($scope,$rootScope,$filter,$cordovaToast,ionicDatePicker,$localStorage,$http,$preLoader, $ionicPopup, $location,$window, $stateParams) {
    
   // $scope.displaybadge = false;
- $scope.propertyName = 'vl_test_date';
+ $scope.propertyName = 'hiv_recency_date';
  $rootScope.apiUrl = localStorage.getItem('apiUrl');
 
         $scope.init = function(){
@@ -280,12 +280,12 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
                      if(response.data.status =="success"){
                       $localStorage.set('ServerRecencyData','login');
                       $preLoader.hide();
-                      // $cordovaToast.show('Authentication is Sucess', 'long', 'bottom')
-                      //       .then(function(success) {
-                      //            // success
-                      //        }, function (error) {
-                      //            // error
-                      //        });
+                      $cordovaToast.show('Authentication is Sucess', 'long', 'bottom')
+                            .then(function(success) {
+                                 // success
+                             }, function (error) {
+                                 // error
+                             });
                         $scope.showauth = false;  
                         console.log( response.data.recency)  
                         console.log($rootScope.fromVlDate)

@@ -279,15 +279,15 @@ app=angular.module('starter.pendingRecencyResultCtrl', ['starter.services'])
                      if(response.data.status =="success"){
                       $localStorage.set('ServerRecencyData','login');
                       $preLoader.hide();
-                      // $cordovaToast.show('Authentication is Sucess', 'long', 'bottom')
-                      //       .then(function(success) {
-                      //            // success
-                      //        }, function (error) {
-                      //            // error
-                      //        });
+                      $cordovaToast.show('Authentication is Sucess', 'long', 'bottom')
+                            .then(function(success) {
+                                 // success
+                             }, function (error) {
+                                 // error
+                             });
                         $scope.showauth = false;  
                         console.log( response.data.recency)  
-                        console.log($rootScope.fromVlDate)
+                        //console.log($rootScope.fromVlDate)
                         if(response.data.recency.length>0){
                           $scope.displaymessage = false;
                         $preLoader.show();

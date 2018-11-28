@@ -133,19 +133,19 @@ $scope.groups = [
       {
         "id":121,
         "name":"All Server Data",
-        "iconURL":"img/serverrecency.png",
+        "iconURL":"img/database.png",
          "menuhref":"#/app/recencyData",
       },
       {
         "id":122,
         "name":"Recency Result With VL",
-        "iconURL":"img/serverrecency.png",
+        "iconURL":"img/database.png",
          "menuhref":"#/app/recencyDataWithVl",
       },
       {
         "id":123,
         "name":"Pending Results",
-        "iconURL":"img/serverrecency.png",
+        "iconURL":"img/database.png",
          "menuhref":"#/app/pendingRecencyResult",
       },
       // {
@@ -256,7 +256,7 @@ $scope.applogout1 = function(){
          });
 }
 $scope.applogout = function() {
-  if($state.current.name=='app.recencyData' || $state.current.name=='app.recencyDataWithVl' ){
+  if($state.current.name=='app.recencyData' || $state.current.name=='app.recencyDataWithVl'|| $state.current.name=='app.pendingRecencyResult' ){
     if($localStorage.get('ServerRecencyData')=='login'){
       var confirmPopup1 = $ionicPopup.confirm({
         title: 'Server Logout',
@@ -300,7 +300,7 @@ $scope.applogout = function() {
                 type: 'button-positive',
                 onTap: function(e) {
                     $preLoader.show();
-    
+                  
                 $localStorage.set('logout',true);
                  $preLoader.hide(); 
                  $state.go('login');
@@ -328,7 +328,8 @@ $scope.applogout = function() {
               type: 'button-positive',
               onTap: function(e) {
                   $preLoader.show();
-  
+                  $localStorage.set('ServerRecencyData','logout');
+                
               $localStorage.set('logout',true);
                // $window.localStorage.clear();
                // $refresh.page();

@@ -95,6 +95,7 @@
                      </div>
                 </div>
             </div>   
+            <p ng-show="displayCount"> Total Recency data for the Selected Date Range : {{recencyCount}}</p>
             <div style="overflow-x:auto;margin-bottom: 30px;" class="">
 
                     <!-- <div class="row responsive-xs  wrap-list">
@@ -120,7 +121,7 @@
                                    </div>
                            </div> -->
                       
-            <table class="table table-bordered table-striped order-table" style="width: 100%" id="ordertable">
+           <table class="table table-bordered table-striped order-table" style="width: 100%" id="ordertable">
               <tr style="white-space: nowrap">
                 <th style="text-align: center" ng-click="sortByDate('hiv_recency_date')">Date Of Testing
                     <span class="sortorder" ng-show="propertyName === 'hiv_recency_date'" ng-class="{reverse: reverse}"></span>
