@@ -4,7 +4,7 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
 .controller('recencyDataCtrl', function($scope,$rootScope,$filter,$cordovaToast,ionicDatePicker,$localStorage,$http,$preLoader, $ionicPopup, $location,$window, $stateParams) {
    
   // $scope.displaybadge = false;
- // $scope.propertyName = 'hiv_recency_date';
+  $scope.propertyName = 'hiv_recency_date';
 
         $rootScope.apiUrl = localStorage.getItem('apiUrl');
         $scope.init = function(){
@@ -242,12 +242,12 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
      var toDate = new Date(val);
        console.log(toDate);
        $rootScope.toDate =  $filter('date')(toDate , "dd-MMM-yyyy");
+ $scope.getRecencyData();
       },
       to: new Date(),
 
      }; 
  ionicDatePicker.openDatePicker(ipObj1);
- $scope.getRecencyData();
 
 }
 $scope.clearFromDate = function(){

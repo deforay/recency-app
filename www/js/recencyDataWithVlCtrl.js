@@ -1,19 +1,23 @@
+
 app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
 
 .controller('recencyDataWithVlCtrl', function($scope,$rootScope,$filter,$cordovaToast,ionicDatePicker,$localStorage,$http,$preLoader, $ionicPopup, $location,$window, $stateParams) {
    
   // $scope.displaybadge = false;
- // $scope.propertyName = 'hiv_recency_date';
+ $scope.propertyName = 'vl_test_date';
+ $rootScope.apiUrl = localStorage.getItem('apiUrl');
 
-        $rootScope.apiUrl = localStorage.getItem('apiUrl');
         $scope.init = function(){
+
           var fromdate = new Date();
           var todate = new Date();
           var intYear = fromdate.getFullYear() - 1; 
           fromdate = fromdate.setFullYear(intYear);
-          $rootScope.fromDate =  $filter('date')(fromdate , "dd-MMM-yyyy");
-          $rootScope.toDate =  $filter('date')(todate , "dd-MMM-yyyy");
-          console.log($rootScope.fromDate,$rootScope.toDate)
+          $rootScope.fromVlDate =  $filter('date')(fromdate , "dd-MMM-yyyy");
+          $rootScope.toVlDate =  $filter('date')(todate , "dd-MMM-yyyy");
+          console.log($rootScope.fromVlDate,$rootScope.toVlDate);
+          $scope.recencyVlCount = "";
+
           if(localStorage.getItem('ServerRecencyData')=='logout' || localStorage.getItem('ServerRecencyData')=='success' ){
             $scope.showauth = true;
           }else
@@ -27,7 +31,7 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
                console.log(response.data);
                if(response.data.status =="success"){
                   $localStorage.set('authToken',response.data.userDetails['authToken']);                  
-                  $http.get($localStorage.get('apiUrl')+'/api/recency?authToken='+$localStorage.get('authToken')+'&startMonth='+$rootScope.fromDate+'&endMonth='+$rootScope.toDate)
+                  $http.get($localStorage.get('apiUrl')+'/api/recency-result-with-vl?authToken='+$localStorage.get('authToken')+'&start='+$rootScope.fromVlDate+'&end='+$rootScope.toVlDate)
                  .then(function(response) {
                    console.log(response)
                    if(response.data.status =="success"){
@@ -38,20 +42,37 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
                       if(response.data.recency.length>0){
                         $scope.displaymessage = false;
                       $preLoader.show();
-                      $scope.recencyDatas =response.data.recency;
-                      for(i=0;i<$scope.recencyDatas.length;i++)
-                      {
-                        $scope.recencyDatas[i].patient_id = "Xx" + $scope.recencyDatas[i].patient_id.slice(2);
-                      }
+                      $scope.recencyVlDatas =response.data.recency;
+                     // console.log($scope.recencyVlDatas);
+                        $scope.recencyVlCountData = [];
+                        for(i=0;i<$scope.recencyVlDatas.length;i++){
+                          if($scope.recencyVlDatas[i]['vl_result']=='null' || $scope.recencyVlDatas[i]['vl_result']==null ){
+                            $scope.recencyVlCountData.push($scope.recencyVlDatas[i]['vl_result']);
+                          }
+                        }
+                        console.log($scope.recencyVlCountData)
+                        $scope.recencyVlCount = $scope.recencyVlCountData.length;
+
+                        $scope.displayVlCount = true;
                       $preLoader.hide()
                     }else{
                       $scope.displaymessage = true;
+                      $scope.displayVlCount = false;
+                      $scope.recencyVlCount="";
+                      $scope.recencyVlCountData = [];
                     }
                    }
                    else{
                     $preLoader.hide();
-                    $scope.showauth = true;
-                    $ionicPopup.alert({title:"Authentication Failed !",template:'<center>'+response.data.message+'</center>'});
+                    $localStorage.set('ServerRecencyData','login');
+                    $scope.showauth = false;  
+                    $scope.recencyVlDatas = [];
+                    $scope.recencyVlCountData = [];
+                    $scope.displaymessage = true;
+                    $scope.displayVlCount = false;
+                    $scope.recencyVlCount="";
+                    // $scope.showauth = true;
+                    // $ionicPopup.alert({title:"Authentication Failed !",template:'<center>'+response.data.message+'</center>'});
                        }
                  })
                }
@@ -59,17 +80,25 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
                 console.log(response.data);
                 $preLoader.hide();
                 $ionicPopup.alert({title:'Authentication Failed!',template:response.data.message});
-
                }
-        });
+            });
             $scope.showauth = false;
           }
          console.log( $scope.showauth)
         }
         $scope.init();
-        $scope.getRecencyData = function(){
-          console.log($rootScope.fromDate,$rootScope.toDate)
-          $scope.fromDate = $rootScope.fromDate;
+
+        $scope.$on("$ionicView.beforeEnter", function(event, data){
+ 
+          var fromdate = new Date();
+          var todate = new Date();
+          var intYear = fromdate.getFullYear() - 1; 
+          fromdate = fromdate.setFullYear(intYear);
+          $rootScope.fromVlDate =  $filter('date')(fromdate , "dd-MMM-yyyy");
+          $rootScope.toVlDate =  $filter('date')(todate , "dd-MMM-yyyy");
+          console.log($rootScope.fromVlDate,$rootScope.toVlDate)
+          $scope.recencyVlCount = "";
+
           if(localStorage.getItem('ServerRecencyData')=='logout' || localStorage.getItem('ServerRecencyData')=='success' ){
             $scope.showauth = true;
           }else
@@ -83,7 +112,7 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
                console.log(response.data);
                if(response.data.status =="success"){
                   $localStorage.set('authToken',response.data.userDetails['authToken']);                  
-                  $http.get($localStorage.get('apiUrl')+'/api/recency?authToken='+$localStorage.get('authToken')+'&startMonth='+$rootScope.fromDate+'&endMonth='+$rootScope.toDate)
+                  $http.get($localStorage.get('apiUrl')+'/api/recency-result-with-vl?authToken='+$localStorage.get('authToken')+'&start='+$rootScope.fromVlDate+'&end='+$rootScope.toVlDate)
                  .then(function(response) {
                    console.log(response)
                    if(response.data.status =="success"){
@@ -94,20 +123,37 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
                       if(response.data.recency.length>0){
                         $scope.displaymessage = false;
                       $preLoader.show();
-                      $scope.recencyDatas =response.data.recency;
-                      for(i=0;i<$scope.recencyDatas.length;i++)
-                      {
-                        $scope.recencyDatas[i].patient_id = "Xx" + $scope.recencyDatas[i].patient_id.slice(2);
-                      }
+                      $scope.recencyVlDatas =response.data.recency;
+                    //  console.log($scope.recencyVlDatas);
+                        $scope.recencyVlCountData = [];
+                        for(i=0;i<$scope.recencyVlDatas.length;i++){
+                          if($scope.recencyVlDatas[i]['vl_result']=='null' || $scope.recencyVlDatas[i]['vl_result']==null ){
+                            $scope.recencyVlCountData.push($scope.recencyVlDatas[i]['vl_result']);
+                          }
+                        }
+                        console.log($scope.recencyVlCountData)
+                        $scope.recencyVlCount = $scope.recencyVlCountData.length;
+
+                        $scope.displayVlCount = true;
                       $preLoader.hide()
                     }else{
                       $scope.displaymessage = true;
+                      $scope.displayVlCount = false;
+                      $scope.recencyVlCount="";
+                      $scope.recencyVlCountData = [];
                     }
                    }
                    else{
                     $preLoader.hide();
-                    $scope.showauth = true;
-                    $ionicPopup.alert({title:"Authentication Failed !",template:'<center>'+response.data.message+'</center>'});
+                    $localStorage.set('ServerRecencyData','login');
+                    $scope.showauth = false;  
+                    $scope.recencyVlDatas = [];
+                    $scope.recencyVlCountData = [];
+                    $scope.displaymessage = true;
+                    $scope.displayVlCount = false;
+                    $scope.recencyVlCount="";
+                    // $scope.showauth = true;
+                    // $ionicPopup.alert({title:"Authentication Failed !",template:'<center>'+response.data.message+'</center>'});
                        }
                  })
                }
@@ -117,25 +163,98 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
                 $ionicPopup.alert({title:'Authentication Failed!',template:response.data.message});
 
                }
+            });
+            $scope.showauth = false;
+          }
+         console.log( $scope.showauth)
         });
+        
+        $scope.getRecencyData = function(){
+          
+          console.log($rootScope.fromVlDate,$rootScope.toVlDate)
+          $scope.fromDate = $rootScope.fromVlDate;
+          $scope.recencyVlCount = "";
+
+          if(localStorage.getItem('ServerRecencyData')=='logout' || localStorage.getItem('ServerRecencyData')=='success' ){
+            $scope.showauth = true;
+          }else
+          {
+            $preLoader.show();
+          $http({
+            url: $rootScope.apiUrl+"/api/login",
+            method: "POST",
+            data: { "email": $localStorage.get('email'), "password" : $localStorage.get('serverpassword') }
+        }).then(function successCallback(response) {
+               console.log(response.data);
+               if(response.data.status =="success"){
+                  $localStorage.set('authToken',response.data.userDetails['authToken']);                  
+                  $http.get($localStorage.get('apiUrl')+'/api/recency-result-with-vl?authToken='+$localStorage.get('authToken')+'&start='+$rootScope.fromVlDate+'&end='+$rootScope.toVlDate)
+                 .then(function(response) {
+                   console.log(response)
+                   if(response.data.status =="success"){
+                    $localStorage.set('ServerRecencyData','login');
+                    $preLoader.hide();
+                      $scope.showauth = false;   
+                      console.log( response.data.recency) 
+                      if(response.data.recency.length>0){
+                        $scope.displaymessage = false;
+                      $preLoader.show();
+                      $scope.recencyVlDatas =response.data.recency;
+                     // console.log($scope.recencyVlDatas);
+                        $scope.recencyVlCountData = [];
+                        for(i=0;i<$scope.recencyVlDatas.length;i++){
+                          if($scope.recencyVlDatas[i]['vl_result']=='null' || $scope.recencyVlDatas[i]['vl_result']==null ){
+                            $scope.recencyVlCountData.push($scope.recencyVlDatas[i]['vl_result']);
+                          }
+                        }
+                        console.log($scope.recencyVlCountData)
+                        $scope.recencyVlCount = $scope.recencyVlCountData.length;
+
+                        $scope.displayVlCount = true;
+                      $preLoader.hide()
+                    }else{
+                      $scope.displaymessage = true;
+                      $scope.displayVlCount = false;
+                      $scope.recencyVlCount="";
+                      $scope.recencyVlCountData = [];
+                    }
+                   }
+                   else{
+                    $preLoader.hide();
+                    $localStorage.set('ServerRecencyData','login');
+                    $scope.showauth = false;  
+                    $scope.recencyVlDatas = [];
+                    $scope.recencyVlCountData = [];
+                    $scope.displaymessage = true;
+                    $scope.displayVlCount = false;
+                    $scope.recencyVlCount="";
+                    // $ionicPopup.alert({title:"Authentication Failed 1 !",template:'<center>'+response.data.message+'</center>'});
+                       }
+                 })
+               }
+               else{
+                console.log(response.data);       
+                $preLoader.hide();
+                $ionicPopup.alert({title:'Authentication Failed!',template:response.data.message});
+
+               }
+           });
             $scope.showauth = false;
           }
          console.log( $scope.showauth)
         }
-        $scope.doRefresh = function() {
-          $preLoader.show();
-          $window.location.reload(true);
-          $preLoader.hide(); 
-        }
 
     $scope.doLogin = function(credentials) {
+
       var fromdate = new Date();
       var todate = new Date();
       var intYear = fromdate.getFullYear() - 1; 
       fromdate = fromdate.setFullYear(intYear);
-      $rootScope.fromDate =  $filter('date')(fromdate , "dd-MMM-yyyy");
-      $rootScope.toDate =  $filter('date')(todate , "dd-MMM-yyyy");
-      console.log($rootScope.fromDate,$rootScope.toDate)
+      $rootScope.fromVlDate =  $filter('date')(fromdate , "dd-MMM-yyyy");
+      $rootScope.toVlDate =  $filter('date')(todate , "dd-MMM-yyyy");
+      console.log($rootScope.fromVlDate,$rootScope.toVlDate);
+      $scope.recencyVlCount = "";
+
        if(!credentials.email){
           $ionicPopup.alert({title: 'Login Failed',template: 'Please Enter Valid Email ID'});
         }
@@ -155,7 +274,7 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
                  if(response.data.status =="success"){
                     $localStorage.set('authToken',response.data.userDetails['authToken']);
                     
-                   $http.get($localStorage.get('apiUrl')+'/api/recency?authToken='+$localStorage.get('authToken')+'&startMonth='+$rootScope.fromDate+'&endMonth='+$rootScope.toDate)
+                   $http.get($localStorage.get('apiUrl')+'/api/recency-result-with-vl?authToken='+$localStorage.get('authToken')+'&start='+$rootScope.fromVlDate+'&end='+$rootScope.toVlDate)
                    .then(function(response) {
                      console.log(response);
                      if(response.data.status =="success"){
@@ -169,27 +288,41 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
                       //        });
                         $scope.showauth = false;  
                         console.log( response.data.recency)  
-                        console.log($rootScope.fromDate)
+                        console.log($rootScope.fromVlDate)
                         if(response.data.recency.length>0){
                           $scope.displaymessage = false;
-                          $preLoader.show();
-                          $scope.recencyDatas =response.data.recency;
-                          for(i=0;i<$scope.recencyDatas.length;i++)
-                          {
-                            $scope.recencyDatas[i].patient_id = "Xx" + $scope.recencyDatas[i].patient_id.slice(2);
-                            // console.log($scope.recencyDatas[i].patient_id);
+                        $preLoader.show();
+                        $scope.recencyVlDatas =response.data.recency;
+                     //   console.log($scope.recencyVlDatas);
+                          $scope.recencyVlCountData = [];
+                          for(i=0;i<$scope.recencyVlDatas.length;i++){
+                            if($scope.recencyVlDatas[i]['vl_result']=='null' || $scope.recencyVlDatas[i]['vl_result']==null ){
+                              $scope.recencyVlCountData.push($scope.recencyVlDatas[i]['vl_result']);
+                            }
                           }
-                          $preLoader.hide()
-                        }else{
-                          $scope.displaymessage = true;
-                        }
-                        
+                          console.log($scope.recencyVlCountData)
+                          $scope.recencyVlCount = $scope.recencyVlCountData.length;
+  
+                          $scope.displayVlCount = true;
+                        $preLoader.hide()
+                      }else{
+                        $scope.displaymessage = true;
+                        $scope.displayVlCount = false;
+                        $scope.recencyVlCount="";
+                        $scope.recencyVlCountData = [];
+                      }
                      }
                      else{
                       $preLoader.hide();
-
-                      $scope.showauth = true;
-                      $ionicPopup.alert({title:"Authentication Failed !",template:'<center>'+response.data.message+'</center>'});
+                      $localStorage.set('ServerRecencyData','login');
+                      $scope.showauth = false;  
+                      $scope.recencyVlDatas = [];
+                      $scope.recencyVlCountData = [];
+                      $scope.displaymessage = true;
+                      $scope.displayVlCount = false;
+                      $scope.recencyVlCount="";
+                      // $scope.showauth = true;
+                      // $ionicPopup.alert({title:"Authentication Failed1 !",template:'<center>'+response.data.message+'</center>'});
                          }
                    })
                  }
@@ -199,21 +332,23 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
                   $ionicPopup.alert({title:'Authentication Failed!',template:response.data.message});
 
                  }
-              // }, function errorCallback(response) {
-              //   console.log(response.data);
-              //   $preLoader.hide();
-              //   $ionicPopup.alert({title:"Authentication Failed !",template:'<center>'+response.data.message+'</center>'});
           });
     
         }
-      }  
+      } 
+        $scope.doRefresh = function() {
+          $preLoader.show();
+          $window.location.reload(true);
+          $preLoader.hide(); 
+        }
 
-      $scope.setFromDate = function(val){
+
+      $scope.setFromVlDate = function(val){
         var ipObj1 = {
          callback: function (val) {  
          var fromDate = new Date(val);
            console.log(fromDate);
-           $rootScope.fromDate =  $filter('date')(fromDate , "dd-MMM-yyyy");
+           $rootScope.fromVlDate =  $filter('date')(fromDate , "dd-MMM-yyyy");
            $scope.getRecencyData();
           },
    to: new Date(),
@@ -223,25 +358,25 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
      console.log()
    
    }
-   $scope.settoDate = function(val){
+   $scope.settoVlDate = function(val){
     var ipObj1 = {
      callback: function (val) {  
      var toDate = new Date(val);
        console.log(toDate);
-       $rootScope.toDate =  $filter('date')(toDate , "dd-MMM-yyyy");
+       $rootScope.toVlDate =  $filter('date')(toDate , "dd-MMM-yyyy");
+        $scope.getRecencyData();
       },
       to: new Date(),
 
      }; 
  ionicDatePicker.openDatePicker(ipObj1);
- $scope.getRecencyData();
 
 }
-$scope.clearFromDate = function(){
-  $rootScope.fromDate ="";
+$scope.clearfromVlDate = function(){
+  $rootScope.fromVlDate ="";
 }
-$scope.cleartoDate = function(){
-  $rootScope.toDate ="";
+$scope.cleartoVlDate = function(){
+  $rootScope.toVlDate ="";
 
 }
       $scope.sortByDate = function(propertyName) {
@@ -259,6 +394,5 @@ $scope.cleartoDate = function(){
 
       }
 })
-
 
 

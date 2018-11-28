@@ -136,18 +136,18 @@ $scope.groups = [
         "iconURL":"img/serverrecency.png",
          "menuhref":"#/app/recencyData",
       },
-      // {
-      //   "id":122,
-      //   "name":"Recency Result With VL",
-      //   "iconURL":"img/serverrecency.png",
-      //    "menuhref":"#/app/recencyDataWithVl",
-      // },
-      // {
-      //   "id":123,
-      //   "name":"Pending Results",
-      //   "iconURL":"img/serverrecency.png",
-      //    "menuhref":"#/app/pendingRecencyResult",
-      // },
+      {
+        "id":122,
+        "name":"Recency Result With VL",
+        "iconURL":"img/serverrecency.png",
+         "menuhref":"#/app/recencyDataWithVl",
+      },
+      {
+        "id":123,
+        "name":"Pending Results",
+        "iconURL":"img/serverrecency.png",
+         "menuhref":"#/app/pendingRecencyResult",
+      },
       // {
       //   "id":124,
       //   "name":"TAT Report",
@@ -256,10 +256,10 @@ $scope.applogout1 = function(){
          });
 }
 $scope.applogout = function() {
-  if($state.current.name=='app.recencyData'){
+  if($state.current.name=='app.recencyData' || $state.current.name=='app.recencyDataWithVl' ){
     if($localStorage.get('ServerRecencyData')=='login'){
       var confirmPopup1 = $ionicPopup.confirm({
-        title: 'Logout',
+        title: 'Server Logout',
         template: '<center>Are you sure want to Logout?<center>',
         buttons: [
               {

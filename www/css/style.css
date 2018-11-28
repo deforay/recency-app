@@ -189,7 +189,7 @@ a{
     /* Login CSS */
 
 .backgroundimg {
-    background: url(../img/oldloginbanner.jpg) no-repeat center center #2a2b30;
+    background: url(../img/recency-bg.png) no-repeat center center #2a2b30;
     background-size: cover;
     width: 100%;
     height: 100%;
@@ -223,7 +223,7 @@ a{
 }
 
 .authWrapper .input-field .mobileNumber {
-    background: url(../img/mobile_white.png) no-repeat left center; 
+    background: url(../img/mobile_white.png) no-repeat left center #fafafa; 
   
     border-color: rgba(0, 0, 0, 0.12);
     border-bottom: 1px solid #fff !important;
@@ -236,7 +236,7 @@ a{
 }
 
 .authWrapper .input-field .serverHost {
-    background: url(../img/host.png) no-repeat left center;
+    background: url(../img/host.png) no-repeat left center #fafafa;
       border-color: rgba(0, 0, 0, 0.12);
       border-bottom: 1px solid #fff !important;
    padding: 7px 10px 7px 50px;
@@ -245,7 +245,7 @@ a{
       box-shadow: none !important;
   }
 .authWrapper .input-field .userName {
-  background: url(../img/address.png) no-repeat left center;
+  background: url(../img/address.png) no-repeat left center #fafafa;
     border-color: rgba(0, 0, 0, 0.12);
     border-bottom: 1px solid #fff !important;
  padding: 7px 10px 7px 50px;
@@ -259,7 +259,7 @@ a{
 .authWrapper .input-field .Oldpassword,
 .authWrapper .input-field .Newpassword ,
 .authWrapper .input-field .onetimePass {
-   background: url(../img/key.png) no-repeat left center; 
+   background: url(../img/key.png) no-repeat left center #fafafa; 
 
     border-color: rgba(0, 0, 0, 0.12);
     border-bottom: 1px solid #fff !important;
