@@ -160,7 +160,7 @@ $scope.$on("$ionicView.Enter", function(event, data){
           }
 
 
-        $scope.syncnows = function(){
+        $scope.syncnow1 = function(){
             if($scope.displaymessage== true){
                 $ionicPopup.alert({title:'Alert!',template:'<center>No Records to Sync </center>'});
             }

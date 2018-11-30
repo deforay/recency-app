@@ -19,7 +19,7 @@
                        
                     </div>
                     <div class="input-field col " style="padding:0">
-                      <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="qcAssurance.qcTestDate =''"><img src="img/clear.png" style="height: 26px;"></div> 
+                      <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="qcAssurance.qcTestDate ='';partialQcData();"><img src="img/clear.png" style="height: 26px;"></div> 
                      </div>
                 </div>  
               <div class="row">
@@ -28,7 +28,7 @@
                                 <p>QC Sample ID <span style="color:#df3838;"> *</span></p>
                             </span>  
                    <div class="form-logo"><img src="img/lab.png"></div> 
-                      <input id="qcsampleId" type="text" class="qcsampleId" name="qcsampleId" title="Please Enter QC Sample ID" ng-model='qcAssurance.qcsampleId' placeholder="QC Sample ID" > 
+                      <input id="qcsampleId" type="text" class="qcsampleId" name="qcsampleId" title="Please Enter QC Sample ID" ng-model='qcAssurance.qcsampleId' placeholder="QC Sample ID" ng-click="partialQcData()"> 
                   </div>  
               </div>
            
@@ -38,7 +38,7 @@
                                   <p>Reference Result <span style="color:#df3838;"> *</span></p>
                           </span>
                         <div class="form-logo"><img src="img/recencyresult.png"></div> 
-                        <select class="ng-valid" id="referenceResult" name="referenceResult" title="Please Choose Reference Result" ng-model="qcAssurance.referenceResult" ng-change="OnReferenceResultChange(qcAssurance.referenceResult);" >
+                        <select class="ng-valid" id="referenceResult" name="referenceResult" title="Please Choose Reference Result" ng-model="qcAssurance.referenceResult" ng-change="OnReferenceResultChange(qcAssurance.referenceResult);partialQcData();">
                           <option value="">-- Select --</option>
                           <option value="preliminary_recent_sample">Preliminary Recent Sample</option>
                           <option value="long_term_sample">Long Term Sample</option>
@@ -52,7 +52,7 @@
                             <p>Test Kit Lot Number<span style="color:#df3838;"> *</span></p>
                               </span>
                         <div class="form-logo "><img src="img/lab.png"></div> 
-                        <select class="ng-valid" id="testKitLotNo"  name="testKitLotNo"  title="Please Enter Test Kit Lot Number" ng-model="qcAssurance.testKitLotNo" ng-change="getTestKitExpDate(qcAssurance.testKitLotNo)">
+                        <select class="ng-valid" id="testKitLotNo"  name="testKitLotNo"  title="Please Enter Test Kit Lot Number" ng-model="qcAssurance.testKitLotNo" ng-change="getTestKitExpDate(qcAssurance.testKitLotNo);partialQcData();">
                                 <option value="">-- Select --</option>
                                 <option ng-repeat="lot in TestKitLotList" value="{{lot['testKitLotNo']}}">{{lot['testKitLotNo']}}</option>
                         </select>   
@@ -122,7 +122,7 @@
                      
                   </div>
                   <div class="input-field col " style="padding:0">
-                    <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="qcAssurance.hivRecencyDate =''"><img src="img/clear.png" style="height: 26px;"></div> 
+                    <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="qcAssurance.hivRecencyDate ='';partialQcData();"><img src="img/clear.png" style="height: 26px;"></div> 
                    </div>
               </div>
               <div class="row">
@@ -131,7 +131,7 @@
                                 <p>Control Line<span style="color:#df3838;"> *</span></p>
                          </span>
                          <div class="form-logo"><img src="img/recencyresult.png"></div> 
-                      <select class="ng-valid" id="ctrlLine" name="ctrlLine" ng-model="qcAssurance.ctrlLine" title="Please Choose Control Line" ng-change="getControlLine(qcAssurance.ctrlLine);getOutcome(qcAssurance.ctrlLine,qcAssurance.positiveLine,qcAssurance.longTermLine)">
+                      <select class="ng-valid" id="ctrlLine" name="ctrlLine" ng-model="qcAssurance.ctrlLine" title="Please Choose Control Line" ng-change="getControlLine(qcAssurance.ctrlLine);getOutcome(qcAssurance.ctrlLine,qcAssurance.positiveLine,qcAssurance.longTermLine);partialQcData()">
                         <option value="">-- Select --</option>
                         <option value="present">Present</option>
                         <option value="absent">Absent</option>
@@ -144,7 +144,7 @@
                               <p>Positive Verification Line<span style="color:#df3838;"> *</span></p>
                       </span>
                     <div class="form-logo"><img src="img/recencyresult.png"></div> 
-                    <select class="ng-valid" id="positiveLine" name="positiveLine" title="Please Choose Positive Verification Line" ng-model="qcAssurance.positiveLine" ng-change="OnPositiveLineChange(qcAssurance.positiveLine);getOutcome(qcAssurance.ctrlLine,qcAssurance.positiveLine,qcAssurance.longTermLine)" >
+                    <select class="ng-valid" id="positiveLine" name="positiveLine" title="Please Choose Positive Verification Line" ng-model="qcAssurance.positiveLine" ng-change="OnPositiveLineChange(qcAssurance.positiveLine);getOutcome(qcAssurance.ctrlLine,qcAssurance.positiveLine,qcAssurance.longTermLine);partialQcData()">
                       <option value="">-- Select --</option>
                       <option value="present">Present(Positive/P)</option>
                       <option value="absent">Absent(Negative/N)</option>
@@ -157,7 +157,7 @@
                               <p>Long Term Line<span style="color:#df3838;"> *</span></p>
                       </span>
                     <div class="form-logo"><img src="img/recencyresult.png"></div> 
-                    <select class="ng-valid" id="longTermLine" name="longTermLine" title="Please Choose LongTerm Line" ng-model="qcAssurance.longTermLine" ng-change="OnLongtermChange(recency.longTermLine);getOutcome(qcAssurance.ctrlLine,qcAssurance.positiveLine,qcAssurance.longTermLine)" >
+                    <select class="ng-valid" id="longTermLine" name="longTermLine" title="Please Choose LongTerm Line" ng-model="qcAssurance.longTermLine" ng-change="OnLongtermChange(recency.longTermLine);getOutcome(qcAssurance.ctrlLine,qcAssurance.positiveLine,qcAssurance.longTermLine);partialQcData()" >
                       <option value="">-- Select --</option>
                       <option value="present">Present(Long Term/LT)</option>
                       <option value="absent">Absent(Recent/R)</option>
@@ -191,7 +191,7 @@
                         <p>Tester Name<span style="color:#df3838;"> *</span></p>
                           </span>
                     <div class="form-logo "><img src="img/doctor.png"></div> 
-                    <select class="ng-valid" id="testerName"  name="testerName"  title="Please Enter Tester Name" ng-model="qcAssurance.testerName">
+                    <select class="ng-valid" id="testerName"  name="testerName"  title="Please Enter Tester Name" ng-model="qcAssurance.testerName" ng-change="partialQcData()">
                             <option value="">-- Select --</option>
                             <option ng-repeat="test in TesterNameList" value="{{test['testerName']}}">{{test['testerName']}}</option>
                     </select>   

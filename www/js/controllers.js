@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope,$rootScope,$ionicModal,$ionicHistory, $location,$refresh,  $window, $ionicModal, $timeout,$ionicPopup,$localStorage,$preLoader, $state) {
+.controller('AppCtrl', function($scope,$rootScope,$http,$ionicModal,$ionicHistory, $location,$refresh,  $window, $ionicModal, $timeout,$ionicPopup,$localStorage,$preLoader, $state) {
 
  //$rootScope.apiUrl = 'http://recency.deforay.in/';
  // $rootScope.apiUrl='http://recency-web/';
@@ -39,7 +39,7 @@ $scope.updateBadge = function(){
     $scope.displayqcbadge=false;
   }
   
-  $scope.appVersion = 0.2;
+  $scope.appVersion = 0.5;
 }
 
 // $rootScope.displaybadge=true;
@@ -62,35 +62,24 @@ if(QCDataList != null){
   $scope.displayqcbadge=false;
 }
 
-$scope.appVersion = 0.2;
+$scope.appVersion = 0.5;
 localStorage.setItem('AppVersion',$scope.appVersion);
-// if($scope.syncCount== undefined || $scope.syncCount == ""){
-//      $scope.syncCount = 0;
-//      localStorage.setItem('syncCount', $scope.syncCount);
-//     console.log($scope.syncCount);
-//     $scope.displaybadge=false;
-// }else{
-//   $scope.displaybadge=true;
-  
-// }
-$scope.refresh = function()
-	{
-    console.log($state.current)
-		$ionicHistory.clearCache([$state.current.name]).then(function()
-		{
-			$state.reload($state.current);
-		});
-	};
+
+// $scope.refresh = function()
+// 	{
+//     console.log($state.current)
+// 		$ionicHistory.clearCache([$state.current.name]).then(function()
+// 		{
+// 			$state.reload($state.current);
+// 		});
+// 	};
 $scope.addRecency = function(){
-  console.log($state.current)
-		
+  console.log($state.current)	
   $location.path('/app/addRecency');
   // $ionicHistory.clearCache([$state.current.name]).then(function()
 	// 	{
 			// $state.reload($state.current);
 		// });
-  
-  
 }
 
 $scope.groups = [
@@ -178,6 +167,76 @@ $scope.isGroupShown = function(group) {
 $scope.isSubGroupShown = function(item) {
   return $scope.shownChild === item;
 }
+$scope.$on("$ionicView.beforeEnter", function(event, data){
+
+  $http.get($localStorage.get('apiUrl')+'/api/facility')
+  .success(function(data) {
+   $scope.facilityData = data;
+   var facilitylen = ($scope.facilityData.length+1).toString();
+   $scope.facilityData.push({
+      "facility_id": facilitylen,
+      "facility_name":"Other"
+    })
+    localStorage.setItem('FacilityData',JSON.stringify($scope.facilityData))    
+   console.log($scope.facilityData)           
+  });
+  if(JSON.parse(localStorage.getItem('PartialRecencyData'))==null){
+  $http.get($localStorage.get('apiUrl')+'/api/global-config')
+  .success(function(data) {
+    console.log(data);
+  $scope.configdata =data.config;
+     for(i=0;i<$scope.configdata.length;i++){        
+        if($scope.configdata[i].global_name =="mandatory_fields" || $scope.configdata[i].global_name =="admin_email" || $scope.configdata[i].global_name =="admin_phone" )   {
+          $scope.configdata.splice(i);
+        }    
+     } 
+    // for(i=0;i<$scope.configdata.length;i++){
+    //       $scope.recency.location[i]="";
+    //      }
+   localStorage.setItem('GlobalConfig',JSON.stringify($scope.configdata)) 
+    console.log($scope.configdata)
+    });
+    $http.get($localStorage.get('apiUrl')+'/api/recency-mandatory')
+    .success(function(data) {
+     $scope.mandatoryData =data.fields;
+     //console.log(data)
+     localStorage.setItem('MandatoryData',JSON.stringify($scope.mandatoryData)) 
+     console.log( $scope.mandatoryData);           
+    });
+    $http.get($localStorage.get('apiUrl')+'/api/province')
+    .success(function(data) {
+     $scope.provinceData =data.province;
+     localStorage.setItem('ProvinceData',JSON.stringify(data.province))      
+    });
+    $http.get($localStorage.get('apiUrl')+'/api/district')
+    .success(function(data) {
+     localStorage.setItem('DistrictData',JSON.stringify(data.district))           
+    });
+    $http.get($localStorage.get('apiUrl')+'/api/city')
+    .success(function(data) {     
+     localStorage.setItem('CityData',JSON.stringify(data.city))           
+    });
+  }else{
+    $scope.mandatoryData = JSON.parse(localStorage.getItem('MandatoryData'));
+    $scope.configdata = JSON.parse(localStorage.getItem('GlobalConfig'));
+    $scope.provinceData = JSON.parse(localStorage.getItem('ProvinceData'));
+
+  }
+  $http.get($localStorage.get('apiUrl')+'/api/risk-populations')
+  .success(function(data) {
+   $scope.riskpopulations =data;
+   $scope.riskpopulations.push({
+    "rp_id": $scope.riskpopulations.length+1,
+    "name":"Other"
+  })
+  localStorage.setItem('RiskPopulations',JSON.stringify($scope.riskpopulations))       
+
+//  console.log($scope.riskpopulations)  
+  });
+});
+
+
+
 $scope.serverlogout = function(){
   var confirmPopup1 = $ionicPopup.confirm({
     title: 'Server Logout',

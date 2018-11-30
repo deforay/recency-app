@@ -283,7 +283,74 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
         $scope.passcode = $scope.passcode.substring(0, $scope.passcode.length - 1);
       }
     }
-
+    $scope.getApiCalls = function(){
+      if($localStorage.get('apiUrl')!=null)
+      {
+        $http.get($localStorage.get('apiUrl')+'/api/facility')
+           .success(function(data) {
+           $scope.facilityData = data;
+           var facilitylen = ($scope.facilityData.length+1).toString();
+           $scope.facilityData.push({
+             "facility_id": facilitylen,
+             "facility_name":"Other"
+           })
+        localStorage.setItem('FacilityData',JSON.stringify($scope.facilityData))    
+        console.log($scope.facilityData)           
+        });
+    if(JSON.parse(localStorage.getItem('PartialRecencyData'))==null){
+       $http.get($localStorage.get('apiUrl')+'/api/global-config')
+        .success(function(data) {
+         console.log(data);
+        $scope.configdata =data.config;
+           for(i=0;i<$scope.configdata.length;i++){        
+             if($scope.configdata[i].global_name =="mandatory_fields" || $scope.configdata[i].global_name =="admin_email" || $scope.configdata[i].global_name =="admin_phone" )   {
+               $scope.configdata.splice(i);
+            }    
+           } 
+      // for(i=0;i<$scope.configdata.length;i++){
+      //       $scope.recency.location[i]="";
+      //      }
+         localStorage.setItem('GlobalConfig',JSON.stringify($scope.configdata)) 
+         console.log($scope.configdata)
+      });
+      $http.get($localStorage.get('apiUrl')+'/api/recency-mandatory')
+      .success(function(data) {
+       $scope.mandatoryData =data.fields;
+       //console.log(data)
+       localStorage.setItem('MandatoryData',JSON.stringify($scope.mandatoryData)) 
+       console.log( $scope.mandatoryData);           
+      });
+      $http.get($localStorage.get('apiUrl')+'/api/province')
+      .success(function(data) {
+       $scope.provinceData =data.province;
+       localStorage.setItem('ProvinceData',JSON.stringify(data.province))      
+      });
+      $http.get($localStorage.get('apiUrl')+'/api/district')
+      .success(function(data) {
+       localStorage.setItem('DistrictData',JSON.stringify(data.district))           
+      });
+      $http.get($localStorage.get('apiUrl')+'/api/city')
+      .success(function(data) {     
+       localStorage.setItem('CityData',JSON.stringify(data.city))           
+      });
+      }else{
+      $scope.mandatoryData = JSON.parse(localStorage.getItem('MandatoryData'));
+      $scope.configdata = JSON.parse(localStorage.getItem('GlobalConfig'));
+      $scope.provinceData = JSON.parse(localStorage.getItem('ProvinceData'));
+      }
+        $http.get($localStorage.get('apiUrl')+'/api/risk-populations')
+        .success(function(data) {
+          $scope.riskpopulations =data;
+            $scope.riskpopulations.push({
+               "rp_id": $scope.riskpopulations.length+1,
+               "name":"Other"
+            })
+        localStorage.setItem('RiskPopulations',JSON.stringify($scope.riskpopulations))       
+  
+        //  console.log($scope.riskpopulations)  
+        });
+    }
+     }
   $scope.doLogin = function(credentials) {
     if(!credentials.serverHost){
       $ionicPopup.alert({title: 'Login Failed',
@@ -340,6 +407,7 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
               $scope.viewAddPassword = true;
               $scope.viewConfirmPassword = false;
              $scope.viewLoginPassword =false;
+             $scope.getApiCalls();
              }
              else{
            //   console.log(response.data);
@@ -355,5 +423,6 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
     }
   }
   
+
   
 });

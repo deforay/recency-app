@@ -7,7 +7,13 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
   $scope.propertyName = 'hiv_recency_date';
 
         $rootScope.apiUrl = localStorage.getItem('apiUrl');
+        $scope.doRefresh = function() {
+          $preLoader.show();
+          $window.location.reload(true);
+          $preLoader.hide(); 
+        }
         $scope.init = function(){
+
           var fromdate = new Date();
           var todate = new Date();
           var intYear = fromdate.getFullYear() - 1;   
@@ -36,11 +42,10 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                     $localStorage.set('ServerRecencyData','login');
                     $preLoader.hide();
                       $scope.showauth = false;   
-                      console.log( response.data.recency) 
+                     // console.log( response.data.recency) 
                       if(response.data.recency.length>0){
                         $scope.displaymessage = false;
                       $preLoader.show();
-                      console.log($scope.recencyDatas);
                       $scope.recencyDatas =response.data.recency;
                       $scope.recencyCount = $scope.recencyDatas.length;
                       for(i=0;i<$scope.recencyDatas.length;i++)
@@ -83,7 +88,7 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
           }
          console.log( $scope.showauth)
         }
-        $scope.init();
+       $scope.init();
         $scope.getRecencyData = function(){
           console.log($rootScope.fromDate,$rootScope.toDate)
           
@@ -154,13 +159,10 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
           }
          console.log( $scope.showauth)
         }
-        $scope.doRefresh = function() {
-          $preLoader.show();
-          $window.location.reload(true);
-          $preLoader.hide(); 
-        }
+       
 
     $scope.doLogin = function(credentials) {
+      console.log(credentials);
       var fromdate = new Date();
       var todate = new Date();
       var intYear = fromdate.getFullYear() - 1; 
@@ -193,15 +195,16 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                      if(response.data.status =="success"){
                       $localStorage.set('ServerRecencyData','login');
                       $preLoader.hide();
+                      
                       $cordovaToast.show('Authentication is Sucess', 'long', 'bottom')
                             .then(function(success) {
                                  // success
                              }, function (error) {
                                  // error
                              });
+
                         $scope.showauth = false;  
-                        console.log( response.data.recency)  
-                        console.log($rootScope.fromDate)
+                       // console.log( response.data.recency)  
                         if(response.data.recency.length>0){
                           $scope.displaymessage = false;
                           $preLoader.show();
@@ -249,8 +252,7 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
           });
     
         }
-      }  
-
+      }
       $scope.setFromDate = function(val){
         var ipObj1 = {
          callback: function (val) {  
@@ -263,7 +265,6 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
 
          }; 
      ionicDatePicker.openDatePicker(ipObj1);
-     console.log()
    
    }
    $scope.settoDate = function(val){
@@ -290,14 +291,14 @@ $scope.cleartoDate = function(){
 }
       $scope.sortByDate = function(propertyName) {
         $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
-        console.log($scope.reverse)
+        //console.log($scope.reverse)
 
         $scope.propertyName = propertyName;
       };   
       $scope.sortBy = function(propertyName,propertyName1){
-          console.log($scope.propertyName)
+         // console.log($scope.propertyName)
         $scope.reverse = ($scope.propertyName === propertyName && $scope.propertyName1 === propertyName1) ? !$scope.reverse : false;
-        console.log($scope.reverse)
+       // console.log($scope.reverse)
         $scope.propertyName = propertyName;
         $scope.propertyName1 = propertyName1;
 

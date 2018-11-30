@@ -13,7 +13,7 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
         }
 
       });
-     
+         
 //console.log(qcList)
 $scope.qcOutcomeCheck = function(){
   var qcLocalDatas = JSON.parse(localStorage.getItem('QCData'));
@@ -95,8 +95,6 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
        console.log($scope.testkitlotObj1)
        $scope.TestKitLotList = $scope.testkitlotObj1;
      }
-
-
        $scope.testerNameObj1 =[];
        $scope.testerNameObj2 =[];
       $scope.TesterNameList = JSON.parse(localStorage.getItem('TesterInfo'));
@@ -123,28 +121,42 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
         console.log($scope.testerNameObj1)
         $scope.TesterNameList = $scope.testerNameObj1;
       }
-      $scope.qcAssurance.appVersion = localStorage.getItem('AppVersion');
-      $scope.qcAssurance.addedBy = localStorage.getItem('userId');
-      $scope.qcAssurance.qcsampleId ="";
-      $scope.qcAssurance.referenceResult="";
-      $scope.qcAssurance.qcTestDate ="";
-      $scope.qcAssurance.testKitValueName="";
-      $scope.qcAssurance.testKitLotNo="";
-      $scope.qcAssurance.testKitExpDate="";
-      $scope.qcAssurance.testKitLotAvailability="";
-      // $scope.qcAssurance.recencyreason="";
-      // $scope.qcAssurance.recencyreasonName="";
-      // $scope.qcAssurance.otherreason ="";
-      $scope.qcAssurance.hivRecencyDate="";
-      $scope.qcAssurance.ctrlLine="";
-      $scope.qcAssurance.ctrlLineName="";
-      $scope.qcAssurance.positiveLine="";
-      $scope.qcAssurance.positiveLineName=""
-      $scope.qcAssurance.longTermLine="";
-      $scope.qcAssurance.longTermLineName="";
-      $scope.qcAssurance.recencyOutcome="";
-      $scope.qcAssurance.testerName = "";
-      $scope.qcAssurance.testerNameAvailability = "";
+      if(JSON.parse(localStorage.getItem('PartialQCData'))==null){
+        $scope.qcAssurance.appVersion = localStorage.getItem('AppVersion');
+        $scope.qcAssurance.addedBy = localStorage.getItem('userId');
+        $scope.qcAssurance.qcsampleId ="";
+        $scope.qcAssurance.referenceResult="";
+        $scope.qcAssurance.qcTestDate ="";
+        $scope.qcAssurance.testKitValueName="";
+        $scope.qcAssurance.testKitLotNo="";
+        $scope.qcAssurance.testKitExpDate="";
+        $scope.qcAssurance.testKitLotAvailability="";
+        $scope.qcAssurance.hivRecencyDate="";
+        $scope.qcAssurance.ctrlLine="";
+        $scope.qcAssurance.ctrlLineName="";
+        $scope.qcAssurance.positiveLine="";
+        $scope.qcAssurance.positiveLineName=""
+        $scope.qcAssurance.longTermLine="";
+        $scope.qcAssurance.longTermLineName="";
+        $scope.qcAssurance.recencyOutcome="";
+        $scope.qcAssurance.testerName = "";
+        $scope.qcAssurance.testerNameAvailability = "";
+      }else{
+        $scope.qcAssurance = JSON.parse(localStorage.getItem('PartialQCData'));
+        if($scope.qcAssurance.recencyOutcome=='Invalid-Please Verify' || $scope.qcAssurance.recencyOutcome =='Assay HIV Negative'){
+          $scope.outcomered = true;
+          $scope.outcomeblack = false;
+        }else if($scope.qcAssurance.recencyOutcome=='Assay Recent' || $scope.qcAssurance.recencyOutcome=='Long Term'){
+          $scope.outcomeblack = true;
+          $scope.outcomered = false;
+        }else{
+          $scope.outcomeblack = false;
+          $scope.outcomered = false;
+        }
+         
+        console.log($scope.qcAssurance);  
+      }
+     
    //   console.log($scope.qcAssurance);
    var qcList =   localStorage.getItem('QCData');
    //console.log(qcList)
@@ -220,35 +232,44 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
         console.log($scope.testerNameObj1)
         $scope.TesterNameList = $scope.testerNameObj1;
       }
-      $scope.qcAssurance.appVersion = localStorage.getItem('AppVersion');
-      $scope.qcAssurance.addedBy = localStorage.getItem('userId');
-      $scope.qcAssurance.qcsampleId ="";
-      $scope.qcAssurance.referenceResult="";
-      $scope.qcAssurance.qcTestDate ="";
-      $scope.qcAssurance.testKitValueName="";
-      $scope.qcAssurance.testKitLotNo="";
-      $scope.qcAssurance.testKitExpDate="";
-      $scope.qcAssurance.testKitLotAvailability="";
-      // $scope.qcAssurance.recencyreason="";
-      // $scope.qcAssurance.recencyreasonName="";
-      // $scope.qcAssurance.otherreason ="";
-      $scope.qcAssurance.hivRecencyDate="";
-      $scope.qcAssurance.ctrlLine="";
-      $scope.qcAssurance.ctrlLineName="";
-      $scope.qcAssurance.positiveLine="";
-      $scope.qcAssurance.positiveLineName=""
-      $scope.qcAssurance.longTermLine="";
-      $scope.qcAssurance.longTermLineName="";
-      $scope.qcAssurance.recencyOutcome="";
-      $scope.qcAssurance.testerName = "";
-      $scope.qcAssurance.testerNameAvailability = "";
-   //   console.log($scope.qcAssurance);
+      if(JSON.parse(localStorage.getItem('PartialQCData'))==null){
+        $scope.qcAssurance.appVersion = localStorage.getItem('AppVersion');
+        $scope.qcAssurance.addedBy = localStorage.getItem('userId');
+        $scope.qcAssurance.qcsampleId ="";
+        $scope.qcAssurance.referenceResult="";
+        $scope.qcAssurance.qcTestDate ="";
+        $scope.qcAssurance.testKitValueName="";
+        $scope.qcAssurance.testKitLotNo="";
+        $scope.qcAssurance.testKitExpDate="";
+        $scope.qcAssurance.testKitLotAvailability="";
+        $scope.qcAssurance.hivRecencyDate="";
+        $scope.qcAssurance.ctrlLine="";
+        $scope.qcAssurance.ctrlLineName="";
+        $scope.qcAssurance.positiveLine="";
+        $scope.qcAssurance.positiveLineName=""
+        $scope.qcAssurance.longTermLine="";
+        $scope.qcAssurance.longTermLineName="";
+        $scope.qcAssurance.recencyOutcome="";
+        $scope.qcAssurance.testerName = "";
+        $scope.qcAssurance.testerNameAvailability = "";
+      }else{
+        $scope.qcAssurance = JSON.parse(localStorage.getItem('PartialQCData'));
+        if($scope.qcAssurance.recencyOutcome=='Invalid-Please Verify' || $scope.qcAssurance.recencyOutcome =='Assay HIV Negative'){
+          $scope.outcomered = true;
+          $scope.outcomeblack = false;
+        }else if($scope.qcAssurance.recencyOutcome=='Assay Recent' || $scope.qcAssurance.recencyOutcome=='Long Term'){
+          $scope.outcomeblack = true;
+          $scope.outcomered = false;
+        }else{
+          $scope.outcomeblack = false;
+          $scope.outcomered = false;
+        }
+      }
    var qcList =   localStorage.getItem('QCData');
    //console.log(qcList)
-   if(qcList != null){
+  if(qcList != null){
      qcList    = JSON.parse(qcList);
      $rootScope.unSyncAddQcCount = "("+Object.keys(qcList).length+"  Not Synced)";
-
    }  else{
      $rootScope.unSyncAddQcCount="";
    }
@@ -261,7 +282,44 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
       
     }
 
+    $scope.getOutcome = function(controlLine,positiveLine,longTermLine){
+      if((controlLine=='absent'&& positiveLine=='absent'&& longTermLine=='absent')||
+      (controlLine=='absent'&& positiveLine=='absent'&& longTermLine=='present')||
+      (controlLine=='absent'&& positiveLine=='present'&& longTermLine=='absent')||
+      (controlLine=='absent'&& positiveLine=='present'&& longTermLine=='present')||
+      (controlLine=='present'&& positiveLine=='absent'&& longTermLine=='present'))
+      {
+        // $(".outcome").css("color","red");
+        $scope.qcAssurance.recencyOutcome="Invalid-Please Verify";
+        $scope.outcomered = true;
+        $scope.outcomeblack = false;
 
+      }
+      if(controlLine=='present'&& positiveLine=='absent'&& longTermLine=='absent'){
+        $scope.qcAssurance.recencyOutcome="Assay HIV Negative";
+        // $(".outcome").css("color","red");
+        $scope.outcomered = true;
+        $scope.outcomeblack = false;
+
+
+      }
+      if(controlLine=='present'&& positiveLine=='present'&& longTermLine=='absent'){
+        $scope.qcAssurance.recencyOutcome="Assay Recent";
+        $scope.outcomeblack = true;
+        $scope.outcomered = false;
+
+      }
+      if(controlLine=='present'&& positiveLine=='present'&& longTermLine=='present'){
+        $scope.qcAssurance.recencyOutcome="Long Term";
+        $scope.outcomeblack = true;
+        $scope.outcomered = false;
+      }
+      if(controlLine==""|| positiveLine==""||longTermLine==""){
+        $scope.qcAssurance.recencyOutcome="";
+        $scope.outcomeblack = false;
+        $scope.outcomered = false;
+      }
+    } 
     $scope.getTestKitExpDate = function(lotNo){
       console.log(lotNo)
       if(lotNo!=""){
@@ -378,64 +436,8 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
    
    
 
-      $scope.getOutcome = function(controlLine,positiveLine,longTermLine){
-        if((controlLine=='absent'&& positiveLine=='absent'&& longTermLine=='absent')||
-        (controlLine=='absent'&& positiveLine=='absent'&& longTermLine=='present')||
-        (controlLine=='absent'&& positiveLine=='present'&& longTermLine=='absent')||
-        (controlLine=='absent'&& positiveLine=='present'&& longTermLine=='present')||
-        (controlLine=='present'&& positiveLine=='absent'&& longTermLine=='present'))
-        {
-          // $(".outcome").css("color","red");
-          $scope.qcAssurance.recencyOutcome="Invalid-Please Verify";
-          $scope.outcomered = true;
-          $scope.outcomeblack = false;
-
-        }
-        if(controlLine=='present'&& positiveLine=='absent'&& longTermLine=='absent'){
-          $scope.qcAssurance.recencyOutcome="Assay HIV Negative";
-          // $(".outcome").css("color","red");
-          $scope.outcomered = true;
-          $scope.outcomeblack = false;
 
 
-        }
-        if(controlLine=='present'&& positiveLine=='present'&& longTermLine=='absent'){
-          $scope.qcAssurance.recencyOutcome="Assay Recent";
-          $scope.outcomeblack = true;
-          $scope.outcomered = false;
-
-        }
-        if(controlLine=='present'&& positiveLine=='present'&& longTermLine=='present'){
-          $scope.qcAssurance.recencyOutcome="Long Term";
-          $scope.outcomeblack = true;
-          $scope.outcomered = false;
-        }
-        if(controlLine==""|| positiveLine==""||longTermLine==""){
-          $scope.qcAssurance.recencyOutcome="";
-          $scope.outcomeblack = false;
-          $scope.outcomered = false;
-
-
-        }
-      }
-      // $scope.getReasonName = function(reason){
-      //   if(reason=='no_consent_from_the_client'){
-      //     $scope.qcAssurance.recencyreasonName ="No consent from the Client";
-      //   }else 
-      //   if(reason=='sample_was_not_collected'){
-      //     $scope.qcAssurance.recencyreasonName ="Sample was not collected (Phlebotomy failure)";
-      //   }else
-      //   if(reason=='not_newly_diagnosed'){
-      //     $scope.qcAssurance.recencyreasonName ="Not newly diagnosed";
-      //   }
-      //   else
-      //   if(reason=='other'){
-      //     $scope.qcAssurance.recencyreasonName ="Other, please specify";
-      //   }
-      //   else{
-      //     $scope.qcAssurance.recencyreasonName="";
-      //   }
-      // }
 
       $scope.setqcTestDate = function(val){
         var ipObj1 = {
@@ -443,6 +445,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
           var qcTestDate = new Date(val);
           console.log(qcTestDate);
           $scope.qcAssurance.qcTestDate =  $filter('date')(qcTestDate , "dd-MMM-yyyy");
+          $scope.partialQcData();
           },
         to: new Date(),
         }; 
@@ -455,6 +458,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
       var hivRecencyDate = new Date(val);
       console.log(hivRecencyDate);
       $scope.qcAssurance.hivRecencyDate =  $filter('date')(hivRecencyDate , "dd-MMM-yyyy");
+      $scope.partialQcData();
       },
     to: new Date(),
 
@@ -469,11 +473,19 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
       var testKitExpDate = new Date(val);
       console.log(testKitExpDate);
       $scope.qcAssurance.testKitExpDate =  $filter('date')(testKitExpDate , "dd-MMM-yyyy");
+      $scope.partialQcData();
       },
     }; 
     ionicDatePicker.openDatePicker(ipObj3);
   }
 
+
+  $scope.partialQcData = function(){
+    console.log($scope.qcAssurance)
+    var partialQCData = $scope.qcAssurance;
+
+     localStorage.setItem('PartialQCData',JSON.stringify(partialQCData)) ;
+     }
       $scope.addQcAssurance = function()
       {
         console.log($scope.qcAssurance);
@@ -549,6 +561,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
             console.log($scope.qcData)      
 
             localStorage.setItem('QCData',JSON.stringify($scope.qcData)) 
+            localStorage.removeItem('PartialQCData');
             localStorage.setItem('qccounter', $scope.counter);
         
              $scope.qcAssurance ={};
