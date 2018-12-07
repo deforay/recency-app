@@ -1,0 +1,109 @@
+<ion-side-menus enable-menu-with-back-views="false">
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-stable" >
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+     
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left" ng-click="updateBadge();getApiCalls()">
+        </button>
+      </ion-nav-buttons>
+
+   <ion-nav-buttons side="right" >
+        <div class="item-icon-right" style="padding-right:10px;" ng-click="applogout()">
+            <i class="icon ion-log-out"></i>	
+        </div>
+       
+     </ion-nav-buttons>  
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent"></ion-nav-view>
+  </ion-side-menu-content>
+  <ion-side-menu side="left">
+    <ion-header-bar class="bar-stable menu-header">
+      <!-- <h1 class="title">Home</h1> -->
+    </ion-header-bar>
+    <div class="menu-logo">
+        <img ng-src="img/icon.png"/>
+
+    </div>
+    <ion-content  class="menucontent">
+      <ion-list>
+
+        <ion-item menu-close href="#/app/addRecency" >
+          <span><img style="height:20px;" src=" img/add-recency.png" ><div style="margin-left: 35px;margin-top: -25px;" >Add Recency Test</div></span>
+
+        </ion-item>
+        <ion-item menu-close href="#/app/addQcAssurance" >
+          <span><img style="height:20px;" src="img/qa.png" ><div style="margin-left: 35px;margin-top: -25px;" >Add QC Data</div></span>
+
+        </ion-item>
+        <ion-item menu-close href="#/app/addQcSettings"  >
+          <!-- <span class="badge badge-assertive">3</span> -->
+          <span><img style="height:20px;" src="img/settings.png"><div style="margin-left: 35px;margin-top: -25px;">QC Settings</div></span>
+        </ion-item>
+        <!-- <ion-item menu-close href="#/app/viewRecency" >
+          <span><img style="height:20px;" src="img/lab.png"><div style="margin-left: 35px;margin-top: -25px;"  > Local Recency Data</div><span ng-show="displaybadge" class="badge badge-assertive" style="right: 75px;top: 1px;">{{unSyncCount}}</span></span>
+        </ion-item>
+        <ion-item menu-close href="#/app/viewQcAssurance" >
+          <span><img style="height:20px;" src="img/qcassurance.png"><div style="margin-left: 35px;margin-top: -25px;"  > Local QC Data</div><span ng-show="displayqcbadge" class="badge badge-assertive" style="right: 75px;top: 1px;">{{unSyncQcCount}}</span></span>
+        </ion-item>
+        <ion-item menu-close href="#/app/serverQcData" >
+          <span><img style="height:20px;" src="img/labresult.png"><div style="margin-left: 35px;margin-top: -25px;"  > Server QC Data</div>
+          </span>
+        </ion-item>
+        <ion-item menu-close href="#/app/recencyData">
+          <span><img style="height:20px;" src="img/labresult.png"><div style="margin-left: 35px;margin-top: -25px;">Server Recency Data</div></span>
+        </ion-item> -->
+        <div ng-repeat="group in groups" >
+            <ion-item class="item-stable parent-sub" ng-click="toggleGroup(group)" ng-class="{active: isGroupShown(group)}" >
+                <span><img style="height:20px;" src="{{group.iconURL}}">
+                  <div style="margin-left: 35px;margin-top: -25px;"> {{group.name}}</div>
+                  <i class="icon" style="    margin-top: -22px;
+               float: right;
+               padding-left: 40px;" ng-class="isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i>
+                </span>
+            </ion-item>
+            <div ng-repeat="item in group.items" >
+
+            <ion-item menu-close  ng-if="item.name!='Server Recency Data'" href="{{item.menuhref}}" class="item-accordion" ng-click="toggleSubGroup(item)" ng-show="isGroupShown(group)">
+                <span><img style="height:20px;" src="{{item.iconURL}}">
+                  <div ng-if="item.name=='Local Recency Data'" style="margin-left: 35px;margin-top: -25px;"> {{item.name}}<span ng-show="displaybadge" class="badge badge-assertive" style="right: 75px;top: 1px;">{{unSyncCount}}</span>
+                  </div>
+                  <div ng-if="item.name=='Local QC Data'" style="margin-left: 35px;margin-top: -25px;"> {{item.name}}<span ng-show="displayqcbadge" class="badge badge-assertive" style="right: 75px;top: 1px;">{{unSyncQcCount}}</span>
+                  </div>
+                  <div ng-if="item.name!='Local QC Data' && item.name!='Local Recency Data' && item.name!='Server Recency Data'" style="margin-left: 35px;margin-top: -25px;"> {{item.name}}
+                  </div>
+                  <i class="icon" ng-if="item.name=='Server Recency Data'" style=" margin-top: -22px;float: right;padding-left: 40px;" 
+                  ng-class="isSubGroupShown(item) ? 'ion-minus' : 'ion-plus'"></i>
+                </span>
+            </ion-item>
+            <ion-item  ng-if="item.name=='Server Recency Data'" href="{{item.menuhref}}" class="item-accordion child-sub" ng-click="toggleSubGroup(item)" 
+            ng-show="isGroupShown(group)" ng-class="{active: isSubGroupShown(item)}">
+                <span><img style="height:20px;" src="{{item.iconURL}}">
+                  <div  style="margin-left: 35px;margin-top: -25px;"> {{item.name}}
+                  </div>
+                  <i class="icon" ng-if="item.name=='Server Recency Data'" style=" margin-top: -22px;float: right;padding-left: 40px;" 
+                  ng-class="isSubGroupShown(item) ? 'ion-minus' : 'ion-plus'"></i>
+                </span>
+            </ion-item>
+            <ion-item menu-close  href="{{child.menuhref}}" ng-repeat="child in item.subMenuItems" ng-show="isSubGroupShown(item)" style="margin-left: 20px;">
+              <span><img style="height:20px;" src="{{child.iconURL}}"><div style="margin-left: 35px;margin-top: -25px;">{{child.name}}</div></span>
+            </ion-item>
+            </div>
+          </div>
+        <ion-item menu-close  href="" ng-click="serverlogout()">
+            <span><img style="height:20px;" src="img/logout.png"><div style="margin-left: 35px;margin-top: -25px;">Server Logout</div></span>
+          </ion-item>
+        
+      </ion-list>
+
+      
+       
+     
+    </ion-content>
+    <ion-footer-bar style="border:none">
+      <h1 class="title" style="text-align:center;font-size:12px">App Version : {{appVersion}}</h1>
+    </ion-footer-bar>
+  </ion-side-menu>
+</ion-side-menus>
+

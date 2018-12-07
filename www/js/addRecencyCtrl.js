@@ -6,12 +6,11 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
     $scope.showLongTermLine = true;
     $scope.displaybadge = false;
 
+
        $(document).ready(function(){
      
        $scope.recencydisplay=true; 
-     // $("#section1").css("display","block");
 
-     //  $("#section2").css("display","none");
 
         $("#main-recency").addClass("active");
         if(!localStorage.getItem('counter')){
@@ -24,10 +23,15 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
       $scope.provinceData = JSON.parse(localStorage.getItem('ProvinceData'));
       $scope.recencyDetails = JSON.parse(localStorage.getItem('viewRecency'));
       $scope.configdata = JSON.parse(localStorage.getItem('GlobalConfig'));
-     
+      
+      $scope.optionalFieldsFlag = JSON.parse(localStorage.getItem('OptionalData'));
       $scope.mandatoryData = JSON.parse(localStorage.getItem('MandatoryData'));
       $scope.facilityData= JSON.parse(localStorage.getItem('FacilityData'));
       $scope.riskpopulations= JSON.parse(localStorage.getItem('RiskPopulations'))    
+      $scope.$on("$ionicView.beforeEnter", function(event, data){
+        $scope.recencydisplay=true; 
+        $("#main-recency").addClass("active");
+      });
 
 // $scope.$on("$ionicView.beforeEnter", function(event, data){
 //       $scope.testkitlotObj1 =[];
@@ -215,7 +219,10 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
 //     });
     // $scope.recencyinit();
     $scope.getLatLong = function(){
-      $scope.testkitlotObj1 =[];
+      $scope.optionalFieldsFlag = JSON.parse(localStorage.getItem('OptionalData'));
+
+     
+      $scope.testkitlotObj1 =[]; 
       $scope.testkitlotObj2 =[];
       $scope.TestKitLotList = JSON.parse(localStorage.getItem('LotInfo'));
       if( $scope.TestKitLotList!=null){
@@ -276,6 +283,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
          //console.log($scope.testerNameObj1)
          $scope.TesterNameList = $scope.testerNameObj1;
        }
+
        if(JSON.parse(localStorage.getItem('PartialRecencyData'))==null){
       $scope.recency.appVersion = localStorage.getItem('AppVersion');      
       $scope.recency.addedBy = localStorage.getItem('userId');
@@ -324,7 +332,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
       $scope.recency.longitude="";
       $scope.recency.phoneNumber="";
       $scope.recency.notes="";
-  
+     
       //console.log(recencyList)      
       var options = {maximumAge: 20000,timeout: 30000, enableHighAccuracy: true};
       $cordovaGeolocation.getCurrentPosition(options).then(function(position){
@@ -368,7 +376,8 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
     
        if($scope.recency.location[1]){
         var localDistrict = JSON.parse(localStorage.getItem('DistrictData'));
-        var result = localDistrict.filter(obj => {
+        var result = localDistrict.filter(obj => 
+          {
           return obj.province_id === $scope.recency.location[0]
         })
         $scope.districtData = result;
@@ -383,6 +392,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
         $scope.cityData = cityresult;
       }
     }
+    
     var recencyList =   localStorage.getItem('RecencyData');
     if(recencyList != null){
       recencyList    = JSON.parse(recencyList);
@@ -393,24 +403,32 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
     }
     $scope.getLatLong();
 
+    $scope.getoptionField = function(){
+
+        $timeout(function () {
+          $scope.optionalFieldsFlag = JSON.parse(localStorage.getItem('OptionalData'));
+    console.log( $scope.optionalFieldsFlag);
+    }, 100);
+    }
+    $scope.getoptionField();
     $scope.partialRecencyData = function(){
       console.log($scope.recency)
       var partialData = $scope.recency;
     //  console.log($scope.recency.location)
 
-      // for(i=0;i<$scope.configdata.length;i++){
-      //   var key=$scope.configdata[i].global_name;
-      //   var  keyname = key +"_name";
-      //   var  keyId = "#" +$scope.configdata[i].global_name;
-      //   if( $scope.recency.location[i]==undefined || $scope.recency.location[i]==""){
-      //       $scope.recency[key] =""
-      //       $scope.recency[keyname] = "";
-      //   }else{
-      //       $scope.recency[key] =$scope.recency.location[i];
-      //       $scope.recency[keyname] =   $(keyId).find("option:selected").text();
-      //       console.log( $scope.recency[keyname])     
-      //   }
-      // }   
+      for(i=0;i<$scope.configdata.length;i++){
+        var key=$scope.configdata[i].global_name;
+        var  keyname = key +"_name";
+        var  keyId = "#" +$scope.configdata[i].global_name;
+        if( $scope.recency.location[i]==undefined || $scope.recency.location[i]==""){
+            $scope.recency[key] =""
+            $scope.recency[keyname] = "";
+        }else{
+            $scope.recency[key] =$scope.recency.location[i];
+            $scope.recency[keyname] =   $(keyId).find("option:selected").text();
+            console.log( $scope.recency[keyname])     
+        }
+      }   
 
        localStorage.setItem('PartialRecencyData',JSON.stringify(partialData)) ;
        }
@@ -516,6 +534,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
         $localStorage.set('offline','true');
         $scope.riskpopulations = JSON.parse(localStorage.getItem('RiskPopulations'));
         $scope.mandatoryData = JSON.parse(localStorage.getItem('MandatoryData'));
+        $scope.optionalFieldsFlag = JSON.parse(localStorage.getItem('OptionalData'));
         $scope.testerNameObj = JSON.parse(localStorage.getItem('testerName'));
         $scope.configdata = JSON.parse(localStorage.getItem('GlobalConfig'));
         // $scope.provinceData =  JSON.parse(localStorage.getItem('ProvinceData'))      
@@ -635,6 +654,13 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
          localStorage.setItem('MandatoryData',JSON.stringify($scope.mandatoryData)) 
         // console.log( $scope.mandatoryData);           
         });
+      //   $http.get($localStorage.get('apiUrl')+'/api/recency-mandatory')
+      // .success(function(data) {
+      //  $scope.optionalData =data.fields;
+      //  //console.log(data)
+      //  localStorage.setItem('OptionalData',JSON.stringify($scope.optionalData)) 
+      //  console.log( $scope.optionalData);           
+      // });
         $http.get($localStorage.get('apiUrl')+'/api/province')
         .success(function(data) {
          $scope.provinceData =data.province;
@@ -672,6 +698,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
     // $scope.getApiCalls();
       // If Internet Connection Disconnected
    
+      $scope.optionalFieldsFlag = JSON.parse(localStorage.getItem('OptionalData'));
    
    
 
@@ -958,7 +985,7 @@ $scope.GetCityValue = function(district){
     //   onoffline();
     // }
     $scope.showToastAlert = function(mandatorytitle){
-   //  $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+  //$ionicPopup.alert({title:'Alert!',template:mandatorytitle});
     $cordovaToast.show(mandatorytitle, 'long', 'center')
               .then(function(success) {
                 // success
@@ -988,7 +1015,7 @@ $scope.GetCityValue = function(district){
         var mandatoryname = $(id).attr("name");
         var mandatorytitle = $(id).attr("title");
         var mandatoryField=$scope.mandatoryData[i];
-      //console.log(mandatoryField);
+      console.log(mandatoryField);
          
           if($scope.mandatoryData[i]=='sampleId' && $scope.recency.sampleId==""){
             $scope.showRecencyTick = false;
@@ -1170,12 +1197,7 @@ $scope.GetCityValue = function(district){
         if($scope.mandatoryData[i]=='gender' && $scope.recency.gender==""){
           $scope.showBehaviourTick = false;
           $scope.showToastAlert(mandatorytitle); 
-          $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
-          .then(function(success) {
-            // success
-          }, function (error) {
-            // error
-          }); return false;
+           return false;
         }
         if($scope.mandatoryData[i]=='maritalStatus' && $scope.recency.maritalStatus==""){
           $scope.showBehaviourTick = false;

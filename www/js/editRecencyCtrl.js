@@ -9,9 +9,11 @@ app=angular.module('starter.editRecencyCtrl', ['starter.services'])
   $scope.configdata = JSON.parse(localStorage.getItem('GlobalConfig'));
   $scope.mandatoryData = JSON.parse(localStorage.getItem('MandatoryData'));
   $scope.facilityData= JSON.parse(localStorage.getItem('FacilityData'));
-  $scope.riskpopulations= JSON.parse(localStorage.getItem('RiskPopulations'))        
-
-console.log( $scope.recencyDetails)
+  $scope.riskpopulations= JSON.parse(localStorage.getItem('RiskPopulations')) 
+  $scope.optionalFieldsFlag = JSON.parse(localStorage.getItem('OptionalFieldsFlag'));
+  console.log( $scope.optionalFieldsFlag);
+  console.log( $scope.recencyDetails);
+  
 
   // $("#main-recency").addClass("active");
   

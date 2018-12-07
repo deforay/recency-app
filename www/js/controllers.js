@@ -39,7 +39,7 @@ $scope.updateBadge = function(){
     $scope.displayqcbadge=false;
   }
   
-  $scope.appVersion = 0.5;
+  $scope.appVersion = 0.6;
 }
 
 // $rootScope.displaybadge=true;
@@ -62,7 +62,7 @@ if(QCDataList != null){
   $scope.displayqcbadge=false;
 }
 
-$scope.appVersion = 0.5;
+$scope.appVersion = 0.6;
 localStorage.setItem('AppVersion',$scope.appVersion);
 
 // $scope.refresh = function()
@@ -199,9 +199,40 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
     $http.get($localStorage.get('apiUrl')+'/api/recency-mandatory')
     .success(function(data) {
      $scope.mandatoryData =data.fields;
-     //console.log(data)
+    console.log(data)
      localStorage.setItem('MandatoryData',JSON.stringify($scope.mandatoryData)) 
      console.log( $scope.mandatoryData);           
+    });
+    $http.get($localStorage.get('apiUrl')+'/api/recency-hide')
+    .success(function(data) {
+     $scope.optionalData =data.fields[0];
+     //console.log($scope.optionalData);
+     $scope.optionalArr =[];
+     $scope.optionalArr.location=[];
+     angular.forEach($scope.optionalData, function(value, key) {
+       $scope.optionalArr[key]=value;
+     });
+     if($scope.optionalArr.location_one==false){
+        $scope.optionalArr.location[0]=false;
+      }else{
+        $scope.optionalArr.location[0]=true;
+      }
+      if($scope.optionalArr.location_two==false){
+        $scope.optionalArr.location[1]=false;
+      }else{
+        $scope.optionalArr.location[1]=true;
+      }
+      if($scope.optionalArr.location_three==false){
+        $scope.optionalArr.location[2]=false;
+      }else{
+        $scope.optionalArr.location[2]=true;
+      }
+     console.log(  $scope.optionalArr);
+
+    var hideFields =  Object.assign({}, $scope.optionalArr);
+      console.log(hideFields)
+     localStorage.setItem('OptionalData',JSON.stringify(hideFields)) 
+   
     });
     $http.get($localStorage.get('apiUrl')+'/api/province')
     .success(function(data) {
