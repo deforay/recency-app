@@ -99,13 +99,13 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
           $localStorage.set('apppassword',$scope.confirmpasscode);
           
           $preLoader.show();
-          $cordovaToast
-          .show('App Password Created Successfully', 'long', 'center')
-          .then(function(success) {
-            // success
-          }, function (error) {
-            // error
-          });
+          // $cordovaToast
+          // .show('App Password Created Successfully', 'long', 'center')
+          // .then(function(success) {
+          //   // success
+          // }, function (error) {
+          //   // error
+          // });
           $timeout(function() {
             $location.path('/app/addRecency');
             $preLoader.hide();
@@ -297,7 +297,7 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
         localStorage.setItem('FacilityData',JSON.stringify($scope.facilityData))    
         console.log($scope.facilityData)           
         });
-    if(JSON.parse(localStorage.getItem('PartialRecencyData'))==null){
+    //if(JSON.parse(localStorage.getItem('PartialRecencyData'))==null){
        $http.get($localStorage.get('apiUrl')+'/api/global-config')
         .success(function(data) {
          console.log(data);
@@ -364,11 +364,11 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
       .success(function(data) {     
        localStorage.setItem('CityData',JSON.stringify(data.city))           
       });
-      }else{
+     // }else{
       $scope.mandatoryData = JSON.parse(localStorage.getItem('MandatoryData'));
       $scope.configdata = JSON.parse(localStorage.getItem('GlobalConfig'));
       $scope.provinceData = JSON.parse(localStorage.getItem('ProvinceData'));
-      }
+     // }
         $http.get($localStorage.get('apiUrl')+'/api/risk-populations')
         .success(function(data) {
           $scope.riskpopulations =data;
@@ -428,12 +428,12 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
               $localStorage.set('serverpassword',credentials.serverpassword);
                 $localStorage.set('userId',response.data.userDetails['userId']);
                 $localStorage.set('userName',response.data.userDetails['userName']);  
-            $cordovaToast.show('Successfully Logged in', 'long', 'bottom')
-              .then(function(success) {
-                // success
-              }, function (error) {
-                // error
-              });
+            // $cordovaToast.show('Successfully Logged in', 'long', 'bottom')
+            //   .then(function(success) {
+            //     // success
+            //   }, function (error) {
+            //     // error
+            //   });
               $scope.viewLogin = false;
               $scope.viewAddPassword = true;
               $scope.viewConfirmPassword = false;

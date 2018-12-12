@@ -178,12 +178,12 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
       "facility_name":"Other"
     })
     localStorage.setItem('FacilityData',JSON.stringify($scope.facilityData))    
-   console.log($scope.facilityData)           
+  // console.log($scope.facilityData)           
   });
-  if(JSON.parse(localStorage.getItem('PartialRecencyData'))==null){
+  //if(JSON.parse(localStorage.getItem('PartialRecencyData'))==null){
   $http.get($localStorage.get('apiUrl')+'/api/global-config')
   .success(function(data) {
-    console.log(data);
+ //   console.log(data);
   $scope.configdata =data.config;
      for(i=0;i<$scope.configdata.length;i++){        
         if($scope.configdata[i].global_name =="mandatory_fields" || $scope.configdata[i].global_name =="admin_email" || $scope.configdata[i].global_name =="admin_phone" )   {
@@ -194,14 +194,14 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
     //       $scope.recency.location[i]="";
     //      }
    localStorage.setItem('GlobalConfig',JSON.stringify($scope.configdata)) 
-    console.log($scope.configdata)
+  //  console.log($scope.configdata)
     });
     $http.get($localStorage.get('apiUrl')+'/api/recency-mandatory')
     .success(function(data) {
      $scope.mandatoryData =data.fields;
-    console.log(data)
+   // console.log(data)
      localStorage.setItem('MandatoryData',JSON.stringify($scope.mandatoryData)) 
-     console.log( $scope.mandatoryData);           
+   //  console.log( $scope.mandatoryData);           
     });
     $http.get($localStorage.get('apiUrl')+'/api/recency-hide')
     .success(function(data) {
@@ -227,7 +227,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
       }else{
         $scope.optionalArr.location[2]=true;
       }
-     console.log(  $scope.optionalArr);
+   //  console.log(  $scope.optionalArr);
 
     var hideFields =  Object.assign({}, $scope.optionalArr);
       console.log(hideFields)
@@ -247,12 +247,12 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
     .success(function(data) {     
      localStorage.setItem('CityData',JSON.stringify(data.city))           
     });
-  }else{
+  //}else{
     $scope.mandatoryData = JSON.parse(localStorage.getItem('MandatoryData'));
     $scope.configdata = JSON.parse(localStorage.getItem('GlobalConfig'));
     $scope.provinceData = JSON.parse(localStorage.getItem('ProvinceData'));
 
-  }
+  //}
   $http.get($localStorage.get('apiUrl')+'/api/risk-populations')
   .success(function(data) {
    $scope.riskpopulations =data;

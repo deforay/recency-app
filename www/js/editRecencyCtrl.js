@@ -10,7 +10,7 @@ app=angular.module('starter.editRecencyCtrl', ['starter.services'])
   $scope.mandatoryData = JSON.parse(localStorage.getItem('MandatoryData'));
   $scope.facilityData= JSON.parse(localStorage.getItem('FacilityData'));
   $scope.riskpopulations= JSON.parse(localStorage.getItem('RiskPopulations')) 
-  $scope.optionalFieldsFlag = JSON.parse(localStorage.getItem('OptionalFieldsFlag'));
+  $scope.optionalFieldsFlag = JSON.parse(localStorage.getItem('OptionalData'));
   console.log( $scope.optionalFieldsFlag);
   console.log( $scope.recencyDetails);
   
@@ -686,13 +686,13 @@ if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != u
   $scope.onLoadMandatoryCheck ();
 
   $scope.showToastAlert = function(mandatorytitle){
- //    $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
-  $cordovaToast.show(mandatorytitle, 'long', 'center')
-            .then(function(success) {
-              // success
-            }, function (error) {
-              // error
-            });
+  $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+  // $cordovaToast.show(mandatorytitle, 'long', 'center')
+  //           .then(function(success) {
+  //             // success
+  //           }, function (error) {
+  //             // error
+  //           });
   }
   $scope.patientvalidation = function(){
     console.log($scope.recency)
@@ -1099,12 +1099,12 @@ if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != u
            localStorage.setItem('RecencyData',JSON.stringify($scope.chkrecency));
             $scope.recency ={};
            $scope.recencydisplay=true;
-           $cordovaToast.show('Edited Successfully', 'long', 'center')
-           .then(function(success) {
-             // success
-           }, function (error) {
-             // error
-           });
+          //  $cordovaToast.show('Edited Successfully', 'long', 'center')
+          //  .then(function(success) {
+          //    // success
+          //  }, function (error) {
+          //    // error
+          //  });
            $("#main-recency").addClass("active");
            $("#other-recency").removeClass('active');
            $window.location.reload(true);

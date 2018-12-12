@@ -10,8 +10,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
        $(document).ready(function(){
      
        $scope.recencydisplay=true; 
-
-
+      
         $("#main-recency").addClass("active");
         if(!localStorage.getItem('counter')){
           $scope.counter =0;
@@ -287,6 +286,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
        if(JSON.parse(localStorage.getItem('PartialRecencyData'))==null){
       $scope.recency.appVersion = localStorage.getItem('AppVersion');      
       $scope.recency.addedBy = localStorage.getItem('userId');
+      $scope.recency.created_datetime="";
       $scope.recency.sampleId ="";
       $scope.recency.patientId="";
       $scope.recency.facilityId="";
@@ -411,11 +411,66 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
     }, 100);
     }
     $scope.getoptionField();
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // Cordova is ready
+    //
+    function onDeviceReady() {
+       $scope.recency.macAddress = device.uuid;
+      localStorage.setItem('MacAddress', $scope.recency.macAddress);
+      // Comment during Development mode
+      window.plugins.sim.getSimInfo(
+        function(r) { $scope.out = r; $scope.$apply(); console.log(r);
+       $scope.recency.phoneNumber =   $scope.out.phoneNumber;
+      localStorage.setItem('PhoneNumber',$scope.recency.phoneNumber)
+
+       },
+        function(r) { $scope.out = r; $scope.$apply(); console.log(r); }
+        
+      );
+      window.plugins.sim.hasReadPermission(
+        function(r) { $scope.out2 = r; $scope.$apply(); console.log(r); },
+        function(r) { $scope.out2 = r; $scope.$apply(); console.log(r); }
+      );
+      $timeout(function() {
+        window.plugins.sim.requestReadPermission();
+      }, 5000);
+      $timeout(function() {
+        window.plugins.sim.getSimInfo(
+          function(r) { $scope.out3 = r; $scope.$apply(); console.log(r); 
+       $scope.recency.phoneNumber =   $scope.out.phoneNumber;
+      localStorage.setItem('PhoneNumber',$scope.recency.phoneNumber)
+
+          },
+          function(r) { $scope.out3 = r; $scope.$apply(); console.log(r); }
+        );
+        window.plugins.sim.hasReadPermission(
+          function(r) { $scope.out4 = r; $scope.$apply(); console.log(r); },
+          function(r) { $scope.out4 = r; $scope.$apply(); console.log(r); }
+        );
+      }, 1000);
+
+    }
     $scope.partialRecencyData = function(){
       console.log($scope.recency)
       var partialData = $scope.recency;
     //  console.log($scope.recency.location)
+    if($scope.recency.created_datetime=='' || $scope.recency.created_datetime==null || $scope.recency.created_datetime==undefined){
+      var currentdatetime = new Date();
+      $scope.recency.created_datetime = currentdatetime.getFullYear() + "-"
+      + (currentdatetime.getMonth()+1)  + "-" 
+      + currentdatetime.getDate() + " "
+      + currentdatetime.getHours() + ":"  
+      + currentdatetime.getMinutes() + ":" 
+      + currentdatetime.getSeconds();
+  
+       console.log($scope.recency.created_datetime);
+    }
+    else{
+      console.log($scope.recency.created_datetime);
 
+    }
       for(i=0;i<$scope.configdata.length;i++){
         var key=$scope.configdata[i].global_name;
         var  keyname = key +"_name";
@@ -482,41 +537,6 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
     }
 
 
-    document.addEventListener("deviceready", onDeviceReady, false);
-
-    // Cordova is ready
-    //
-    function onDeviceReady() {
-       $scope.recency.macAddress = device.uuid;
-      localStorage.setItem('MacAddress', $scope.recency.macAddress);
-      // Comment during Development mode
-      window.plugins.sim.getSimInfo(
-        function(r) { $scope.out = r; $scope.$apply(); console.log(r);
-       $scope.recency.phoneNumber =   $scope.out.phoneNumber;
-       },
-        function(r) { $scope.out = r; $scope.$apply(); console.log(r); }
-        
-      );
-      window.plugins.sim.hasReadPermission(
-        function(r) { $scope.out2 = r; $scope.$apply(); console.log(r); },
-        function(r) { $scope.out2 = r; $scope.$apply(); console.log(r); }
-      );
-      $timeout(function() {
-        window.plugins.sim.requestReadPermission();
-      }, 5000);
-      $timeout(function() {
-        window.plugins.sim.getSimInfo(
-          function(r) { $scope.out3 = r; $scope.$apply(); console.log(r); 
-       $scope.recency.phoneNumber =   $scope.out.phoneNumber;
-          },
-          function(r) { $scope.out3 = r; $scope.$apply(); console.log(r); }
-        );
-        window.plugins.sim.hasReadPermission(
-          function(r) { $scope.out4 = r; $scope.$apply(); console.log(r); },
-          function(r) { $scope.out4 = r; $scope.$apply(); console.log(r); }
-        );
-      }, 10000);
-    }
       document.addEventListener("online",ononline, false);
       document.addEventListener("offline", onoffline, false);
       
@@ -985,13 +1005,13 @@ $scope.GetCityValue = function(district){
     //   onoffline();
     // }
     $scope.showToastAlert = function(mandatorytitle){
-  //$ionicPopup.alert({title:'Alert!',template:mandatorytitle});
-    $cordovaToast.show(mandatorytitle, 'long', 'center')
-              .then(function(success) {
-                // success
-              }, function (error) {
-                // error
-              });
+  $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+    // $cordovaToast.show(mandatorytitle, 'long', 'center')
+    //           .then(function(success) {
+    //             // success
+    //           }, function (error) {
+    //             // error
+    //           });
     }
     $scope.patientvalidation = function(){
       console.log($scope.recency)
@@ -1277,7 +1297,7 @@ $scope.GetCityValue = function(district){
           var mandatorytitle = $(id).attr("title");
           var mandatoryField=$scope.mandatoryData[i];
           
-          console.log(mandatoryField)
+         // console.log(mandatoryField)
           if(($scope.mandatoryData[i]=='dob' && $scope.recency.dob=="" &&  $scope.recency.age=="")){
             var mandatorytitle = 'Please Enter Date Of Birth or Age';
              $scope.showBehaviourTick = false;
@@ -1329,7 +1349,7 @@ $scope.GetCityValue = function(district){
             return false;
           }
           if($scope.recency.testNotPerformed==true){
-            console.log($scope.recency.testNotPerformed);
+            //console.log($scope.recency.testNotPerformed);
             if( $scope.recency.recencyreason==""){
               var mandatorytitle = 'Please Choose Reason of Recency Test Not Performed';
             $scope.showRecencyTick = false;
@@ -1344,7 +1364,7 @@ $scope.GetCityValue = function(district){
             }
           }
           if($scope.recency.testNotPerformed!=true || $scope.recency.testNotPerformed=='' ){
-            console.log($scope.recency.testNotPerformed)
+           // console.log($scope.recency.testNotPerformed)
            if($scope.mandatoryData[i]=='hivRecencyDate' && $scope.recency.hivRecencyDate==""){
                $scope.showRecencyTick = false;
                $scope.showToastAlert(mandatorytitle);     
@@ -1378,10 +1398,10 @@ $scope.GetCityValue = function(district){
         var count = localStorage.getItem('counter');
         $scope.counter  = parseInt(count) + 1;
      
-        if($scope.recency.facilityId!=""){
-              $scope.recency.facility_name = $("#facilityId").find("option:selected").text();
-              console.log($scope.recency.facility_name)
-        }
+        // if($scope.recency.facilityId!=""){
+        //       $scope.recency.facility_name = $("#facilityId").find("option:selected").text();
+        //       console.log($scope.recency.facility_name)
+        // }
         // if($scope.recency.ctrlLine!=""){
         //   $scope.recency.ctrlLineName =   $("#ctrlLine").find("option:selected").text();
         // }
@@ -1400,8 +1420,24 @@ $scope.GetCityValue = function(district){
         + currentdate.getMinutes() + ":" 
         + currentdate.getSeconds();
 
-         console.log($scope.recency.addedOn)
-        // console.log($scope.recency);
+         console.log($scope.recency.addedOn);
+
+        
+          var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+          var string_length = 12;
+          var randomstring = '';
+          for (var i=0; i<string_length; i++) {
+            var rnum = Math.floor(Math.random() * chars.length);
+            randomstring += chars.substring(rnum,rnum+1);
+          }
+          console.log(randomstring)
+          $scope.recency.unique_id = randomstring;
+          //document.randform.randomfield.value = randomstring;
+     
+         $scope.recency.macAddress = localStorage.getItem('MacAddress');
+         $scope.recency.phoneNumber =  localStorage.getItem('PhoneNumber');
+
+         console.log($scope.recency);
         $preLoader.show();
         var recency = $scope.recency;
            if(JSON.parse(localStorage.getItem('RecencyData'))!=null){
@@ -1414,14 +1450,14 @@ $scope.GetCityValue = function(district){
         
              $scope.recency ={};
               $scope.recencydisplay=true;
-            // $("#section2").css("display","none");
-              $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
-              .then(function(success) {
-                // success
-              }, function (error) {
-                // error
-              });
-              //$scope.getApiCalls();
+       
+              // $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
+              // .then(function(success) {
+              //   // success
+              // }, function (error) {
+              //   // error
+              // });
+      
               $scope.getLatLong();
                $scope.showRecencyTick = false;
                $scope.showBehaviourTick = false;
