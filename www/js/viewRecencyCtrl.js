@@ -87,6 +87,16 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
             }
                 for(i=0;i<$scope.recencyList.length;i++){
                     $scope.recencyList[i].syncedBy = localStorage.getItem('userId');
+                    var currentdatetime = new Date();
+                    $scope.recencyList[i].formTransferDateTime = currentdatetime.getFullYear() + "-"
+                    + (currentdatetime.getMonth()+1)  + "-" 
+                    + currentdatetime.getDate() + " "
+                    + currentdatetime.getHours() + ":"  
+                    + currentdatetime.getMinutes() + ":" 
+                    + currentdatetime.getSeconds();
+                
+                     console.log($scope.recencyList[i].formTransferDateTime);
+                    
                 }
                 console.log($scope.recencyList)
          

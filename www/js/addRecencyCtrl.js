@@ -286,7 +286,8 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
        if(JSON.parse(localStorage.getItem('PartialRecencyData'))==null){
       $scope.recency.appVersion = localStorage.getItem('AppVersion');      
       $scope.recency.addedBy = localStorage.getItem('userId');
-      $scope.recency.created_datetime="";
+      $scope.recency.formInitDateTime="";
+      $scope.recency.formSavedDateTime="";
       $scope.recency.sampleId ="";
       $scope.recency.patientId="";
       $scope.recency.facilityId="";
@@ -456,19 +457,19 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
       console.log($scope.recency)
       var partialData = $scope.recency;
     //  console.log($scope.recency.location)
-    if($scope.recency.created_datetime=='' || $scope.recency.created_datetime==null || $scope.recency.created_datetime==undefined){
+    if($scope.recency.formInitDateTime=='' || $scope.recency.formInitDateTime==null || $scope.recency.formInitDateTime==undefined){
       var currentdatetime = new Date();
-      $scope.recency.created_datetime = currentdatetime.getFullYear() + "-"
+      $scope.recency.formInitDateTime = currentdatetime.getFullYear() + "-"
       + (currentdatetime.getMonth()+1)  + "-" 
       + currentdatetime.getDate() + " "
       + currentdatetime.getHours() + ":"  
       + currentdatetime.getMinutes() + ":" 
       + currentdatetime.getSeconds();
   
-       console.log($scope.recency.created_datetime);
+       console.log($scope.recency.formInitDateTime);
     }
     else{
-      console.log($scope.recency.created_datetime);
+      console.log($scope.recency.formInitDateTime);
 
     }
       for(i=0;i<$scope.configdata.length;i++){
@@ -1005,13 +1006,13 @@ $scope.GetCityValue = function(district){
     //   onoffline();
     // }
     $scope.showToastAlert = function(mandatorytitle){
-  $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
-    // $cordovaToast.show(mandatorytitle, 'long', 'center')
-    //           .then(function(success) {
-    //             // success
-    //           }, function (error) {
-    //             // error
-    //           });
+ // $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+    $cordovaToast.show(mandatorytitle, 'long', 'center')
+              .then(function(success) {
+                // success
+              }, function (error) {
+                // error
+              });
     }
     $scope.patientvalidation = function(){
       console.log($scope.recency)
@@ -1413,14 +1414,14 @@ $scope.GetCityValue = function(district){
         // }
 
         var currentdate = new Date();
-        $scope.recency.addedOn = currentdate.getFullYear() + "-"
+        $scope.recency.formSavedDateTime = currentdate.getFullYear() + "-"
         + (currentdate.getMonth()+1)  + "-" 
         + currentdate.getDate() + " "
         + currentdate.getHours() + ":"  
         + currentdate.getMinutes() + ":" 
         + currentdate.getSeconds();
 
-         console.log($scope.recency.addedOn);
+         console.log($scope.recency.formSavedDateTime);
 
         
           var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
@@ -1451,12 +1452,12 @@ $scope.GetCityValue = function(district){
              $scope.recency ={};
               $scope.recencydisplay=true;
        
-              // $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
-              // .then(function(success) {
-              //   // success
-              // }, function (error) {
-              //   // error
-              // });
+              $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
+              .then(function(success) {
+                // success
+              }, function (error) {
+                // error
+              });
       
               $scope.getLatLong();
                $scope.showRecencyTick = false;

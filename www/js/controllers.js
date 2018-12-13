@@ -256,10 +256,17 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
   $http.get($localStorage.get('apiUrl')+'/api/risk-populations')
   .success(function(data) {
    $scope.riskpopulations =data;
+   var lastelement = $scope.riskpopulations.length-1;
+   $scope.lastindex = parseInt($scope.riskpopulations[lastelement]['rp_id'])+1;
+   console.log($scope.lastindex)
    $scope.riskpopulations.push({
-    "rp_id": $scope.riskpopulations.length+1,
+    "rp_id": $scope.lastindex,
     "name":"Other"
-  })
+  }) 
+  //  $scope.riskpopulations.push({
+  //   "rp_id": $scope.riskpopulations.length+1,
+  //   "name":"Other"
+  // })
   localStorage.setItem('RiskPopulations',JSON.stringify($scope.riskpopulations))       
 
 //  console.log($scope.riskpopulations)  

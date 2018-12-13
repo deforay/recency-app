@@ -686,13 +686,13 @@ if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != u
   $scope.onLoadMandatoryCheck ();
 
   $scope.showToastAlert = function(mandatorytitle){
-  $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
-  // $cordovaToast.show(mandatorytitle, 'long', 'center')
-  //           .then(function(success) {
-  //             // success
-  //           }, function (error) {
-  //             // error
-  //           });
+ // $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+  $cordovaToast.show(mandatorytitle, 'long', 'center')
+            .then(function(success) {
+              // success
+            }, function (error) {
+              // error
+            });
   }
   $scope.patientvalidation = function(){
     console.log($scope.recency)
@@ -1085,7 +1085,7 @@ if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != u
       }
       $scope.recency.addedBy = localStorage.getItem('userId');
       var currentdate = new Date();
-      $scope.recency.addedOn = currentdate.getFullYear() + "-"
+      $scope.recency.formSavedDateTime = currentdate.getFullYear() + "-"
       + (currentdate.getMonth()+1)  + "-" 
       + currentdate.getDate() + " "
       + currentdate.getHours() + ":"  
@@ -1099,12 +1099,12 @@ if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != u
            localStorage.setItem('RecencyData',JSON.stringify($scope.chkrecency));
             $scope.recency ={};
            $scope.recencydisplay=true;
-          //  $cordovaToast.show('Edited Successfully', 'long', 'center')
-          //  .then(function(success) {
-          //    // success
-          //  }, function (error) {
-          //    // error
-          //  });
+           $cordovaToast.show('Edited Successfully', 'long', 'center')
+           .then(function(success) {
+             // success
+           }, function (error) {
+             // error
+           });
            $("#main-recency").addClass("active");
            $("#other-recency").removeClass('active');
            $window.location.reload(true);
