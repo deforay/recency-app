@@ -20,17 +20,14 @@ app=angular.module('starter.pendingRecencyResultCtrl', ['starter.services'])
             method: "POST",
             data: { "email": $localStorage.get('email'), "password" : $localStorage.get('serverpassword') }
         }).then(function successCallback(response) {
-               console.log(response.data);
                if(response.data.status =="success"){
                   $localStorage.set('authToken',response.data.userDetails['authToken']);                  
                   $http.get($localStorage.get('apiUrl')+'/api/pending-vl-result?authToken='+$localStorage.get('authToken'))
                  .then(function(response) {
-                   console.log(response)
                    if(response.data.status =="success"){
                     $localStorage.set('ServerRecencyData','login');
                     $preLoader.hide();
                       $scope.showauth = false;   
-                      console.log( response.data.recency) 
                       if(response.data.recency.length>0){
                         $scope.displaymessage = false;
                       $preLoader.show();
@@ -61,14 +58,14 @@ app=angular.module('starter.pendingRecencyResultCtrl', ['starter.services'])
                  })
                }
                else{
-                console.log(response.data);
+                //console.log(response.data);
                 $preLoader.hide();
                 $ionicPopup.alert({title:'Authentication Failed!',template:response.data.message});
                }
             });
             $scope.showauth = false;
           }
-         console.log( $scope.showauth)
+        // console.log( $scope.showauth)
         }
         $scope.init();
         
@@ -91,13 +88,13 @@ app=angular.module('starter.pendingRecencyResultCtrl', ['starter.services'])
               method: "POST",
               data: { "email": credentials.email, "password" : credentials.serverpassword }
           }).then(function successCallback(response) {
-                 console.log(response.data);
+                // console.log(response.data);
                  if(response.data.status =="success"){
                     $localStorage.set('authToken',response.data.userDetails['authToken']);
                     
                    $http.get($localStorage.get('apiUrl')+'/api/pending-vl-result?authToken='+$localStorage.get('authToken'))
                    .then(function(response) {
-                     console.log(response);
+                     //console.log(response);
                      if(response.data.status =="success"){
                       $localStorage.set('ServerRecencyData','login');
                       $preLoader.hide();
@@ -110,8 +107,7 @@ app=angular.module('starter.pendingRecencyResultCtrl', ['starter.services'])
                              });
 
                         $scope.showauth = false;  
-                        console.log( response.data.recency)  
-                        //console.log($rootScope.fromVlDate)
+                       
                         if(response.data.recency.length>0){
                           $scope.displaymessage = false;
                         $preLoader.show();
@@ -141,7 +137,7 @@ app=angular.module('starter.pendingRecencyResultCtrl', ['starter.services'])
                    })
                  }
                  else{
-                  console.log(response.data);
+                 // console.log(response.data);
                   $preLoader.hide();
                   $ionicPopup.alert({title:'Authentication Failed!',template:response.data.message});
 
@@ -163,12 +159,9 @@ app=angular.module('starter.pendingRecencyResultCtrl', ['starter.services'])
         $scope.propertyName = propertyName;
       };   
       $scope.sortBy = function(propertyName,propertyName1){
-       //   console.log($scope.propertyName)
         $scope.reverse = ($scope.propertyName === propertyName && $scope.propertyName1 === propertyName1) ? !$scope.reverse : false;
-      //  console.log($scope.reverse)
         $scope.propertyName = propertyName;
         $scope.propertyName1 = propertyName1;
-
       }
 })
 

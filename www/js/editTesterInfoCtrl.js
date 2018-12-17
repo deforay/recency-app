@@ -4,9 +4,8 @@ app=angular.module('starter.editTesterInfoCtrl', ['starter.services'])
 
 
     $scope.TesterListData ={};
-    
-      $scope.qcTester = JSON.parse(localStorage.getItem('viewTesterInfo'));
-     console.log($scope.qcTester)
+    $scope.qcTester = JSON.parse(localStorage.getItem('viewTesterInfo'));
+    // console.log($scope.qcTester)
      if($scope.qcTester.available=='yes'){
       $scope.qcTester.available = true;
      }
@@ -14,12 +13,11 @@ app=angular.module('starter.editTesterInfoCtrl', ['starter.services'])
       $scope.qcTester.available = false;
      }
     $(document).ready(function(){
-
         if(!localStorage.getItem('Testercounter')){
          $scope.Testercounter =0;
           localStorage.setItem('Testercounter',$scope.Testercounter);
         }
-      });
+     });
 
 
     $scope.doRefresh = function() {
@@ -29,27 +27,17 @@ app=angular.module('starter.editTesterInfoCtrl', ['starter.services'])
       
     }
 
-
     $scope.editTesterInfo = function(qc){
-        console.log(qc);
         $scope.qcTesterInfo = qc;
-
         if(qc.available=='yes'){
           $scope.qcTesterInfo.isavailable= true;
         }else{
           $scope.qcTesterInfo.isavailable= false;
         }
-        
-        console.log($scope.qcTesterInfo);
-
     }
-
-
-
     $scope.updateTesterName = function()
       { 
         $preLoader.show();
-
         $scope.index  = $scope.qcTester.index;
         $scope.qcTester.label = $scope.qcTester.testerName 
        if($scope.qcTester.available==true){
@@ -57,10 +45,8 @@ app=angular.module('starter.editTesterInfoCtrl', ['starter.services'])
        }else{
         $scope.qcTester.available = 'no';    
        }
-       console.log($scope.qcTester);
        $scope.chkTesterInfo = JSON.parse(localStorage.getItem('TesterInfo'))
        $scope.chkTesterInfo[$scope.index] = $scope.qcTester;
-       console.log( $scope.chkTesterInfo)
        localStorage.setItem('TesterInfo',JSON.stringify($scope.chkTesterInfo));
        $scope.qcTester ={};
 

@@ -2,8 +2,6 @@ angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($scope,$rootScope,$http,$ionicModal,$ionicHistory, $location,$refresh,  $window, $ionicModal, $timeout,$ionicPopup,$localStorage,$preLoader, $state) {
 
- //$rootScope.apiUrl = 'http://recency.deforay.in/';
- // $rootScope.apiUrl='http://recency-web/';
   $scope.loginData = {};
   $scope.displaybadge=false;
   $scope.displayqcbadge= false;
@@ -39,7 +37,7 @@ $scope.updateBadge = function(){
     $scope.displayqcbadge=false;
   }
   
-  $scope.appVersion = 0.6;
+  $scope.appVersion = 0.7;
 }
 
 // $rootScope.displaybadge=true;
@@ -62,24 +60,13 @@ if(QCDataList != null){
   $scope.displayqcbadge=false;
 }
 
-$scope.appVersion = 0.6;
+$scope.appVersion = 0.7;
 localStorage.setItem('AppVersion',$scope.appVersion);
 
-// $scope.refresh = function()
-// 	{
-//     console.log($state.current)
-// 		$ionicHistory.clearCache([$state.current.name]).then(function()
-// 		{
-// 			$state.reload($state.current);
-// 		});
-// 	};
 $scope.addRecency = function(){
   console.log($state.current)	
   $location.path('/app/addRecency');
-  // $ionicHistory.clearCache([$state.current.name]).then(function()
-	// 	{
-			// $state.reload($state.current);
-		// });
+
 }
 
 $scope.groups = [
@@ -190,16 +177,12 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
           $scope.configdata.splice(i);
         }    
      } 
-    // for(i=0;i<$scope.configdata.length;i++){
-    //       $scope.recency.location[i]="";
-    //      }
    localStorage.setItem('GlobalConfig',JSON.stringify($scope.configdata)) 
   //  console.log($scope.configdata)
     });
     $http.get($localStorage.get('apiUrl')+'/api/recency-mandatory')
     .success(function(data) {
      $scope.mandatoryData =data.fields;
-   // console.log(data)
      localStorage.setItem('MandatoryData',JSON.stringify($scope.mandatoryData)) 
    //  console.log( $scope.mandatoryData);           
     });
@@ -230,7 +213,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
    //  console.log(  $scope.optionalArr);
 
     var hideFields =  Object.assign({}, $scope.optionalArr);
-      console.log(hideFields)
+      //console.log(hideFields)
      localStorage.setItem('OptionalData',JSON.stringify(hideFields)) 
    
     });
@@ -247,29 +230,24 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
     .success(function(data) {     
      localStorage.setItem('CityData',JSON.stringify(data.city))           
     });
-  //}else{
+  
     $scope.mandatoryData = JSON.parse(localStorage.getItem('MandatoryData'));
     $scope.configdata = JSON.parse(localStorage.getItem('GlobalConfig'));
     $scope.provinceData = JSON.parse(localStorage.getItem('ProvinceData'));
 
-  //}
+ 
   $http.get($localStorage.get('apiUrl')+'/api/risk-populations')
   .success(function(data) {
    $scope.riskpopulations =data;
    var lastelement = $scope.riskpopulations.length-1;
    $scope.lastindex = parseInt($scope.riskpopulations[lastelement]['rp_id'])+1;
-   console.log($scope.lastindex)
+ //  console.log($scope.lastindex)
    $scope.riskpopulations.push({
     "rp_id": $scope.lastindex,
     "name":"Other"
   }) 
-  //  $scope.riskpopulations.push({
-  //   "rp_id": $scope.riskpopulations.length+1,
-  //   "name":"Other"
-  // })
-  localStorage.setItem('RiskPopulations',JSON.stringify($scope.riskpopulations))       
 
-//  console.log($scope.riskpopulations)  
+  localStorage.setItem('RiskPopulations',JSON.stringify($scope.riskpopulations))       
   });
 });
 
@@ -323,35 +301,7 @@ $scope.serverlogout = function(){
     }
   });
 }
-$scope.applogout1 = function(){
-  var confirmPopup = $ionicPopup.confirm({
-    title: 'App Logout',
-    template: '<center>Are you sure want to Logout?<center>',
-     buttons: [
-           {
-             text: '<b>Yes</b>',
-             type: 'button-positive',
-             onTap: function(e) {
-                 $preLoader.show();
- 
-             $localStorage.set('logout',true);
-              // $window.localStorage.clear();
-              // $refresh.page();
-              $preLoader.hide(); 
-              $state.go('login');
-             }
-           },
-           { text: 'Cancel', type: 'button-assertive',onTap: function(e) { return true; } },
-         ]
-     });
-        confirmPopup.then(function(res) {
-          if(res) {
-          // console.log('Yes');
-         } else {
-          //console.log('No!');
-          }
-         });
-}
+
 $scope.applogout = function() {
   if($state.current.name=='app.recencyData' || $state.current.name=='app.recencyDataWithVl'|| $state.current.name=='app.pendingRecencyResult' ){
     if($localStorage.get('ServerRecencyData')=='login'){

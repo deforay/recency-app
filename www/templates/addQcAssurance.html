@@ -58,16 +58,7 @@
                         </select>   
                     </div>
                 </div>
-              <!-- <div class="row">
-                <div class="input-field col "> 
-                      <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                              <p>Test Kit Lot Number</p>
-                          </span>  
-                 <div class="form-logo"><img src="img/lab.png"></div> 
-                    <input id="testKitLotNo" type="text" class="testKitLotNo" name="testKitLotNo" title="Please Enter Test Kit Lot Number" ng-model='qcAssurance.testKitLotNo' ng-change="getTestKitExpDate(qcAssurance.testKitLotNo)" placeholder="Test Kit Lot Number" > 
-                    <input  type="hidden" id="testKitLotAvailability" />
-                </div>  
-            </div> -->
+
             <div class="row">
                 <div class="input-field col ">
                       <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
@@ -77,39 +68,7 @@
                     <input id="testKitExpDate" type="text" class="testKitExpDate" name="testKitExpDate" title="Please Enter Test Kit Expiry Date"  ng-model='qcAssurance.testKitExpDate' placeholder="Test Kit Expiry Date" readonly required>
                 </div>
             </div>
-            <!-- <div class="row">
-                <div class="input-field col ">
-                    <ion-list >
-                        <ion-checkbox style="padding-top: 16px;" ng-model="qcAssurance.testNotPerformed" >Recency Test not Performed</ion-checkbox>
-                      </ion-list>                              
-                </div>
-            </div>
-            <div class="row" ng-if="qcAssurance.testNotPerformed==true">
-                <div class="input-field col ">
-                        <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                            <p>Reason of Rec.Test Not Performed<span style="color:#df3838;"> *</span></p>
-                        </span>
-                        <div class="form-logo"><img src="img/recencyresult.png"></div> 
-                     <select class="ng-valid" id="recencyreason" name="recencyreason" ng-model="qcAssurance.recencyreason"
-                      title="Please Choose Reason of Recency Test Not Performed" ng-change="getReasonName(qcAssurance.recencyreason)">
-                       <option value="">-- Select --</option>
-                       <option value="no_consent_from_the_client">No consent from the Client</option>
-                       <option value="sample_was_not_collected">Sample was not collected (Phlebotomy failure)</option>
-                       <option value="not_newly_diagnosed">Not newly diagnosed</option>
-                       <option value="other">Other, please specify</option>
-                    </select>  
-                 </div>
-             </div>
-            <div class="row" ng-if="qcAssurance.testNotPerformed==true && qcAssurance.recencyreason=='other'">
-                <div class="input-field col ">
-                      <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                        <p>Other Reasons<span  style="color:#df3838;"> *</span></p>
-                          </span>
-                    <div class="form-logo"><img src="img/population.png"></div> 
-                    <input id="otherreason" type="text" class="otherreason" name="otherreason" ng-model="qcAssurance.otherreason" placeholder="Other Reason"  >
-                   
-                </div>
-            </div> -->
+
             <div class="card" style="margin-top:0;margin-bottom: 0;" >
             <h4 style="font-size: 14px;margin-left: 12px;margin-bottom: 0;font-weight: bold;">Recency Test Result</h4>
               <div class="row">
@@ -172,19 +131,6 @@
                 </div>
              </div> 
             </div>
-       
-            <!-- <div class="row">
-                <div class="input-field col "> 
-                      <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                              <p>Tester Name</p>
-                          </span>  
-                 <div class="form-logo"><img src="img/doctor.png"></div> 
-                    <input id="testerName" type="text" class="testerName" name="testerName" title="Please Enter Tester Name" ng-model='qcAssurance.testerName' placeholder="Tester Name" ng-keyup="testerNameAutoComplete()"> 
-                    <input  type="hidden" id="testerNameId" />
-                    <input  type="hidden" id="testerNameAvailability" />
-                </div>  
-            </div> -->
-
             <div class="row">
                 <div class="input-field col ">
                       <span class="input-label item-stacked-label" style="margin-bottom: -30px;">

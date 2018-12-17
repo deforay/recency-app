@@ -13,7 +13,6 @@ angular.module('starter',  ['ionic',
                             'starter.loginCtrl',
                             'starter.addQcAssuranceCtrl',
                             'starter.addQcSettingsCtrl',
-                            'starter.viewQcSettingsCtrl',
                             'starter.editTesterInfoCtrl',
                             'starter.editLotInfoCtrl',
                             'starter.recencyDataCtrl',
@@ -36,8 +35,7 @@ angular.module('starter',  ['ionic',
     // least on iOS. It's a dead giveaway that an app is using a Web View. However, it's sometimes
     // useful especially with forms, though we would prefer giving the user a little more room
     // to interact with the app.
-    //$rootScope.apiUrl = 'http://recency.deforay.in/';
-    //$rootScope.apiUrl='http://recency-web/';
+
 
     if (window.cordova && window.Keyboard) {
       window.Keyboard.hideKeyboardAccessoryBar(true);
@@ -52,57 +50,15 @@ angular.module('starter',  ['ionic',
 
    
   });
-
+// When the app becomes Inactive 
   $ionicPlatform.on('pause', function() {
-    // alert("pause")
-    //  console.log("pause");
     if( $localStorage.get('ServerRecencyData')=='login' ){
       $state.go('app.addRecency');
-
       $localStorage.set('ServerRecencyData','logout');
       $refresh.page();
     }
      })
-    //  $ionicPlatform.on('resume', function() {
-    //   //console.log("resume");
-    //   alert("resume")
-    //   $state.go('app.addRecency');
 
-    //   $localStorage.set('ServerRecencyData','logout');    
-    //  })
-  // $ionicPlatform.registerBackButtonAction(function(e) {
-  //   e.preventDefault();
-  //   function showConfirm() {
-  // var confirmPopup = $ionicPopup.confirm({
-  //   title: 'Recency',
-  //   template: '<center>Are you sure want to Exit App?<center>',
-  //   buttons: [
-  //     {
-  //       text: '<b>Yes</b>',
-  //       type: 'button-balanced',
-  //       onTap: function(e) {
-  //         $localStorage.set('logout',true);
-  //         ionic.Platform.exitApp();
-  //                          }
-  //     },
-  //     { text: 'Cancel', type: 'button-assertive',onTap: function(e) { return true; } },
-  //   ]
-  // })
-  // };
-  //   // Is there a page to go back to?
-  //  if ($state.current.name == 'app.addRecency' || $state.current.name == 'app.viewRecency'|| $state.current.name == 'app.recencyData'){
-  //     showConfirm();
-  //   } else
-  //    if ($ionicHistory.backView()) {
-  //     // Go back in history
-  //     $ionicHistory.backView().go();
-  //    }
-  //    else
-  //   {
-  //     showConfirm();
-  //   }
-  //   return false;
-  //  }, 101);
 })
 
 .config(function($stateProvider, $urlRouterProvider,ionicDatePickerProvider) {
@@ -246,16 +202,7 @@ angular.module('starter',  ['ionic',
       }
     })
     
-    .state('app.viewQcSettings', {
-      url: '/viewQcSettings',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/viewQcSettings.html',
-          controller:"viewQcSettingsCtrl"
-        }
-      }
-    })
-    
+
     .state('app.viewQcAssuranceDetail', {
       url: '/viewQcAssuranceDetail/:patientID',
       views: {
@@ -292,15 +239,7 @@ angular.module('starter',  ['ionic',
     disableWeekdays: []
   };
   ionicDatePickerProvider.configDatePicker(datePickerObj);
-  // .state('app.single', {
-  //   url: '/playlists/:playlistId',
-  //   views: {
-  //     'menuContent': {
-  //       templateUrl: 'templates/playlist.html',
-       
-  //     }
-  //   }
-  // });
+-
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
 

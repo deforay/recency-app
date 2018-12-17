@@ -13,15 +13,7 @@ app=angular.module('starter.viewQcAssuranceDetailCtrl', ['starter.services'])
     };
   
     $scope.viewqcDetail = JSON.parse(localStorage.getItem('viewQcAssurance'));
-    console.log($scope.viewqcDetail)
 
-  //   $scope.editRecency = function(recency){
-  //     //console.log(viewRecency);
-  //     $scope.viewqcDetail = recency;
-  //   //  console.log($scope.viewqcDetail)
-  //     $window.location.href = '#/app/editRecency/'+recency.patientId;
-  
-  // }
 
 })
 .filter('replace', [function () {

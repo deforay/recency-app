@@ -15,7 +15,6 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
           fromdate = fromdate.setFullYear(intYear);
           $rootScope.fromVlDate =  $filter('date')(fromdate , "dd-MMM-yyyy");
           $rootScope.toVlDate =  $filter('date')(todate , "dd-MMM-yyyy");
-          console.log($rootScope.fromVlDate,$rootScope.toVlDate);
           $scope.recencyVlCount = "";
 
           if(localStorage.getItem('ServerRecencyData')=='logout' || localStorage.getItem('ServerRecencyData')=='success' ){
@@ -28,17 +27,15 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
             method: "POST",
             data: { "email": $localStorage.get('email'), "password" : $localStorage.get('serverpassword') }
         }).then(function successCallback(response) {
-               console.log(response.data);
                if(response.data.status =="success"){
                   $localStorage.set('authToken',response.data.userDetails['authToken']);                  
                   $http.get($localStorage.get('apiUrl')+'/api/recency-result-with-vl?authToken='+$localStorage.get('authToken')+'&start='+$rootScope.fromVlDate+'&end='+$rootScope.toVlDate)
                  .then(function(response) {
-                   console.log(response)
                    if(response.data.status =="success"){
                     $localStorage.set('ServerRecencyData','login');
                     $preLoader.hide();
                       $scope.showauth = false;   
-                      console.log( response.data.recency) 
+                     // console.log( response.data.recency) 
                       if(response.data.recency.length>0){
                         $scope.displaymessage = false;
                       $preLoader.show();
@@ -68,20 +65,19 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
                  })
                }
                else{
-                console.log(response.data);
+               // console.log(response.data);
                 $preLoader.hide();
                 $ionicPopup.alert({title:'Authentication Failed!',template:response.data.message});
                }
             });
             $scope.showauth = false;
           }
-         console.log( $scope.showauth)
+         //console.log( $scope.showauth)
         }
         $scope.init();
        
         $scope.getRecencyData = function(){
           
-          console.log($rootScope.fromVlDate,$rootScope.toVlDate)
           $scope.fromDate = $rootScope.fromVlDate;
           $scope.recencyVlCount = "";
 
@@ -95,17 +91,17 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
             method: "POST",
             data: { "email": $localStorage.get('email'), "password" : $localStorage.get('serverpassword') }
         }).then(function successCallback(response) {
-               console.log(response.data);
+              // console.log(response.data);
                if(response.data.status =="success"){
                   $localStorage.set('authToken',response.data.userDetails['authToken']);                  
                   $http.get($localStorage.get('apiUrl')+'/api/recency-result-with-vl?authToken='+$localStorage.get('authToken')+'&start='+$rootScope.fromVlDate+'&end='+$rootScope.toVlDate)
                  .then(function(response) {
-                   console.log(response)
+                   //console.log(response)
                    if(response.data.status =="success"){
                     $localStorage.set('ServerRecencyData','login');
                     $preLoader.hide();
                       $scope.showauth = false;   
-                      console.log( response.data.recency) 
+                     // console.log( response.data.recency) 
                       if(response.data.recency.length>0){
                         $scope.displaymessage = false;
                       $preLoader.show();
@@ -134,7 +130,7 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
                  })
                }
                else{
-                console.log(response.data);       
+               // console.log(response.data);       
                 $preLoader.hide();
                 $ionicPopup.alert({title:'Authentication Failed!',template:response.data.message});
 
@@ -142,7 +138,6 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
            });
             $scope.showauth = false;
           }
-         console.log( $scope.showauth)
         }
 
     $scope.doLogin = function(credentials) {
@@ -153,7 +148,7 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
       fromdate = fromdate.setFullYear(intYear);
       $rootScope.fromVlDate =  $filter('date')(fromdate , "dd-MMM-yyyy");
       $rootScope.toVlDate =  $filter('date')(todate , "dd-MMM-yyyy");
-      console.log($rootScope.fromVlDate,$rootScope.toVlDate);
+     // console.log($rootScope.fromVlDate,$rootScope.toVlDate);
       $scope.recencyVlCount = "";
 
        if(!credentials.email){
@@ -171,13 +166,10 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
               method: "POST",
               data: { "email": credentials.email, "password" : credentials.serverpassword }
           }).then(function successCallback(response) {
-                 console.log(response.data);
                  if(response.data.status =="success"){
                     $localStorage.set('authToken',response.data.userDetails['authToken']);
-                    
                    $http.get($localStorage.get('apiUrl')+'/api/recency-result-with-vl?authToken='+$localStorage.get('authToken')+'&start='+$rootScope.fromVlDate+'&end='+$rootScope.toVlDate)
                    .then(function(response) {
-                     console.log(response);
                      if(response.data.status =="success"){
                       $localStorage.set('ServerRecencyData','login');
                       $preLoader.hide();
@@ -190,8 +182,6 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
                              });
 
                         $scope.showauth = false;  
-                        console.log( response.data.recency)  
-                       // console.log($rootScope.fromVlDate)
                         if(response.data.recency.length>0){
                           $scope.displaymessage = false;
                         $preLoader.show();
@@ -222,7 +212,7 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
                    })
                  }
                  else{
-                  console.log(response.data);
+                 // console.log(response.data);
                   $preLoader.hide();
                   $ionicPopup.alert({title:'Authentication Failed!',template:response.data.message});
 
@@ -242,7 +232,7 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
         var ipObj1 = {
          callback: function (val) {  
          var fromDate = new Date(val);
-           console.log(fromDate);
+           //console.log(fromDate);
            $rootScope.fromVlDate =  $filter('date')(fromDate , "dd-MMM-yyyy");
            $scope.getRecencyData();
           },
@@ -250,14 +240,13 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
 
          }; 
      ionicDatePicker.openDatePicker(ipObj1);
-     console.log()
    
    }
    $scope.settoVlDate = function(val){
     var ipObj1 = {
      callback: function (val) {  
      var toDate = new Date(val);
-       console.log(toDate);
+       //console.log(toDate);
        $rootScope.toVlDate =  $filter('date')(toDate , "dd-MMM-yyyy");
         $scope.getRecencyData();
       },

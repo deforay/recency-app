@@ -4,22 +4,19 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
     $scope.qcLotObj ={};
     $scope.TesterListData ={};
     $scope.LotListData ={};
-
-
     $scope.qcTesterInfo ={};
     $scope.qcLotInfo ={};
 
-    $scope.recencydisplay = true;
+    $scope.qcsettingsdisplay = true;
 
     $("#main-addqcsetting").addClass("active");
     
-    $(document).ready(function(){
-   
-      });
+  
+      //This event will trigger when the view is about to enter and become the active view.
 
       $scope.$on("$ionicView.beforeEnter", function(event, data){
         
-        $scope.recencydisplay=true;  
+        $scope.qcsettingsdisplay=true;  
         $("#main-addqcsetting").addClass("active");
         $("#other-addqcsetting").removeClass("active");
         if(!localStorage.getItem('Testercounter')){
@@ -40,9 +37,7 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
         $scope.TesterInfoList = TesterInfoList;
 
         }
-      console.log(TesterInfoList)
           var LotInfoList =   localStorage.getItem('LotInfo');
-      // console.log(LotInfoList)
         if(LotInfoList == null || LotInfoList==""){
           $scope.isVisibleLot = true;
         }else{
@@ -51,8 +46,10 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
 
           $scope.isVisibleLot = false;
         }
-       console.log(LotInfoList)
+
       });
+
+
       $scope.displayQcSettings = function(){
         var TesterInfoList =   localStorage.getItem('TesterInfo');
    
@@ -64,9 +61,7 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
         $scope.TesterInfoList = TesterInfoList;
 
         }
-      console.log(TesterInfoList)
           var LotInfoList =   localStorage.getItem('LotInfo');
-      // console.log(LotInfoList)
         if(LotInfoList == null || LotInfoList==""){
           $scope.isVisibleLot = true;
         }else{
@@ -75,9 +70,10 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
 
           $scope.isVisibleLot = false;
         }
-       console.log(LotInfoList)
       };
       $scope.displayQcSettings();
+
+
     $scope.testerinit = function(){
     $("#main-addqcsetting").addClass("active");
       $scope.qcTester.testerName = "";
@@ -92,7 +88,7 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
     $scope.testerinit();
   
     $scope.setmainactive = function(){
-      $scope.recencydisplay=true;
+      $scope.qcsettingsdisplay=true;
       if($("#main-addqcsetting").hasClass('active')){
     } else {
         $("#main-addqcsetting").addClass('active')
@@ -101,7 +97,7 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
     }
 
     $scope.setothersactive = function(){
-      $scope.recencydisplay=false;
+      $scope.qcsettingsdisplay=false;
       if($("#other-addqcsetting").hasClass('active')){
     } else {
         $("#other-addqcsetting").addClass('active')
@@ -147,26 +143,23 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
        $scope.qcTester.label = $scope.qcTester.testerName;
        var count = localStorage.getItem('Testercounter');
        $scope.Testercounter  = parseInt(count) + 1;
-      // console.log($scope.qcTester);
 
         var qcTester = $scope.qcTester;
         $preLoader.show();
         if(localStorage.getItem('TesterInfo')==null || (localStorage.getItem('TesterInfo'))==""){
-       //   console.log(localStorage.getItem('TesterInfo'))
           }
           else{
           $scope.TesterListData =JSON.parse(localStorage.getItem('TesterInfo'));
         }
-      //  if(JSON.parse(localStorage.getItem('TesterInfo'))!=null){
-      //   $scope.TesterListData =JSON.parse(localStorage.getItem('TesterInfo'));
-      //   }     
 
         $scope.TesterListData[$scope.Testercounter-1] = qcTester;      
         localStorage.setItem('TesterInfo',JSON.stringify($scope.TesterListData)) 
         localStorage.setItem('Testercounter',$scope.Testercounter);  
         $scope.qcTester.testerName = "";
         $scope.qcTester.available = true; 
-        $scope.recencydisplay=true;
+        $scope.qcsettingsdisplay=true;
+
+          //Hide Toast During Debug mode
          $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
          .then(function(success) {
            // success
@@ -181,7 +174,7 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
       
       $scope.addLotInfo = function()
       { 
-        console.log($scope.qcLotObj)
+       // console.log($scope.qcLotObj)
        if($scope.qcLotObj.available==true){
         $scope.qcLotObj.available = 'yes';    
        }else{
@@ -195,11 +188,11 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
        }
        var lotcount = localStorage.getItem('Lotcounter');
        $scope.Lotcounter  = parseInt(lotcount) + 1;
-       console.log($scope.qcLotObj);
+       //console.log($scope.qcLotObj);
         var qcLotObj = $scope.qcLotObj;
         $preLoader.show();        
         if(localStorage.getItem('LotInfo')==null || (localStorage.getItem('LotInfo'))==""){
-          console.log(localStorage.getItem('LotInfo'))
+          //console.log(localStorage.getItem('LotInfo'))
           }
           else{
           $scope.LotListData =JSON.parse(localStorage.getItem('LotInfo'));
@@ -214,9 +207,9 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
         $scope.qcLotObj.LotNumber = "";
         $scope.qcLotObj.testKitExpDate = "";
         $scope.qcLotObj.available = true;
-        $scope.recencydisplay=false;
+        $scope.qcsettingsdisplay=false;
         $scope.displayQcSettings();
-
+        //Hide Toast During Debug mode
          $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
          .then(function(success) {
            // success
@@ -228,7 +221,7 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
          $preLoader.hide();
       }
       $scope.editTesterInfo = function(qc,index){
-        console.log(qc);
+        //console.log(qc);
         qc.index = index;
           $scope.qcTesterInfo = qc;
           localStorage.setItem('viewTesterInfo',JSON.stringify(qc));
@@ -245,7 +238,7 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
       }
 
     
-      $scope.deleteTesterInfo = function(qc,index){
+    $scope.deleteTesterInfo = function(qc,index){
         $preLoader.show();
         $scope.testinfo =[];
         qc.index= index;
@@ -258,19 +251,19 @@ app=angular.module('starter.addQcSettingsCtrl', ['starter.services'])
            });
         }
         $scope.testinfo.splice(index,1);
-    if($scope.testinfo.length==0){
+     if($scope.testinfo.length==0){
       localStorage.setItem('TesterInfo','');
 
-     localStorage.setItem('Testercounter',JSON.stringify( $scope.testinfo.length));
+      localStorage.setItem('Testercounter',JSON.stringify( $scope.testinfo.length));
       $scope.testinfo = "";
-    }else{
+      }else{
       localStorage.setItem('TesterInfo',JSON.stringify( $scope.testinfo));
       localStorage.setItem('Testercounter',JSON.stringify( $scope.testinfo.length));
-    } 
+      } 
    
-$scope.TesterInfoList = [];
-    $scope.displayQcSettings();
-
+      $scope.TesterInfoList = [];
+       $scope.displayQcSettings();
+        //Hide Toast During Debug mode
         $cordovaToast.show('Deleted Successfully', 'long', 'center')
         .then(function(success) {
           // success
@@ -278,7 +271,6 @@ $scope.TesterInfoList = [];
           // error
         });
         $preLoader.hide();
-      //  $window.location.reload(true);
       }
       $scope.deleteLotInfo = function(lotInfo,index){
        // console.log(lotInfo);
@@ -310,15 +302,15 @@ $scope.TesterInfoList = [];
     $scope.LotInfoList = [];
     $scope.displayQcSettings();
   
+    //Hide Toast During Debug mode
     $cordovaToast.show('Deleted Successfully', 'long', 'center')
          .then(function(success) {
            // success
          }, function (error) {
            // error
          });
-    $preLoader.hide();
 
-    //  $window.location.reload(true);
+    $preLoader.hide();
      $("#other-addqcsetting").addClass('active')
      $("#main-addqcsetting").removeClass("active");
     }

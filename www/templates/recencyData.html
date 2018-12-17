@@ -44,28 +44,6 @@
       </div>
       <div class="RecencyForm">
       <ion-content class="animate-fade-slide-in"  ng-hide="showauth">
-            <!-- <div class="recency-view">
-               <div class="item card-item" style="border:none" >   
-                  <a class="card stable-bg ink ink-dark">
-                     <div class="table-header">
-                        <span style="float: left ">Patient Details</span>
-                     </div>
-                    <div class="item item-text-wrap" style="border: 1px solid #e4e4e4;">
-                      Recency Details
-                    </div>
-                  </a>
-                </div>
-                <div class="item card-item" style="border:none" >   
-                    <a class="card stable-bg ink ink-dark">
-                       <div class="table-header">
-                          <span style="float: left ">Other Details</span>
-                       </div>
-                      <div class="item item-text-wrap" style="border: 1px solid #e4e4e4;">
-                        Recency Details
-                      </div>
-                    </a>
-                </div>
-            </div> -->
 
             <ion-list type="list-inset"  ng-hide="showauth">
                 <h3 style="font-size:17px"> Recency Reporting</h3>
@@ -98,29 +76,7 @@
             <p ng-show="displayCount"> Total Recency data for the Selected Date Range : {{recencyCount}}</p>
             <div style="overflow-x:auto;margin-bottom: 30px;" class="">
 
-                    <!-- <div class="row responsive-xs  wrap-list">
-                            <div class="col col-33"><div style="padding-top:5px">Month :</div></div>
-                              <div class="col">
-                                  <div class="item item-input item-select wrap-dropdown" style="height: 35px">
-                                      
-                                          <input id="fromMonth" type="month"  name="fromMonth"  ng-model='fromMonth' > 
-                                     </div>
-                                   </div>
-                                </div>
-                          <div class="row responsive-xs  wrap-list">
-                              <div class="col col-33"><div style="padding-top:5px"> Year :</div></div>
-                                   <div class="col">
-                                     <div class="item item-input item-select wrap-dropdown" style="height: 35px">
-                                     
-                                        <select class="ng-valid" id="searchYear" ng-model="netprofit.searchYear" ng-change="netprofitlist();">
-                                            <option value=""> << Select >> </option>
-                                            <option ng-repeat="period in year" value="{{period['year']}}">{{period['year']}}</option>
-                                           </select>
-                                       
-                                     </div>
-                                   </div>
-                           </div> -->
-                      
+        
            <table class="table table-bordered table-striped order-table" style="width: 100%" id="ordertable">
               <tr style="white-space: nowrap">
                 <th style="text-align: center" ng-click="sortByDate('hiv_recency_date')">Date Of Testing

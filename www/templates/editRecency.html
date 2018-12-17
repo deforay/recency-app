@@ -44,10 +44,7 @@
                                 <p>Facility<span style="color:#df3838;"> *</span></p>                                
                             </span>
                             <div class="form-logo "><img src="img/facility.png"></div> 
-                                 <!-- <select class="ng-valid" id="facilityId" name="facilityId"  title="Please Choose Facility" ng-model="recency.facilityId" ng-change="getFacility(recency.facilityId)">
-                                        <option value="">-- Select --</option>
-                                        <option ng-repeat="facility in facilityData" value="{{facility['facility_id']}}">{{facility['facility_name']}}</option>
-                               </select>   -->
+                             
                                <select class="ng-valid" id="facilityId"  name="facilityId"  title="Please Choose Facility" ng-model="recency.facilityId" ng-change="getFacility(recency.facilityId)">
                                 <option value="">-- Select --</option>
                                 <option ng-repeat="facility in facilityData" value="{{facility['facility_id']}}">{{facility['facility_name']| underscorefilter}}</option>
@@ -90,7 +87,6 @@
                               <option ng-repeat="city in cityData" value="{{city['city_id']}}">{{city['city_name']}}</option>
     
                              </select>
-                            <!-- <input id="{{loc.global_value}}" type="text" class="{{loc.global_value}}" name="{{loc.global_value}}" ng-model='recency.location[$index]' ng-change="chk(loc.loc.global_name)" placeholder="{{loc.global_value}}"  required> -->
                         </div>
                     </div>
                 </div>
@@ -261,16 +257,7 @@
                 </div>
              </div>
             </div>
-            <!-- <div class="row">
-                <div class="input-field col "> 
-                      <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                              <p>Test Kit Lot Number<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testKitLotNo'"  style="color:#df3838;"> *</span></p>
-                          </span>  
-                 <div class="form-logo"><img src="img/lab.png"></div> 
-                    <input id="testKitLotNo" type="text" class="testKitLotNo" name="testKitLotNo" title="Please Enter Test Kit Lot Number" ng-model='recency.testKitLotNo' ng-keyup="testKitLotAutoComplete()" placeholder="Test Kit Lot Number" > 
-                </div>  
-            </div> -->
-      
+             
             <div class="row" ng-if="optionalFieldsFlag.testKitLotNo==true">
                 <div class="input-field col ">
                       <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
@@ -292,16 +279,7 @@
                     <input id="testKitExpDate" type="text" class="testKitExpDate" name="testKitExpDate" title="Please Enter Test Kit Expiry Date"   ng-model='recency.testKitExpDate' placeholder="Test Kit Expiry Date" readonly required>
                 </div>
             </div>
-            <!-- <div class="row">
-                <div class="input-field col "> 
-                      <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                              <p>Tester Name<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testerName'"  style="color:#df3838;"> *</span></p>
-                          </span>  
-                 <div class="form-logo"><img src="img/lab.png"></div> 
-                    <input id="testerName" type="text" class="testerName" name="testerName" title="Please Enter Tester Name" ng-model='recency.testerName' placeholder="Tester Name" ng-keyup="testerNameAutoComplete()"> 
-                    <input  type="hidden" id="testerNameId" />
-                </div>  
-            </div> -->
+         
             <div class="row" ng-if="optionalFieldsFlag.testerName==true">
                 <div class="input-field col ">
                       <span class="input-label item-stacked-label" style="margin-bottom: -30px;">

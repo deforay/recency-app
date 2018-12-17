@@ -1,15 +1,6 @@
 
 <ion-view  view-title="QC Data  {{qcUnsynCount}}">
- 
-    <!-- <div class="badge badge-assertive" style="    top: 1px;
-    right: 0;
-    z-index: 1000000;
-    height: 25px;
-    margin-top: -43px;
-    position: absolute;
-    margin-left: 102px;
-    /* height: 21px; */
-    border-radius: 50%;">1{{unSyncCount}}</div> -->
+
 
   <ion-content class="animate-fade-slide-in" >
 
@@ -33,7 +24,6 @@
              </div>
         </a>
       </div>
-      <!-- <p style="text-align: center;margin: 10px;" ng-show="displaymessage">No Records Found.</p> -->
       <p style="text-align: center;margin: 10px;" ng-show="displaymessage">No Records Found. Total {{syncQcCount}} Datas has been Synced.</p>
     </div>
     
@@ -41,7 +31,6 @@
 
   <div class="bar bar-footer bar-positive" style="padding: 0;">
       <button class="button button-block  waves-effect waves-light sync-button" type="submit" style="margin:0;border:none;"  ng-click="syncnow()">
-          <!-- <div class="form-logo "><img src="img/sync.png" style="height: 18px;"></div> -->
           <p style="margin-bottom: 0">SYNC NOW </p>
       </button>
   </div> 

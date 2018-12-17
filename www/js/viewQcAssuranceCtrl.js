@@ -7,16 +7,13 @@ app=angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
 
   $rootScope.apiUrl = localStorage.getItem('apiUrl');
   var QCDataList =   localStorage.getItem('QCData');
-  //console.log(QCDataList)
   $scope.NewQcDataList = [];
   $scope.NewQcObj = [];
   $scope.limitTo = 2;
    if(QCDataList != null){
      QCDataList    = JSON.parse(QCDataList);
-    console.log(QCDataList);
     var unSyncQcCount = Object.keys(QCDataList).length;
     if($rootScope.qcUnsynCount!= undefined){
-       console.log($rootScope.qcUnsynCount)
    }else{
        $rootScope.qcUnsynCount = '(' + unSyncQcCount + ')';
    }
@@ -29,15 +26,12 @@ app=angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
         }
     $scope.displaymessage = false;        
     var qclen = $scope.QCDataList.length
-    console.log($scope.QCDataList[qclen-1]);
     }  
     else{
         $rootScope.qcUnsynCount ="";
         $scope.syncQcCount =   localStorage.getItem('syncQcCount');
         if($scope.syncQcCount== undefined || $scope.syncQcCount == ""){
               $scope.syncQcCount = 0;
-            //  localStorage.setItem('syncQcCount', $scope.syncQcCount);
-            // console.log($scope.syncQcCount);
         }
     $scope.displaymessage = true;
     }   
@@ -46,17 +40,15 @@ app=angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
 $scope.$on("$ionicView.beforeEnter", function(event, data){
     $rootScope.apiUrl = localStorage.getItem('apiUrl');
   var QCDataList =   localStorage.getItem('QCData');
-  //console.log(QCDataList)
   $scope.NewQcDataList = [];
   $scope.NewQcObj = [];
   $scope.limitTo = 2;
    if(QCDataList != null){
      QCDataList    = JSON.parse(QCDataList);
-    console.log(QCDataList);
-
+    //console.log(QCDataList);
     var unSyncQcCount = Object.keys(QCDataList).length;
      if($rootScope.qcUnsynCount!= undefined){
-        console.log($rootScope.qcUnsynCount)
+       // console.log($rootScope.qcUnsynCount)
     }else{
         $rootScope.qcUnsynCount = '(' + unSyncQcCount + ')';
     }
@@ -69,27 +61,24 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
         }
     $scope.displaymessage = false;        
     var qclen = $scope.QCDataList.length
-    console.log($scope.QCDataList[qclen-1]);
+   // console.log($scope.QCDataList[qclen-1]);
     }  
     else{
         $rootScope.qcUnsynCount ="";
         $scope.syncQcCount =   localStorage.getItem('syncQcCount');
         if($scope.syncQcCount== undefined || $scope.syncQcCount == ""){
               $scope.syncQcCount = 0;
-            //  localStorage.setItem('syncQcCount', $scope.syncQcCount);
-            // console.log($scope.syncQcCount);
+
         }
     $scope.displaymessage = true;
     }   
 });
   var qcdatas = $scope.QCDataList;
 
-//   $scope.NewQcDataList = Object.assign({}, $scope.QCDataList);
-//  console.log( $scope.QCDataList)
-//  console.log( $scope.NewQcDataList)
+
   
 $scope.$on("$ionicView.Enter", function(event, data){
-    console.log($scope.unSyncQcCount)
+   // console.log($scope.unSyncQcCount)
 
 });
 
@@ -107,13 +96,13 @@ $scope.$on("$ionicView.Enter", function(event, data){
             for(i=0;i<$scope.QCDataList.length;i++){
                 $scope.QCDataList[i].syncedBy = localStorage.getItem('userId');
             }
-            console.log($scope.QCDataList);
+           // console.log($scope.QCDataList);
                  $http.post( $rootScope.apiUrl+"/api/quality-check",{
                 "qc":$scope.QCDataList
   
             })
             .success(function(data){
-               console.log(data);
+             //  console.log(data);
              if(data.status=='failed'){
                 $ionicPopup.alert({title:'Failed',template:data.message});                
              }
@@ -122,11 +111,11 @@ $scope.$on("$ionicView.Enter", function(event, data){
                  $scope.response =data.syncData.response;
                 $scope.syncQcCount =data.syncCount.response[0].Total;
                 $scope.tenRecord = data.syncCount.tenRecord;
-                console.log($scope.tenRecord)
+                //console.log($scope.tenRecord)
                 localStorage.setItem('lastTenQcData',JSON.stringify($scope.tenRecord) )
                localStorage.setItem('syncQcCount', $scope.syncQcCount)
                var responselen = $scope.response.length ;
-               console.log($scope.QCDataList[responselen - 1].testerName);
+              // console.log($scope.QCDataList[responselen - 1].testerName);
                var currentdate = new Date();
                localStorage.setItem('LastTesterName',$scope.QCDataList[responselen - 1].testerName)
                localStorage.setItem('LastTestDate',currentdate)
@@ -134,7 +123,7 @@ $scope.$on("$ionicView.Enter", function(event, data){
                     for(i=0;i< $scope.response.length;i++){
                           $scope.QCDataList.splice(i);
                      }
-                     console.log( $scope.QCDataList)
+                    // console.log( $scope.QCDataList)
               localStorage.setItem('QCData',$scope.QCDataList);
                        if(localStorage.getItem('QCData')=="")
                         {
@@ -154,62 +143,10 @@ $scope.$on("$ionicView.Enter", function(event, data){
              }
             })
             .error(function(data){
-                console.log(data);
+               // console.log(data);
                 $ionicPopup.alert({title:data.response});
             });
           }
-
-
-        $scope.syncnow1 = function(){
-            if($scope.displaymessage== true){
-                $ionicPopup.alert({title:'Alert!',template:'<center>No Records to Sync </center>'});
-            }
-            console.log($scope.QCDataList)
-            var loopCount = Math.floor($scope.QCDataList.length / $scope.limitTo);
-            var loopReminder = $scope.QCDataList.length % $scope.limitTo;
-            console.log(loopReminder);
-         for(i=0;i<=loopCount;i++){
-           //  console.log(loopCount);  
-           var deferred = $q.defer();
-  
-           if(loopReminder == $scope.QCDataList.length){
-            $scope.NewQcObj = $scope.QCDataList.splice(0,loopReminder);
-           }else{
-            $scope.NewQcObj = $scope.QCDataList.splice(0,loopCount);
-           }
-            console.log($scope.NewQcObj);
-            console.log($scope.QCDataList);
-
-            $http.post( $rootScope.apiUrl+"/api/quality-check",{
-                "qc":$scope.NewQcObj
-            })
-            .success(function(data){
-                console.log(data);
-            //console.log($scope.NewQcObj);
-
-                // $scope.NewQcObj = [];
-              if(data.status=='failed'){
-                 $ionicPopup.alert({title:'Failed',template:data.message});                
-              }
-              else
-              {
-                 $scope.response =data.syncData.response;
-                 $scope.syncQcCount =data.syncCount.response[0].Total;
-                 deferred.resolve();
-
-                localStorage.setItem('syncQcCount', $scope.syncQcCount);
-                for(i=0;i<$scope.response.length;i++){
-                    console.log("hi");
-                }
-              }
-             })
-             .error(function(data){
-                 console.log(data);
-                 $ionicPopup.alert({title:data.response});
-             });
-        }
-        return deferred.promise;
-        }
         
 
 $scope.viewqc = function(viewqc,index){

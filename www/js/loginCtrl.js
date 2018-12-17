@@ -3,7 +3,9 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
 
 .controller('loginCtrl', function($scope,$ionicPopup,$state, $cordovaToast,$filter,$timeout,$localStorage,$rootScope,$todo,$window,$location,$preLoader,$http) {
   $scope.loginData = {};
-
+  // if(window.cordova && window.cordova.plugins.Keyboard) {
+  //   window.cordova.plugins.Keyboard.disableScroll(true);
+  // }
   if($localStorage.get('logout')=='true' || $localStorage.get('login')=='success' && $localStorage.get('apppassword')!=null){
    $scope.viewLogin = false;
    $scope.viewAddPassword = false;
@@ -49,7 +51,7 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
       if($scope.createpasscode.length < 4) {
         
         $scope.createpasscode = $scope.createpasscode + value;
-      console.log($scope.createpasscode)
+     // console.log($scope.createpasscode)
         if($scope.createpasscode.length == 1){
           $scope.createpassword.one = value;
         } else if($scope.createpasscode.length == 2){
@@ -59,7 +61,7 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
         }
       else {
           $scope.createpassword.four = value;
-       console.log($scope.createpasscode)
+      // console.log($scope.createpasscode)
 
           $timeout(function() {
             $scope.viewAddPassword = false;
@@ -74,7 +76,7 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
       if($scope.confirmpasscode.length < 4) {
         
         $scope.confirmpasscode = $scope.confirmpasscode + value;
-      console.log($scope.confirmpasscode)
+      //console.log($scope.confirmpasscode)
         if($scope.confirmpasscode.length == 1){
           $scope.confirmpassword.one = value;
         } else if($scope.confirmpasscode.length == 2){
@@ -129,7 +131,7 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
         $scope.createpassword.one = "";
         $scope.createpasscode = $scope.createpasscode.substring(0, $scope.createpasscode.length - 1);
       }
-      console.log($scope.createpasscode)
+     // console.log($scope.createpasscode)
 
     }
     $scope.backToCreate = function(){
@@ -154,7 +156,7 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
         $scope.confirmpassword.one = "";
         $scope.confirmpasscode = $scope.confirmpasscode.substring(0, $scope.confirmpasscode.length - 1);
       }
-      console.log($scope.confirmpasscode)
+      //console.log($scope.confirmpasscode)
     }
     
 
@@ -201,7 +203,7 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
                 var QCDatas =  localStorage.getItem('QCData');
 
                if(QCDatas == null || noOfDays==null || noOfDays ==''|| noOfDays=='null' || noOfDays==0){
-                 console.log("No Alert");
+                // console.log("No Alert");
                }else{
                  if(QcStartDate!=null && QcAlertDate!= null){
                   var QcStartDate = new Date(QcStartDate);
@@ -210,7 +212,6 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
                         var currentDate =  new Date();
                         currentDate = $filter('date')(currentDate , "dd-MMM-yyyy");
                         if( currentDate == localStorage.getItem('TodayAlertDate')){
-                            console.log(currentDate)
                         }else{
                             var today = new Date();
                             today = $filter('date')(today , "dd-MMM-yyyy");
@@ -220,28 +221,15 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
                       }
                   }
                 }
-                // var testerName =  localStorage.getItem('LastTesterName');
-                // if(testerName==null){
-                //   testerName = '';
-                // }
-                // var lastTestDate =  localStorage.getItem('LastTestDate');
-                // if(lastTestDate == null){
-                //   lastTestDate ='';
-                // }else{
-                //   lastTestDate = new Date(lastTestDate);
-                //   lastTestDate = $filter('date')(lastTestDate , "dd-MMM-yyyy")
-                // }             
-                // console.log(lastTestDate)
+      
               
                 if( QcStartDate!=null && QcAlertDate!= null && QCDatas != null && (noOfDays!=null && noOfDays!=0)){
                   var QcStartDate = new Date(QcStartDate);
                   var QcAlertDate = new Date(QcAlertDate);
-                  console.log(QcStartDate , QcAlertDate)
                     if((Date.parse(QcStartDate)>=Date.parse(QcAlertDate))){
                       var currentDate =  new Date();
                       currentDate = $filter('date')(currentDate , "dd-MMM-yyyy");
                       if( currentDate == localStorage.getItem('TodayAlertDate')){
-                     console.log(currentDate)
                       }else{
                         var today = new Date();
                          today = $filter('date')(today , "dd-MMM-yyyy");
@@ -295,30 +283,27 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
              "facility_name":"Other"
            })
         localStorage.setItem('FacilityData',JSON.stringify($scope.facilityData))    
-        console.log($scope.facilityData)           
+      //  console.log($scope.facilityData)           
         });
-    //if(JSON.parse(localStorage.getItem('PartialRecencyData'))==null){
        $http.get($localStorage.get('apiUrl')+'/api/global-config')
         .success(function(data) {
-         console.log(data);
+      //   console.log(data);
         $scope.configdata =data.config;
            for(i=0;i<$scope.configdata.length;i++){        
              if($scope.configdata[i].global_name =="mandatory_fields" || $scope.configdata[i].global_name =="admin_email" || $scope.configdata[i].global_name =="admin_phone" )   {
                $scope.configdata.splice(i);
             }    
            } 
-      // for(i=0;i<$scope.configdata.length;i++){
-      //       $scope.recency.location[i]="";
-      //      }
+
          localStorage.setItem('GlobalConfig',JSON.stringify($scope.configdata)) 
-         console.log($scope.configdata)
+        // console.log($scope.configdata)
       });
       $http.get($localStorage.get('apiUrl')+'/api/recency-mandatory')
       .success(function(data) {
        $scope.mandatoryData =data.fields;
        //console.log(data)
        localStorage.setItem('MandatoryData',JSON.stringify($scope.mandatoryData)) 
-       console.log( $scope.mandatoryData);           
+      // console.log( $scope.mandatoryData);           
       });
       $http.get($localStorage.get('apiUrl')+'/api/recency-hide')
       .success(function(data) {
@@ -344,10 +329,10 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
         }else{
           $scope.optionalArr.location[2]=true;
         }
-       console.log(  $scope.optionalArr);
+     //  console.log(  $scope.optionalArr);
 
        var hideFields =  Object.assign({}, $scope.optionalArr);
-       console.log(hideFields)
+       //console.log(hideFields)
       localStorage.setItem('OptionalData',JSON.stringify(hideFields))  
      
       });
@@ -364,29 +349,24 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
       .success(function(data) {     
        localStorage.setItem('CityData',JSON.stringify(data.city))           
       });
-     // }else{
+  
       $scope.mandatoryData = JSON.parse(localStorage.getItem('MandatoryData'));
       $scope.configdata = JSON.parse(localStorage.getItem('GlobalConfig'));
       $scope.provinceData = JSON.parse(localStorage.getItem('ProvinceData'));
-     // }
+ 
         $http.get($localStorage.get('apiUrl')+'/api/risk-populations')
         .success(function(data) {
           $scope.riskpopulations =data;
           var lastelement = $scope.riskpopulations.length-1;
           $scope.lastindex = parseInt($scope.riskpopulations[lastelement]['rp_id'])+1;
-          console.log($scope.lastindex)
+         // console.log($scope.lastindex)
           $scope.riskpopulations.push({
            "rp_id": $scope.lastindex,
            "name":"Other"
          }) 
-         //  $scope.riskpopulations.push({
-         //   "rp_id": $scope.riskpopulations.length+1,
-         //   "name":"Other"
-         // })
+
         localStorage.setItem('RiskPopulations',JSON.stringify($scope.riskpopulations))       
-  
-        //  console.log($scope.riskpopulations)  
-        });
+          });
     }
      }
   $scope.doLogin = function(credentials) {
@@ -403,15 +383,12 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
       }
       else{
          if(credentials.serverHost.indexOf("https://") == 0 || credentials.serverHost.indexOf("Https://") == 0){
-          console.log(credentials.serverHost);
+          //console.log(credentials.serverHost);
           credentials.serverHost =credentials.serverHost;
          }
          else if(credentials.serverHost.indexOf("http://") == 0 ||  credentials.serverHost.indexOf("Http://") == 0 ){
           credentials.serverHost =credentials.serverHost;
          }
-        //  else if(credentials.serverHost.indexOf("Http://") == 0  || credentials.serverHost.indexOf("https://") != 0){
-        //   credentials.serverHost = credentials.serverHost;
-        //  }
          else {
           credentials.serverHost ="https://"+credentials.serverHost;
 
@@ -423,7 +400,7 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
           method: "POST",
           data: { "email": credentials.email, "password" : credentials.serverpassword }
       }).then(function successCallback(response) {
-             console.log(response.data);
+            // console.log(response.data);
              if(response.data.status =="success"){
               $preLoader.hide();
               $localStorage.set('login','success');
@@ -434,7 +411,8 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
                 // $localStorage.set('noOfDays','2');
               $localStorage.set('serverpassword',credentials.serverpassword);
                 $localStorage.set('userId',response.data.userDetails['userId']);
-                $localStorage.set('userName',response.data.userDetails['userName']);  
+                $localStorage.set('userName',response.data.userDetails['userName']); 
+
             $cordovaToast.show('Successfully Logged in', 'long', 'bottom')
               .then(function(success) {
                 // success

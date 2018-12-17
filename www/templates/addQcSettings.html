@@ -7,12 +7,12 @@
 <div class="RecencyForm">        
 <ion-content style="top:0!important;bottom: 100px;">
 
-    <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
+<ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
 
 <div class="loginFields">
     <div class="row">
     <form class="col loginForm" name="addSettings" ng-init="testerinit()">
-        <div ng-show="recencydisplay">    
+        <div ng-show="qcsettingsdisplay">    
             <div class="row">
                 <div class="input-field col "> 
                       <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
@@ -80,7 +80,7 @@
          </ion-list>
 
         </div>
-        <div ng-hide="recencydisplay"> 
+        <div ng-hide="qcsettingsdisplay"> 
             <div class="row">
                         <div class="input-field col ">
                               <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
@@ -167,27 +167,12 @@
               <tr ng-show="isVisibleLot">
                 <td  colspan="5"><p  style="text-align:center">No data available</p> </td>
               </tr>
-              
-              
-              
+
             </table>
           </div>
          </ion-list>    
         </div>  
-         
-              <!-- <div class="row" ng-hide="recencydisplay">
-
-                  <div class="input-field col savebtn ">
-                      <button class="button button-block waves-effect waves-light" type="submit"
-                         ng-click="addRecency()">
-                         SAVE & CONTINUE
-                      </button>
-                  </div>
-                </div> -->
-
-          </form>
-    
-       
+        </form>
       </div>
   </div>
 </ion-content>

@@ -1,19 +1,8 @@
 
 <ion-view view-title="Local Recency Data {{recencyUnsyncCount}}">
-    <!-- <div class="badge badge-assertive" style="    top: 1px;
-    right: 0;
-    z-index: 1000000;
-    height: 25px;
-    margin-top: -43px;
-    position: absolute;
-    margin-left: 102px;
-    /* height: 21px; */
-    border-radius: 50%;">1{{unSyncCount}}</div> -->
+
 
   <ion-content class="animate-fade-slide-in" >
-
-     
-  
       <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
      
     <div class="recency-view" style="margin-bottom:45px">
@@ -44,7 +33,6 @@
              </div>
         </a>
       </div>
-      <!-- <div class="item" >No Records Found</div> -->
       <p style="text-align: center;margin: 10px;" ng-show="displaymessage">No Records Found. Total {{syncCount}} Datas has been Synced.</p>
     </div>
     
@@ -52,7 +40,6 @@
 
   <div class="bar bar-footer bar-positive" style="padding: 0;">
       <button class="button button-block  waves-effect waves-light sync-button" type="submit" style="margin:0;border:none;"  ng-click="syncnow()">
-          <!-- <div class="form-logo "><img src="img/sync.png" style="height: 18px;"></div> -->
           <p style="margin-bottom: 0">SYNC NOW </p>
       </button>
   </div> 

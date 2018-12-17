@@ -5,7 +5,7 @@ app=angular.module('starter.editLotInfoCtrl', ['starter.services'])
     $scope.TesterListData ={};
     
       $scope.qcLotKit = JSON.parse(localStorage.getItem('viewLotInfo'));
-     console.log($scope.qcLotKit)
+    // console.log($scope.qcLotKit)
      if($scope.qcLotKit.available=='yes'){
       $scope.qcLotKit.available = true;
      }
@@ -30,7 +30,7 @@ app=angular.module('starter.editLotInfoCtrl', ['starter.services'])
 
 
     $scope.editTesterInfo = function(qc){
-        console.log(qc);
+        //console.log(qc);
         $scope.qcTesterInfo = qc;
 
         if(qc.available=='yes'){
@@ -39,7 +39,7 @@ app=angular.module('starter.editLotInfoCtrl', ['starter.services'])
           $scope.qcTesterInfo.isavailable= false;
         }
         
-        console.log($scope.qcTesterInfo);
+        //console.log($scope.qcTesterInfo);
 
     }
 
@@ -48,7 +48,7 @@ app=angular.module('starter.editLotInfoCtrl', ['starter.services'])
         callback: function (val) { 
        
         var testKitExpDate = new Date(val);
-        console.log(testKitExpDate);
+        //console.log(testKitExpDate);
         $scope.qcLotKit.testKitExpDate =  $filter('date')(testKitExpDate , "dd-MMM-yyyy");
         }
        
@@ -81,7 +81,7 @@ app=angular.module('starter.editLotInfoCtrl', ['starter.services'])
        }else{
         $scope.qcLotKit.available = 'no';    
        }
-       console.log($scope.qcLotKit);
+      // console.log($scope.qcLotKit);
        $scope.chkLotInfo = JSON.parse(localStorage.getItem('LotInfo'))
        $scope.chkLotInfo[$scope.index] = $scope.qcLotKit;
 

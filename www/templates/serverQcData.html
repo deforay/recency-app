@@ -14,20 +14,12 @@
                 <th style="text-align: center" ng-click="sortBy('reference_result','qc_test_date')">Assay Recent
                     <span class="sortorder" ng-show="propertyName === 'reference_result'" ng-class="{reverse: reverse}"></span>
                 </th>
-                <!-- <th>Final Test Result</th> -->
                 <th style="text-align: center" ng-click="sortBy('tester_name','qc_test_date')">Tester Name
                     <span class="sortorder" ng-show="propertyName === 'tester_name'" ng-class="{reverse: reverse}"></span>
                 </th>
               </tr>
               <tr ng-repeat="recency in lastQCDatas | orderBy:'qc_test_date' | orderBy:propertyName:reverse  " >
-                <td style="text-align: center">{{ recency['qc_test_date']| date: "dd-MMM-yyyy"}}</td>
-             
-                <!-- <td> 
-                  <p style="color:red"  ng-if="recency['term_outcome']!='Long Term' && recency['term_outcome']!='Assay Recent'">{{recency['term_outcome']}}</p>
-                  <p ng-if="recency['term_outcome']=='Long Term' || recency['term_outcome']=='Assay Recent'">{{recency['term_outcome']}}</p>
-                </td> -->
-                <!-- <td style="text-transform: capitalize;">{{recency['reference_result']  | replace: '_':' '}}</td> -->
-      
+                <td style="text-align: center">{{ recency['qc_test_date']| date: "dd-MMM-yyyy"}}</td>     
                 <td style="text-transform: capitalize;text-align: center">{{ recency['reference_result'] | replace: '_':' ' }}</td>
                 <td style="text-align: center">{{ recency['tester_name'] }}</td>
                

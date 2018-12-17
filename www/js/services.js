@@ -21,55 +21,6 @@ angular.module('starter.services', [])
         }
 }])
 
-.factory('backcallFactory', ['$state','$ionicPlatform','$ionicHistory','$timeout','$window','$ionicNavBarDelegate', function($state,$ionicPlatform,$ionicHistory,$timeout,$window,$ionicNavBarDelegate) {
-        var obj={}
-        
-        //obj.backcallfun=function(){
-                
-                var backbutton=0;
-                $ionicPlatform.registerBackButtonAction(function (){
-                        
-                        if($state.current.name=="app.featured-products"){
-                        
-                        if(backbutton==0){
-                        backbutton++;
-                        $window.plugins.toast.showShortCenter('Press again to exit');
-                        $timeout(function(){backbutton=0;},5000);
-                        }else{
-                            navigator.app.exitApp();
-                        }
-                        }else{
-                                $ionicNavBarDelegate.back();
-                        }
-                },100)
-        //}
-        return obj;
-}])
-
-.factory('$commonService', function($http,$rootScope,$q) {
-        return {
-                checkNameValidation: function($tableName,$fieldName,$value,$fnct) {
-                        // the $http API is based on the deferred/promise APIs exposed by the $q service
-                        // so it returns a promise for us by default
-                        return $http.post($rootScope.Url+'api/common', {
-                                'tableName':$tableName,'fieldName':$fieldName,'value':$value,'fnct':$fnct
-                        })
-                        //return $http.get($rootScope.Url+'api/branch-sales-list/3')
-                        .then(function(response) {
-                            if (typeof response.data === 'object') {
-                                return response.data;
-                            } else {
-                                // invalid response
-                                return $q.reject(response.data);
-                            }
-                        }, function(response) {
-                            // something went wrong
-                            return $q.reject(response.data);
-                        });
-                }
-        };
-  })
-
 .factory('$todo',function($http){
     return {
         getAll:function(url){

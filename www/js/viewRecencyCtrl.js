@@ -11,7 +11,6 @@ app=angular.module('starter.viewRecencyCtrl', ['starter.services'])
   //console.log(recencyList)
    if(recencyList != null){
      recencyList    = JSON.parse(recencyList);
-    console.log(recencyList);
      var unsyncount = Object.keys(recencyList).length;
      if($rootScope.recencyUnsyncCount!= undefined){    
     }else{
@@ -42,13 +41,10 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
 
     $rootScope.apiUrl = localStorage.getItem('apiUrl');
     var recencyList =   localStorage.getItem('RecencyData');
-//  console.log(recencyList)
    if(recencyList != null){
      recencyList    = JSON.parse(recencyList);
-    console.log(recencyList);
      var unsyncount = Object.keys(recencyList).length;
         if($rootScope.recencyUnsyncCount!= undefined){
-    console.log($rootScope.recencyUnsyncCount)
         }else{
     $rootScope.recencyUnsyncCount = '(' + unsyncount + ')';
         }
@@ -94,18 +90,14 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
                     + currentdatetime.getHours() + ":"  
                     + currentdatetime.getMinutes() + ":" 
                     + currentdatetime.getSeconds();
-                
-                     console.log($scope.recencyList[i].formTransferDateTime);
-                    
+                                    
                 }
-                console.log($scope.recencyList)
          
             $http.post( $rootScope.apiUrl+"/api/recency",{
                 "form":$scope.recencyList
   
             })
             .success(function(data){
-               console.log(data);
                if(data.status=='failed'){
                 $ionicPopup.alert({title:'Failed!',template:data.message});
                }
@@ -136,7 +128,6 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
                     
             })
             .error(function(){
-                console.log(data);
                 $ionicPopup.alert({title:data.response});
             });
         }

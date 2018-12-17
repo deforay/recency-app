@@ -13,14 +13,12 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
           $preLoader.hide(); 
         }
         $scope.init = function(){
-
           var fromdate = new Date();
           var todate = new Date();
           var intYear = fromdate.getFullYear() - 1;   
           fromdate = fromdate.setFullYear(intYear);
           $rootScope.fromDate =  $filter('date')(fromdate , "dd-MMM-yyyy");
           $rootScope.toDate =  $filter('date')(todate , "dd-MMM-yyyy");
-          console.log($rootScope.fromDate,$rootScope.toDate)
           if(localStorage.getItem('ServerRecencyData')=='logout' || localStorage.getItem('ServerRecencyData')=='success' ){
             $scope.showauth = true;
           }else
@@ -32,12 +30,10 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
             method: "POST",
             data: { "email": $localStorage.get('email'), "password" : $localStorage.get('serverpassword') }
         }).then(function successCallback(response) {
-               console.log(response.data);
                if(response.data.status =="success"){
                   $localStorage.set('authToken',response.data.userDetails['authToken']);                  
                   $http.get($localStorage.get('apiUrl')+'/api/recency?authToken='+$localStorage.get('authToken')+'&start='+$rootScope.fromDate+'&end='+$rootScope.toDate)
                  .then(function(response) {
-                   console.log(response)
                    if(response.data.status =="success"){
                     $localStorage.set('ServerRecencyData','login');
                     $preLoader.hide();
@@ -78,20 +74,17 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                  })
                }
                else{
-                console.log(response.data);
                 $preLoader.hide();
                 $ionicPopup.alert({title:'Authentication Failed!',template:response.data.message});
-
                }
         });
             $scope.showauth = false;
           }
-         console.log( $scope.showauth)
+         //console.log( $scope.showauth)
         }
        $scope.init();
         $scope.getRecencyData = function(){
-          console.log($rootScope.fromDate,$rootScope.toDate)
-          
+         // console.log($rootScope.fromDate,$rootScope.toDate) 
           if(localStorage.getItem('ServerRecencyData')=='logout' || localStorage.getItem('ServerRecencyData')=='success' ){
             $scope.showauth = true;
           }else
@@ -102,22 +95,17 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
             method: "POST",
             data: { "email": $localStorage.get('email'), "password" : $localStorage.get('serverpassword') }
         }).then(function successCallback(response) {
-               console.log(response.data);
                if(response.data.status =="success"){
                   $localStorage.set('authToken',response.data.userDetails['authToken']);                  
                   $http.get($localStorage.get('apiUrl')+'/api/recency?authToken='+$localStorage.get('authToken')+'&start='+$rootScope.fromDate+'&end='+$rootScope.toDate)
                  .then(function(response) {
-                   console.log(response)
                    if(response.data.status =="success"){
                     $localStorage.set('ServerRecencyData','login');
                     $preLoader.hide();
                       $scope.showauth = false;   
-                      console.log( response.data.recency) 
                       if(response.data.recency.length>0){
                         $scope.displaymessage = false;
                       $preLoader.show();
-                      console.log($scope.recencyDatas);
-
                       $scope.recencyDatas =response.data.recency;
                       $scope.recencyCount = $scope.recencyDatas.length;
 
@@ -147,29 +135,24 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                        }
                  })
                }
-               else{
-                console.log(response.data);
-                
+               else{                
                 $preLoader.hide();
                 $ionicPopup.alert({title:'Authentication Failed!',template:response.data.message});
-
                }
         });
             $scope.showauth = false;
           }
-         console.log( $scope.showauth)
+        // console.log( $scope.showauth)
         }
        
 
     $scope.doLogin = function(credentials) {
-      console.log(credentials);
       var fromdate = new Date();
       var todate = new Date();
       var intYear = fromdate.getFullYear() - 1; 
       fromdate = fromdate.setFullYear(intYear);
       $rootScope.fromDate =  $filter('date')(fromdate , "dd-MMM-yyyy");
       $rootScope.toDate =  $filter('date')(todate , "dd-MMM-yyyy");
-      console.log($rootScope.fromDate,$rootScope.toDate)
        if(!credentials.email){
           $ionicPopup.alert({title: 'Login Failed',template: 'Please Enter Valid Email ID'});
         }
@@ -185,13 +168,13 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
               method: "POST",
               data: { "email": credentials.email, "password" : credentials.serverpassword }
           }).then(function successCallback(response) {
-                 console.log(response.data);
+                 //console.log(response.data);
                  if(response.data.status =="success"){
                     $localStorage.set('authToken',response.data.userDetails['authToken']);
                     
                    $http.get($localStorage.get('apiUrl')+'/api/recency?authToken='+$localStorage.get('authToken')+'&start='+$rootScope.fromDate+'&end='+$rootScope.toDate)
                    .then(function(response) {
-                     console.log(response);
+                     //console.log(response);
                      if(response.data.status =="success"){
                       $localStorage.set('ServerRecencyData','login');
                       $preLoader.hide();
@@ -214,7 +197,6 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                           for(i=0;i<$scope.recencyDatas.length;i++)
                           {
                             $scope.recencyDatas[i].patient_id = "Xx" + $scope.recencyDatas[i].patient_id.slice(2);
-                            // console.log($scope.recencyDatas[i].patient_id);
                           }
                           $scope.displayCount = true;
                           $preLoader.hide();
@@ -240,15 +222,12 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                    })
                  }
                  else{
-                  console.log(response.data);
+                 // console.log(response.data);
                   $preLoader.hide();
                   $ionicPopup.alert({title:'Authentication Failed!',template:response.data.message});
 
                  }
-              // }, function errorCallback(response) {
-              //   console.log(response.data);
-              //   $preLoader.hide();
-              //   $ionicPopup.alert({title:"Authentication Failed !",template:'<center>'+response.data.message+'</center>'});
+             
           });
     
         }
@@ -257,7 +236,6 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
         var ipObj1 = {
          callback: function (val) {  
          var fromDate = new Date(val);
-           console.log(fromDate);
            $rootScope.fromDate =  $filter('date')(fromDate , "dd-MMM-yyyy");
            $scope.getRecencyData();
           },
@@ -271,7 +249,6 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
     var ipObj1 = {
      callback: function (val) {  
      var toDate = new Date(val);
-       console.log(toDate);
        $rootScope.toDate =  $filter('date')(toDate , "dd-MMM-yyyy");
  $scope.getRecencyData();
       },
@@ -283,7 +260,6 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
 }
 $scope.clearFromDate = function(){
   $rootScope.fromDate ="";
-  console.log($rootScope.fromDate)
 }
 $scope.cleartoDate = function(){
   $rootScope.toDate ="";
@@ -291,8 +267,6 @@ $scope.cleartoDate = function(){
 }
       $scope.sortByDate = function(propertyName) {
         $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
-        //console.log($scope.reverse)
-
         $scope.propertyName = propertyName;
       };   
       $scope.sortBy = function(propertyName,propertyName1){
