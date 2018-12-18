@@ -38,6 +38,7 @@ angular.module('starter',  ['ionic',
 
 
     if (window.cordova && window.Keyboard) {
+      console.log("hi")
       window.Keyboard.hideKeyboardAccessoryBar(true);
     }
 

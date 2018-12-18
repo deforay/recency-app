@@ -3,6 +3,8 @@ app=angular.module('starter.pendingRecencyResultCtrl', ['starter.services'])
 .controller('pendingRecencyResultCtrl', function($scope,$rootScope,$filter,$cordovaToast,ionicDatePicker,$localStorage,$http,$preLoader, $ionicPopup, $location,$window, $stateParams) {
    
   // $scope.displaybadge = false;
+
+
  $scope.propertyName = 'hiv_recency_date';
  $rootScope.apiUrl = localStorage.getItem('apiUrl');
 

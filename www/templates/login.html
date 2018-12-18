@@ -8,7 +8,7 @@
                 <form class="col loginForm" name="loginForm" ng-show="viewLogin">
                       <div class="row">
                           <div class="input-field col ">
-                              <input id="serverHost" type="text" class="serverHost" name="serverHost" ng-model='loginData.serverHost' placeholder="https://recency.deforay.in" required>
+                              <input id="serverHost" type="text" class="serverHost" name="serverHost" ng-model='loginData.serverHost' placeholder="https://recency.deforay.in" ng-keyup="scrollupform()" required>
                               <span style="color:red" ng-show="loginForm.serverHost.$dirty && loginForm.serverHost.$invalid">
                                     <span ng-show="loginForm.serverHost.$error.required">Server Host is required.</span>
                                 </span>

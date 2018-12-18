@@ -2,6 +2,15 @@ angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($scope,$rootScope,$http,$ionicModal,$ionicHistory, $location,$refresh,  $window, $ionicModal, $timeout,$ionicPopup,$localStorage,$preLoader, $state) {
 
+  $('.authWrapper  .loginFields  .input-field input')
+  .focus(function() {
+    
+      $('.authWrapper .loginFields').addClass('focused');
+  })
+  .blur(function() {
+      $('.authWrapper .loginFields').removeClass('focused');
+  });
+
   $scope.loginData = {};
   $scope.displaybadge=false;
   $scope.displayqcbadge= false;

@@ -6,6 +6,17 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
   // if(window.cordova && window.cordova.plugins.Keyboard) {
   //   window.cordova.plugins.Keyboard.disableScroll(true);
   // }
+
+    $('.authWrapper  .loginFields  .input-field input')
+    .focus(function() {
+      
+        $('.authWrapper .loginFields').addClass('focused');
+    })
+    .blur(function() {
+        $('.authWrapper .loginFields').removeClass('focused');
+    });
+ 
+ 
   if($localStorage.get('logout')=='true' || $localStorage.get('login')=='success' && $localStorage.get('apppassword')!=null){
    $scope.viewLogin = false;
    $scope.viewAddPassword = false;
