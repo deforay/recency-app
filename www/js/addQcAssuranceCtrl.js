@@ -119,6 +119,8 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
       if(JSON.parse(localStorage.getItem('PartialQCData'))==null){
         $scope.qcAssurance.appVersion = localStorage.getItem('AppVersion');
         $scope.qcAssurance.addedBy = localStorage.getItem('userId');
+        $scope.qcAssurance.formInitDateTime="";
+        $scope.qcAssurance.formSavedDateTime="";
         $scope.qcAssurance.qcsampleId ="";
         $scope.qcAssurance.referenceResult="";
         $scope.qcAssurance.qcTestDate ="";
@@ -230,6 +232,8 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
       if(JSON.parse(localStorage.getItem('PartialQCData'))==null){
         $scope.qcAssurance.appVersion = localStorage.getItem('AppVersion');
         $scope.qcAssurance.addedBy = localStorage.getItem('userId');
+        $scope.qcAssurance.formInitDateTime="";
+        $scope.qcAssurance.formSavedDateTime="";
         $scope.qcAssurance.qcsampleId ="";
         $scope.qcAssurance.referenceResult="";
         $scope.qcAssurance.qcTestDate ="";
@@ -376,8 +380,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
     }
         document.addEventListener("deviceready", onDeviceReady, false);
 
-    // Cordova is ready
-    //
+    // Get Device Mac Address and Phone Number
     function onDeviceReady() {
        $scope.qcAssurance.macAddress = device.uuid;
       localStorage.setItem('MacAddress', $scope.qcAssurance.macAddress);
@@ -426,14 +429,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
         $localStorage.set('offline','true');
       }
 
- 
-      // If Internet Connection Disconnected
    
-   
-
-
-
-
       $scope.setqcTestDate = function(val){
         var ipObj1 = {
           callback: function (val) { 
@@ -478,9 +474,20 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
   $scope.partialQcData = function(){
     //console.log($scope.qcAssurance)
     var partialQCData = $scope.qcAssurance;
-
-     localStorage.setItem('PartialQCData',JSON.stringify(partialQCData)) ;
-     }
+        if($scope.qcAssurance.formInitDateTime=='' || $scope.qcAssurance.formInitDateTime==null || $scope.qcAssurance.formInitDateTime==undefined){
+           var currentdatetime = new Date();
+           $scope.qcAssurance.formInitDateTime = currentdatetime.getFullYear() + "-"
+           + (currentdatetime.getMonth()+1)  + "-" 
+           + currentdatetime.getDate() + " "
+           + currentdatetime.getHours() + ":"  
+           + currentdatetime.getMinutes() + ":" 
+           + currentdatetime.getSeconds();
+         }
+        else{
+         // console.log($scope.qcAssurance.formInitDateTime);
+         }
+          localStorage.setItem('PartialQCData',JSON.stringify(partialQCData)) ;
+    }
       $scope.addQcAssurance = function()
       {
         //console.log($scope.qcAssurance);
@@ -534,14 +541,27 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
           $ionicPopup.alert({title:'Alert!',template:'Please Enter Tester Name'});
           return false;
         }
+       
         var currentdate = new Date();
-        $scope.qcAssurance.addedOn = currentdate.getFullYear() + "-"
+        $scope.qcAssurance.formSavedDateTime = currentdate.getFullYear() + "-"
         + (currentdate.getMonth()+1)  + "-" 
         + currentdate.getDate() + " "
         + currentdate.getHours() + ":"  
         + currentdate.getMinutes() + ":" 
         + currentdate.getSeconds();
 
+
+        //Generate Unique Alphanumeric ID 
+          var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+          var string_length = 12;
+          var randomstring = '';
+          for (var i=0; i<string_length; i++) {
+            var rnum = Math.floor(Math.random() * chars.length);
+            randomstring += chars.substring(rnum,rnum+1);
+          }
+         $scope.qcAssurance.unique_id = randomstring;  
+         $scope.qcAssurance.macAddress = localStorage.getItem('MacAddress');
+         $scope.qcAssurance.phoneNumber =  localStorage.getItem('PhoneNumber');
          
         var count = localStorage.getItem('qccounter');
         $scope.counter  = parseInt(count) + 1;

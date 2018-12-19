@@ -95,6 +95,13 @@ $scope.$on("$ionicView.Enter", function(event, data){
             }
             for(i=0;i<$scope.QCDataList.length;i++){
                 $scope.QCDataList[i].syncedBy = localStorage.getItem('userId');
+                var currentdatetime = new Date();
+                $scope.QCDataList[i].formTransferDateTime = currentdatetime.getFullYear() + "-"
+                + (currentdatetime.getMonth()+1)  + "-" 
+                + currentdatetime.getDate() + " "
+                + currentdatetime.getHours() + ":"  
+                + currentdatetime.getMinutes() + ":" 
+                + currentdatetime.getSeconds();
             }
            // console.log($scope.QCDataList);
                  $http.post( $rootScope.apiUrl+"/api/quality-check",{
