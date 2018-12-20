@@ -46,7 +46,7 @@ $scope.updateBadge = function(){
     $scope.displayqcbadge=false;
   }
   
-  $scope.appVersion = 0.7;
+  $scope.appVersion = 0.8;
 }
 
 // $rootScope.displaybadge=true;
@@ -69,7 +69,7 @@ if(QCDataList != null){
   $scope.displayqcbadge=false;
 }
 
-$scope.appVersion = 0.7;
+$scope.appVersion = 0.8;
 localStorage.setItem('AppVersion',$scope.appVersion);
 
 $scope.addRecency = function(){
