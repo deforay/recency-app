@@ -12,8 +12,10 @@ app=angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
           var todate = new Date();
           var intYear = fromdate.getFullYear() - 1; 
           fromdate = fromdate.setFullYear(intYear);
-          $rootScope.fromVlDate =  $filter('date')(fromdate , "dd-MMM-yyyy");
-          $rootScope.toVlDate =  $filter('date')(todate , "dd-MMM-yyyy");
+          $rootScope.fromDate =  $filter('date')(fromdate , "dd-MMM-yyyy");
+          $rootScope.toDate =  $filter('date')(todate , "dd-MMM-yyyy");
+          $scope.tatDataCount = "";
+
           if(localStorage.getItem('ServerRecencyData')=='logout' || localStorage.getItem('ServerRecencyData')=='success' ){
             $scope.showauth = true;
           }else
@@ -26,104 +28,53 @@ app=angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
         }).then(function successCallback(response) {
                if(response.data.status =="success"){
                   $localStorage.set('authToken',response.data.userDetails['authToken']);                  
-                  $http.get($localStorage.get('apiUrl')+'/api/recency-result-with-vl?authToken='+$localStorage.get('authToken')+'&start='+$rootScope.fromVlDate+'&end='+$rootScope.toVlDate)
+                  $http.get($localStorage.get('apiUrl')+'/api/tat-report?authToken='+$localStorage.get('authToken')+'&start='+$rootScope.fromDate+'&end='+$rootScope.toDate)
                  .then(function(response) {
                    if(response.data.status =="success"){
                     $localStorage.set('ServerRecencyData','login');
                     $preLoader.hide();
                       $scope.showauth = false;   
-                      if(response.data.recency.length>0){
+                   //   console.log( response.data.tat) 
+                      if(response.data.tat.length>0){
                         $scope.displaymessage = false;
-                      $preLoader.show();
-                      $scope.recencyDatas =response.data.recency;
-                      for(i=0;i<$scope.recencyDatas.length;i++)
-                      {
-                        $scope.recencyDatas[i].patient_id = "Xx" + $scope.recencyDatas[i].patient_id.slice(2);
-                      }
+                        $preLoader.show();
+                        $scope.tatDatas =response.data.tat;
+                        $scope.tatDataCount = $scope.tatDatas.length;                    
                       $preLoader.hide()
                     }else{
                       $scope.displaymessage = true;
+                      $scope.tatDataCount="";
+                      $scope.tatDatas = [];
                     }
                    }
                    else{
                     $preLoader.hide();
-                    $scope.recencyDatas = [];
+                    $localStorage.set('ServerRecencyData','login');
+                    $scope.showauth = false;  
+                    $scope.tatDatas = [];
                     $scope.displaymessage = true;
+                    $scope.tatDataCount="";
                     
                        }
                  })
                }
                else{
+               // console.log(response.data);
                 $preLoader.hide();
                 $ionicPopup.alert({title:'Authentication Failed!',template:response.data.message});
                }
             });
             $scope.showauth = false;
           }
+         //console.log( $scope.showauth)
         }
         $scope.init();
-
-        $scope.$on("$ionicView.beforeEnter", function(event, data){
- 
-          var fromdate = new Date();
-          var todate = new Date();
-          var intYear = fromdate.getFullYear() - 1; 
-          fromdate = fromdate.setFullYear(intYear);
-          $rootScope.fromVlDate =  $filter('date')(fromdate , "dd-MMM-yyyy");
-          $rootScope.toVlDate =  $filter('date')(todate , "dd-MMM-yyyy");
-          if(localStorage.getItem('ServerRecencyData')=='logout' || localStorage.getItem('ServerRecencyData')=='success' ){
-            $scope.showauth = true;
-          }else
-          {
-            $preLoader.show();
-          $http({
-            url: $rootScope.apiUrl+"/api/login",
-            method: "POST",
-            data: { "email": $localStorage.get('email'), "password" : $localStorage.get('serverpassword') }
-        }).then(function successCallback(response) {
-               if(response.data.status =="success"){
-                  $localStorage.set('authToken',response.data.userDetails['authToken']);                  
-                  $http.get($localStorage.get('apiUrl')+'/api/recency-result-with-vl?authToken='+$localStorage.get('authToken')+'&start='+$rootScope.fromVlDate+'&end='+$rootScope.toVlDate)
-                 .then(function(response) {
-                   if(response.data.status =="success"){
-                    $localStorage.set('ServerRecencyData','login');
-                    $preLoader.hide();
-                      $scope.showauth = false;   
-                      if(response.data.recency.length>0){
-                        $scope.displaymessage = false;
-                      $preLoader.show();
-                      $scope.recencyDatas =response.data.recency;
-                      for(i=0;i<$scope.recencyDatas.length;i++)
-                      {
-                        $scope.recencyDatas[i].patient_id = "Xx" + $scope.recencyDatas[i].patient_id.slice(2);
-                      }
-                      $preLoader.hide()
-                    }else{
-                      $scope.displaymessage = true;
-                    }
-                   }
-                   else{
-                    $preLoader.hide();
-                    $scope.recencyDatas = [];
-                    $scope.displaymessage = true;
-                    // $scope.showauth = true;
-                    // $ionicPopup.alert({title:"Authentication Failed !",template:'<center>'+response.data.message+'</center>'});
-                       }
-                 })
-               }
-               else{
-                $preLoader.hide();
-                $ionicPopup.alert({title:'Authentication Failed!',template:response.data.message});
-
-               }
-            });
-            $scope.showauth = false;
-          }
-        });
-        
+       
         $scope.getRecencyData = function(){
           
-          $scope.fromDate = $rootScope.fromVlDate;
+          $scope.fromDate = $rootScope.fromDate;
+          $scope.tatDataCount = "";
+
           if(localStorage.getItem('ServerRecencyData')=='logout' || localStorage.getItem('ServerRecencyData')=='success' ){
             $scope.showauth = true;
           }else
@@ -134,37 +85,45 @@ app=angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
             method: "POST",
             data: { "email": $localStorage.get('email'), "password" : $localStorage.get('serverpassword') }
         }).then(function successCallback(response) {
+              // console.log(response.data);
                if(response.data.status =="success"){
                   $localStorage.set('authToken',response.data.userDetails['authToken']);                  
-                  $http.get($localStorage.get('apiUrl')+'/api/recency-result-with-vl?authToken='+$localStorage.get('authToken')+'&start='+$rootScope.fromVlDate+'&end='+$rootScope.toVlDate)
+                  $http.get($localStorage.get('apiUrl')+'/api/tat-report?authToken='+$localStorage.get('authToken')+'&start='+$rootScope.fromDate+'&end='+$rootScope.toDate)
                  .then(function(response) {
+                   //console.log(response)
                    if(response.data.status =="success"){
                     $localStorage.set('ServerRecencyData','login');
                     $preLoader.hide();
                       $scope.showauth = false;   
-                      if(response.data.recency.length>0){
+                  //  console.log( response.data.tat) 
+                      if(response.data.tat.length>0){
                         $scope.displaymessage = false;
                       $preLoader.show();
-
-                      $scope.recencyDatas =response.data.recency;
-                      for(i=0;i<$scope.recencyDatas.length;i++)
-                      {
-                        $scope.recencyDatas[i].patient_id = "Xx" + $scope.recencyDatas[i].patient_id.slice(2);
-                      }
+                      $scope.tatDatas =response.data.tat;
+                   
+                        $scope.tatDataCount = $scope.tatDatas.length;
+                      
                       $preLoader.hide()
                     }else{
                       $scope.displaymessage = true;
+
+                      $scope.tatDataCount="";
+                      $scope.tatDatas = [];
                     }
                    }
                    else{
                     $preLoader.hide();
-                    $scope.recencyDatas = [];
+                    $localStorage.set('ServerRecencyData','login');
+                    $scope.showauth = false;  
+                    $scope.tatDatas = [];
                     $scope.displaymessage = true;
-
+                    $scope.tatDataCount="";
+                    // $ionicPopup.alert({title:"Authentication Failed 1 !",template:'<center>'+response.data.message+'</center>'});
                        }
                  })
                }
                else{
+               // console.log(response.data);       
                 $preLoader.hide();
                 $ionicPopup.alert({title:'Authentication Failed!',template:response.data.message});
 
@@ -180,8 +139,11 @@ app=angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
       var todate = new Date();
       var intYear = fromdate.getFullYear() - 1; 
       fromdate = fromdate.setFullYear(intYear);
-      $rootScope.fromVlDate =  $filter('date')(fromdate , "dd-MMM-yyyy");
-      $rootScope.toVlDate =  $filter('date')(todate , "dd-MMM-yyyy");
+      $rootScope.fromDate =  $filter('date')(fromdate , "dd-MMM-yyyy");
+      $rootScope.toDate =  $filter('date')(todate , "dd-MMM-yyyy");
+     // console.log($rootScope.fromDate,$rootScope.toDate);
+      $scope.tatDataCount = "";
+
        if(!credentials.email){
           $ionicPopup.alert({title: 'Login Failed',template: 'Please Enter Valid Email ID'});
         }
@@ -189,6 +151,7 @@ app=angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
           $ionicPopup.alert({title: 'Login Failed',template: 'Please Enter the Server Password'});
           }
           else{
+            // console.log(credentials);
              credentials.serverHost= $localStorage.get('apiUrl');    
               $preLoader.show();
             $http({
@@ -198,42 +161,52 @@ app=angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
           }).then(function successCallback(response) {
                  if(response.data.status =="success"){
                     $localStorage.set('authToken',response.data.userDetails['authToken']);
-                    
-                   $http.get($localStorage.get('apiUrl')+'/api/recency-result-with-vl?authToken='+$localStorage.get('authToken')+'&start='+$rootScope.fromVlDate+'&end='+$rootScope.toDate)
+                   $http.get($localStorage.get('apiUrl')+'/api/tat-report?authToken='+$localStorage.get('authToken')+'&start='+$rootScope.fromDate+'&end='+$rootScope.toDate)
                    .then(function(response) {
                      if(response.data.status =="success"){
                       $localStorage.set('ServerRecencyData','login');
                       $preLoader.hide();
-                      // $cordovaToast.show('Authentication is Sucess', 'long', 'bottom')
-                      //       .then(function(success) {
-                      //            // success
-                      //        }, function (error) {
-                      //            // error
-                      //        });
+                      //console.log(response.data);
+
+                      $cordovaToast.show('Authentication is Sucess', 'long', 'bottom')
+                            .then(function(success) {
+                                 // success
+                             }, function (error) {
+                                 // error
+                             });
+
                         $scope.showauth = false;  
-                      
-                        if(response.data.recency.length>0){
+                        if(response.data.tat.length>0){
                           $scope.displaymessage = false;
-                          $preLoader.show();
-                          $scope.recencyDatas =response.data.recency;
-                          for(i=0;i<$scope.recencyDatas.length;i++)
-                          {
-                            $scope.recencyDatas[i].patient_id = "Xx" + $scope.recencyDatas[i].patient_id.slice(2);
-                          }
-                          $preLoader.hide()
-                        }else{
-                          $scope.displaymessage = true;
-                        }
+                        $preLoader.show();
+                        $scope.tatDatas =response.data.tat;
+                     
+                          $scope.tatDataCount = $scope.tatDatas.length;
+  
                         
+                        $preLoader.hide()
+                      }else{
+                        $scope.displaymessage = true;
+  
+                        $scope.tatDataCount="";
+                        $scope.tatDatas = [];
+                      }
                      }
                      else{
                       $preLoader.hide();
-                      $scope.recencyDatas = [];
+                      $localStorage.set('ServerRecencyData','login');
+                      $scope.showauth = false;  
+                      $scope.tatDatas = [];
                       $scope.displaymessage = true;
+
+                      $scope.tatDataCount="";
+                      // $scope.showauth = true;
+                      // $ionicPopup.alert({title:"Authentication Failed1 !",template:'<center>'+response.data.message+'</center>'});
                          }
                    })
                  }
                  else{
+                 // console.log(response.data);
                   $preLoader.hide();
                   $ionicPopup.alert({title:'Authentication Failed!',template:response.data.message});
 
@@ -242,57 +215,52 @@ app=angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
     
         }
       } 
-        $scope.doRefresh = function() {
+   $scope.doRefresh = function() {
           $preLoader.show();
           $window.location.reload(true);
           $preLoader.hide(); 
-        }
-
-
-      $scope.setFromVlDate = function(val){
+   }
+   $scope.setfromDate = function(val){
         var ipObj1 = {
          callback: function (val) {  
          var fromDate = new Date(val);
-           $rootScope.fromVlDate =  $filter('date')(fromDate , "dd-MMM-yyyy");
+           //console.log(fromDate);
+           $rootScope.fromDate =  $filter('date')(fromDate , "dd-MMM-yyyy");
            $scope.getRecencyData();
           },
-   to: new Date(),
-
+        to: new Date(),
          }; 
      ionicDatePicker.openDatePicker(ipObj1);
-   
    }
-   $scope.settoVlDate = function(val){
+   $scope.settoDate = function(val){
     var ipObj1 = {
      callback: function (val) {  
      var toDate = new Date(val);
-      // console.log(toDate);
+       //console.log(toDate);
        $rootScope.toDate =  $filter('date')(toDate , "dd-MMM-yyyy");
+        $scope.getRecencyData();
       },
       to: new Date(),
 
      }; 
- ionicDatePicker.openDatePicker(ipObj1);
- $scope.getRecencyData();
-
-}
-$scope.clearfromVlDate = function(){
-  $rootScope.fromVlDate ="";
-}
-$scope.cleartoVlDate = function(){
-  $rootScope.toDate ="";
-
-}
+    ionicDatePicker.openDatePicker(ipObj1);
+  }
+  $scope.clearfromDate = function(){
+      $rootScope.fromDate ="";
+  }
+  $scope.cleartoDate = function(){
+      $rootScope.toDate ="";
+  }
       $scope.sortByDate = function(propertyName) {
         $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
-       // console.log($scope.reverse)
+      //  console.log($scope.reverse)
 
         $scope.propertyName = propertyName;
       };   
       $scope.sortBy = function(propertyName,propertyName1){
-        //  console.log($scope.propertyName)
+      // console.log($scope.propertyName)
         $scope.reverse = ($scope.propertyName === propertyName && $scope.propertyName1 === propertyName1) ? !$scope.reverse : false;
-       // console.log($scope.reverse)
+      //  console.log($scope.reverse)
         $scope.propertyName = propertyName;
         $scope.propertyName1 = propertyName1;
 

@@ -133,12 +133,12 @@ $scope.groups = [
         "iconURL":"img/database.png",
          "menuhref":"#/app/pendingRecencyResult",
       },
-      // {
-      //   "id":124,
-      //   "name":"TAT Report",
-      //   "iconURL":"img/serverrecency.png",
-      //    "menuhref":"#/app/tatRecencyReport",
-      // },
+      {
+        "id":124,
+        "name":"TAT Report",
+        "iconURL":"img/database.png",
+         "menuhref":"#/app/tatRecencyReport",
+      },
 
     ]
       }

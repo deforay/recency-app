@@ -319,7 +319,6 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
       $http.get($localStorage.get('apiUrl')+'/api/recency-hide')
       .success(function(data) {
        $scope.optionalData =data.fields[0];
-       //console.log($scope.optionalData);
        $scope.optionalArr =[];
        $scope.optionalArr.location=[];
        angular.forEach($scope.optionalData, function(value, key) {
