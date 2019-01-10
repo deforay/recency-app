@@ -72,7 +72,7 @@ app=angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
        
         $scope.getRecencyData = function(){
           
-          $scope.fromDate = $rootScope.fromDate;
+          //$scope.fromDate = $rootScope.fromDate;
           $scope.tatDataCount = "";
 
           if(localStorage.getItem('ServerRecencyData')=='logout' || localStorage.getItem('ServerRecencyData')=='success' ){
@@ -223,9 +223,9 @@ app=angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
    $scope.setfromDate = function(val){
         var ipObj1 = {
          callback: function (val) {  
-         var fromDate = new Date(val);
+         var fromdate = new Date(val);
            //console.log(fromDate);
-           $rootScope.fromDate =  $filter('date')(fromDate , "dd-MMM-yyyy");
+           $rootScope.fromDate =  $filter('date')(fromdate , "dd-MMM-yyyy");
            $scope.getRecencyData();
           },
         to: new Date(),

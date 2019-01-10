@@ -739,58 +739,176 @@ input[readonly]#testKitExpDate{
   .button.icon-left::before, .button.icon-right::before{
     font-size: 18px;
   }
+
+  /* Media Query For Form */
+
+
   @media only screen and (max-width: 400px)  {
   .RecencyForm  .input-field.savebtn button  {
    font-size: 12px;
   }
   }
-  @media only screen and (max-width: 500px) and (max-height:800px) {
+  @media only screen and (min-width:801px) and (max-width:999px) and (min-height:501px) and (max-height:640px){
 
-    .authWrapper .logo {
+    .authWrapper .loginFields {
        
-        margin-top: 25%;
+        margin-right:20%;
+        margin-left: 20%;
+    }
+ }
+
+@media only screen and (min-width:700px) and (max-height:767px){
+
+    .authWrapper .loginFields {
+        margin-top:220px;
+        margin-right: 25%;
+         margin-left: 25%;
+     }
+ }
+ @media only screen and (min-height:1025px) and (max-height:1224px){
+    .authWrapper .loginFields {
+       margin-top: 400px !important;
+        margin-right: 20%;
+        margin-left: 20%;
+    }
+ }
+ @media only screen and (min-height:1225px){
+    .authWrapper .loginFields {
+       margin-top: 580px !important;
+        margin-right: 20%;
+        margin-left: 20%;
     }
 }
-@media only screen and (min-width:1500px) and (min-height:2000px){
+
+ @media only screen and (min-width:1500px) and (min-height:2000px) {
     .authWrapper .loginFields {
         margin-top: 600px;
          margin-right: 20%;
          margin-left: 20%;
      }  
+     
 }
-  @media only screen and (min-height:1025px){
-    /* .authWrapper .logo {
-        text-align: center;
-        margin-top: 40%;
-    } */
-    .authWrapper .loginFields {
-       margin-top: 500px;
-        margin-right: 20%;
-        margin-left: 20%;
-    }
- }
- @media only screen and (min-height:900px){
-  
-    .authWrapper .loginFields {
-       margin-top: 300px;
-        margin-right: 15%;
-        margin-left: 15%;
-    }
- }
- @media only screen and (min-width:700px) and (max-height:767px){
+   /* Media Query For Background  Landscape*/
+
+   @media only screen and (min-height:320px) and (max-height:500px) and (min-width:480px) and (max-width:888px){
+
     .backgroundimg {
-        /* background: url(../img/oldloginbanner.jpg) no-repeat center center #fafafa;    */
-        background: url(../img/banner-tab-rtri.png) no-repeat center center #fafafa !important;
+       
+        background: url(../img/recency-bg-landscape.png) no-repeat center center #fafafa !important;
         background-size: cover;
         width: 100%;
         height: 100%;
         position: relative;
     }
     .authWrapper .loginFields {
-        margin-top:220px;
+        margin-top: 100px;
+         margin-right: 20%;
+         margin-left: 20%;
+     }  
+ 
+ }
+ @media only screen and (min-height:501px) and (max-height:700px) and (min-width:889px) and (max-width:999px){
+
+    .authWrapper .loginFields {
+        margin-top: 200px !important;
+         margin-right: 20%;
+         margin-left: 20%;
+     } 
+     .backgroundimg {
+       
+        background: url(../img/recency-bg-landscape.png) no-repeat center center #fafafa !important;
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+        position: relative;
+    } 
+ }
+ @media only screen and (min-height:600px) and (max-height:700px) and (min-width:1024px) and (max-width:1279px){
+
+    .authWrapper .loginFields {
+        margin-top: 200px !important;
+         margin-right: 20%;
+         margin-left: 20%;
+     }  
+ }
+   /* Media Query For Background  Potrait*/
+
+
+ @media only screen and (min-height:800px){
+  
+    .authWrapper .loginFields {
+       margin-top: 350px;
+        margin-right: 15%;
+        margin-left: 15%;
+    }
+    .backgroundimg {
+       
+        background: url(../img/recency-bg.png) no-repeat center center #fafafa !important;
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+    .focused {
+        margin-top:260px !important;
+    }
+ }
+ @media only screen and (min-width:999px){
+
+    .backgroundimg {
+        background: url(../img/recency-bg.png) no-repeat center center #fafafa !important;
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+    .authWrapper .loginFields {
+       margin-top:340px;
         margin-right: 25%;
-         margin-left: 25%;
-     }
+        margin-left: 25%;
+    }
+    .focused {
+        margin-top:200px !important;
+    }
+    .authWrapper .passlock{
+        margin-left: 20%; 
+    margin-right: 20%;
+    }
+ }
+ @media only screen and (min-width:501px) and (max-width:700px) and (min-height:889px) and (max-height:999px){
+
+    .authWrapper .loginFields {
+        margin-top: 350px ;
+         margin-right: 20%;
+         margin-left: 20%;
+     } 
+     .backgroundimg {
+       
+        background: url(../img/recency-bg.png) no-repeat center center #fafafa !important;
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+        position: relative;
+    } 
+    .focused {
+        margin-top:300px !important;
+    }
+ }
+ @media only screen and (min-width:603px) and (max-width:700px) and (max-height:700px){
+
+    .backgroundimg {
+        /* background: url(../img/oldloginbanner.jpg) no-repeat center center #fafafa;    */
+        background: url(../img/recency-bg-landscape.png) no-repeat center center #fafafa !important;
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+    .authWrapper .loginFields {
+         margin-right: 20%;
+         margin-left: 20%;
+     } 
+
  }
  @media only screen and (min-width:1025px) and (max-height:767px){
     .backgroundimg {
@@ -801,10 +919,7 @@ input[readonly]#testKitExpDate{
         height: 100%;
         position: relative;
     }
-    /* .authWrapper .logo {
-        text-align: center;
-        margin-top: 10%;
-    } */
+
     .authWrapper .loginFields {
        margin-top:250px;
         margin-right: 30%;
@@ -816,44 +931,8 @@ input[readonly]#testKitExpDate{
     }
  }
 
- @media only screen and (min-width:999px) and(min-height:768px){
-    .authWrapper .logo {
-        text-align: center;
-        margin-top: 30%;
-    }
-    .backgroundimg {
-        /* background: url(../img/oldloginbanner.jpg) no-repeat center center #2a2b30;    */
-        background: url(../img/banner-tab-rtri.png) no-repeat center center #fafafa !important;
-        background-size: cover;
-        width: 100%;
-        height: 100%;
-        position: relative;
-    }
-    .authWrapper .loginFields {
-       margin-top:300px;
-        margin-right: 25%;
-        margin-left: 25%;
-    }
-    .authWrapper .passlock{
-        margin-left: 20%; 
-    margin-right: 20%;
-    }
- }
- /* @media only screen and (min-width:620px) and (max-width:800px) and(min-height:880px) and (max-height:1024px){
-    .authWrapper .logo {
-        text-align: center;
-        margin-top: 30%;
-    }
-    .authWrapper .loginFields {
-       
-        margin-right: 15%;
-        margin-left: 15%;
-    }
-    .authWrapper .passlock{
-        margin-left: 20%; 
-    margin-right: 20%;
-    }
- } */
+
+
  @media only screen and (min-width:801px) and (max-width:1024px) and (min-height:801px)and (max-height:1024px){
     .backgroundimg {
         /* background: url(../img/oldloginbanner.jpg) no-repeat center center #fafafa;    */
@@ -863,10 +942,7 @@ input[readonly]#testKitExpDate{
         height: 100%;
         position: relative;
     }
-    .authWrapper .logo {
-        text-align: center;
-        margin-top: 40%;
-    }
+
     .authWrapper .loginFields {
        margin-top:280px;
         margin-right: 25%;
@@ -877,26 +953,9 @@ input[readonly]#testKitExpDate{
     margin-right: 20%;
     }
  }
- @media only screen and (min-width:801px) and (max-width:999px) and (min-height:501px) and (max-height:640px){
-    .backgroundimg {
-        /* background: url(../img/oldloginbanner.jpg) no-repeat center center #fafafa;    */
-        background: url(../img/banner-tab-rtri.png) no-repeat center center #fafafa !important;
-        background-size: cover;
-        width: 100%;
-        height: 100%;
-        position: relative;
-    }
-    .authWrapper .loginFields {
-       
-        margin-right:20%;
-        margin-left: 20%;
-    }
- }
+ 
  @media only screen and (min-width:600px) and (max-width:800px) and (min-height:768px) and(max-height:800px){
-    .authWrapper .logo {
-        text-align: center;
-        margin-top: 30%;
-    }
+
     .backgroundimg {
         /* background: url(../img/oldloginbanner.jpg) no-repeat center center #fafafa;    */
         background: url(../img/banner-tab-rtri.png) no-repeat center center #fafafa !important;
