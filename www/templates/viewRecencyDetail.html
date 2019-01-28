@@ -103,6 +103,22 @@
                   <td>&nbsp;:&nbsp; </td>
                   <td style="font-size:14px;"> {{recencyDetail.testerName}} </td>
                 </tr>
+                <tr>
+                    <td style="font: size 14px;"><b>Testing Facility</b> </td>
+                    <td>&nbsp;:&nbsp; </td>
+                    <td ng-if="recencyDetail.testing_facility_name!='Other'" style="font-size:14px;text-transform: capitalize"> {{recencyDetail.testing_facility_name | replace: '_':' '}} </td>
+                    <td ng-if="recencyDetail.testing_facility_name=='Other'" style="font-size:14px;text-transform: capitalize"> {{recencyDetail.othertestingfacility | replace: '_':' '}} </td>
+                  </tr>
+                  <tr>
+                      <td style="font: size 14px;"><b>Viral Load Test Date</b> </td>
+                      <td>&nbsp;:&nbsp; </td>
+                      <td style="font-size:14px;"> {{recencyDetail.vlTestDate}} </td>
+                  </tr>
+                  <tr>
+                      <td style="font: size 14px;"><b>Viral Load Result</b> </td>
+                      <td>&nbsp;:&nbsp; </td>
+                      <td style="font-size:14px;"> {{recencyDetail.vlLoadResult}} </td>
+                    </tr>
               </div>
                 </table>
             <table class="item item-stacked-label item-text-wrap" style="border-top:none">

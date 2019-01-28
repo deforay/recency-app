@@ -103,7 +103,10 @@ $scope.$on("$ionicView.Enter", function(event, data){
                 + currentdatetime.getMinutes() + ":" 
                 + currentdatetime.getSeconds();
             }
-           // console.log($scope.QCDataList);
+            console.log($scope.QCDataList);
+
+           
+
                  $http.post( $rootScope.apiUrl+"/api/quality-check",{
                 "qc":$scope.QCDataList
   
@@ -146,7 +149,6 @@ $scope.$on("$ionicView.Enter", function(event, data){
                         // error
                    });
                     $scope.onLoadQc();
-
              }
             })
             .error(function(data){
@@ -154,7 +156,6 @@ $scope.$on("$ionicView.Enter", function(event, data){
                 $ionicPopup.alert({title:data.response});
             });
           }
-        
 
 $scope.viewqc = function(viewqc,index){
    // console.log(viewqc,index);

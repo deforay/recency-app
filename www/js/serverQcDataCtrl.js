@@ -58,14 +58,14 @@ console.log($scope.lastQCDatas)
 
         $scope.sortByDate = function(propertyName) {
           $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
-          console.log($scope.reverse)
+        //  console.log($scope.reverse)
   
           $scope.propertyName = propertyName;
         };   
         $scope.sortBy = function(propertyName,propertyName1){
-            console.log($scope.propertyName)
+           // console.log($scope.propertyName)
           $scope.reverse = ($scope.propertyName === propertyName && $scope.propertyName1 === propertyName1) ? !$scope.reverse : false;
-          console.log($scope.reverse)
+         // console.log($scope.reverse)
           $scope.propertyName = propertyName;
           $scope.propertyName1 = propertyName1;
   

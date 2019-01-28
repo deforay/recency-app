@@ -16,6 +16,14 @@
     <div class="loginFields">
         <div class="row">
         <form class="col loginForm" name="editform" >
+                <div class="row" >
+                        <div class=" input-field col">
+                            <span>
+                                 <span class="outcome" style="margin-left: 10px;font-weight: bold" >{{announcement}}  </span></span> 
+                            </span> 
+                                
+                        </div>
+                     </div> 
             <div ng-if="recencydisplay==true">    
                   <div class="row" ng-if="optionalFieldsFlag.sampleId==true">
                       <div class="input-field col "> 
@@ -251,8 +259,8 @@
                </div>
                <div class="row" ng-if="recency.testNotPerformed!=true">
                 <div class=" input-field col">
-                       <span>Outcome:<span ng-if="recency.recencyOutcome=='HIV Negative' || recency.recencyOutcome=='Invalid-Please Verify'" style="margin-left: 10px;color:red" >{{recency.recencyOutcome}}  </span></span>
-                        <span ng-if="recency.recencyOutcome!='HIV Negative' &&  recency.recencyOutcome!='Invalid-Please Verify'"style="margin-left: 10px;" >{{recency.recencyOutcome}}  </span>
+                       <span>Outcome:<span ng-if="recency.recencyOutcome=='Assay HIV Negative' || recency.recencyOutcome=='Invalid-Please Verify'" style="margin-left: 10px;color:red" >{{recency.recencyOutcome}}  </span></span>
+                        <span ng-if="recency.recencyOutcome!='Assay HIV Negative' &&  recency.recencyOutcome!='Invalid-Please Verify'"style="margin-left: 10px;" >{{recency.recencyOutcome}}  </span>
 
                 </div>
              </div>
@@ -292,6 +300,57 @@
                     </select>   
                 </div>
             </div>
+            <div class="row" ng-if="optionalFieldsFlag.testingFacility==true">
+                <div class="input-field col ">
+                      <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                              <p>Testing Facility<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testingFacility'"  style="color:#df3838;"> *</span></p>
+                          </span>
+                    <div class="form-logo "><img src="img/facility.png"></div> 
+                    <select class="ng-valid" id="testingFacility"  name="testingFacility"  title="Please Choose Testing Facility" ng-model="recency.testingFacility" ng-change="getTestingFacility(recency.testingFacility);" >
+                        <option value="">-- Select --</option>
+                        <option ng-repeat="facility in facilityTestData" value="{{facility['facility_id']}}">{{facility['facility_name']| underscorefilter}}</option>
+                      </select>    
+                </div>
+            </div>
+            <div class="row" ng-if="showothertestfacility==true && optionalFieldsFlag.testingFacility==true">
+                <div class="input-field col ">
+                      <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                              <p>Other Testing Facility <span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testingFacility'" style="color:#df3838;"> *</span></p>
+                          </span>
+                    <div class="form-logo"><img src="img/population.png"></div> 
+                    <input id="othertestingfacility" type="text" class="othertestingfacility" name="othertestingfacility"  ng-model="recency.othertestingfacility" placeholder="Other Testing Facility" >
+                   
+                </div>
+            </div>
+            <div class="row" ng-if="optionalFieldsFlag.vlTestDate==true">
+                <div class="input-field col col-90">
+                      <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                              <p>Viral Load Test Date<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='vlTestDate'" style="color:#df3838;"> *</span></p>
+                          </span>
+                    <div class="form-logo date-img"><img src="img/date.png"></div> 
+                    <input id="vlTestDate" type="text" class="vlTestDate" name="vlTestDate" title="Please Enter Viral Load Test Date" ng-click="setVlTestDate();"  ng-model='recency.vlTestDate' placeholder="Viral Load Test Date"  readonly required>
+                   
+                </div>
+                <div class="input-field col " style="padding:0">
+                  <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="recency.vlTestDate =''"><img src="img/clear.png" style="height: 26px;"></div> 
+                 </div>
+            </div>
+            <div class="row" ng-if="optionalFieldsFlag.vlLoadResult==true">
+                <div class="input-field col "> 
+                      <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                              <p>Viral Load Result<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='vlLoadResult'"  style="color:#df3838;"> *</span></p>
+                          </span>  
+                 <div class="form-logo"><img src="img/lab.png"></div> 
+                    <input id="vlLoadResult" type="number" class="vlLoadResult" name="vlLoadResult" title="Please Enter Viral Load Result" ng-model='recency.vlLoadResult' placeholder="Viral Load Test Result" ng-keyup="getFinalOutcome(recency.recencyOutcome,recency.vlLoadResult)"> 
+                </div>  
+            </div>
+             <div class="row">
+                <div class=" input-field col">
+                       <span>Final Outcome:<span ng-if="recency.finalOutcome=='Assay Negative' || recency.finalOutcome=='Invalid'" style="margin-left: 10px;color:red" >{{recency.finalOutcome}}  </span></span>
+                        <span ng-if="recency.finalOutcome!='Assay Negative' &&  recency.finalOutcome!='Invalid'"style="margin-left: 10px;" >{{recency.finalOutcome}}  </span>
+
+                </div>
+             </div>
                 <div class="row" >
                     <div class="input-field col ">
                         <button class="button button-block  icon-right ion-chevron-right button-calm waves-effect waves-light" style="background:#3592f0 !important;" type="button"
