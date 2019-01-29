@@ -699,9 +699,21 @@ height: 100%;
     font-weight: 600;
 }
 
-input[readonly]#testKitExpDate{
+input[readonly]#testKitExpDate ,
+input[disabled]#vlTestDate,
+input[disabled]#vlLoadResult 
+{
     background-color: #efefef  !important;
 
+}
+#finalOutcome.red,#termOutcome.red{
+    color:red
+}
+#finalOutcome.blue,#termOutcome.blue{
+    color:blue
+}
+#finalOutcome.black,#termOutcome.black{
+    color:black
 }
 .recency-view .sync-button{
     left: 15%;

@@ -178,7 +178,7 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                      if(response.data.status =="success"){
                       $localStorage.set('ServerRecencyData','login');
                       $preLoader.hide();
-                      
+                      // Hide Toast During Debugging
                       $cordovaToast.show('Authentication is Sucess', 'long', 'bottom')
                             .then(function(success) {
                                  // success

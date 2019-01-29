@@ -122,11 +122,15 @@
                     <p>{{recency['patient_id'] }}</p>
                </td>
                 <td style="text-align: center"> 
-                    <p style="color:red"  ng-if="recency['term_outcome']!='Long Term' && recency['term_outcome']!='Assay Recent'">{{recency['term_outcome']}}</p>
-                    <p ng-if="recency['term_outcome']=='Long Term' || recency['term_outcome']=='Assay Recent'">{{recency['term_outcome']}}</p>
+                    <p style="color:red"  ng-if="recency['term_outcome']!='Assay Long Term' && recency['term_outcome']!='Assay Negative' && recency['term_outcome']!='Assay Recent'">{{recency['term_outcome']}}</p>
+                    <p style="color:blue" ng-if="recency['term_outcome']=='Assay Negative'">{{recency['term_outcome']}}</p>
+                    <p ng-if="recency['term_outcome']=='Assay Long Term' || recency['term_outcome']=='Assay Recent'">{{recency['term_outcome']}}</p>
                 </td>
-                
-                <td style="text-align: center;white-space: nowrap;">{{ recency['final_outcome'] }}</td>
+                <td style="text-align: center"> 
+                        <p style="color:blue" ng-if="recency['final_outcome']=='Inconclusive' || recency['final_outcome']=='RITA Recent'">{{recency['final_outcome']}}</p>
+                        <p ng-if="recency['final_outcome']!='Inconclusive' && recency['final_outcome']!='RITA Recent'">{{recency['final_outcome']}}</p>
+                 </td>
+                <!-- <td style="text-align: center;white-space: nowrap;">{{ recency['final_outcome'] }}</td> -->
                 <td style="text-align: center;white-space: nowrap;">{{ recency['facility_name'] }}</td>
                 <td style="text-align: center;white-space: nowrap;">{{ recency['vl_result'] }}</td>
                 <td style="text-align: center;white-space: nowrap;">{{ recency['vl_test_date'] | date: "dd-MMM-yyyy"}}</td>
