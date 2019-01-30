@@ -420,7 +420,7 @@ else if($scope.recency.finalOutcome =='Assay Negative'){
           $scope.recency.finalOutcome="RITA Recent";
           $scope.recency.showFinalOutcome = true;
           $scope.setfinalcolor = 'blue';
-        }else if((vlLoadResultDropdown =='< 20' || vlLoadResultDropdown =='< 40'|| vlLoadResultDropdown =='BDL') && ($scope.recency.recencyOutcome=='Assay Recent'|| $scope.recency.recencyOutcome=='Assay Long Term')){
+        }else if((vlLoadResultDropdown =='<20' || vlLoadResultDropdown =='<40'|| vlLoadResultDropdown =='BDL') && ($scope.recency.recencyOutcome=='Assay Recent'|| $scope.recency.recencyOutcome=='Assay Long Term')){
           $scope.recency.finalOutcome="RITA Long Term";
           $scope.recency.showFinalOutcome = true;
           $scope.setfinalcolor = 'black';
@@ -830,13 +830,13 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
   $scope.onLoadMandatoryCheck ();
 
   $scope.showToastAlert = function(mandatorytitle){
- $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
-  // $cordovaToast.show(mandatorytitle, 'long', 'center')
-  //           .then(function(success) {
-  //             // success
-  //           }, function (error) {
-  //             // error
-  //           });
+ //$ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+  $cordovaToast.show(mandatorytitle, 'long', 'center')
+            .then(function(success) {
+              // success
+            }, function (error) {
+              // error
+            });
   }
   $scope.patientvalidation = function(){
   // console.log($scope.recency)
@@ -1342,12 +1342,12 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
            localStorage.setItem('RecencyData',JSON.stringify($scope.chkrecency));
             $scope.recency ={};
            $scope.recencydisplay=true;
-          //  $cordovaToast.show('Edited Successfully', 'long', 'center')
-          //  .then(function(success) {
-          //    // success
-          //  }, function (error) {
-          //    // error
-          //  });
+           $cordovaToast.show('Edited Successfully', 'long', 'center')
+           .then(function(success) {
+             // success
+           }, function (error) {
+             // error
+           });
            $("#main-recency").addClass("active");
            $("#other-recency").removeClass('active');
            $window.location.reload(true);

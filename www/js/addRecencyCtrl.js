@@ -155,6 +155,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
       $scope.recency.notes="";
       $scope.recency.showFinalOutcome = false;
       $scope.recency.showtermOutcome = false;
+      
       if($scope.recency.vlLoadResult==null){
         $scope.recency.vlLoadResult="";
       }
@@ -527,7 +528,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
           $scope.recency.finalOutcome="RITA Recent";
           $scope.recency.showFinalOutcome = true;
           $scope.setfinalcolor = 'blue';
-        }else if((vlLoadResultDropdown =='< 20' || vlLoadResultDropdown =='< 40'|| vlLoadResultDropdown =='BDL') && ($scope.recency.recencyOutcome=='Assay Recent'|| $scope.recency.recencyOutcome=='Assay Long Term')){
+        }else if((vlLoadResultDropdown =='<20' || vlLoadResultDropdown =='<40'|| vlLoadResultDropdown =='BDL') && ($scope.recency.recencyOutcome=='Assay Recent'|| $scope.recency.recencyOutcome=='Assay Long Term')){
           $scope.recency.finalOutcome="RITA Long Term";
           $scope.recency.showFinalOutcome = true;
           $scope.setfinalcolor = 'black';
@@ -889,13 +890,13 @@ $scope.GetCityValue = function(district){
         }
     }
     $scope.showToastAlert = function(mandatorytitle){
-   // $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
-    $cordovaToast.show(mandatorytitle, 'long', 'center')
-              .then(function(success) {
-                // success
-              }, function (error) {
-                // error
-              });
+    $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+    // $cordovaToast.show(mandatorytitle, 'long', 'center')
+    //           .then(function(success) {
+    //             // success
+    //           }, function (error) {
+    //             // error
+    //           });
     }
 
     // Section 1 Mandatory Data Validation

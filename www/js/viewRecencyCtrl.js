@@ -102,7 +102,8 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
                 $ionicPopup.alert({title:'Failed!',template:data.message});
                }
                else{
-                $scope.response =data.syncData.response;
+
+                    $scope.response =data.syncData.response;
                     $scope.syncCount =data.syncCount.response[0].Total;
                     localStorage.setItem('syncCount', $scope.syncCount)
                     for(i=0;i< $scope.response.length;i++){
@@ -114,6 +115,8 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
                              localStorage.removeItem('RecencyData');
                               } 
                      localStorage.setItem('counter',0);
+
+
                      $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
                      .then(function(success) {
                           // success
@@ -121,7 +124,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
                           // error
                       });
                  
-                    $scope.onLoadRecency();
+                   $scope.onLoadRecency();
 
                     
                }
