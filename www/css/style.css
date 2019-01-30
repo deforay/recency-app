@@ -701,7 +701,8 @@ height: 100%;
 
 input[readonly]#testKitExpDate ,
 input[disabled]#vlTestDate,
-input[disabled]#vlLoadResult 
+input[disabled]#vlLoadResult ,
+select[disabled]#vlLoadResultDropdown
 {
     background-color: #efefef  !important;
 
