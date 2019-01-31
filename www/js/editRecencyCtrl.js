@@ -399,7 +399,7 @@ else if($scope.recency.finalOutcome =='Assay Negative'){
     }
     $scope.getLatLong();
     $scope.recencyNotPerformed = function(testNotPerformed){
-      console.log(testNotPerformed)
+     // console.log(testNotPerformed)
       if(testNotPerformed==true){
         $scope.recency.hivRecencyDate="";
         $scope.recency.ctrlLine="";
@@ -414,8 +414,7 @@ else if($scope.recency.finalOutcome =='Assay Negative'){
     }
       //On Viral Load Change
       $scope.OnVlLoadChange =  function(vlLoadResultDropdown){
-        console.log(vlLoadResultDropdown);
-        console.log($scope.recency.recencyOutcome);
+    
         if(vlLoadResultDropdown=='TND' && ($scope.recency.recencyOutcome=='Assay Recent'|| $scope.recency.recencyOutcome=='Assay Long Term')){
           $scope.recency.finalOutcome="RITA Recent";
           $scope.recency.showFinalOutcome = true;
@@ -562,7 +561,6 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
   
     }
     $scope.getTestingFacility=function(facilityid){
-       console.log(facilityid)
  
        if(facilityid!=""){
          $scope.recency.testing_facility_name = $("#testingFacility option:selected").text();

@@ -47,8 +47,9 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                       for(i=0;i<$scope.recencyDatas.length;i++)
                       {
                         $scope.recencyDatas[i].patient_id = "Xx" + $scope.recencyDatas[i].patient_id.slice(2);
-                      //   var str = $scope.recencyDatas[i].vl_result;
-                      //  String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                        var str = $scope.recencyDatas[i].vl_result;
+                        $scope.recencyDatas[i].vl_result = String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(null,'');
+                      // console.log($scope.recencyDatas[i].vl_result);
                       }
                      
                    
@@ -282,10 +283,10 @@ $scope.cleartoDate = function(){
       }
 })
 
-// .filter('trusted', ['$sce', function($sce) {
-//   var div = document.createElement('div');
-//   return function(text) {
-//       div.innerHTML = text;
-//       return $sce.trustAsHtml(div.textContent);
-//   };
-// }])
+.filter('trusted', ['$sce', function($sce) {
+  var div = document.createElement('div');
+  return function(text) {
+      div.innerHTML = text;
+      return $sce.trustAsHtml(div.textContent);
+  };
+}])

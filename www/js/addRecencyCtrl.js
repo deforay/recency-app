@@ -522,8 +522,8 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
       }
       //On Viral Load Change
       $scope.OnVlLoadChange =  function(vlLoadResultDropdown){
-        console.log(vlLoadResultDropdown);
-        console.log($scope.recency.recencyOutcome);
+       // console.log(vlLoadResultDropdown);
+       // console.log($scope.recency.recencyOutcome);
         if(vlLoadResultDropdown=='TND' && ($scope.recency.recencyOutcome=='Assay Recent'|| $scope.recency.recencyOutcome=='Assay Long Term')){
           $scope.recency.finalOutcome="RITA Recent";
           $scope.recency.showFinalOutcome = true;
@@ -890,13 +890,13 @@ $scope.GetCityValue = function(district){
         }
     }
     $scope.showToastAlert = function(mandatorytitle){
-    $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
-    // $cordovaToast.show(mandatorytitle, 'long', 'center')
-    //           .then(function(success) {
-    //             // success
-    //           }, function (error) {
-    //             // error
-    //           });
+ //   $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+    $cordovaToast.show(mandatorytitle, 'long', 'center')
+              .then(function(success) {
+                // success
+              }, function (error) {
+                // error
+              });
     }
 
     // Section 1 Mandatory Data Validation
