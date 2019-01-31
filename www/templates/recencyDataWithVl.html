@@ -115,7 +115,7 @@
                     <td style="text-align: center">{{ recency['final_outcome']}}</td>
     
                     <td style="text-align: center;white-space: nowrap;">{{ recency['facility_name'] }}</td>
-                    <td style="text-align: center;">{{ recency['vl_result'] }}</td>
+                    <td style="text-align: center;" ng-bind-html=" recency['vl_result']  | trusted"></td>
                     <td style="text-align: center">{{ recency['vl_test_date'] | date: "dd-MMM-yyyy" }}</td>                    
                   </tr>
                   

@@ -347,12 +347,21 @@
                              ng-keyup="partialRecencyData();getFinalOutcome(recency.recencyOutcome,recency.vlLoadResult);" ng-disabled="recency.recencyOutcome=='Assay Negative'||recency.recencyOutcome=='Invalid-Please Verify' ||recency.recencyOutcome==''|| recency.vlLoadResultDropdown!=''" > 
                         </div>  
                     </div>
+                    <div class="row" ng-if="recency.testNotPerformed!=true">
+                        <div class=" input-field col" style="padding:0 10px">
+                            <div style="width: 100%; height: 16px;border-bottom: 0.5px solid #b3acac;text-align: center;margin-bottom: 7px;">
+                                <span style="font-size: 15px; background-color: #ffffff;padding: 0px 10px;line-height: 30px;">
+                                    OR 
+                                </span>
+                            </div>                              
+                        </div>
+                     </div> 
                     <div class="row" ng-if="recency.testNotPerformed!=true && optionalFieldsFlag.vlLoadResult==true">
                         <div class="input-field col ">
                               <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
                                       <p>Viral Load Result<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='vlLoadResult'" style="color:#df3838;"> *</span></p>
                               </span>
-                            <div class="form-logo"><img src="img/recencyresult.png"></div> 
+                            <div class="form-logo"><img src="img/lab.png"></div> 
                             <select class="ng-valid" id="vlLoadResultDropdown" name="vlLoadResultDropdown" title="Please Choose LongTerm Line" ng-model="recency.vlLoadResultDropdown"
                              ng-disabled="recency.recencyOutcome=='Assay Negative'||recency.recencyOutcome=='Invalid-Please Verify' ||recency.recencyOutcome==''||recency.vlLoadResult!=''"
                              ng-change="OnVlLoadChange(recency.vlLoadResultDropdown);partialRecencyData();" >
@@ -360,8 +369,8 @@
                               <option value="TND">TND</option>
                               <option value="BDL">BDL</option>
                               <option value="Failed">Failed</option>
-                              <option value="<20">< 20</option>
-                              <option value="<40">< 40</option>
+                              <option value="< 20">< 20</option>
+                              <option value="< 40">< 40</option>
     
                            </select> 
                         </div>

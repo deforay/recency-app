@@ -116,6 +116,8 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                       for(i=0;i<$scope.recencyDatas.length;i++)
                       {
                         $scope.recencyDatas[i].patient_id = "Xx" + $scope.recencyDatas[i].patient_id.slice(2);
+                        var str = $scope.recencyDatas[i].vl_result;
+                        $scope.recencyDatas[i].vl_result = String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(null,'');
                       }
                       $scope.displayCount = true;
                       $preLoader.hide()
@@ -201,6 +203,8 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                           for(i=0;i<$scope.recencyDatas.length;i++)
                           {
                             $scope.recencyDatas[i].patient_id = "Xx" + $scope.recencyDatas[i].patient_id.slice(2);
+                            var str = $scope.recencyDatas[i].vl_result;
+                            $scope.recencyDatas[i].vl_result = String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(null,'');
                           }
                           $scope.displayCount = true;
                           $preLoader.hide();

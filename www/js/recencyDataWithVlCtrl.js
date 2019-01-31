@@ -42,6 +42,11 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
                       $scope.recencyVlDatas =response.data.recency;
            
                         $scope.recencyVlCount = $scope.recencyVlDatas.length;
+                        for(i=0;i<$scope.recencyVlDatas.length;i++)
+                        {
+                          var str = $scope.recencyVlDatas[i].vl_result;
+                          $scope.recencyVlDatas[i].vl_result = String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(null,'');
+                        }
                         $scope.displayVlCount = true;
                       $preLoader.hide()
                     }else{
@@ -108,6 +113,11 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
                       $scope.recencyVlDatas =response.data.recency;
                    
                         $scope.recencyVlCount = $scope.recencyVlDatas.length;
+                        for(i=0;i<$scope.recencyVlDatas.length;i++)
+                        {
+                          var str = $scope.recencyVlDatas[i].vl_result;
+                          $scope.recencyVlDatas[i].vl_result = String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(null,'');
+                        }
                         $scope.displayVlCount = true;
                       $preLoader.hide()
                     }else{
@@ -188,7 +198,11 @@ app=angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
                         $scope.recencyVlDatas =response.data.recency;
                      
                           $scope.recencyVlCount = $scope.recencyVlDatas.length;
-  
+                          for(i=0;i<$scope.recencyVlDatas.length;i++)
+                          {
+                            var str = $scope.recencyVlDatas[i].vl_result;
+                            $scope.recencyVlDatas[i].vl_result = String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(null,'');
+                          }
                           $scope.displayVlCount = true;
                         $preLoader.hide()
                       }else{
@@ -280,3 +294,10 @@ $scope.cleartoVlDate = function(){
 })
 
 
+.filter('trusted', ['$sce', function($sce) {
+  var div = document.createElement('div');
+  return function(text) {
+      div.innerHTML = text;
+      return $sce.trustAsHtml(div.textContent);
+  };
+}])

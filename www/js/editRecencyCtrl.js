@@ -419,7 +419,7 @@ else if($scope.recency.finalOutcome =='Assay Negative'){
           $scope.recency.finalOutcome="RITA Recent";
           $scope.recency.showFinalOutcome = true;
           $scope.setfinalcolor = 'blue';
-        }else if((vlLoadResultDropdown =='<20' || vlLoadResultDropdown =='<40'|| vlLoadResultDropdown =='BDL') && ($scope.recency.recencyOutcome=='Assay Recent'|| $scope.recency.recencyOutcome=='Assay Long Term')){
+        }else if((vlLoadResultDropdown =='< 20' || vlLoadResultDropdown =='< 40'|| vlLoadResultDropdown =='BDL') && ($scope.recency.recencyOutcome=='Assay Recent'|| $scope.recency.recencyOutcome=='Assay Long Term')){
           $scope.recency.finalOutcome="RITA Long Term";
           $scope.recency.showFinalOutcome = true;
           $scope.setfinalcolor = 'black';
