@@ -828,7 +828,7 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
   $scope.onLoadMandatoryCheck ();
 
   $scope.showToastAlert = function(mandatorytitle){
- //$ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+ $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
   $cordovaToast.show(mandatorytitle, 'long', 'center')
             .then(function(success) {
               // success
@@ -1340,6 +1340,7 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
            localStorage.setItem('RecencyData',JSON.stringify($scope.chkrecency));
             $scope.recency ={};
            $scope.recencydisplay=true;
+
            $cordovaToast.show('Edited Successfully', 'long', 'center')
            .then(function(success) {
              // success

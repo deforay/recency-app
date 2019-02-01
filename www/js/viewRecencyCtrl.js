@@ -92,6 +92,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
                     + currentdatetime.getSeconds();
                                     
                 }
+                $preLoader.show();
          
             $http.post( $rootScope.apiUrl+"/api/recency",{
                 "form":$scope.recencyList
@@ -99,6 +100,8 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
             })
             .success(function(data){
                if(data.status=='failed'){
+                $preLoader.hide();
+
                 $ionicPopup.alert({title:'Failed!',template:data.message});
                }
                else{
@@ -116,6 +119,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
                               } 
                      localStorage.setItem('counter',0);
 
+                     $preLoader.hide();
 
                      $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
                      .then(function(success) {
@@ -131,6 +135,8 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
                     
             })
             .error(function(){
+                $preLoader.hide();
+
                 $ionicPopup.alert({title:data.response});
             });
         }

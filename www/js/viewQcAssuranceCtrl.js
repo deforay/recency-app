@@ -106,14 +106,18 @@ $scope.$on("$ionicView.Enter", function(event, data){
             console.log($scope.QCDataList);
 
            
+            $preLoader.show();
 
                  $http.post( $rootScope.apiUrl+"/api/quality-check",{
                 "qc":$scope.QCDataList
   
             })
             .success(function(data){
+            
              //  console.log(data);
              if(data.status=='failed'){
+                $preLoader.hide();
+
                 $ionicPopup.alert({title:'Failed',template:data.message});                
              }
              else
@@ -142,6 +146,8 @@ $scope.$on("$ionicView.Enter", function(event, data){
                        localStorage.removeItem('QcAlertDate');
                         } 
                localStorage.setItem('qccounter',0);
+               $preLoader.hide();
+
                   $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
                   .then(function(success) {
                        // success
@@ -152,6 +158,8 @@ $scope.$on("$ionicView.Enter", function(event, data){
              }
             })
             .error(function(data){
+                $preLoader.hide();
+
                // console.log(data);
                 $ionicPopup.alert({title:data.response});
             });
