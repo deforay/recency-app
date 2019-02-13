@@ -91,8 +91,9 @@ $scope.$on("$ionicView.Enter", function(event, data){
 
           $scope.syncnow = function(){
             if($scope.displaymessage== true){
-                $ionicPopup.alert({title:'Alert!',template:'<center>No Records to Sync </center>'});
-            }
+                $ionicPopup.alert({title:'Alert!',template:'<center>There are no records to sync.</center>'});
+            }else{
+
             for(i=0;i<$scope.QCDataList.length;i++){
                 $scope.QCDataList[i].syncedBy = localStorage.getItem('userId');
                 var currentdatetime = new Date();
@@ -103,7 +104,7 @@ $scope.$on("$ionicView.Enter", function(event, data){
                 + currentdatetime.getMinutes() + ":" 
                 + currentdatetime.getSeconds();
             }
-            console.log($scope.QCDataList);
+            //console.log($scope.QCDataList);
 
            
             $preLoader.show();
@@ -163,6 +164,7 @@ $scope.$on("$ionicView.Enter", function(event, data){
                // console.log(data);
                 $ionicPopup.alert({title:data.response});
             });
+        }
           }
 
 $scope.viewqc = function(viewqc,index){

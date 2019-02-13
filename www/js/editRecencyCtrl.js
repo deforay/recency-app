@@ -502,7 +502,7 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
     $scope.recency.showFinalOutcome = true;
     $scope.setfinalcolor = 'blue';
   }
-  else if(termOutcome=="Assay Recent" && (vlLoadResult <1000 && vlLoadResult !="" && vlLoadResult!=null) ){
+  else if(termOutcome=="Assay Recent" && (vlLoadResult <=1000 && vlLoadResult !="" && vlLoadResult!=null) ){
     $scope.recency.finalOutcome="RITA Long Term";
     $scope.recency.showFinalOutcome = true;
     $scope.setfinalcolor = 'black';
@@ -828,7 +828,7 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
   $scope.onLoadMandatoryCheck ();
 
   $scope.showToastAlert = function(mandatorytitle){
- $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+// $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
   $cordovaToast.show(mandatorytitle, 'long', 'center')
             .then(function(success) {
               // success

@@ -550,7 +550,8 @@ background: url(../img/user.png) no-repeat left center rgba(255, 255, 255, 0.5)
     margin-left: 15px;
 }
 .recency-tab .tickMark .icon::before{
-    font-size: 16px;
+    /* font-size: 16px; */
+    font-size: 18px;
     color:#41de6e;
 }
 .RecencyForm{

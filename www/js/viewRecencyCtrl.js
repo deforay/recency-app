@@ -8,7 +8,6 @@ app=angular.module('starter.viewRecencyCtrl', ['starter.services'])
 
     $rootScope.apiUrl = localStorage.getItem('apiUrl');
     var recencyList =   localStorage.getItem('RecencyData');
-  //console.log(recencyList)
    if(recencyList != null){
      recencyList    = JSON.parse(recencyList);
      var unsyncount = Object.keys(recencyList).length;
@@ -34,6 +33,7 @@ app=angular.module('starter.viewRecencyCtrl', ['starter.services'])
         }
     $scope.displaymessage = true;
     }   
+
 }
 $scope.$on("$ionicView.beforeEnter", function(event, data){
     $scope.recencyList =[];
@@ -41,8 +41,11 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
 
     $rootScope.apiUrl = localStorage.getItem('apiUrl');
     var recencyList =   localStorage.getItem('RecencyData');
+
    if(recencyList != null){
      recencyList    = JSON.parse(recencyList);
+    console.log(recencyList)
+
      var unsyncount = Object.keys(recencyList).length;
         if($rootScope.recencyUnsyncCount!= undefined){
         }else{
@@ -79,8 +82,11 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
           }
         $scope.syncnow = function(){
            if($scope.displaymessage== true){
-                $ionicPopup.alert({title:'Alert!',template:'<center>No Records to Sync </center>'});
-            }
+            $preLoader.hide();
+
+                $ionicPopup.alert({title:'Alert!',template:'<center>There are no records to sync.</center>'});
+            }else{
+           
                 for(i=0;i<$scope.recencyList.length;i++){
                     $scope.recencyList[i].syncedBy = localStorage.getItem('userId');
                     var currentdatetime = new Date();
@@ -121,13 +127,13 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
 
                      $preLoader.hide();
 
-                     $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
-                     .then(function(success) {
-                          // success
-                      }, function (error) {
-                          // error
-                      });
-                 
+                         $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
+                         .then(function(success) {
+                              // success
+                          }, function (error) {
+                              // error
+                          });
+                    
                    $scope.onLoadRecency();
 
                     
@@ -139,6 +145,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
 
                 $ionicPopup.alert({title:data.response});
             });
+        }
         }
         
 

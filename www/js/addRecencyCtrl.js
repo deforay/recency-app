@@ -116,6 +116,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
       $scope.recency.longTermLine="";
       $scope.recency.longTermLineName="";
       $scope.recency.recencyOutcome="";
+      $scope.recencyOutcomeDisplay="";
       $scope.recency.recencyreason="";
       $scope.recency.recencyreasonName="";
       $scope.recency.otherreason="";
@@ -179,6 +180,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
     else
     {
       $scope.recency = JSON.parse(localStorage.getItem('PartialRecencyData'));
+      console.log($scope.recency)
      //Other Text Field
       if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != undefined ||$scope.recency.otherfacility!="")){
         $scope.showotherfacility = true;
@@ -187,6 +189,14 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
        if( $scope.recency.testing_facility_name =="Other" && ($scope.recency.othertestingfacility != undefined ||$scope.recency.othertestingfacility!="")){
         $scope.showothertestfacility = true;
         $scope.recency.testing_facility_name="Other"
+       }
+       if( $scope.recency.location_two_name =="Other" && ($scope.recency.otherDistrict != undefined ||$scope.recency.otherDistrict!="")){
+        $scope.showotherdistrict = true;
+        $scope.recency.location_two_name="Other"
+       }
+       if( $scope.recency.location_three_name =="Other" && ($scope.recency.otherCity != undefined ||$scope.recency.otherCity!="")){
+        $scope.showothercity = true;
+        $scope.recency.location_three_name="Other"
        }
        if( $scope.recency.riskPopulationName =="Other" && ($scope.recency.otherriskPopulation != undefined ||$scope.recency.otherriskPopulation!="")){
         $scope.otherpopulation = true;
@@ -230,6 +240,8 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
         $scope.districtData = result;
         $scope.recency.location[1] = $scope.recency.location[1];
         //console.log( $scope.districtData)
+      }else{
+        $scope.districtData =[];
       }
       if($scope.recency.location[2]){
         var localCity = JSON.parse(localStorage.getItem('CityData'));
@@ -237,6 +249,8 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
           return obj.district_id === $scope.recency.location[1]
         })
         $scope.cityData = cityresult;
+      }else{
+        $scope.cityData =[];
       }
     }
     
@@ -522,20 +536,24 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
       }
       //On Viral Load Change
       $scope.OnVlLoadChange =  function(vlLoadResultDropdown){
-       // console.log(vlLoadResultDropdown);
-       // console.log($scope.recency.recencyOutcome);
         if(vlLoadResultDropdown=='TND' && ($scope.recency.recencyOutcome=='Assay Recent'|| $scope.recency.recencyOutcome=='Assay Long Term')){
           $scope.recency.finalOutcome="RITA Recent";
+          $scope.recencyOutcomeDisplay=""
           $scope.recency.showFinalOutcome = true;
           $scope.setfinalcolor = 'blue';
         }else if((vlLoadResultDropdown =='< 20' || vlLoadResultDropdown =='< 40'|| vlLoadResultDropdown =='BDL') && ($scope.recency.recencyOutcome=='Assay Recent'|| $scope.recency.recencyOutcome=='Assay Long Term')){
           $scope.recency.finalOutcome="RITA Long Term";
+          $scope.recencyOutcomeDisplay="";
           $scope.recency.showFinalOutcome = true;
           $scope.setfinalcolor = 'black';
         }else if(vlLoadResultDropdown =='Failed'&& ($scope.recency.recencyOutcome=='Assay Recent'|| $scope.recency.recencyOutcome=='Assay Long Term') ){
          $scope.recency.finalOutcome="Inconclusive";
+        $scope.recencyOutcomeDisplay="";
          $scope.setfinalcolor = 'blue';
          $scope.recency.showFinalOutcome = true;
+        }
+        if(vlLoadResultDropdown==''&& $scope.recency.recencyOutcome=='Assay Recent'){
+          $scope.recencyOutcomeDisplay = "- Please ensure you add Viral Load Result"; 
         }
      }
 // Term Outcome 
@@ -546,6 +564,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
         (controlLine=='absent'&& positiveLine=='present'&& longTermLine=='present'))
         {
          $scope.recency.recencyOutcome="Invalid-Please Verify";
+         $scope.recencyOutcomeDisplay ="";
          $scope.recency.showtermOutcome = true;
          $scope.recency.showFinalOutcome = false;
          $scope.setoutcomecolor = 'red';
@@ -558,6 +577,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
           $scope.recency.showFinalOutcome = true;
           $scope.setfinalcolor = 'blue';
           $scope.recency.recencyOutcome="Invalid-Please Verify";
+          $scope.recencyOutcomeDisplay ="";
           $scope.recency.showtermOutcome = true;
           $scope.setoutcomecolor = 'red';
           $scope.recency.finalOutcome="Inconclusive";
@@ -567,6 +587,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
         }
         if(controlLine=='present'&& positiveLine=='absent'&& longTermLine=='absent'){
           $scope.recency.recencyOutcome="Assay Negative";
+          $scope.recencyOutcomeDisplay ="";
           $scope.recency.showtermOutcome = true;
           $scope.setoutcomecolor = 'blue';
           $scope.recency.finalOutcome="Inconclusive";
@@ -578,6 +599,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
         }
         if(controlLine=='present'&& positiveLine=='present'&& longTermLine=='absent'){
           $scope.recency.recencyOutcome="Assay Recent";
+          $scope.recencyOutcomeDisplay = "- Please ensure you add Viral Load Result";
           $scope.recency.showtermOutcome = true;
           $scope.setoutcomecolor = 'black';
           $scope.recency.finalOutcome="";
@@ -586,6 +608,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
        
         if(controlLine=='present'&& positiveLine=='present'&& longTermLine=='present'){
           $scope.recency.recencyOutcome="Assay Long Term";
+          $scope.recencyOutcomeDisplay ="";
           $scope.recency.showtermOutcome = true;
           $scope.setoutcomecolor = 'black';
           $scope.recency.finalOutcome="Long Term";
@@ -595,23 +618,27 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
         if(controlLine==""|| positiveLine==""||longTermLine==""){
           $scope.recency.recencyOutcome="";
           $scope.recency.finalOutcome="";
+          $scope.recencyOutcomeDisplay ="";
           $scope.recency.vlTestDate="";
           $scope.recency.vlLoadResult="";
           $scope.recency.vlLoadResultDropdown="";
           $scope.recency.showFinalOutcome = false;
           $scope.recency.showtermOutcome = false;
         }
+
       }
         // Final Outcome
       $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
-       // console.log(vlLoadResult )
+       
         if(termOutcome=="Assay Recent" && vlLoadResult >1000){
           $scope.recency.finalOutcome="RITA Recent";
+          $scope.recencyOutcomeDisplay ="";
           $scope.recency.showFinalOutcome = true;
           $scope.setfinalcolor = 'blue';
         }
-        else if(termOutcome=="Assay Recent" && (vlLoadResult <1000 && vlLoadResult !="" && vlLoadResult!=null) ){
+        else if(termOutcome=="Assay Recent" && (vlLoadResult <=1000   && vlLoadResult !="" && vlLoadResult!=null) ){
           $scope.recency.finalOutcome="RITA Long Term";
+          $scope.recencyOutcomeDisplay ="";
           $scope.recency.showFinalOutcome = true;
           $scope.setfinalcolor = 'black';
         } 
@@ -620,6 +647,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
           $scope.recency.finalOutcome="";
           $scope.recency.vlTestDate="";
           $scope.recency.vlLoadResult="";
+          $scope.recencyOutcomeDisplay = "- Please ensure you add Viral Load Result";
           $scope.recency.showFinalOutcome = false;
         }
         else if(termOutcome=="Assay Long Term" && ( vlLoadResult =="" || vlLoadResult==null))
@@ -746,8 +774,10 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
     $scope.recency.dob ="";
     }
   }
+
 // Get District Dropdown based on Province
 $scope.GetDistrictValue = function(province){
+  console.log(province);
   if($localStorage.get('offline') == true){
     var localarr = [];
     var localDistrict = [];
@@ -771,7 +801,6 @@ $scope.GetDistrictValue = function(province){
      } 
      for(i =0;i<Object.keys($scope.freq_district).length;i++){  
        $scope.alldistrict.unshift($scope.freq_district[i]);
-
      }
      var trimmedArray2 = [];
      var values2 = [];
@@ -784,15 +813,22 @@ $scope.GetDistrictValue = function(province){
        }
      }
      $scope.districtData = trimmedArray2;  
-   
+  
   }else{
     var localDistrict = JSON.parse(localStorage.getItem('DistrictData'));
     var result = localDistrict.filter(obj => {
     return obj.province_id === province
   })
   $scope.districtData = result;
-  console.log($scope.recency.location)
   }
+  console.log($scope.districtData)
+if(province!=null){
+  var districtlen = ($scope.districtData.length+1).toString();
+  $scope.districtData.push({
+   "district_id": districtlen,
+   "district_name":"Other"
+ })
+}
 
 }
 // Get City Dropdown based on District
@@ -811,7 +847,6 @@ $scope.GetCityValue = function(district){
     })
     localCity = result;
      //Display recent district on top of dropdown
-
      $scope.allcity =localCity;
      for(i=0;i<localarrsize;i++){
        $scope.freq_city.unshift({
@@ -822,8 +857,6 @@ $scope.GetCityValue = function(district){
      } 
      for(i =0;i<Object.keys($scope.freq_city).length;i++){  
        $scope.allcity.unshift($scope.freq_city[i]);
-       //console.log($scope.allcity)
-
      }
      var trimmedArray2 = [];
      var values2 = [];
@@ -843,9 +876,12 @@ $scope.GetCityValue = function(district){
       return obj.district_id === district
     })
     $scope.cityData = cityresult;
-  //console.log($scope.recency.location)
-
   }
+      var citylen = ($scope.cityData.length+1).toString();
+        $scope.cityData.push({
+         "city_id": citylen,
+         "city_name":"Other"
+       })
   
 }
     $scope.checkriskpopulation = function(){
@@ -875,6 +911,45 @@ $scope.GetCityValue = function(district){
       else{
        $scope.showotherfacility = false;
         }
+    }
+    $scope.checkotherdistrict = function(districtid){
+      var cityData = $scope.cityData
+      function isCity(item) { 
+         return item.city_name === 'Other';
+      }
+      var othercityData = cityData.find(isCity)
+      console.log(othercityData.city_id); 
+      $scope.recency.districtname = $("#location_two").find("option:selected").text();
+      if($scope.recency.districtname=='Other'){
+        $scope.showotherdistrict = true;
+        $scope.recency.location[2]=othercityData.city_id;
+        $scope.showothercity = true;
+      }
+      else if($scope.recency.districtname=='-- Select --'){
+        $scope.showotherdistrict = false;
+        $scope.recency.districtname="";
+        $scope.recency.location[2]="";
+        $scope.showothercity = false;
+      }else{
+        $scope.showotherdistrict = false;
+        $scope.recency.location[2]="";
+        $scope.showothercity = false;
+      }
+     
+    }
+    $scope.checkothercity = function(cityid){
+      $scope.recency.cityname = $("#location_three").find("option:selected").text();
+      console.log($scope.recency.cityname);
+      if($scope.recency.cityname=='Other'){
+        $scope.showothercity = true;
+      }
+      else if($scope.recency.cityname=='-- Select --'){
+        $scope.showothercity = false;
+        $scope.recency.cityname="";
+      }else{
+        $scope.showothercity = false;
+
+      }
     }
     $scope.checkOtherTestingFacility = function(){
       $scope.recency.testing_facility_name = $("#testingFacility").find("option:selected").text();
@@ -1169,7 +1244,7 @@ $scope.GetCityValue = function(district){
       $scope.addRecency = function()
       {
         $scope.clientLocation =[];
-        console.log($scope.recency);
+       // console.log($scope.recency);
         $scope.recency.appVersion = localStorage.getItem('AppVersion');      
         $scope.recency.addedBy = localStorage.getItem('userId');
         for(i=0;i<$scope.configdata.length;i++){
@@ -1189,7 +1264,7 @@ $scope.GetCityValue = function(district){
              // console.log( $scope.recency[keyname])     
           }
       }
-      console.log($scope.clientLocation)
+      //console.log($scope.clientLocation)
 
       for(i=0;i<$scope.mandatoryData.length;i++){
         var id ="#"+$scope.mandatoryData[i];

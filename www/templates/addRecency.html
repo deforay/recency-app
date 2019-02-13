@@ -2,10 +2,10 @@
 <ion-view view-title="Add Recency Test {{unSyncCount}}" >
         <header class="row recency-tab" >
                 <button id="main-recency" class="col button recency-head " ng-click="setmainactive();">Section 1/2
-                     <span ng-if="showRecencyTick==true" class="tickMark"><i class="icon ion-checkmark"></i></span>
+                     <span ng-if="showRecencyTick==true" class="tickMark"><i class="icon ion-checkmark-circled"></i></span>
                     </button>
                 <button id="other-recency" class="col button recency-head" ng-click="patientvalidation();setothersactive();">Section 2/2
-                    <span ng-if="showBehaviourTick==true" class="tickMark"><i class="icon ion-checkmark"></i></span>
+                    <span ng-if="showBehaviourTick==true" class="tickMark"><i class="icon ion-checkmark-circled"></i></span>
                 </button>
             </header>
 <div class="RecencyForm">        
@@ -52,7 +52,7 @@
                                       <p>Facility<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='facilityId'"  style="color:#df3838;"> *</span></p>
                                   </span>
                             <div class="form-logo "><img src="img/facility.png"></div> 
-                                <!-- <select id="facilityId" name="facilityId" ng-model="recency.facilityId" title="Please Choose Facility" ng-options="facility.facility_id as facility.facility_name for facility in facilityData track by facility.facility_id"
+                            <!-- <select id="facilityId" name="facilityId" ng-model="recency.facilityId" title="Please Choose Facility" ng-options="facility.facility_id as facility.facility_name for facility in facilityData track by facility.facility_id"
                                 ng-change="checkotherfacility();"  >
                                 <option value="">-- Select --</option>
                             </select> -->
@@ -85,16 +85,34 @@
                                   ng-change="GetDistrictValue(recency.location[0]);partialRecencyData()">
                                     <option value="">-- Select --</option>
                             </select>
+                          
                             <select id="{{loc.global_name}}" ng-if="loc.global_name=='location_two'" name="{{loc.global_name}}"  title="Please Choose {{loc.global_value}}" ng-model='recency.location[1]' ng-options="district.district_id as district.district_name for district in districtData "
-                                    ng-change="GetCityValue(recency.location[1]);partialRecencyData()">
+                                    ng-change="GetCityValue(recency.location[1]);checkotherdistrict(recency.location[1]);partialRecencyData()">
                                     <option value="">-- Select --</option>
                             </select>
+
+                            <div ng-if="loc.global_name=='location_two' && showotherdistrict==true">
+                                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                            <p>Other {{loc.global_value}}<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory==loc.global_name" style="color:#df3838;"> *</span> </p>
+                                    </span>
+                                  <div class="form-logo date-img"><img src="img/house.png"></div> 
+                                    <input id="otherDistrict" type="text" class="otherDistrict" name="otherDistrict"  ng-model="recency.otherDistrict" placeholder="Other {{loc.global_value}}" ng-click="partialRecencyData()">
+                           </div>
                             <select id="{{loc.global_name}}" ng-if="loc.global_name=='location_three'" name="{{loc.global_name}}"   title="Please Choose {{loc.global_value}}" ng-model='recency.location[2]' ng-options="city.city_id as city.city_name for city in cityData"
-                               ng-change="partialRecencyData()">
+                               ng-change="checkothercity(recency.location[2]);partialRecencyData()">
                                      <option value="">-- Select --</option>
-                            </select>                      
+                            </select>   
+
+                            <div ng-if="loc.global_name=='location_three' && showothercity==true">
+                                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                            <p>Other {{loc.global_value}}<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory==loc.global_name" style="color:#df3838;"> *</span> </p>
+                                    </span>
+                                  <div class="form-logo date-img"><img src="img/house.png"></div> 
+                                    <input id="otherCity" type="text" class="otherCity" name="otherCity"  ng-model="recency.otherCity" placeholder="Other {{loc.global_value}}" ng-click="partialRecencyData()">
+                           </div>                   
                         </div>
                     </div>
+                 
              </div>
              <div class="card" style="margin-top:0;margin-bottom: 0;" ng-if="optionalFieldsFlag.hivDiagnosisDate==true || optionalFieldsFlag.pastHivTesting==true || optionalFieldsFlag.testLast12Month==true" >
                     <h4  style="font-size: 14px;margin-left: 12px;margin-bottom: 0;font-weight: bold;">HIV Diagnosis Test</h4>
@@ -317,7 +335,7 @@
                 </div>
                 <div class="row" ng-if="recency.testNotPerformed!=true">
                     <div class=" input-field col">
-                            <span ng-if="recency.showtermOutcome==true">Assay Outcome:    <span id="termOutcome" ng-class="setoutcomecolor" class="outcome" style="margin-left: 10px;" >{{recency.recencyOutcome}}  </span></span> 
+                            <span ng-if="recency.showtermOutcome==true">Assay Outcome: <span  id="termOutcome" ng-class="setoutcomecolor" class="outcome" style="margin-left: 10px;" >{{recency.recencyOutcome}} {{recencyOutcomeDisplay}} </span></span> 
                         <!-- <span ng-if="outcomered==true">Outcome:    <span class="outcome" style="margin-left: 10px;color:red;" >{{recency.recencyOutcome}}  </span></span> 
                         <span ng-if="outcomeblack==true">Outcome:    <span class="outcome" style="margin-left: 10px;color:#000;" >{{recency.recencyOutcome}}  </span></span>  -->
                             

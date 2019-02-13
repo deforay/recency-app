@@ -46,7 +46,7 @@ $scope.updateBadge = function(){
     $scope.displayqcbadge=false;
   }
   
-  $scope.appVersion = 1.0;
+  $scope.appVersion = 1.2;
 }
 
 // $rootScope.displaybadge=true;
@@ -69,7 +69,7 @@ if(QCDataList != null){
   $scope.displayqcbadge=false;
 }
 
-$scope.appVersion = 1.0;
+$scope.appVersion = 1.2;
 localStorage.setItem('AppVersion',$scope.appVersion);
 
 $scope.addRecency = function(){
@@ -249,11 +249,24 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
     });
     $http.get($localStorage.get('apiUrl')+'/api/district')
     .success(function(data) {
-     localStorage.setItem('DistrictData',JSON.stringify(data.district))           
+   //  console.log(data);
+     $scope.districtData  = data.district;
+    //  var districtlen = ($scope.districtData.length+1).toString();
+    //  $scope.districtData.push({
+    //   "district_id": districtlen,
+    //   "district_name":"Other"
+    // })
+    localStorage.setItem('DistrictData',JSON.stringify($scope.districtData))  
     });
     $http.get($localStorage.get('apiUrl')+'/api/city')
     .success(function(data) {     
-     localStorage.setItem('CityData',JSON.stringify(data.city))           
+      $scope.cityData = data.city;
+    //   var citylen = ($scope.cityData.length+1).toString();
+    //   $scope.cityData.push({
+    //    "city_id": citylen,
+    //    "city_name":"Other"
+    //  })
+     localStorage.setItem('CityData',JSON.stringify($scope.cityData))           
     });
   
     $scope.mandatoryData = JSON.parse(localStorage.getItem('MandatoryData'));
