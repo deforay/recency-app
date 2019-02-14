@@ -111,7 +111,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
                 $ionicPopup.alert({title:'Failed!',template:data.message});
                }
                else{
-
+                    console.log(data)
                     $scope.response =data.syncData.response;
                     $scope.syncCount =data.syncCount.response[0].Total;
                     localStorage.setItem('syncCount', $scope.syncCount)
@@ -127,12 +127,12 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
 
                      $preLoader.hide();
 
-                         $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
-                         .then(function(success) {
-                              // success
-                          }, function (error) {
-                              // error
-                          });
+                        //  $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
+                        //  .then(function(success) {
+                        //       // success
+                        //   }, function (error) {
+                        //       // error
+                        //   });
                     
                    $scope.onLoadRecency();
 

@@ -2,7 +2,7 @@
 app=angular.module('starter.viewRecencyDetailCtrl', ['starter.services'])
 
 .controller('viewRecencyDetailCtrl', function($scope,  $window,$rootScope, $stateParams) {
-   // console.log( $rootScope.recencyDetail);
+    console.log( $rootScope.recencyDetail);
   
   $scope.displaybadge = false;
 

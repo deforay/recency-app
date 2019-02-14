@@ -79,22 +79,41 @@
                                 <p>{{loc.global_value}}<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory==loc.global_name" style="color:#df3838;"> *</span> </p>                               
                                   </span>
                             <div class="form-logo date-img"><img src="img/house.png"></div>
+
                              <select id="{{loc.global_name}}" ng-if="loc.global_name=='location_one'" name="{{loc.global_name}}" title="Please Choose {{loc.global_value}}" ng-model='recency.location[0]' 
                                      ng-change="GetDistrictValue(recency.location[0])"  >
                               <option value="">-- Select --</option>
                               <option ng-repeat="province in provinceData" value="{{province['province_id']}}">{{province['province_name']}}</option>
                              </select> 
+
                             <select id="{{loc.global_name}}" ng-if="loc.global_name=='location_two'" name="{{loc.global_name}}" title="Please Choose {{loc.global_value}}" ng-model='recency.location[1]' 
-                              ng-change="GetCityValue(recency.location[1])"  >
+                              ng-change="GetCityValue(recency.location[1]);checkotherdistrict(recency.location[1]);"  >
                               <option value="">-- Select --</option>
                               <option ng-repeat="district in districtData" value="{{district['district_id']}}">{{district['district_name']}}</option>
-    
                             </select>
-                             <select id="{{loc.global_name}}" ng-if="loc.global_name=='location_three'" name="{{loc.global_name}}" title="Please Choose {{loc.global_value}}"  ng-model='recency.location[2]'>
+
+                            <div ng-if="loc.global_name=='location_two' && showotherdistrict==true">
+                                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                            <p>Other {{loc.global_value}}<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory==loc.global_name" style="color:#df3838;"> *</span> </p>
+                                    </span>
+                                  <div class="form-logo date-img"><img src="img/house.png"></div> 
+                                    <input id="otherDistrict" type="text" class="otherDistrict" name="otherDistrict"  title="Please Enter Other {{loc.global_value}}" ng-model="recency.otherDistrict" placeholder="Other {{loc.global_value}}">
+                            </div>
+
+                             <select id="{{loc.global_name}}" ng-if="loc.global_name=='location_three'" name="{{loc.global_name}}" title="Please Choose {{loc.global_value}}"  ng-model='recency.location[2]'
+                               ng-change="checkothercity(recency.location[2])">
                                <option value="">-- Select --</option>
                               <option ng-repeat="city in cityData" value="{{city['city_id']}}">{{city['city_name']}}</option>
-    
                              </select>
+
+                             <div ng-if="loc.global_name=='location_three' && showothercity==true">
+                                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                            <p>Other {{loc.global_value}}<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory==loc.global_name" style="color:#df3838;"> *</span> </p>
+                                    </span>
+                                  <div class="form-logo date-img"><img src="img/house.png"></div> 
+                                    <input id="otherCity" type="text" class="otherCity" name="otherCity"  ng-model="recency.otherCity" title="Please Enter Other {{loc.global_value}}" placeholder="Other {{loc.global_value}}">
+                             </div> 
+                             
                         </div>
                     </div>
                 </div>
@@ -308,7 +327,8 @@
                             <p>Long Term Line<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='longTermLine'" style="color:#df3838;"> *</span></p>                                  
                          </span>
                        <div class="form-logo"><img src="img/recencyresult.png"></div> 
-                       <select class="ng-valid" id="longTermLine" name="longTermLine" title="Please Choose LongTerm Line"  ng-model="recency.longTermLine" ng-change="OnLongtermChange(recency.longTermLine);getOutcome(recency.ctrlLine,recency.positiveLine,recency.longTermLine);OnVlLoadChange(recency.vlLoadResultDropdown);">
+                       <select class="ng-valid" id="longTermLine" name="longTermLine" title="Please Choose LongTerm Line"  ng-model="recency.longTermLine"
+                        ng-change="OnLongtermChange(recency.longTermLine);getOutcome(recency.ctrlLine,recency.positiveLine,recency.longTermLine);OnVlLoadChange(recency.vlLoadResultDropdown);">
                          <option value="">-- Select --</option>
                          <option value="present">Present(Long Term/LT)</option>
                          <option value="absent">Absent(Recent/R)</option>
@@ -317,7 +337,7 @@
                </div>
                <div class="row" ng-if="recency.testNotPerformed!=true">
                 <div class=" input-field col">
-                        <span ng-if="recency.showtermOutcome==true">Assay Outcome:    <span id="termOutcome" ng-class="setoutcomecolor" class="outcome" style="margin-left: 10px;" >{{recency.recencyOutcome}}  </span></span> 
+                        <span ng-if="recency.showtermOutcome==true">Assay Outcome:    <span id="termOutcome" ng-class="setoutcomecolor" class="outcome" style="margin-left: 10px;" >{{recency.recencyOutcome}} {{recencyOutcomeDisplay}} </span></span> 
                        <!-- <span>Outcome:<span ng-if="recency.recencyOutcome=='Assay HIV Negative' || recency.recencyOutcome=='Invalid-Please Verify'" style="margin-left: 10px;color:red" >{{recency.recencyOutcome}}  </span></span>
                         <span ng-if="recency.recencyOutcome!='Assay HIV Negative' &&  recency.recencyOutcome!='Invalid-Please Verify'"style="margin-left: 10px;" >{{recency.recencyOutcome}}  </span> -->
 
