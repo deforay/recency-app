@@ -672,8 +672,9 @@ else if($scope.recency.finalOutcome =='Assay Negative'){
          $scope.setfinalcolor = 'blue';
          $scope.recency.showFinalOutcome = true;
         }
-        if(vlLoadResultDropdown==''&& $scope.recency.recencyOutcome=='Assay Recent'){
+        if(vlLoadResultDropdown==''&&  $scope.recency.vlLoadResult=="" && $scope.recency.recencyOutcome=='Assay Recent'){
           $scope.recencyOutcomeDisplay = "- Please ensure you add Viral Load Result"; 
+          
         }
      }
 
@@ -721,11 +722,16 @@ $scope.getOutcome = function(controlLine,positiveLine,longTermLine){
   }
   if(controlLine=='present'&& positiveLine=='present'&& longTermLine=='absent'){
     $scope.recency.recencyOutcome="Assay Recent";
-    $scope.recencyOutcomeDisplay = "- Please ensure you add Viral Load Result";
     $scope.recency.showtermOutcome = true;
     $scope.setoutcomecolor = 'black';
     $scope.recency.finalOutcome="";
-    $scope.recency.showFinalOutcome = false;          
+    $scope.recency.showFinalOutcome = false;   
+    if($scope.recency.vlLoadResult=="" &&  $scope.recency.vlLoadResultDropdown==""){
+      $scope.recencyOutcomeDisplay = "- Please ensure you add Viral Load Result";
+    }else{
+      $scope.recencyOutcomeDisplay="";
+    }
+
   }
   if(controlLine=='present'&& positiveLine=='present'&& longTermLine=='present'){
     $scope.recency.recencyOutcome="Assay Long Term";
@@ -746,6 +752,8 @@ $scope.getOutcome = function(controlLine,positiveLine,longTermLine){
     $scope.recency.showFinalOutcome = false;
     $scope.recency.showtermOutcome = false;
   }
+  console.log($scope.recencyOutcomeDisplay)
+  
 }
   // Final Outcome
 $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
@@ -777,6 +785,8 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
     $scope.recency.showFinalOutcome = true;
     $scope.setfinalcolor = 'black';
   }
+  console.log($scope.recencyOutcomeDisplay)
+
 }
 
     $scope.getReasonName = function(reason){

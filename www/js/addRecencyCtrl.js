@@ -589,7 +589,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
          $scope.setfinalcolor = 'blue';
          $scope.recency.showFinalOutcome = true;
         }
-        if(vlLoadResultDropdown==''&& $scope.recency.recencyOutcome=='Assay Recent'){
+        if(vlLoadResultDropdown=='' && $scope.recency.vlLoadResult==""&& $scope.recency.recencyOutcome=='Assay Recent'){
           $scope.recencyOutcomeDisplay = "- Please ensure you add Viral Load Result"; 
         }
      }
@@ -636,11 +636,15 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
         }
         if(controlLine=='present'&& positiveLine=='present'&& longTermLine=='absent'){
           $scope.recency.recencyOutcome="Assay Recent";
-          $scope.recencyOutcomeDisplay = "- Please ensure you add Viral Load Result";
           $scope.recency.showtermOutcome = true;
           $scope.setoutcomecolor = 'black';
           $scope.recency.finalOutcome="";
           $scope.recency.showFinalOutcome = false; 
+          if($scope.recency.vlLoadResult=="" &&  $scope.recency.vlLoadResultDropdown==""){
+            $scope.recencyOutcomeDisplay = "- Please ensure you add Viral Load Result";
+          }else{
+            $scope.recencyOutcomeDisplay="";
+          }
          }
        
         if(controlLine=='present'&& positiveLine=='present'&& longTermLine=='present'){
@@ -662,7 +666,6 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
           $scope.recency.showFinalOutcome = false;
           $scope.recency.showtermOutcome = false;
         }
-
       }
         // Final Outcome
       $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
@@ -693,6 +696,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
           $scope.recency.showFinalOutcome = true;
           $scope.setfinalcolor = 'black';
         }
+
       }
 
       $scope.getReasonName = function(reason){
