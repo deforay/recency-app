@@ -59,7 +59,7 @@
                             <select class="ng-valid" id="facilityId"  name="facilityId"  title="Please Choose Facility" ng-model="recency.facilityId" ng-change="checkotherfacility();partialRecencyData();" >
                                 <option value="">-- Select --</option>
                                 <option ng-repeat="facility in facilityData" value="{{facility['facility_id']}}">{{facility['facility_name']| underscorefilter}}</option>
-                              </select>    
+                            </select>    
                         </div>
                     </div>
                     <div class="row" ng-if="showotherfacility==true && optionalFieldsFlag.facilityId==true">

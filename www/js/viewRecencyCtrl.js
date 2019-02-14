@@ -127,12 +127,12 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
 
                      $preLoader.hide();
 
-                        //  $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
-                        //  .then(function(success) {
-                        //       // success
-                        //   }, function (error) {
-                        //       // error
-                        //   });
+                         $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
+                         .then(function(success) {
+                              // success
+                          }, function (error) {
+                              // error
+                          });
                     
                    $scope.onLoadRecency();
 

@@ -82,7 +82,6 @@ app=angular.module('starter.editRecencyCtrl', ['starter.services'])
   $scope.recency.location[0] = $scope.recency.location_one;
   $scope.recency.location[1] = $scope.recency.location_two;
   $scope.recency.location[2] = $scope.recency.location_three;
-console.log( $scope.recency.location)
    if($scope.recency.location_one){
     var localDistrict = JSON.parse(localStorage.getItem('DistrictData'));
     var result = localDistrict.filter(obj => {
@@ -97,7 +96,6 @@ console.log( $scope.recency.location)
        "district_name":"Other"
      })
     }
-    console.log( $scope.districtData)
   }else{
     $scope.districtData = [];
     $scope.cityData = [];
@@ -189,7 +187,6 @@ if($localStorage.get('offline') == true){
 })
 $scope.districtData = result;
 }
-console.log($scope.districtData);
   if(province!=null && province!=""){
     var districtlen = ($scope.districtData.length+1).toString();
     $scope.districtData.push({
@@ -273,7 +270,6 @@ if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != u
  }
  if( $scope.recency.districtname =="Other" && $scope.recency.location[1]!="" && ($scope.recency.otherDistrict != undefined ||$scope.recency.otherDistrict!="")){
   $scope.showotherdistrict = true;
- console.log($scope.recency)
 
   $scope.recency.location_two_name=$scope.recency.districtname;
  }
@@ -424,7 +420,7 @@ else if($scope.recency.finalOutcome =='Assay Negative'){
             }
           }
           $scope.facilityTestData = trimmedArray2;
-          console.log( $scope.facilityTestData);
+          //console.log( $scope.facilityTestData);
           //Display recent province on top of dropdown
 
           $scope.allprovinces =localprovince;
@@ -501,7 +497,7 @@ else if($scope.recency.finalOutcome =='Assay Negative'){
         var mandatoryname = $(id).attr("name");
         var mandatorytitle = $(id).attr("title");
         var mandatoryField=$scope.mandatoryData[i];
-        console.log(mandatoryField);
+       // console.log(mandatoryField);
                
       if($scope.mandatoryData[i]=='sampleId' && $scope.recency.sampleId==""){
         $scope.showRecencyTick = false;
@@ -634,8 +630,6 @@ else if($scope.recency.finalOutcome =='Assay Negative'){
         $scope.showBehaviourTick = true;
   
       }
-      console.log($scope.showRecencyTick)
-      console.log($scope.showBehaviourTick)
     }
   
     }
@@ -806,10 +800,63 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
 
     $scope.getFacility=function(facilityid){
      // console.log(facilityid)
-
-      if(facilityid!=""){
+      if($scope.recency.facilityId!=""){
         $scope.recency.facility_name = $("#facilityId option:selected").text();
-        //console.log($scope.recency.facility_name)
+
+        var facilityData = $scope.facilityData
+        function isfacility(item) { 
+           return item.facility_id === $scope.recency.facilityId;
+        }
+        var selectedfacility = facilityData.find(isfacility)
+      $scope.recency.location[0] = selectedfacility.province;
+      $scope.recency.location[1] = selectedfacility.district;
+      $scope.recency.location[2] = selectedfacility.city;
+
+      if($scope.recency.location[0]){
+        var localDistrict = JSON.parse(localStorage.getItem('DistrictData'));
+        var result = localDistrict.filter(obj => 
+          {
+          return obj.province_id === $scope.recency.location[0]
+        })
+        $scope.districtData = result;
+        $scope.recency.location[1] = $scope.recency.location[1];
+       // console.log( $scope.districtData)
+        if($scope.recency.location[0]!=""||$scope.recency.location[0]!=null){
+          var districtlen = ($scope.districtData.length+1).toString();
+          $scope.districtData.push({
+           "district_id": districtlen,
+           "district_name":"Other"
+         })
+        }
+      }
+      else{
+        $scope.districtData =[];
+        $scope.cityData =[];
+      }
+      if($scope.recency.location[1]){
+        var localCity = JSON.parse(localStorage.getItem('CityData'));
+        var cityresult = localCity.filter(obj => {
+          return obj.district_id === $scope.recency.location[1]
+        })
+        $scope.cityData = cityresult;
+
+        if($scope.recency.location[1]!=""||$scope.recency.location[1]!=null){
+          var citylen = ($scope.cityData.length+1).toString();
+          $scope.cityData.push({
+           "city_id": citylen,
+           "city_name":"Other"
+         })
+        }
+
+      }else{
+        $scope.cityData =[];
+      }
+    }else{
+        $scope.recency.location[0] = "";
+        $scope.recency.location[1] = "";
+        $scope.recency.location[2] = "";
+        $scope.districtData =[];
+        $scope.cityData =[];
       }
       if($scope.recency.facility_name =='-- Select --' || facilityid=="" ){
         $scope.showotherfacility = false;
@@ -849,7 +896,7 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
         var othercityData = cityData.find(isCity)
         $scope.recency.districtname = $("#location_two").find("option:selected").text();
       }
-      console.log(othercityData.city_id); 
+      //console.log(othercityData.city_id); 
      
       if($scope.recency.districtname=='Other'){
         $scope.showotherdistrict = true;
@@ -872,7 +919,7 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
     }
     $scope.checkothercity = function(cityid){
       $scope.recency.cityname = $("#location_three").find("option:selected").text();
-      console.log($scope.recency.cityname);
+     // console.log($scope.recency.cityname);
       if($scope.recency.cityname=='Other'){
         $scope.showothercity = true;
         $scope.recency.otherCity="";
@@ -1001,13 +1048,13 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
 
 
   $scope.showToastAlert = function(mandatorytitle){
- $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
-  // $cordovaToast.show(mandatorytitle, 'long', 'center')
-  //           .then(function(success) {
-  //             // success
-  //           }, function (error) {
-  //             // error
-  //           });
+// $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+  $cordovaToast.show(mandatorytitle, 'long', 'center')
+            .then(function(success) {
+              // success
+            }, function (error) {
+              // error
+            });
   }
   $scope.patientvalidation = function(){
   // console.log($scope.recency)
@@ -1022,7 +1069,7 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
       }else{
           $scope.recency[key] =$scope.recency.location[i];
           $scope.recency[keyname] =   $(keyId).find("option:selected").text();
-          console.log( $scope.recency[keyname])     
+         // console.log( $scope.recency[keyname])     
       }
   } 
   if($scope.mandatoryData.length>0){
@@ -1310,7 +1357,7 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
         var mandatoryname = $(id).attr("name");
         var mandatorytitle = $(id).attr("title");
         var mandatoryField=$scope.mandatoryData[i];
-        console.log(id)
+        //console.log(id)
         if($scope.mandatoryData[i]=='sampleId' && $scope.recency.sampleId==""){
           $scope.showRecencyTick = false;
           var mandatorytitle = 'Please Enter Sample ID';
@@ -1543,12 +1590,12 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
             $scope.recency ={};
            $scope.recencydisplay=true;
 
-          //  $cordovaToast.show('Edited Successfully', 'long', 'center')
-          //  .then(function(success) {
-          //    // success
-          //  }, function (error) {
-          //    // error
-          //  });
+           $cordovaToast.show('Edited Successfully', 'long', 'center')
+           .then(function(success) {
+             // success
+           }, function (error) {
+             // error
+           });
            $("#main-recency").addClass("active");
            $("#other-recency").removeClass('active');
            $window.location.reload(true);

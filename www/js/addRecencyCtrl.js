@@ -160,7 +160,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
       if($scope.recency.vlLoadResult==null){
         $scope.recency.vlLoadResult="";
       }
-      //console.log(recencyList)      
+
       var options = {maximumAge: 20000,timeout: 30000, enableHighAccuracy: true};
       $cordovaGeolocation.getCurrentPosition(options).then(function(position){
         $scope.recency.latitude=parseFloat(position.coords.latitude).toFixed(3);
@@ -180,12 +180,12 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
     else
     {
       $scope.recency = JSON.parse(localStorage.getItem('PartialRecencyData'));
-      console.log($scope.recency)
+     // console.log($scope.recency)
      //Other Text Field
       if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != undefined ||$scope.recency.otherfacility!="")){
         $scope.showotherfacility = true;
         $scope.recency.facility_name="Other"
-        console.log($scope.recency.otherfacility)
+      //  console.log($scope.recency.otherfacility)
        }
        if( $scope.recency.testing_facility_name =="Other" && ($scope.recency.othertestingfacility != undefined ||$scope.recency.othertestingfacility!="")){
         $scope.showothertestfacility = true;
@@ -245,7 +245,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
 
       }
     
-      console.log($scope.recency.location)
+     // console.log($scope.recency.location)
       if($scope.recency.location[0]){
         var localDistrict = JSON.parse(localStorage.getItem('DistrictData'));
         var result = localDistrict.filter(obj => 
@@ -254,7 +254,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
         })
         $scope.districtData = result;
         $scope.recency.location[1] = $scope.recency.location[1];
-        console.log( $scope.districtData)
+     //   console.log( $scope.districtData)
         if($scope.recency.location[0]!=""||$scope.recency.location[0]!=null){
           var districtlen = ($scope.districtData.length+1).toString();
           $scope.districtData.push({
@@ -347,7 +347,6 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
     }
     $scope.partialRecencyData = function(){
       var partialData = $scope.recency;
-   console.log($scope.recency)
     if($scope.recency.formInitDateTime=='' || $scope.recency.formInitDateTime==null || $scope.recency.formInitDateTime==undefined){
       var currentdatetime = new Date();
       $scope.recency.formInitDateTime = currentdatetime.getFullYear() + "-"
@@ -493,7 +492,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
               }
             }
             $scope.facilityData = trimmedArray;
-            console.log( $scope.facilityData);
+            //console.log( $scope.facilityData);
 
             //Display Recent Testing Facilities dropdown
             
@@ -518,7 +517,7 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
                }
              }
              $scope.facilityTestData = trimmedArray;
-             console.log( $scope.facilityTestData);
+             //console.log( $scope.facilityTestData);
  
              //Display recent province in Province dropdown
 
@@ -859,7 +858,7 @@ $scope.GetDistrictValue = function(province){
   })
   $scope.districtData = result;
   }
-  console.log($scope.districtData)
+  //console.log($scope.districtData)
 if(province!=null){
   var districtlen = ($scope.districtData.length+1).toString();
   $scope.districtData.push({
@@ -920,7 +919,7 @@ $scope.GetCityValue = function(district){
     })
     $scope.cityData = cityresult;
   }
-  console.log(district)
+  //console.log(district)
 
   if(district!=null){
     var citylen = ($scope.cityData.length+1).toString();
@@ -952,6 +951,62 @@ $scope.GetCityValue = function(district){
     }
     $scope.checkotherfacility = function(){
       $scope.recency.facility_name = $("#facilityId").find("option:selected").text();
+    if($scope.recency.facilityId!=""){
+        var facilityData = $scope.facilityData
+        function isfacility(item) { 
+           return item.facility_id === $scope.recency.facilityId;
+        }
+        var selectedfacility = facilityData.find(isfacility)
+      $scope.recency.location[0] = selectedfacility.province;
+      $scope.recency.location[1] = selectedfacility.district;
+      $scope.recency.location[2] = selectedfacility.city;
+
+      if($scope.recency.location[0]){
+        var localDistrict = JSON.parse(localStorage.getItem('DistrictData'));
+        var result = localDistrict.filter(obj => 
+          {
+          return obj.province_id === $scope.recency.location[0]
+        })
+        $scope.districtData = result;
+        $scope.recency.location[1] = $scope.recency.location[1];
+        if($scope.recency.location[0]!=""||$scope.recency.location[0]!=null){
+          var districtlen = ($scope.districtData.length+1).toString();
+          $scope.districtData.push({
+           "district_id": districtlen,
+           "district_name":"Other"
+         })
+        }
+      }
+      else{
+        $scope.districtData =[];
+        $scope.cityData =[];
+      }
+      if($scope.recency.location[1]){
+        var localCity = JSON.parse(localStorage.getItem('CityData'));
+        var cityresult = localCity.filter(obj => {
+          return obj.district_id === $scope.recency.location[1]
+        })
+        $scope.cityData = cityresult;
+
+        if($scope.recency.location[1]!=""||$scope.recency.location[1]!=null){
+          var citylen = ($scope.cityData.length+1).toString();
+          $scope.cityData.push({
+           "city_id": citylen,
+           "city_name":"Other"
+         })
+        }
+
+      }else{
+        $scope.cityData =[];
+      }
+    }else{
+        $scope.recency.location[0] = "";
+        $scope.recency.location[1] = "";
+        $scope.recency.location[2] = "";
+        $scope.districtData =[];
+        $scope.cityData =[];
+      }
+ 
       //console.log( $scope.recency.facility_name);
       if($scope.recency.facility_name=='Other'){
        $scope.showotherfacility = true;
@@ -971,7 +1026,6 @@ $scope.GetCityValue = function(district){
            return item.city_name === 'Other';
         }
         var othercityData = cityData.find(isCity)
-      console.log(othercityData); 
 
         $scope.recency.districtname = $("#location_two").find("option:selected").text();
       }else{
@@ -1000,7 +1054,7 @@ $scope.GetCityValue = function(district){
     }
     $scope.checkothercity = function(cityid){
       $scope.recency.cityname = $("#location_three").find("option:selected").text();
-      console.log($scope.recency.cityname);
+    //  console.log($scope.recency.cityname);
       if($scope.recency.cityname=='Other'){
         $scope.showothercity = true;
       }
@@ -1026,13 +1080,13 @@ $scope.GetCityValue = function(district){
         }
     }
     $scope.showToastAlert = function(mandatorytitle){
-   $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
-    // $cordovaToast.show(mandatorytitle, 'long', 'center')
-    //           .then(function(success) {
-    //             // success
-    //           }, function (error) {
-    //             // error
-    //           });
+   //$ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+    $cordovaToast.show(mandatorytitle, 'long', 'center')
+              .then(function(success) {
+                // success
+              }, function (error) {
+                // error
+              });
     }
 
     // Section 1 Mandatory Data Validation
@@ -1601,15 +1655,18 @@ $scope.GetCityValue = function(district){
             localStorage.setItem('counter', $scope.counter);
         
              $scope.recency ={};
+             $scope.districtData =[];
+             $scope.cityData =[];
+
              $scope.recencydisplay=true;
        
               //Hide Toast During Debugging 
-              // $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
-              // .then(function(success) {
-              //   // success
-              // }, function (error) {
-              //   // error
-              // });
+              $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
+              .then(function(success) {
+                // success
+              }, function (error) {
+                // error
+              });
       
               $scope.getLatLong();
                $scope.showRecencyTick = false;

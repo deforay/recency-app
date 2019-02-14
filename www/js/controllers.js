@@ -251,21 +251,11 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
     .success(function(data) {
    //  console.log(data);
      $scope.districtData  = data.district;
-    //  var districtlen = ($scope.districtData.length+1).toString();
-    //  $scope.districtData.push({
-    //   "district_id": districtlen,
-    //   "district_name":"Other"
-    // })
     localStorage.setItem('DistrictData',JSON.stringify($scope.districtData))  
     });
     $http.get($localStorage.get('apiUrl')+'/api/city')
     .success(function(data) {     
       $scope.cityData = data.city;
-    //   var citylen = ($scope.cityData.length+1).toString();
-    //   $scope.cityData.push({
-    //    "city_id": citylen,
-    //    "city_name":"Other"
-    //  })
      localStorage.setItem('CityData',JSON.stringify($scope.cityData))           
     });
   
