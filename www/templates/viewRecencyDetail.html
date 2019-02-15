@@ -117,7 +117,9 @@
                   <tr>
                       <td style="font: size 14px;"><b>Viral Load Result</b> </td>
                       <td>&nbsp;:&nbsp; </td>
-                      <td style="font-size:14px;"> {{recencyDetail.vlLoadResult}} </td>
+                      <td ng-if="recencyDetail.vlLoadResult!='BDL' && recencyDetail.vlLoadResult!='TND'" style="font-size:14px;"> {{recencyDetail.vlLoadResult}} </td>
+                      <td ng-if="recencyDetail.vlLoadResult=='BDL'" style="font-size:14px;"> Below Detection Line </td>
+                      <td ng-if="recencyDetail.vlLoadResult=='TND'" style="font-size:14px;"> Target not detected </td>
                     </tr>
               </div>
                 </table>

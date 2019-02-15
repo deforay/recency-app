@@ -385,8 +385,8 @@
                              ng-disabled="recency.recencyOutcome=='Assay Negative'||recency.recencyOutcome=='Invalid-Please Verify' ||recency.recencyOutcome==''||recency.vlLoadResult!=''"
                              ng-change="OnVlLoadChange(recency.vlLoadResultDropdown);partialRecencyData();" >
                               <option value="">-- Select --</option>
-                              <option value="TND">TND</option>
-                              <option value="BDL">BDL</option>
+                              <option value="TND">Target not detected</option>
+                              <option value="BDL">Below Detection Line</option>
                               <option value="Failed">Failed</option>
                               <option value="< 20">< 20</option>
                               <option value="< 40">< 40</option>
