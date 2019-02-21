@@ -287,37 +287,28 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
       {
         $http.get($localStorage.get('apiUrl')+'/api/facility')
            .success(function(data) {
-           $scope.facilityData = data.facility;
-           var facilitylen = ($scope.facilityData.length+1).toString();
-           $scope.facilityData.push({
-             "facility_id": facilitylen,
+            $scope.facilityData = data.facility;
+            var len = $scope.facilityData.length - 1;
+           var facilitylen = $scope.facilityData[len];  
+           var facilityid = (parseInt(facilitylen['facility_id'])+1).toString();
+            $scope.facilityData.push({
+             "facility_id": facilityid,
              "facility_name":"Other"
            })
         localStorage.setItem('FacilityData',JSON.stringify($scope.facilityData))  
         
-          $scope.facilityTestData = data.facilityTest;
-          var facilitytestlen = ($scope.facilityTestData.length+1).toString();
-              //console.log(facilitytestlen)
-          $scope.facilityTestData.push({
-             "facility_id": facilitytestlen,
-             "facility_name":"Other"
-          })
+        $scope.facilityTestData = data.facilityTest;
+        var testlen = $scope.facilityTestData.length - 1;
+        var facilitytestlen = $scope.facilityTestData[testlen];  
+        var facilitytestid = (parseInt(facilitytestlen['facility_id'])+1).toString();
+         $scope.facilityTestData.push({
+           "facility_id": facilitytestid,
+           "facility_name":"Other"
+         })
         localStorage.setItem('TestingFacilityData',JSON.stringify($scope.facilityTestData)) 
                
         });
-      //  $http.get($localStorage.get('apiUrl')+'/api/global-config')
-      //   .success(function(data) {
-      // //   console.log(data);
-      //   $scope.configdata =data.config;
-      //      for(i=0;i<$scope.configdata.length;i++){        
-      //        if($scope.configdata[i].global_name =="mandatory_fields" || $scope.configdata[i].global_name =="admin_email" || $scope.configdata[i].global_name =="admin_phone" )   {
-      //          $scope.configdata.splice(i);
-      //       }    
-      //      } 
-
-      //    localStorage.setItem('GlobalConfig',JSON.stringify($scope.configdata)) 
-      //   // console.log($scope.configdata)
-      // });
+ 
 
       $http.get($localStorage.get('apiUrl')+'/api/global-config')
       .success(function(data) {
@@ -377,18 +368,31 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
       });
       $http.get($localStorage.get('apiUrl')+'/api/province')
       .success(function(data) {
+        if(data.status=="success"){
        $scope.provinceData =data.province;
-       localStorage.setItem('ProvinceData',JSON.stringify(data.province))      
+       localStorage.setItem('ProvinceData',JSON.stringify(data.province))  
+      }else{
+        localStorage.setItem('ProvinceData','')
+       }    
       });
       $http.get($localStorage.get('apiUrl')+'/api/district')
       .success(function(data) {
-       $scope.districtData  = data.district;
-      localStorage.setItem('DistrictData',JSON.stringify($scope.districtData))  
+       if(data.status=="success"){
+        $scope.districtData  = data.district;
+        localStorage.setItem('DistrictData',JSON.stringify($scope.districtData))
+       }else{
+        localStorage.setItem('DistrictData','')
+       }
+    
       });
       $http.get($localStorage.get('apiUrl')+'/api/city')
-      .success(function(data) {     
+      .success(function(data) {   
+        if(data.status=="success"){
         $scope.cityData = data.city;
-       localStorage.setItem('CityData',JSON.stringify($scope.cityData))           
+       localStorage.setItem('CityData',JSON.stringify($scope.cityData))     
+        }else{
+          localStorage.setItem('CityData','')
+        }      
       });
   
       $scope.mandatoryData = JSON.parse(localStorage.getItem('MandatoryData'));
@@ -399,7 +403,7 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
         .success(function(data) {
           $scope.riskpopulations =data;
           var lastelement = $scope.riskpopulations.length-1;
-          $scope.lastindex = parseInt($scope.riskpopulations[lastelement]['rp_id'])+1;
+          $scope.lastindex = (parseInt($scope.riskpopulations[lastelement]['rp_id'])+1).toString();
          // console.log($scope.lastindex)
           $scope.riskpopulations.push({
            "rp_id": $scope.lastindex,

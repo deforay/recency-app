@@ -182,24 +182,24 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
       $scope.recency = JSON.parse(localStorage.getItem('PartialRecencyData'));
      // console.log($scope.recency)
      //Other Text Field
-      if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != undefined ||$scope.recency.otherfacility!="")){
+      if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != undefined && $scope.recency.otherfacility!="")){
         $scope.showotherfacility = true;
         $scope.recency.facility_name="Other"
       //  console.log($scope.recency.otherfacility)
        }
-       if( $scope.recency.testing_facility_name =="Other" && ($scope.recency.othertestingfacility != undefined ||$scope.recency.othertestingfacility!="")){
+       if( $scope.recency.testing_facility_name =="Other" && ($scope.recency.othertestingfacility != undefined && $scope.recency.othertestingfacility!="")){
         $scope.showothertestfacility = true;
         $scope.recency.testing_facility_name="Other"
        }
-       if( $scope.recency.location_two_name =="Other" && ($scope.recency.otherDistrict != undefined ||$scope.recency.otherDistrict!="")){
+       if( $scope.recency.location_two_name =="Other" && ($scope.recency.otherDistrict != undefined && $scope.recency.otherDistrict!="")){
         $scope.showotherdistrict = true;
         $scope.recency.location_two_name="Other"
        }
-       if( $scope.recency.location_three_name =="Other" && ($scope.recency.otherCity != undefined ||$scope.recency.otherCity!="")){
+       if( $scope.recency.location_three_name =="Other" && ($scope.recency.otherCity != undefined && $scope.recency.otherCity!="")){
         $scope.showothercity = true;
         $scope.recency.location_three_name="Other"
        }
-       if( $scope.recency.riskPopulationName =="Other" && ($scope.recency.otherriskPopulation != undefined ||$scope.recency.otherriskPopulation!="")){
+       if( $scope.recency.riskPopulationName =="Other" && ($scope.recency.otherriskPopulation != undefined && $scope.recency.otherriskPopulation!="")){
         $scope.otherpopulation = true;
         $scope.recency.riskPopulationName="Other"
        }
@@ -246,7 +246,8 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
       }
     
      // console.log($scope.recency.location)
-      if($scope.recency.location[0]){
+  var localDistrictjson = localStorage.getItem('DistrictData');
+      if($scope.recency.location[0]&& (localDistrictjson!="" && localDistrictjson!=null)){
         var localDistrict = JSON.parse(localStorage.getItem('DistrictData'));
         var result = localDistrict.filter(obj => 
           {
@@ -254,11 +255,14 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
         })
         $scope.districtData = result;
         $scope.recency.location[1] = $scope.recency.location[1];
-     //   console.log( $scope.districtData)
+       console.log( $scope.districtData)
         if($scope.recency.location[0]!=""||$scope.recency.location[0]!=null){
-          var districtlen = ($scope.districtData.length+1).toString();
+
+          var len = $scope.districtData.length - 1;
+          var districtlen = $scope.districtData[len];  
+          var districtid = (parseInt(districtlen['district_id'])+1).toString();
           $scope.districtData.push({
-           "district_id": districtlen,
+           "district_id": districtid,
            "district_name":"Other"
          })
         }
@@ -267,7 +271,8 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
         $scope.districtData =[];
         $scope.cityData =[];
       }
-      if($scope.recency.location[1]){
+      var localCityjson = localStorage.getItem('CityData');
+      if($scope.recency.location[1] && (localCityjson!="" &&  localCityjson!=null)){
         var localCity = JSON.parse(localStorage.getItem('CityData'));
         var cityresult = localCity.filter(obj => {
           return obj.district_id === $scope.recency.location[1]
@@ -275,9 +280,11 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
         $scope.cityData = cityresult;
 
         if($scope.recency.location[1]!=""||$scope.recency.location[1]!=null){
-          var citylen = ($scope.cityData.length+1).toString();
+          var len = $scope.cityData.length - 1;
+          var citylen = $scope.cityData[len];  
+          var cityid = (parseInt(citylen['city_id'])+1).toString();
           $scope.cityData.push({
-           "city_id": citylen,
+           "city_id": cityid,
            "city_name":"Other"
          })
         }
@@ -818,58 +825,59 @@ app=angular.module('starter.addRecencyCtrl', ['starter.services'])
 
 // Get District Dropdown based on Province
 $scope.GetDistrictValue = function(province){
-  console.log(province);
-  if($localStorage.get('offline') == true){
-    var localarr = [];
-    var localDistrict = [];
-    $scope.freq_district = [];
-    $scope.alldistrict = new Array();
-
-    localarr = JSON.parse(localStorage.getItem('RecencyData'));  
-    localDistrict =  JSON.parse(localStorage.getItem('DistrictData'))      
-    var result = localDistrict.filter(obj => {
-      return obj.province_id === province
-    })
-    localDistrict = result;
-   //Display recent district on top of dropdown
-     $scope.alldistrict =localDistrict;
-     for(i=0;i<localarrsize;i++){
-       $scope.freq_district.unshift({
-         "district_id":localarr[i]['location_two'],
-         "district_name":localarr[i]['location_two_name']
-       })
-       //console.log($scope.freq_district)
-     } 
-     for(i =0;i<Object.keys($scope.freq_district).length;i++){  
-       $scope.alldistrict.unshift($scope.freq_district[i]);
-     }
-     var trimmedArray2 = [];
-     var values2 = [];
-     var value2;
-     for(var i = 0; i < $scope.alldistrict.length; i++) {
-       value2 = $scope.alldistrict[i]['district_id'];
-       if(values2.indexOf(value2) === -1) {
-         trimmedArray2.push($scope.alldistrict[i]);
-         values2.push(value2);
-       }
-     }
-     $scope.districtData = trimmedArray2;  
+  if((localStorage.getItem('DistrictData'))!="" ){ 
+     if($localStorage.get('offline') == true){
+        var localarr = [];
+        var localDistrict = [];
+        $scope.freq_district = [];
+        $scope.alldistrict = new Array();
+        localarr = JSON.parse(localStorage.getItem('RecencyData'));  
+        localDistrict =  JSON.parse(localStorage.getItem('DistrictData'))      
+        var result = localDistrict.filter(obj => {
+           return obj.province_id === province
+        })
+        localDistrict = result;
+        //Display recent district on top of dropdown
+        $scope.alldistrict =localDistrict;
+          for(i=0;i<localarrsize;i++){
+           $scope.freq_district.unshift({
+            "district_id":localarr[i]['location_two'],
+            "district_name":localarr[i]['location_two_name']
+          })
+          //console.log($scope.freq_district)
+           } 
+          for(i =0;i<Object.keys($scope.freq_district).length;i++){  
+            $scope.alldistrict.unshift($scope.freq_district[i]);
+          }
+          var trimmedArray2 = [];
+          var values2 = [];
+          var value2;
+          for(var i = 0; i < $scope.alldistrict.length; i++) {
+            value2 = $scope.alldistrict[i]['district_id'];
+            if(values2.indexOf(value2) === -1) {
+              trimmedArray2.push($scope.alldistrict[i]);
+              values2.push(value2);
+            }
+          }
+          $scope.districtData = trimmedArray2;  
   
-  }else{
-    var localDistrict = JSON.parse(localStorage.getItem('DistrictData'));
-    var result = localDistrict.filter(obj => {
-    return obj.province_id === province
-  })
-  $scope.districtData = result;
-  }
-  //console.log($scope.districtData)
-if(province!=null){
-  var districtlen = ($scope.districtData.length+1).toString();
-  $scope.districtData.push({
-   "district_id": districtlen,
-   "district_name":"Other"
- })
-}
+      }else{
+          var localDistrict = JSON.parse(localStorage.getItem('DistrictData'));
+          var result = localDistrict.filter(obj => {
+          return obj.province_id === province
+          })
+          $scope.districtData = result;
+      }
+      if(province!=null){
+        var len = $scope.districtData.length - 1;
+        var districtlen = $scope.districtData[len];  
+        var districtid = (parseInt(districtlen['district_id'])+1).toString();
+        $scope.districtData.push({
+          "district_id": districtid,
+          "district_name":"Other"
+          })
+        }
+   }
 $scope.recency.location[1] ="";
 $scope.recency.otherDistrict ="";
 $scope.showotherdistrict = false;
@@ -880,6 +888,7 @@ $scope.showothercity = false;
 // Get City Dropdown based on District
 
 $scope.GetCityValue = function(district){
+  if((localStorage.getItem('CityData'))!="" ){ 
   if($localStorage.get('offline') == true){
     var localarr = [];
     var localCity = [];
@@ -887,7 +896,7 @@ $scope.GetCityValue = function(district){
     $scope.allcity = new Array();
 
     localarr = JSON.parse(localStorage.getItem('RecencyData'));  
-    localCity =  JSON.parse(localStorage.getItem('DistrictData'))      
+    localCity =  JSON.parse(localStorage.getItem('CityData'))      
     var result = localCity.filter(obj => {
       return obj.district_id === district
     })
@@ -917,6 +926,7 @@ $scope.GetCityValue = function(district){
      $scope.cityData = trimmedArray2;  
      //console.log($scope.cityData);
   }else{
+    
     var localCity = JSON.parse(localStorage.getItem('CityData'));
     var cityresult = localCity.filter(obj => {
       return obj.district_id === district
@@ -924,17 +934,19 @@ $scope.GetCityValue = function(district){
     $scope.cityData = cityresult;
   }
   //console.log(district)
-
   if(district!=null){
-    var citylen = ($scope.cityData.length+1).toString();
+    var len = $scope.cityData.length - 1;
+    var citylen = $scope.cityData[len];  
+    var cityid = (parseInt(citylen['city_id'])+1).toString();
     $scope.cityData.push({
-     "city_id": citylen,
+     "city_id": cityid,
      "city_name":"Other"
    })
   } else{
     $scope.showotherdistrict = false;
     $scope.otherDistrict="";
   }
+}
   $scope.recency.location[2] ="";
   $scope.recency.otherCity ="";
   $scope.showothercity = false;
@@ -964,8 +976,8 @@ $scope.GetCityValue = function(district){
       $scope.recency.location[0] = selectedfacility.province;
       $scope.recency.location[1] = selectedfacility.district;
       $scope.recency.location[2] = selectedfacility.city;
-
-      if($scope.recency.location[0]){
+      var localDistrictjson = localStorage.getItem('DistrictData');
+      if($scope.recency.location[0] && (localDistrictjson!="" && localDistrictjson!=null)){
         var localDistrict = JSON.parse(localStorage.getItem('DistrictData'));
         var result = localDistrict.filter(obj => 
           {
@@ -974,9 +986,11 @@ $scope.GetCityValue = function(district){
         $scope.districtData = result;
         $scope.recency.location[1] = $scope.recency.location[1];
         if($scope.recency.location[0]!=""||$scope.recency.location[0]!=null){
-          var districtlen = ($scope.districtData.length+1).toString();
+          var len = $scope.districtData.length - 1;
+          var districtlen = $scope.districtData[len];  
+          var districtid = (parseInt(districtlen['district_id'])+1).toString();
           $scope.districtData.push({
-           "district_id": districtlen,
+           "district_id": districtid,
            "district_name":"Other"
          })
         }
@@ -985,7 +999,8 @@ $scope.GetCityValue = function(district){
         $scope.districtData =[];
         $scope.cityData =[];
       }
-      if($scope.recency.location[1]){
+      var localCityjson = localStorage.getItem('CityData');
+      if($scope.recency.location[1]&& ( localCityjson!="" && localCityjson!=null)){
         var localCity = JSON.parse(localStorage.getItem('CityData'));
         var cityresult = localCity.filter(obj => {
           return obj.district_id === $scope.recency.location[1]
@@ -993,9 +1008,11 @@ $scope.GetCityValue = function(district){
         $scope.cityData = cityresult;
 
         if($scope.recency.location[1]!=""||$scope.recency.location[1]!=null){
-          var citylen = ($scope.cityData.length+1).toString();
+          var len = $scope.cityData.length - 1;
+          var citylen = $scope.cityData[len];  
+          var cityid = (parseInt(citylen['city_id'])+1).toString();
           $scope.cityData.push({
-           "city_id": citylen,
+           "city_id": cityid,
            "city_name":"Other"
          })
         }
@@ -1010,7 +1027,10 @@ $scope.GetCityValue = function(district){
         $scope.districtData =[];
         $scope.cityData =[];
       }
- 
+      $scope.otherDistrict = "";
+      $scope.showotherdistrict=false;
+      $scope.otherCity="";
+      $scope.showothercity = false;
       //console.log( $scope.recency.facility_name);
       if($scope.recency.facility_name=='Other'){
        $scope.showotherfacility = true;
@@ -1084,7 +1104,7 @@ $scope.GetCityValue = function(district){
         }
     }
     $scope.showToastAlert = function(mandatorytitle){
-   //$ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+  //$ionicPopup.alert({title:'Alert!',template:mandatorytitle});
     $cordovaToast.show(mandatorytitle, 'long', 'center')
               .then(function(success) {
                 // success

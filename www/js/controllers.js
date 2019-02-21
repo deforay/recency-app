@@ -46,7 +46,7 @@ $scope.updateBadge = function(){
     $scope.displayqcbadge=false;
   }
   
-  $scope.appVersion = 1.3;
+  $scope.appVersion = 1.5;
 }
 
 // $rootScope.displaybadge=true;
@@ -69,7 +69,7 @@ if(QCDataList != null){
   $scope.displayqcbadge=false;
 }
 
-$scope.appVersion = 1.3;
+$scope.appVersion = 1.5;
 localStorage.setItem('AppVersion',$scope.appVersion);
 
 $scope.addRecency = function(){
@@ -169,18 +169,21 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
   .success(function(data) {
     console.log(data);
    $scope.facilityData = data.facility;
-   var facilitylen = ($scope.facilityData.length+1).toString();
+   var len = $scope.facilityData.length - 1;
+  var facilitylen = $scope.facilityData[len];  
+  var facilityid = (parseInt(facilitylen['facility_id'])+1).toString();
    $scope.facilityData.push({
-    "facility_id": facilitylen,
+    "facility_id": facilityid,
     "facility_name":"Other"
   })
   localStorage.setItem('FacilityData',JSON.stringify($scope.facilityData))    
 
    $scope.facilityTestData = data.facilityTest;
-   var facilitytestlen = ($scope.facilityTestData.length+1).toString();
-   //console.log(facilitytestlen)
+   var testlen = $scope.facilityTestData.length - 1;
+   var facilitytestlen = $scope.facilityTestData[testlen];  
+   var facilitytestid = (parseInt(facilitytestlen['facility_id'])+1).toString();
     $scope.facilityTestData.push({
-      "facility_id": facilitytestlen,
+      "facility_id": facilitytestid,
       "facility_name":"Other"
     })
     localStorage.setItem('TestingFacilityData',JSON.stringify($scope.facilityTestData))    
@@ -244,19 +247,31 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
     });
     $http.get($localStorage.get('apiUrl')+'/api/province')
     .success(function(data) {
+      if(data.status=="success"){
      $scope.provinceData =data.province;
-     localStorage.setItem('ProvinceData',JSON.stringify(data.province))      
+     localStorage.setItem('ProvinceData',JSON.stringify(data.province))  
+    }else{
+      localStorage.setItem('ProvinceData','')
+     }    
     });
     $http.get($localStorage.get('apiUrl')+'/api/district')
     .success(function(data) {
-   //  console.log(data);
-     $scope.districtData  = data.district;
-    localStorage.setItem('DistrictData',JSON.stringify($scope.districtData))  
+     if(data.status=="success"){
+      $scope.districtData  = data.district;
+      localStorage.setItem('DistrictData',JSON.stringify($scope.districtData))
+     }else{
+      localStorage.setItem('DistrictData','')
+     }
+  
     });
     $http.get($localStorage.get('apiUrl')+'/api/city')
-    .success(function(data) {     
+    .success(function(data) {   
+      if(data.status=="success"){
       $scope.cityData = data.city;
-     localStorage.setItem('CityData',JSON.stringify($scope.cityData))           
+     localStorage.setItem('CityData',JSON.stringify($scope.cityData))     
+      }else{
+        localStorage.setItem('CityData','')
+      }      
     });
   
     $scope.mandatoryData = JSON.parse(localStorage.getItem('MandatoryData'));
@@ -268,13 +283,13 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
   .success(function(data) {
    $scope.riskpopulations =data;
    var lastelement = $scope.riskpopulations.length-1;
-   $scope.lastindex = parseInt($scope.riskpopulations[lastelement]['rp_id'])+1;
+   $scope.lastindex = (parseInt($scope.riskpopulations[lastelement]['rp_id'])+1).toString();
  //  console.log($scope.lastindex)
    $scope.riskpopulations.push({
     "rp_id": $scope.lastindex,
     "name":"Other"
   }) 
-
+console.log($scope.riskpopulations)
   localStorage.setItem('RiskPopulations',JSON.stringify($scope.riskpopulations))       
   });
 });
