@@ -158,7 +158,12 @@ a{
   height: 100%;
 }
 
+/*Autocomplete*/
 
+ul.ui-autocomplete{
+    overflow-x: scroll;
+    max-height: 200px;
+}
 
 /* Modal Animation*/
 .slide-in-left {

@@ -264,6 +264,23 @@ else if($scope.recency.finalOutcome =='Assay Negative'){
            })
     }
   }
+  if(province!=null && province!=""){
+    var localfacility = JSON.parse(localStorage.getItem('FacilityData'));
+    var fac_result = localfacility.filter(obj => 
+      {      
+      return obj.province === province
+    })
+    $scope.facilityData = fac_result;
+    var len = $scope.facilityData.length - 1;
+    var facilitylen = $scope.facilityData[len];  
+    var facilityid = (parseInt(facilitylen['facility_id'])+1).toString();
+    $scope.facilityData.push({
+     "facility_id": facilityid,
+     "facility_name":"Other"
+   })
+   }else{
+    $scope.facilityData = JSON.parse(localStorage.getItem('FacilityData')); 
+   }
     $scope.recency.location[1] ="";
     $scope.recency.otherDistrict ="";
     $scope.showotherdistrict = false;
@@ -328,6 +345,24 @@ else if($scope.recency.finalOutcome =='Assay Negative'){
        })
       } 
     }
+    if(district!=null){
+      var localfacility = JSON.parse(localStorage.getItem('FacilityData'));
+      var fac_result = localfacility.filter(obj => 
+        {
+         
+        return obj.district === district
+      })
+      $scope.facilityData = fac_result;
+      var len = $scope.facilityData.length - 1;
+      var facilitylen = $scope.facilityData[len];  
+      var facilityid = (parseInt(facilitylen['facility_id'])+1).toString();
+      $scope.facilityData.push({
+       "facility_id": facilityid,
+       "facility_name":"Other"
+     })
+     }else{
+      $scope.facilityData = JSON.parse(localStorage.getItem('FacilityData'));
+     }
       $scope.recency.location[2] ="";
     $scope.recency.otherCity ="";
     $scope.showothercity = false;
@@ -825,6 +860,15 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
 
     $scope.getFacility=function(facilityid){
      // console.log(facilityid)
+     if($scope.recency.facility_name =='' || facilityid=="" ){
+      $scope.showotherfacility = false;
+      $scope.recency.facility_name = "";
+     }
+       else  if($scope.recency.facility_name=='Other'){
+      $scope.showotherfacility = true;
+       } else{
+      $scope.showotherfacility = false;
+       }
       if($scope.recency.facilityId!=""){
         $scope.recency.facility_name = $("#facilityId option:selected").text();
 
@@ -892,16 +936,58 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
       $scope.showotherdistrict = false;
       $scope.recency.otherCity ="";
       $scope.showothercity = false;
-      if($scope.recency.facility_name =='-- Select --' || facilityid=="" ){
-        $scope.showotherfacility = false;
-        $scope.recency.facility_name = "";
-       }
-      if($scope.recency.facility_name=='Other'){
-        $scope.showotherfacility = true;
-         } else{
-        $scope.showotherfacility = false;
-         }
-  
+
+    
+    }
+    $scope.facilityautocomplete = function(){
+      var src = $scope.facilityData;
+    src = $.map(src, function (value, key) {
+      return {
+          label: value.facility_name,
+          value: value.facility_id,
+          province:value.province,
+          district:value.district,
+          city:value.city,
+          facility_type_id:value.facility_type_id
+      }
+    })
+   // console.log(src);
+
+      $("#searchfacility").autocomplete({
+        source: src,
+        minLength:0,
+        autoFocus: true,
+    
+        select: function (event, ui) {
+            event.preventDefault();
+            
+            this.value = ui.item.label;
+            $(this).next().val(ui.item.value);
+          $scope.recency.facilityId = ui.item.value;
+          $scope.recency.facility_name = ui.item.label
+        if($scope.recency.facility_name=='Other'){
+          $scope.showotherfacility = true;
+        }
+        else{
+          $scope.showotherfacility = false;
+
+        }
+          if($scope.recency.facilityId !=''){         
+            sr2= $.map(ui.item, function (value, key) {
+              return {
+               facility_name: key.label,
+               facility_id :key.value,
+               province:key.province,
+               district:key.district,
+               city:key.city,
+               facility_type_id:key.facility_type_id
+              }
+            })
+            $scope.getFacility($scope.recency.facilityId);
+          }     
+      console.log($scope.showotherfacility) 
+        }
+      })
     }
     $scope.getTestingFacility=function(facilityid){
  

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src  'self' 'unsafe-inline' *">
+    <meta http-equiv="Content-Security-Policy" content="img-src 'self' data:; default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src  'self' 'unsafe-inline' *">
    
     <title>Recency</title>
 
@@ -18,7 +18,7 @@
      <link href="css/style.css" rel="stylesheet">
      <link href="lib/ionic-datepicker/src/ionic-datepicker.styles.css" rel="stylesheet">
      <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
+     <link rel="stylesheet" href="css/autocomplete.css">
 
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
@@ -28,6 +28,7 @@
 
    <script type="text/javascript" src="js/common/jquery.min.js"></script>
    <script type="text/javascript" src="js/common/crypto-js.js"></script>
+
    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
@@ -41,7 +42,7 @@
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/services.js"></script>
-    <!-- <script src="js/common/toast.js"></script> -->
+   
     <script src="js/loginCtrl.js"></script>
     <script src="js/addRecencyCtrl.js"></script>
     <script src="js/editRecencyCtrl.js"></script>

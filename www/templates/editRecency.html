@@ -46,7 +46,7 @@
                         </div>
                   </div>
               
-                    <div class="row" ng-if="optionalFieldsFlag.facilityId==true">
+                    <!-- <div class="row" ng-if="optionalFieldsFlag.facilityId==true">
                         <div class="input-field col ">
                               <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
                                 <p>Facility<span style="color:#df3838;"> *</span></p>                                
@@ -58,6 +58,17 @@
                                 <option ng-repeat="facility in facilityData" value="{{facility['facility_id']}}">{{facility['facility_name']| underscorefilter}}</option>
                               </select>  
 
+                        </div>
+                    </div> -->
+                    <div class="row" style="margin-top: 10px" ng-if="optionalFieldsFlag.facilityId==true">
+                        <div class="input-field col ">
+                            <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                               <p style="z-index: 1; position: absolute; margin-top: -20px;">Facility<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='facilityId'"  style="color:#df3838;"> *</span></p>
+                            </span>
+                            <div class="form-logo "><img src="img/facility.png"></div> 
+                            <input type="text" class="name" id="searchfacility"  ng-model="recency.facility_name" placeholder="Type to search facility..." 
+                            ng-keyup="facilityautocomplete()" />
+                            <input type="hidden" id="facilityId"  name="facilityId" title="Please Choose Facility"  ng-model="recency.facilityId" class="value" />
                         </div>
                     </div>
                     <div class="row" ng-if="showotherfacility==true && optionalFieldsFlag.facilityId==true">
