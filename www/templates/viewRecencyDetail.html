@@ -26,6 +26,21 @@
                 <td style="font-size:14px;"> {{recencyDetail.patientId}} </td>
               </tr>
               <tr>
+                <td style="font: size 14px;"><b>Sample Collection Date</b> </td>
+                <td>&nbsp;:&nbsp; </td>
+                <td style="font-size:14px;"> {{recencyDetail.sampleCollectionDate}} </td>
+              </tr>
+              <tr>
+                <td style="font: size 14px;"><b>Sample Receipt Date</b> </td>
+                <td>&nbsp;:&nbsp; </td>
+                <td style="font-size:14px;"> {{recencyDetail.sampleReceiptDate}} </td>
+              </tr>
+              <tr>
+                <td style="font: size 14px;"><b>Received Specimen Type</b> </td>
+                <td>&nbsp;:&nbsp; </td>
+                <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.receivedSpecimenType | replace: '_':' '}} </td>
+              </tr>
+              <tr>
                 <td style="font: size 14px;"><b>Facility</b> </td>
                 <td>&nbsp;:&nbsp; </td>
                 <td ng-if="recencyDetail.facility_name!='Other'" style="font-size:14px;text-transform: capitalize"> {{recencyDetail.facility_name | replace: '_':' '}} </td>

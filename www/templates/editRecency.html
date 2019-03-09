@@ -45,8 +45,45 @@
                          
                         </div>
                   </div>
+                        <div class="row" ng-if="optionalFieldsFlag.sampleCollectionDate==true" >
+                          <div class="input-field col col-90">
+                                <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                        <p>Sample Collection Date<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='sampleCollectionDate'"  style="color:#df3838;"> *</span></p>
+                                    </span>
+                              <div class="form-logo date-img"><img src="img/date.png"></div> 
+                              <input id="sampleCollectionDate" type="text" class="sampleCollectionDate" name="sampleCollectionDate" title="Please Enter Sample Collection Date from the Client"  ng-click="setSampleCollectionDate();" ng-model='recency.sampleCollectionDate' placeholder="HIV+ Diag Date" readonly required>
+                          </div>
+                          <div class="input-field col " style="padding:0">
+                            <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="recency.sampleCollectionDate ='';partialRecencyData();"><img src="img/clear.png" style="height: 26px;"></div> 
+                           </div>
+                      </div>
+                        <div class="row" ng-if="optionalFieldsFlag.sampleReceiptDate==true" >
+                            <div class="input-field col col-90">
+                                  <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                          <p>Sample Receipt Date<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='sampleReceiptDate'"  style="color:#df3838;"> *</span></p>
+                                      </span>
+                                <div class="form-logo date-img"><img src="img/date.png"></div> 
+                                <input id="sampleReceiptDate" type="text" class="sampleReceiptDate" name="sampleReceiptDate" title="Please Enter Sample Receipt Date at the Recency Testing Site"  ng-click="setsampleReceiptDate();" ng-model='recency.sampleReceiptDate' placeholder="HIV+ Diag Date" readonly required>
+                            </div>
+                            <div class="input-field col " style="padding:0">
+                              <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="recency.sampleReceiptDate ='';partialRecencyData();"><img src="img/clear.png" style="height: 26px;"></div> 
+                             </div>
+                        </div>
+                        <div class="row" ng-if="optionalFieldsFlag.receivedSpecimenType==true" > 
+                          <div class="input-field col " >
+                                <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                        <p>Received Specimen Type<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='receivedSpecimenType'" style="color:#df3838;"> *</span></p>
+                                    </span>
+                              <div class="form-logo "><img src="img/testtime.png"></div> 
+                              <select class="ng-valid" id="receivedSpecimenType" name="receivedSpecimenType" title="Please Choose Received Specimen Type" ng-model="recency.receivedSpecimenType" ng-change="partialRecencyData()">
+                                      <option value="">-- Select --</option>
+                                      <option value="whole_blood">Whole Blood</option> 
+                                      <option value="plasma">Plasma</option>
+                              </select>                               
+                           </div>
+                        </div>
               
-                    <!-- <div class="row" ng-if="optionalFieldsFlag.facilityId==true">
+                    <div class="row" ng-if="optionalFieldsFlag.facilityId==true">
                         <div class="input-field col ">
                               <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
                                 <p>Facility<span style="color:#df3838;"> *</span></p>                                
@@ -59,8 +96,8 @@
                               </select>  
 
                         </div>
-                    </div> -->
-                    <div class="row" style="margin-top: 10px" ng-if="optionalFieldsFlag.facilityId==true">
+                    </div>
+                    <!-- <div class="row" style="margin-top: 10px" ng-if="optionalFieldsFlag.facilityId==true">
                         <div class="input-field col ">
                             <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
                                <p style="z-index: 1; position: absolute; margin-top: -20px;">Facility<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='facilityId'"  style="color:#df3838;"> *</span></p>
@@ -70,7 +107,7 @@
                             ng-keyup="facilityautocomplete()" />
                             <input type="hidden" id="facilityId"  name="facilityId" title="Please Choose Facility"  ng-model="recency.facilityId" class="value" />
                         </div>
-                    </div>
+                    </div> -->
                     <div class="row" ng-if="showotherfacility==true && optionalFieldsFlag.facilityId==true">
                         <div class="input-field col ">
                               <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
@@ -279,6 +316,7 @@
                                            <option value="no_consent_from_the_client">No consent from the Client</option>
                                            <option value="sample_was_not_collected">Sample was not collected (Phlebotomy failure)</option>
                                            <option value="not_newly_diagnosed">Not newly diagnosed</option>
+                                           <option value="sample_rejected">Sample Rejected</option>
                                            <option value="other">Other, please specify</option>
                                         </select>  
                                      </div>

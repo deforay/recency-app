@@ -16,7 +16,7 @@ app=angular.module('starter.viewRecencyDetailCtrl', ['starter.services'])
 
     $scope.editRecency = function(recency){
       $scope.recencyDetail = recency;
-      $window.location.href = '#/app/editRecency/'+recency.patientId;
+      $window.location.href = '#/app/editRecency/'+recency.unique_id;
   }
 
 })

@@ -294,3 +294,19 @@ $scope.cleartoDate = function(){
       return $sce.trustAsHtml(div.textContent);
   };
 }])
+.filter('replace', [function () {
+
+  return function (input, from, to) {
+    
+    if(input === undefined) {
+      return;
+    }
+
+    var regex = new RegExp(from, 'g');
+    return   input.replace(regex, to);
+
+     
+  };
+
+
+}]);

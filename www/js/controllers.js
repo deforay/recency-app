@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope,$rootScope,$http,$ionicModal,$ionicHistory, $location,$refresh,  $window, $ionicModal, $timeout,$ionicPopup,$localStorage,$preLoader, $state) {
+.controller('AppCtrl', function($scope,$rootScope,$http,$ionicModal,$ionicHistory,$cordovaNetwork, $location,$refresh,  $window, $ionicModal, $timeout,$ionicPopup,$localStorage,$preLoader, $state) {
 
   $('.authWrapper  .loginFields  .input-field input')
   .focus(function() {
@@ -20,6 +20,139 @@ angular.module('starter.controllers', [])
     $window.location.reload(true);
     $preLoader.hide();
 };
+
+  document.addEventListener("online",ononline, false);
+  document.addEventListener("offline", onoffline, false);
+  function ononline() {
+
+    var isOnline = $cordovaNetwork.isOnline();
+    console.log("isOnline",isOnline);
+    $localStorage.set('online',isOnline);
+    $localStorage.set('offline','false');
+  }
+  function onoffline() {
+    var isOnline = $cordovaNetwork.isOnline();
+
+    $localStorage.set('online',isOnline);
+    $localStorage.set('offline','true');
+    console.log("isOnline",isOnline);
+
+    var localarr = [];
+    var localfacility =[];
+    var localtestfacility =[];
+    $scope.freq_facilities = [];
+    $scope.freq_testfacilities = [];
+    $scope.freq_provinces=[];
+    $scope.allfacilities = new Array();
+    $scope.alltestfacilities = new Array();
+    $scope.facilityData = new Array();
+    $scope.facilityTestData = new Array();
+    localarr = JSON.parse(localStorage.getItem('RecencyData'));
+    localfacility =JSON.parse(localStorage.getItem('FacilityData'));
+    localtestfacility =JSON.parse(localStorage.getItem('TestingFacilityData'));
+    //localprovince = JSON.parse(localStorage.getItem('ProvinceData'));
+    if(localarr !=null){
+      //Display recent Facilities  in Facility dropdown
+   var localarrsize = Object.keys(localarr).length;
+   var obj = {};
+   $scope.allfacilities =localfacility;
+   for(i=0;i<localarrsize;i++){
+    //console.log(localarr[i]['location']['0'],localarr[i]['location']['1'],localarr[i]['location']['2'])
+
+    if(localarr[i]['facility_name']=='Other'){
+      $scope.freq_facilities.unshift({
+        "facility_id":localarr[i]['facilityId'],
+        "facility_name":localarr[i]['facility_name'],
+      })
+    }else{
+      $scope.freq_facilities.unshift({
+        "facility_id":localarr[i]['facilityId'],
+        "facility_name":localarr[i]['facility_name'],
+        "province":localarr[i]['location']['0'],
+        "district":localarr[i]['location']['1'],
+        "city":localarr[i]['location']['2']
+      })
+    }
+
+   } 
+   for(i =0;i<Object.keys($scope.freq_facilities).length;i++){  
+     $scope.allfacilities.unshift($scope.freq_facilities[i]);
+   }
+  // console.log($scope.freq_facilities);
+
+   var trimmedArray = [];
+   var values = [];
+   var value;
+ //  console.log($scope.allfacilities);
+   for(var i = 0; i < $scope.allfacilities.length; i++) {
+     value = $scope.allfacilities[i]['facility_id'];
+     if(values.indexOf(value) === -1) {
+       trimmedArray.push($scope.allfacilities[i]);
+       values.push(value);
+     }
+   }
+   $scope.facilityData = trimmedArray;
+  // console.log( $scope.facilityData);
+   localStorage.setItem('FacilityData',JSON.stringify($scope.facilityData))    
+  //  //Display Recent Testing Facilities dropdown
+   
+  //   $scope.alltestfacilities =localtestfacility;
+  //   for(i=0;i<localarrsize;i++){
+  //     $scope.freq_testfacilities.unshift({
+  //       "facility_id":localarr[i]['facilityId'],
+  //       "facility_name":localarr[i]['facility_name']
+  //     })
+  //   } 
+  //   for(i =0;i<Object.keys($scope.freq_testfacilities).length;i++){  
+  //     $scope.alltestfacilities.unshift($scope.freq_testfacilities[i]);
+  //   }
+  //   var trimmedArray = [];
+  //   var values = [];
+  //   var value;
+  //   for(var i = 0; i < $scope.alltestfacilities.length; i++) {
+  //     value = $scope.alltestfacilities[i]['facility_id'];
+  //     if(values.indexOf(value) === -1) {
+  //       trimmedArray.push($scope.alltestfacilities[i]);
+  //       values.push(value);
+  //     }
+  //   }
+  //   $scope.facilityTestData = trimmedArray;
+    //console.log( $scope.facilityTestData);
+
+    //Display recent province in Province dropdown
+
+    // $scope.allprovinces =localprovince;
+    // for(i=0;i<localarrsize;i++){
+    //   $scope.freq_provinces.unshift({
+    //     "province_id":localarr[i]['location_one'],
+    //     "province_name":localarr[i]['location_one_name']
+    //   })
+    // //  console.log($scope.freq_provinces)
+    // } 
+    // for(i =0;i<Object.keys($scope.freq_provinces).length;i++){  
+    //   $scope.allprovinces.unshift($scope.freq_provinces[i]);
+    //   //console.log($scope.allprovinces)
+    // }
+    // var trimmedArray1 = [];
+    // var values1 = [];
+    // var value1;
+    // for(var i = 0; i < $scope.allprovinces.length; i++) {
+    //   value1 = $scope.allprovinces[i]['province_id'];
+    //   if(values1.indexOf(value1) === -1) {
+    //     trimmedArray1.push($scope.allprovinces[i]);
+    //     values1.push(value1);
+    //   }
+    // }
+    // $scope.provinceData = trimmedArray1;  
+    console.log($scope.facilityData)
+   
+}else{
+ $scope.facilityData =localfacility;
+// $scope.facilityTestData =localtestfacility;
+ //$scope.provinceData = localprovince;  
+}
+
+  }
 $scope.updateBadge = function(){
   var recencyList =   localStorage.getItem('RecencyData');
   var QCDataList =   localStorage.getItem('QCData');
@@ -46,7 +179,7 @@ $scope.updateBadge = function(){
     $scope.displayqcbadge=false;
   }
   
-  $scope.appVersion = 1.5;
+  $scope.appVersion = 1.8;
 }
 
 // $rootScope.displaybadge=true;
@@ -69,7 +202,7 @@ if(QCDataList != null){
   $scope.displayqcbadge=false;
 }
 
-$scope.appVersion = 1.5;
+$scope.appVersion = 1.8;
 localStorage.setItem('AppVersion',$scope.appVersion);
 
 $scope.addRecency = function(){
@@ -164,14 +297,19 @@ $scope.isSubGroupShown = function(item) {
   return $scope.shownChild === item;
 }
 $scope.$on("$ionicView.beforeEnter", function(event, data){
+  $scope.userId = JSON.parse(localStorage.getItem('userId'));
 
-  $http.get($localStorage.get('apiUrl')+'/api/facility')
+  $http.get($localStorage.get('apiUrl')+'/api/facility?userId='+$scope.userId)
   .success(function(data) {
     console.log(data);
    $scope.facilityData = data.facility;
+   var faciltiydataObj = data.facility;
+   var maxid = Math.max.apply(Math,faciltiydataObj.map(function(o){return o.facility_id;}))
+
    var len = $scope.facilityData.length - 1;
-  var facilitylen = $scope.facilityData[len];  
-  var facilityid = (parseInt(facilitylen['facility_id'])+1).toString();
+  //var facilitylen = $scope.facilityData[len];  
+  var facilityid = (maxid+1).toString();
+  console.log(facilityid)
    $scope.facilityData.push({
     "facility_id": facilityid,
     "facility_name":"Other"
@@ -179,6 +317,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
   localStorage.setItem('FacilityData',JSON.stringify($scope.facilityData))    
 
    $scope.facilityTestData = data.facilityTest;
+
    var testlen = $scope.facilityTestData.length - 1;
    var facilitytestlen = $scope.facilityTestData[testlen];  
    var facilitytestid = (parseInt(facilitytestlen['facility_id'])+1).toString();
@@ -210,14 +349,15 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
     });
     $http.get($localStorage.get('apiUrl')+'/api/recency-mandatory')
     .success(function(data) {
+      console.log(data)
      $scope.mandatoryData =data.fields;
      localStorage.setItem('MandatoryData',JSON.stringify($scope.mandatoryData)) 
-   //  console.log( $scope.mandatoryData);           
+    //console.log( $scope.mandatoryData);           
     });
     $http.get($localStorage.get('apiUrl')+'/api/recency-hide')
     .success(function(data) {
      $scope.optionalData =data.fields[0];
-     //console.log($scope.optionalData);
+    console.log($scope.optionalData);
      $scope.optionalArr =[];
      $scope.optionalArr.location=[];
      angular.forEach($scope.optionalData, function(value, key) {

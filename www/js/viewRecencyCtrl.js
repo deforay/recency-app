@@ -8,6 +8,7 @@ app=angular.module('starter.viewRecencyCtrl', ['starter.services'])
 
     $rootScope.apiUrl = localStorage.getItem('apiUrl');
     var recencyList =   localStorage.getItem('RecencyData');
+    console.log(recencyList)
    if(recencyList != null){
      recencyList    = JSON.parse(recencyList);
      var unsyncount = Object.keys(recencyList).length;
@@ -114,20 +115,28 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
                     console.log(data)
                     $scope.response =data.syncData.response;
                     $scope.syncCount =data.syncCount.response[0].Total;
+                    console.log($scope.response);
+                    console.log($scope.syncCount);
                     localStorage.setItem('syncCount', $scope.syncCount)
                     for(i=0;i< $scope.response.length;i++){
                       $scope.recencyList.splice(i);
                     }
-                    localStorage.setItem('RecencyData',$scope.recencyList);
+                    console.log(JSON.stringify($scope.recencyList));
+                    console.log($scope.recencyList);
+                    if($scope.recencyList.length==0){
+                    localStorage.setItem('RecencyData',($scope.recencyList));
+                    }else{
+                    localStorage.setItem('RecencyData',JSON.stringify($scope.recencyList));
+                    }
                              if(localStorage.getItem('RecencyData')=="")
                               {
                              localStorage.removeItem('RecencyData');
                               } 
-                     localStorage.setItem('counter',0);
+                            localStorage.setItem('counter',$scope.recencyList.length);
 
                      $preLoader.hide();
 
-                         $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
+                         $cordovaToast.show($scope.response.length +'  Data has been Successfully Synced', 'long', 'bottom')
                          .then(function(success) {
                               // success
                           }, function (error) {
@@ -154,7 +163,7 @@ $scope.viewRecency = function(recency,index){
     $rootScope.recencyDetail = recency;
     recency.index = index;
     localStorage.setItem('viewRecency',JSON.stringify(recency));
-    $window.location.href = '#/app/viewRecencyDetail/'+recency.patientId;
+    $window.location.href = '#/app/viewRecencyDetail/'+recency.unique_id;
 
 }
 
@@ -169,9 +178,7 @@ $scope.viewRecency = function(recency,index){
   
       var regex = new RegExp(from, 'g');
       input.replace(regex, to);
-      return  input.replace(regex, to);
-    
-       
+      return  input.replace(regex, to);       
     };
   
   

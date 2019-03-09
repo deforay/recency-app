@@ -85,26 +85,35 @@ app=angular.module('starter.editRecencyCtrl', ['starter.services'])
   var localDistrictjson = localStorage.getItem('DistrictData');
    if($scope.recency.location_one && (localDistrictjson!="" && localDistrictjson!=null)){
     var localDistrict = JSON.parse(localStorage.getItem('DistrictData'));
-    var result = localDistrict.filter(obj => {
+    var districtresult = localDistrict.filter(obj => {
       return obj.province_id === $scope.recency.location_one
     })
-    $scope.districtData = result;
+    $scope.districtData = districtresult;
     $scope.recency.location[1] = $scope.recency.location_two;
     if($scope.recency.location[0]!=""||$scope.recency.location[0]!=null){
-      var len = $scope.districtData.length - 1;
-      var districtlen = $scope.districtData[len];  
-      var districtid = (parseInt(districtlen['district_id'])+1).toString();
-      $scope.districtData.push({
-       "district_id": districtid,
-       "district_name":"Other"
-     })
+      if(districtresult.length==0){
+        $scope.districtData.push({
+         "district_id": districtresult.length.toString(),
+         "district_name":"Other"
+        })
+      }
+      else
+      {
+        var len = $scope.districtData.length - 1;
+        var districtlen = $scope.districtData[len];  
+        var districtid = (parseInt(districtlen['district_id'])+1).toString();
+        $scope.districtData.push({
+           "district_id": districtid,
+           "district_name":"Other"
+        })
+      }
     }
   }else{
     $scope.districtData = [];
     $scope.cityData = [];
-    $scope.recency.otherDistrict ="";
-    $scope.showotherdistrict = false;
-    $scope.showothercity = false;
+    // $scope.recency.otherDistrict ="";
+    // $scope.showotherdistrict = false;
+    // $scope.showothercity = false;
   }
   var localCityjson = localStorage.getItem('CityData');
   if($scope.recency.location_two && (localCityjson!="" && localCityjson!=null)){
@@ -115,22 +124,114 @@ app=angular.module('starter.editRecencyCtrl', ['starter.services'])
     })
     $scope.cityData = cityresult;
     if($scope.recency.location[1]!=""||$scope.recency.location[1]!=null){
-      var len = $scope.cityData.length - 1;
-      var citylen = $scope.cityData[len];  
-      var cityid = (parseInt(citylen['city_id'])+1).toString();
-      $scope.cityData.push({
-       "city_id": cityid,
-       "city_name":"Other"
-     })
+      if(cityresult.length==0){
+        $scope.cityData.push({
+         "city_id": cityresult.length.toString(),
+         "city_name":"Other"
+       })
+       }
+       else
+       {
+         var len = $scope.cityData.length - 1;
+         var citylen = $scope.cityData[len];  
+         var cityid = (parseInt(citylen['city_id'])+1).toString();
+         $scope.cityData.push({
+          "city_id": cityid,
+          "city_name":"Other"
+        })
+       }
     }
   }else{
     $scope.cityData = [];
-    $scope.recency.otherCity ="";
-  $scope.showothercity = false;
-  $scope.showotherdistrict = false;
-
+    // $scope.recency.otherCity ="";
+    // $scope.showothercity = false;
+    // $scope.showotherdistrict = false;
   }
-console.log($scope.districtData)
+  console.log($scope.districtData)
+  if($scope.recency.facilityId!='' && $scope.recency.facilityId!=null){
+    if(($scope.recency.location[0]!=''&& $scope.recency.location[0]!=null)
+    &&($scope.recency.location[1]!=''&& $scope.recency.location[1]!=null &&  $scope.recency.location[1]!='null')
+    &&($scope.recency.location[2]!=''&& $scope.recency.location[2]!=null &&  $scope.recency.location[2]!='null')){
+      var localfacility = JSON.parse(localStorage.getItem('FacilityData'));
+      var fac_result = localfacility.filter(obj => 
+        {
+        return obj.city === $scope.recency.location[2]
+      })
+       $scope.facilityData = fac_result;
+       var maxid = Math.max.apply(Math,localfacility.map(function(o){return o.facility_id;}))
+        var facilityid = (maxid).toString();
+       if(fac_result.length==0){
+         $scope.facilityData.push({
+          "facility_id": facilityid,
+          "facility_name":"Other"
+        })
+        }
+        else
+        {
+          var len = $scope.facilityData.length - 1;
+          var facilitylen = $scope.facilityData[len];  
+          //var facilityid = (parseInt(facilitylen['facility_id'])+1).toString();
+          $scope.facilityData.push({
+             "facility_id": facilityid,
+             "facility_name":"Other"
+          })
+        }
+    }
+   else  if(($scope.recency.location[0]!=''&& $scope.recency.location[0]!=null)&&($scope.recency.location[1]!=''&& $scope.recency.location[1]!=null &&  $scope.recency.location[1]!='null')){
+      var localfacility = JSON.parse(localStorage.getItem('FacilityData'));
+      var fac_result = localfacility.filter(obj => 
+        {
+        return obj.district === $scope.recency.location[1]
+      })
+       $scope.facilityData = fac_result;
+       var maxid = Math.max.apply(Math,localfacility.map(function(o){return o.facility_id;}))
+       var facilityid = (maxid).toString(); 
+       if(fac_result.length==0){
+         $scope.facilityData.push({
+          "facility_id": facilityid,
+          "facility_name":"Other"
+        })
+        }
+        else
+        {
+          var len = $scope.facilityData.length - 1;
+          var facilitylen = $scope.facilityData[len];  
+        //  var facilityid = (parseInt(facilitylen['facility_id'])+1).toString();
+          $scope.facilityData.push({
+             "facility_id": facilityid,
+             "facility_name":"Other"
+          })
+        }
+        console.log($scope.facilityData)
+    }
+  else  if($scope.recency.location[0]!=''&& $scope.recency.location[0]!=null){
+      var localfacility = JSON.parse(localStorage.getItem('FacilityData'));
+      var fac_result = localfacility.filter(obj => 
+       { 
+        return obj.province === $scope.recency.location[0]
+      })
+      $scope.facilityData = fac_result;
+      var maxid = Math.max.apply(Math,localfacility.map(function(o){return o.facility_id;}))
+      var facilityid = (maxid).toString(); 
+      if(fac_result.length==0){
+        $scope.facilityData.push({
+         "facility_id": facilityid,
+         "facility_name":"Other"
+       })
+       }else{
+        var len = $scope.facilityData.length - 1;
+        var facilitylen = $scope.facilityData[len];  
+       // var facilityid = (parseInt(facilitylen['facility_id'])+1).toString();
+        $scope.facilityData.push({
+         "facility_id": facilityid,
+         "facility_name":"Other"
+       })
+       }
+    }
+    console.log($scope.facilityData)
+  }else{
+   $scope.facilityData = JSON.parse(localStorage.getItem('FacilityData'));
+  }  
   if($scope.recency.vlLoadResult==null){
     $scope.recency.vlLoadResult="";
   }else if($scope.recency.vlLoadResult==$scope.recency.vlLoadResultDropdown){
@@ -211,57 +312,68 @@ else if($scope.recency.finalOutcome =='Assay Negative'){
     }
     $scope.GetDistrictValue = function(province){
   if((localStorage.getItem('DistrictData'))!="" ){ 
-    if($localStorage.get('offline') == true){
-    var localarr = [];
-    var localDistrict = [];
-    $scope.freq_district = [];
-    $scope.alldistrict = new Array();
+  //   if($localStorage.get('offline') == true){
+  //   var localarr = [];
+  //   var localDistrict = [];
+  //   $scope.freq_district = [];
+  //   $scope.alldistrict = new Array();
   
-    localarr = JSON.parse(localStorage.getItem('RecencyData'));  
-    localDistrict =  JSON.parse(localStorage.getItem('DistrictData'))      
-    var result = localDistrict.filter(obj => {
+  //   localarr = JSON.parse(localStorage.getItem('RecencyData'));  
+  //   localDistrict =  JSON.parse(localStorage.getItem('DistrictData'))      
+  //   var result = localDistrict.filter(obj => {
+  //     return obj.province_id === province
+  //   })
+  //   localDistrict = result;
+  //  //Display recent district on top of dropdown
+  //    $scope.alldistrict =localDistrict;
+  //    for(i=0;i<localarrsize;i++){
+  //      $scope.freq_district.unshift({
+  //        "district_id":localarr[i]['location_two'],
+  //        "district_name":localarr[i]['location_two_name']
+  //      })
+  //      //console.log($scope.freq_district)
+  //    } 
+  //    for(i =0;i<Object.keys($scope.freq_district).length;i++){  
+  //      $scope.alldistrict.unshift($scope.freq_district[i]);
+  //    }
+  //    var trimmedArray2 = [];
+  //    var values2 = [];
+  //    var value2;
+  //    for(var i = 0; i < $scope.alldistrict.length; i++) {
+  //      value2 = $scope.alldistrict[i]['district_id'];
+  //      if(values2.indexOf(value2) === -1) {
+  //        trimmedArray2.push($scope.alldistrict[i]);
+  //        values2.push(value2);
+  //      }
+  //    }
+  //    $scope.districtData = trimmedArray2;  
+  
+  // }
+  // else{
+
+  // }
+    if(province!=null && province!=""){
+      var localDistrict = JSON.parse(localStorage.getItem('DistrictData'));
+      var districtresult = localDistrict.filter(obj => {
       return obj.province_id === province
     })
-    localDistrict = result;
-   //Display recent district on top of dropdown
-     $scope.alldistrict =localDistrict;
-     for(i=0;i<localarrsize;i++){
-       $scope.freq_district.unshift({
-         "district_id":localarr[i]['location_two'],
-         "district_name":localarr[i]['location_two_name']
-       })
-       //console.log($scope.freq_district)
-     } 
-     for(i =0;i<Object.keys($scope.freq_district).length;i++){  
-       $scope.alldistrict.unshift($scope.freq_district[i]);
-     }
-     var trimmedArray2 = [];
-     var values2 = [];
-     var value2;
-     for(var i = 0; i < $scope.alldistrict.length; i++) {
-       value2 = $scope.alldistrict[i]['district_id'];
-       if(values2.indexOf(value2) === -1) {
-         trimmedArray2.push($scope.alldistrict[i]);
-         values2.push(value2);
-       }
-     }
-     $scope.districtData = trimmedArray2;  
-  
-  }else{
-    var localDistrict = JSON.parse(localStorage.getItem('DistrictData'));
-    var result = localDistrict.filter(obj => {
-    return obj.province_id === province
-  })
-  $scope.districtData = result;
-  }
-    if(province!=null && province!=""){
+    $scope.districtData = districtresult;
+    if(districtresult.length==0){
+      $scope.districtData.push({
+      "district_id": districtresult.length.toString(),
+      "district_name":"Other"
+      })
+    }
+    else
+    {
       var len = $scope.districtData.length - 1;
-            var districtlen = $scope.districtData[len];  
-            var districtid = (parseInt(districtlen['district_id'])+1).toString();
-            $scope.districtData.push({
-             "district_id": districtid,
-             "district_name":"Other"
-           })
+      var districtlen = $scope.districtData[len];  
+      var districtid = (parseInt(districtlen['district_id'])+1).toString();
+      $scope.districtData.push({
+        "district_id": districtid,
+        "district_name":"Other"
+      })
+    }
     }
   }
   if(province!=null && province!=""){
@@ -271,16 +383,32 @@ else if($scope.recency.finalOutcome =='Assay Negative'){
       return obj.province === province
     })
     $scope.facilityData = fac_result;
-    var len = $scope.facilityData.length - 1;
-    var facilitylen = $scope.facilityData[len];  
-    var facilityid = (parseInt(facilitylen['facility_id'])+1).toString();
-    $scope.facilityData.push({
-     "facility_id": facilityid,
-     "facility_name":"Other"
-   })
+    var maxid = Math.max.apply(Math,localfacility.map(function(o){return o.facility_id;}))
+    var facilityid = (maxid).toString(); 
+    if(fac_result.length==0){
+      $scope.facilityData.push({
+       "facility_id": facilityid,
+       "facility_name":"Other"
+     })
+     console.log( $scope.facilityData)
+     $scope.recency.facilityId ="";
+     }
+     else
+     {
+       var len = $scope.facilityData.length - 1;
+       var facilitylen = $scope.facilityData[len];  
+      // var facilityid = (parseInt(facilitylen['facility_id'])+1).toString();
+       $scope.facilityData.push({
+          "facility_id": facilityid,
+          "facility_name":"Other"
+       })
+     $scope.recency.facilityId ="";
+     }
    }else{
     $scope.facilityData = JSON.parse(localStorage.getItem('FacilityData')); 
-   }
+    $scope.recency.facilityId ="";
+    $scope.showotherfacility = false;
+  }
     $scope.recency.location[1] ="";
     $scope.recency.otherDistrict ="";
     $scope.showotherdistrict = false;
@@ -290,78 +418,121 @@ else if($scope.recency.finalOutcome =='Assay Negative'){
    
     }
     $scope.GetCityValue = function(district){
+      console.log(district)
     if((localStorage.getItem('CityData'))!= '' ){ 
-      if($localStorage.get('offline') == true){
-        var localarr = [];
-        var localCity = [];
-        $scope.freq_city = [];
-        $scope.allcity = new Array();
+      // if($localStorage.get('offline') == true){
+      //   var localarr = [];
+      //   var localCity = [];
+      //   $scope.freq_city = [];
+      //   $scope.allcity = new Array();
     
-        localarr = JSON.parse(localStorage.getItem('RecencyData'));  
-        localCity =  JSON.parse(localStorage.getItem('DistrictData'))      
-        var result = localCity.filter(obj => {
-          return obj.district_id === district
-        })
-        localCity = result;
-         //Display recent district on top of dropdown
+      //   localarr = JSON.parse(localStorage.getItem('RecencyData'));  
+      //   localCity =  JSON.parse(localStorage.getItem('DistrictData'))      
+      //   var result = localCity.filter(obj => {
+      //     return obj.district_id === district
+      //   })
+      //   localCity = result;
+      //    //Display recent district on top of dropdown
     
-         $scope.allcity =localCity;
-         for(i=0;i<localarrsize;i++){
-           $scope.freq_city.unshift({
-             "city_id":localarr[i]['location_three'],
-             "city_name":localarr[i]['location_three_name']
-           })
-           //console.log($scope.freq_city)
-         } 
-         for(i =0;i<Object.keys($scope.freq_city).length;i++){  
-           $scope.allcity.unshift($scope.freq_city[i]);  
-         }
-         var trimmedArray2 = [];
-         var values2 = [];
-         var value2;
-         for(var i = 0; i < $scope.allcity.length; i++) {
-           value2 = $scope.allcity[i]['city_id'];
-           if(values2.indexOf(value2) === -1) {
-             trimmedArray2.push($scope.allcity[i]);
-             values2.push(value2);
-           }
-         }
-         $scope.cityData = trimmedArray2;  
-        // console.log($scope.cityData);
-      }else{
+      //    $scope.allcity =localCity;
+      //    for(i=0;i<localarrsize;i++){
+      //      $scope.freq_city.unshift({
+      //        "city_id":localarr[i]['location_three'],
+      //        "city_name":localarr[i]['location_three_name']
+      //      })
+      //      //console.log($scope.freq_city)
+      //    } 
+      //    for(i =0;i<Object.keys($scope.freq_city).length;i++){  
+      //      $scope.allcity.unshift($scope.freq_city[i]);  
+      //    }
+      //    var trimmedArray2 = [];
+      //    var values2 = [];
+      //    var value2;
+      //    for(var i = 0; i < $scope.allcity.length; i++) {
+      //      value2 = $scope.allcity[i]['city_id'];
+      //      if(values2.indexOf(value2) === -1) {
+      //        trimmedArray2.push($scope.allcity[i]);
+      //        values2.push(value2);
+      //      }
+      //    }
+      //    $scope.cityData = trimmedArray2;  
+      //   // console.log($scope.cityData);
+      // }
+      // else{
+
+      // }
+      if(district!=null && district !=""){
         var localCity = JSON.parse(localStorage.getItem('CityData'));
         var cityresult = localCity.filter(obj => {
           return obj.district_id === district
         })
         $scope.cityData = cityresult;
-      }
-      if(district!=null && district !=""){
-        var len = $scope.cityData.length - 1;
-        var citylen = $scope.cityData[len];  
-        var cityid = (parseInt(citylen['city_id'])+1).toString();
-        $scope.cityData.push({
-         "city_id": cityid,
-         "city_name":"Other"
-       })
+        if(cityresult.length==0){
+          $scope.cityData.push({
+          "city_id": cityresult.length.toString(),
+          "city_name":"Other"
+          })
+        }
+        else
+        {
+          var len = $scope.cityData.length - 1;
+          var citylen = $scope.cityData[len];  
+          var cityid = (parseInt(citylen['city_id'])+1).toString();
+          $scope.cityData.push({
+             "city_id": cityid,
+             "city_name":"Other"
+          })
+        }
       } 
+      else{
+        $scope.showotherdistrict = false;
+        $scope.recency.otherDistrict="";
+      }
     }
-    if(district!=null){
+    if(district!=null && district !=""){
       var localfacility = JSON.parse(localStorage.getItem('FacilityData'));
       var fac_result = localfacility.filter(obj => 
         {
-         
         return obj.district === district
       })
       $scope.facilityData = fac_result;
-      var len = $scope.facilityData.length - 1;
-      var facilitylen = $scope.facilityData[len];  
-      var facilityid = (parseInt(facilitylen['facility_id'])+1).toString();
-      $scope.facilityData.push({
-       "facility_id": facilityid,
-       "facility_name":"Other"
-     })
+      var maxid = Math.max.apply(Math,localfacility.map(function(o){return o.facility_id;}))
+      var facilityid = (maxid).toString(); 
+      if($scope.facilityData.length==0){
+        $scope.facilityData.push({
+          "facility_id": facilityid,
+          "facility_name":"Other"
+        })
+       $scope.recency.facilityId ="";
+      }else{
+        var len = $scope.facilityData.length - 1;
+        var facilitylen = $scope.facilityData[len];  
+        //var facilityid = (parseInt(facilitylen['facility_id'])+1).toString();
+        $scope.facilityData.push({
+         "facility_id": facilityid,
+         "facility_name":"Other"
+       })
+         $scope.recency.facilityId ="";
+      }
      }else{
-      $scope.facilityData = JSON.parse(localStorage.getItem('FacilityData'));
+        var localfacility = JSON.parse(localStorage.getItem('FacilityData'));
+        var fac_result = localfacility.filter(obj => 
+          {      
+          return obj.province === $scope.recency.location[0]
+        })
+        $scope.facilityData = fac_result;
+        var maxid = Math.max.apply(Math,localfacility.map(function(o){return o.facility_id;}))
+        var facilityid = (maxid).toString(); 
+        var len = $scope.facilityData.length - 1;
+        var facilitylen = $scope.facilityData[len];  
+  
+       // var facilityid = (parseInt(facilitylen['facility_id'])+1).toString();
+        $scope.facilityData.push({
+         "facility_id": facilityid,
+         "facility_name":"Other"
+       })
+       $scope.recency.facilityId ="";
+        // $scope.facilityData = JSON.parse(localStorage.getItem('FacilityData'));
      }
       $scope.recency.location[2] ="";
     $scope.recency.otherCity ="";
@@ -388,8 +559,8 @@ else if($scope.recency.finalOutcome =='Assay Negative'){
   }
   }
 
-    document.addEventListener("online", ononline, false);
-    document.addEventListener("offline", onoffline, false);
+    // document.addEventListener("online", ononline, false);
+    // document.addEventListener("offline", onoffline, false);
     
     function ononline() {
 
@@ -561,6 +732,18 @@ else if($scope.recency.finalOutcome =='Assay Negative'){
         $ionicPopup.alert({title:'Alert!',template:'Please Choose Either Sample ID or Patient ID'});
         $scope.showRecencyTick = false;
         return false;
+      }
+      if($scope.mandatoryData[i]=='sampleCollectionDate' && $scope.recency.sampleCollectionDate==""){
+        $scope.showRecencyTick = false;
+      return false;
+      }
+      if($scope.mandatoryData[i]=='sampleReceiptDate' && $scope.recency.sampleReceiptDate==""){
+        $scope.showRecencyTick = false;
+      return false;
+      }
+      if($scope.mandatoryData[i]=='receivedSpecimenType' && $scope.recency.receivedSpecimenType==""){
+        $scope.showRecencyTick = false;
+      return false;
       }
        if($scope.mandatoryData[i]=='facilityId' && $scope.recency.facilityId==""){
         $scope.showRecencyTick = false;
@@ -835,8 +1018,7 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
     $scope.recency.showFinalOutcome = true;
     $scope.setfinalcolor = 'black';
   }
- // console.log($scope.recencyOutcomeDisplay)
-
+ // console.log($scope.recencyOutcomeDisplay);
 }
 
     $scope.getReasonName = function(reason){
@@ -859,18 +1041,20 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
     }
 
     $scope.getFacility=function(facilityid){
-     // console.log(facilityid)
+    console.log(facilityid);
+     $scope.recency.facility_name = $("#facilityId").find("option:selected").text();
+     //console.log($scope.recency.facility_name);
+
      if($scope.recency.facility_name =='' || facilityid=="" ){
       $scope.showotherfacility = false;
       $scope.recency.facility_name = "";
+      $scope.facilityData = JSON.parse(localStorage.getItem('FacilityData'));      
      }
-       else  if($scope.recency.facility_name=='Other'){
-      $scope.showotherfacility = true;
-       } else{
+      else{
       $scope.showotherfacility = false;
        }
-      if($scope.recency.facilityId!=""){
-        $scope.recency.facility_name = $("#facilityId option:selected").text();
+      if($scope.recency.facilityId!="" && $scope.recency.facility_name!='Other'){
+       // $scope.recency.facility_name = $("#facilityId option:selected").text();
 
         var facilityData = $scope.facilityData
         function isfacility(item) { 
@@ -883,21 +1067,30 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
       var localDistrictjson = localStorage.getItem('DistrictData');
       if($scope.recency.location[0]&& (localDistrictjson!="" && localDistrictjson!=null)){
         var localDistrict = JSON.parse(localStorage.getItem('DistrictData'));
-        var result = localDistrict.filter(obj => 
+        var districtresult = localDistrict.filter(obj => 
           {
           return obj.province_id === $scope.recency.location[0]
         })
-        $scope.districtData = result;
+        $scope.districtData = districtresult;
         $scope.recency.location[1] = $scope.recency.location[1];
        // console.log( $scope.districtData)
         if($scope.recency.location[0]!=""||$scope.recency.location[0]!=null){
-          var len = $scope.districtData.length - 1;
-          var districtlen = $scope.districtData[len];  
-          var districtid = (parseInt(districtlen['district_id'])+1).toString();
-          $scope.districtData.push({
-           "district_id": districtid,
-           "district_name":"Other"
-         })
+          if(districtresult.length==0){
+            $scope.districtData.push({
+            "district_id": districtresult.length.toString(),
+            "district_name":"Other"
+            })
+          }
+          else
+          {
+            var len = $scope.districtData.length - 1;
+            var districtlen = $scope.districtData[len];  
+            var districtid = (parseInt(districtlen['district_id'])+1).toString();
+            $scope.districtData.push({
+              "district_id": districtid,
+              "district_name":"Other"
+            })
+          }
         }
       }
       else{
@@ -913,29 +1106,43 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
         $scope.cityData = cityresult;
 
         if($scope.recency.location[1]!=""||$scope.recency.location[1]!=null){
+          if(cityresult.length==0){
+            $scope.cityData.push({
+              "city_id": cityresult.length.toString(),
+              "city_name":"Other"
+            })
+          }
+         else{
           var len = $scope.cityData.length - 1;
           var citylen = $scope.cityData[len];  
-          var cityid = (parseInt(citylen['city_id'])+1).toString();
+          var cityid = (parseInt(citylen['facility_id'])+1).toString();
           $scope.cityData.push({
            "city_id": cityid,
            "city_name":"Other"
          })
+         }
         }
 
       }else{
         $scope.cityData =[];
       }
-    }else{
+    }
+    else  if($scope.recency.facility_name=='Other'){
+      $scope.showotherfacility = true;
+      $scope.recency.otherfacility="";
+       } 
+    else{
         $scope.recency.location[0] = "";
         $scope.recency.location[1] = "";
         $scope.recency.location[2] = "";
         $scope.districtData =[];
         $scope.cityData =[];
+        $scope.showotherdistrict = false;
+       $scope.showothercity = false;
+
       }
       $scope.recency.otherDistrict ="";
-      $scope.showotherdistrict = false;
       $scope.recency.otherCity ="";
-      $scope.showothercity = false;
 
     
     }
@@ -951,8 +1158,6 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
           facility_type_id:value.facility_type_id
       }
     })
-   // console.log(src);
-
       $("#searchfacility").autocomplete({
         source: src,
         minLength:0,
@@ -1037,7 +1242,7 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
       }
      
     }
-    $scope.checkothercity = function(cityid){
+    $scope.checkothercity = function(city){
       $scope.recency.cityname = $("#location_three").find("option:selected").text();
      // console.log($scope.recency.cityname);
       if($scope.recency.cityname=='Other'){
@@ -1050,8 +1255,64 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
         $scope.recency.otherCity="";
       }else{
         $scope.showothercity = false;
-
       }
+      if(city!=null){
+        var localfacility = JSON.parse(localStorage.getItem('FacilityData'));
+        var fac_result = localfacility.filter(obj => 
+          {
+          return obj.city === city
+        })
+         $scope.facilityData = fac_result;
+         var maxid = Math.max.apply(Math,localfacility.map(function(o){return o.facility_id;}))
+         var facilityid = (maxid).toString(); 
+         if(fac_result.length==0){
+           $scope.facilityData.push({
+            "facility_id": facilityid,
+            "facility_name":"Other"
+          })
+          $scope.recency.facilityId ="";
+          }
+          else
+          {
+            var len = $scope.facilityData.length - 1;
+            var facilitylen = $scope.facilityData[len];  
+           // var facilityid = (parseInt(facilitylen['facility_id'])+1).toString();
+            $scope.facilityData.push({
+               "facility_id": facilityid,
+               "facility_name":"Other"
+            })
+          $scope.recency.facilityId ="";
+          }
+      }
+      {
+        var localfacility = JSON.parse(localStorage.getItem('FacilityData'));
+        var fac_result = localfacility.filter(obj => 
+          {      
+          return obj.district === $scope.recency.location[1]
+          })
+        $scope.facilityData = fac_result;
+        var maxid = Math.max.apply(Math,localfacility.map(function(o){return o.facility_id;}))
+        var facilityid = (maxid).toString(); 
+        if(fac_result.length==0){
+          $scope.facilityData.push({
+            "facility_id": facilityid,
+            "facility_name":"Other"
+          })
+          $scope.recency.facilityId ="";
+        }
+        else
+        {
+          var len = $scope.facilityData.length - 1;
+          var facilitylen = $scope.facilityData[len];  
+     //     var facilityid = (parseInt(facilitylen['facility_id'])+1).toString();
+          $scope.facilityData.push({
+            "facility_id": facilityid,
+            "facility_name":"Other"
+          })
+          $scope.recency.facilityId ="";
+        }
+          // $scope.facilityData = JSON.parse(localStorage.getItem('FacilityData'));
+     }
     }
     $scope.checkriskpopulation = function(riskpopulation){
 
@@ -1103,9 +1364,28 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
         ionicDatePicker.openDatePicker(ipObj1);
      
     }
-    
-    $scope.setRecencyDate = function(val){
+    $scope.setSampleCollectionDate = function(){
       var ipObj2 = {
+        callback: function (val) {  
+        var sampleCollectionDate = new Date(val);
+          $scope.recency.sampleCollectionDate =  $filter('date')(sampleCollectionDate , "dd-MMM-yyyy");
+         },
+         to: new Date(),
+        }; 
+    ionicDatePicker.openDatePicker(ipObj2);
+    }
+    $scope.setsampleReceiptDate = function(){
+      var ipObj3 = {
+        callback: function (val) {  
+        var sampleReceiptDate = new Date(val);
+          $scope.recency.sampleReceiptDate =  $filter('date')(sampleReceiptDate , "dd-MMM-yyyy");
+         },
+         to: new Date(),
+        }; 
+    ionicDatePicker.openDatePicker(ipObj3);
+    }
+    $scope.setRecencyDate = function(val){
+      var ipObj4 = {
         callback: function (val) {  //Mandatory
           var hivRecencyDate = new Date(val);
          // console.log(hivRecencyDate);
@@ -1113,10 +1393,10 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
         },
         to: new Date(),
       }; 
-        ionicDatePicker.openDatePicker(ipObj2);
+        ionicDatePicker.openDatePicker(ipObj4);
     }
     $scope.setVlTestDate = function(val){
-      var ipObj2 = {
+      var ipObj5 = {
         callback: function (val) { 
        
         var viralLoadTestDate = new Date(val);
@@ -1127,20 +1407,20 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
       //   weeksList: [],
       // dateFormat: 'MMMM yyyy',
       }; 
-      ionicDatePicker.openDatePicker(ipObj2);
+      ionicDatePicker.openDatePicker(ipObj5);
     }
     $scope.setTestKitExpDate = function(val){
-      var ipObj3 = {
+      var ipObj6 = {
         callback: function (val) { 
         var testKitExpDate = new Date(val);
         $scope.recency.testKitExpDate =  $filter('date')(testKitExpDate , "dd-MMM-yyyy");
         }
        
       }; 
-      ionicDatePicker.openDatePicker(ipObj3);
+      ionicDatePicker.openDatePicker(ipObj6);
     }
     $scope.setDob = function(val){
-      var ipObj3 = {
+      var ipObj7 = {
         callback: function (val) {  //Mandatory
           var dob = new Date(val);
           var ageDifMs = Date.now() - dob.getTime();
@@ -1150,7 +1430,7 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
         },
         to: new Date(),
       }; 
-        ionicDatePicker.openDatePicker(ipObj3);
+        ionicDatePicker.openDatePicker(ipObj7);
     }
 
     $scope.cleardob = function(age){
@@ -1215,6 +1495,21 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
             var mandatorytitle = 'Please Choose Either Sample ID or Patient ID';
             $scope.showToastAlert(mandatorytitle); 
           return false;
+        }
+        if($scope.mandatoryData[i]=='sampleCollectionDate' && $scope.recency.sampleCollectionDate==""){
+          $scope.showRecencyTick = false;
+          $scope.showToastAlert(mandatorytitle);  
+        return false;
+        }
+        if($scope.mandatoryData[i]=='sampleReceiptDate' && $scope.recency.sampleReceiptDate==""){
+          $scope.showRecencyTick = false;
+          $scope.showToastAlert(mandatorytitle);  
+        return false;
+        }
+        if($scope.mandatoryData[i]=='receivedSpecimenType' && $scope.recency.receivedSpecimenType==""){
+          $scope.showRecencyTick = false;
+          $scope.showToastAlert(mandatorytitle);  
+        return false;
         }
          if($scope.mandatoryData[i]=='facilityId' && $scope.recency.facilityId==""){
             $scope.showRecencyTick = false;
@@ -1495,6 +1790,24 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
             var mandatorytitle = 'Please Choose Either Sample ID or Patient ID';
             $scope.showToastAlert(mandatorytitle); 
           return false;
+        }
+        if($scope.mandatoryData[i]=='sampleCollectionDate' && $scope.recency.sampleCollectionDate==""){
+          $scope.showRecencyTick = false;
+          var mandatorytitle = 'Please Enter Sample Collection Date from the Client';
+          $scope.showToastAlert(mandatorytitle);  
+        return false;
+        }
+        if($scope.mandatoryData[i]=='sampleReceiptDate' && $scope.recency.sampleReceiptDate==""){
+          $scope.showRecencyTick = false;
+          var mandatorytitle = 'Please Enter Sample Receipt Date at the Recency Testing Site';
+          $scope.showToastAlert(mandatorytitle);  
+        return false;
+        }
+        if($scope.mandatoryData[i]=='receivedSpecimenType' && $scope.recency.receivedSpecimenType==""){
+          $scope.showRecencyTick = false;
+          var mandatorytitle = 'Please Choose Received Specimen Type';
+          $scope.showToastAlert(mandatorytitle);  
+        return false;
         }
          if($scope.mandatoryData[i]=='facilityId' && $scope.recency.facilityId==""){
             $scope.showRecencyTick = false;
