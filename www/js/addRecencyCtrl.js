@@ -26,7 +26,7 @@ app.controller('addRecencyCtrl', function($scope,$rootScope, $http, $timeout, $s
       $scope.optionalFieldsFlag = JSON.parse(localStorage.getItem('OptionalData'));
       $scope.mandatoryData = JSON.parse(localStorage.getItem('MandatoryData'));
       $scope.facilityData= JSON.parse(localStorage.getItem('FacilityData'));
-      console.log($scope.facilityData)
+      //console.log($scope.facilityData)
       $scope.facilityTestData= JSON.parse(localStorage.getItem('TestingFacilityData'));
       $scope.facilityTestTypeData= JSON.parse(localStorage.getItem('TestingFacilityTypeData'));
      // console.log($scope.facilityTestData)
@@ -318,7 +318,7 @@ app.controller('addRecencyCtrl', function($scope,$rootScope, $http, $timeout, $s
             })
            }
         }
-        console.log($scope.cityData);
+      //  console.log($scope.cityData);
       }else{
         $scope.cityData =[];
       }
@@ -1006,7 +1006,7 @@ console.log(province)
         return obj.province_id === province
         })
         $scope.districtData = districtresult;
-        console.log($scope.districtData)
+       // console.log($scope.districtData)
           if(districtresult.length==0){
             $scope.districtData.push({
             "district_id": districtresult.length.toString(),
@@ -1040,7 +1040,7 @@ console.log(province)
        "facility_id": facilityid,
        "facility_name":"Other"
      })
-     console.log( $scope.facilityData)
+    // console.log( $scope.facilityData)
      $scope.recency.facilityId ="";
      }else{
       var len = $scope.facilityData.length - 1;
@@ -1119,7 +1119,7 @@ if((localStorage.getItem('CityData'))!="" ){
       return obj.district_id === district
     })
     $scope.cityData = cityresult;
-     console.log(cityresult)
+   //  console.log(cityresult)
      if(cityresult.length==0){
         $scope.cityData.push({
         "city_id": cityresult.length.toString(),
@@ -1136,7 +1136,7 @@ if((localStorage.getItem('CityData'))!="" ){
            "city_name":"Other"
         })
       }
-      console.log( $scope.cityData)
+   //   console.log( $scope.cityData)
   } else{
     $scope.showotherdistrict = false;
     $scope.recency.otherDistrict="";
@@ -1203,7 +1203,7 @@ if(district!=null){
   $scope.recency.location[2] ="";
   $scope.recency.otherCity ="";
   $scope.showothercity = false;
-  console.log($scope.recency.facilityId)
+ // console.log($scope.recency.facilityId)
 }
     $scope.checkriskpopulation = function(){
      $scope.recency.riskPopulationName = $("#riskPopulation").find("option:selected").text();
@@ -1281,7 +1281,7 @@ if(district!=null){
           return obj.district_id === $scope.recency.location[1]
         })
         $scope.cityData = cityresult;
-        console.log($scope.cityData )
+       // console.log($scope.cityData )
        
         if($scope.recency.location[1]!=""||$scope.recency.location[1]!=null){
           if(cityresult.length==0){
@@ -1372,7 +1372,7 @@ if(district!=null){
             $scope.checkotherfacility();
             $scope.partialRecencyData();
           }     
-      console.log($scope.showotherfacility) 
+     // console.log($scope.showotherfacility) 
         }
     
       })

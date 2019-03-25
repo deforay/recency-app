@@ -45,7 +45,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
 
    if(recencyList != null){
      recencyList    = JSON.parse(recencyList);
-    console.log(recencyList)
+  //  console.log(recencyList)
 
      var unsyncount = Object.keys(recencyList).length;
         if($rootScope.recencyUnsyncCount!= undefined){
@@ -112,17 +112,17 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
                 $ionicPopup.alert({title:'Failed!',template:data.message});
                }
                else{
-                    console.log(data)
+                   // console.log(data)
                     $scope.response =data.syncData.response;
                     $scope.syncCount =data.syncCount.response[0].Total;
-                    console.log($scope.response);
-                    console.log($scope.syncCount);
+                  //  console.log($scope.response);
+                  //  console.log($scope.syncCount);
                     localStorage.setItem('syncCount', $scope.syncCount)
                     for(i=0;i< $scope.response.length;i++){
                       $scope.recencyList.splice(i);
                     }
-                    console.log(JSON.stringify($scope.recencyList));
-                    console.log($scope.recencyList);
+                  //  console.log(JSON.stringify($scope.recencyList));
+                  //  console.log($scope.recencyList);
                     if($scope.recencyList.length==0){
                     localStorage.setItem('RecencyData',($scope.recencyList));
                     }else{
