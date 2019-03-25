@@ -28,6 +28,7 @@ app.controller('addRecencyCtrl', function($scope,$rootScope, $http, $timeout, $s
       $scope.facilityData= JSON.parse(localStorage.getItem('FacilityData'));
       console.log($scope.facilityData)
       $scope.facilityTestData= JSON.parse(localStorage.getItem('TestingFacilityData'));
+      $scope.facilityTestTypeData= JSON.parse(localStorage.getItem('TestingFacilityTypeData'));
      // console.log($scope.facilityTestData)
       $scope.riskpopulations= JSON.parse(localStorage.getItem('RiskPopulations'));    
 
@@ -132,7 +133,10 @@ app.controller('addRecencyCtrl', function($scope,$rootScope, $http, $timeout, $s
       $scope.recency.testerName = "";
       $scope.recency.testingFacility = "";
       $scope.recency.testing_facility_name = "";
+      $scope.recency.testingModality = "";
+      $scope.recency.testingModalityName = "";
       $scope.recency.othertestingfacility = "";
+      $scope.recency.othertestingmodality = "";
       $scope.recency.vlTestDate = "";
       $scope.recency.vlLoadResult = "";
       $scope.recency.vlLoadResultDropdown = "";
@@ -193,9 +197,13 @@ app.controller('addRecencyCtrl', function($scope,$rootScope, $http, $timeout, $s
         $scope.recency.facility_name="Other"
       //  console.log($scope.recency.otherfacility)
        }
-       if( $scope.recency.testing_facility_name =="Other" && ($scope.recency.othertestingfacility != undefined && $scope.recency.othertestingfacility!="")){
+       if( $scope.recency.testing_facility_name =="Other" && ($scope.recency.othertestingfacility != undefined)){
         $scope.showothertestfacility = true;
         $scope.recency.testing_facility_name="Other"
+       }
+       if( $scope.recency.testingModalityName =="Other" && ($scope.recency.othertestingmodality != undefined)){
+        $scope.showothertestmodality = true;
+        $scope.recency.testingModalityName="Other"
        }
        if( $scope.recency.location_two_name =="Other" && ($scope.recency.otherDistrict != undefined && $scope.recency.otherDistrict!="")){
         $scope.showotherdistrict = true;
@@ -1488,14 +1496,27 @@ if(district!=null){
        $scope.showothertestfacility = false;
         }
     }
+    $scope.checkOthertestingModality = function(){
+      $scope.recency.testingModalityName = $("#testingModality").find("option:selected").text();
+      if($scope.recency.testingModalityName=='Other'){
+       $scope.showothertestmodality = true;
+        }
+      else if($scope.recency.testingModalityName =='-- Select --'){
+       $scope.showothertestmodality = false;
+       $scope.recency.testingModalityName = "";
+      }else{
+       $scope.showothertestmodality = false;
+        }
+        console.log($scope.showothertestmodality)
+    }
     $scope.showToastAlert = function(mandatorytitle){
- // $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
-    $cordovaToast.show(mandatorytitle, 'long', 'center')
-              .then(function(success) {
-                // success
-              }, function (error) {
-                // error
-              });
+   $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+    // $cordovaToast.show(mandatorytitle, 'long', 'center')
+    //           .then(function(success) {
+    //             // success
+    //           }, function (error) {
+    //             // error
+    //           });
     }
 
     // Section 1 Mandatory Data Validation
@@ -1513,14 +1534,15 @@ if(district!=null){
             $scope.recency[keyname] =   $(keyId).find("option:selected").text();
         }
     } 
-  //  console.log($scope.mandatoryData);
+  if($("#other-recency").hasClass('active')){
+  }else{
     if($scope.mandatoryData.length>0){
+      
       for(i=0;i<$scope.mandatoryData.length;i++){
         var id ="#"+$scope.mandatoryData[i];
         var mandatoryname = $(id).attr("name");
         var mandatorytitle = $(id).attr("title");
-        var mandatoryField=$scope.mandatoryData[i];
-     // console.log(mandatorytitle);
+
      // console.log(mandatoryname);
          
           if($scope.mandatoryData[i]=='sampleId' && $scope.recency.sampleId==""){
@@ -1651,6 +1673,17 @@ if(district!=null){
               $scope.showToastAlert(mandatorytitle); 
             return false;
           }
+          if($scope.mandatoryData[i]=='testingModality' && $scope.recency.testingModality==""){
+            $scope.showRecencyTick = false;
+            $scope.showToastAlert(mandatorytitle); 
+          return false;
+          } 
+          if($scope.mandatoryData[i]=='testingModality' && $scope.recency.testingModalityName == 'Other' && $scope.recency.othertestingmodality==""){
+            $scope.showRecencyTick = false;
+            var mandatorytitle = 'Please Enter Other Testing Modality';
+            $scope.showToastAlert(mandatorytitle); 
+          return false;
+        }
           if($scope.recency.testNotPerformed==true){
             if( $scope.recency.recencyreason==""){
             var mandatorytitle = 'Please Choose Reason of Recency Test Not Performed';
@@ -1710,6 +1743,8 @@ if(district!=null){
       }  
     }
 
+
+  }
     }
     // Section 2 Mandatory Data Validation
 
@@ -1972,6 +2007,18 @@ if(district!=null){
               $scope.showToastAlert(mandatorytitle); 
             return false;
           }
+          if($scope.mandatoryData[i]=='testingModality' && $scope.recency.testingModality==""){
+            $scope.showRecencyTick = false;
+            var mandatorytitle = 'Please Choose Testing Modality';           
+            $scope.showToastAlert(mandatorytitle); 
+          return false;
+          } 
+          if($scope.mandatoryData[i]=='testingModality' && $scope.recency.testingModalityName == 'Other' && $scope.recency.othertestingmodality==""){
+            $scope.showRecencyTick = false;
+            var mandatorytitle = 'Please Enter Other Testing Modality';
+            $scope.showToastAlert(mandatorytitle); 
+          return false;
+        }
           if($scope.recency.testNotPerformed==true){
             if( $scope.recency.recencyreason==""){
             var mandatorytitle = 'Please Choose Reason of Recency Test Not Performed';
@@ -2097,7 +2144,9 @@ if(district!=null){
             localStorage.setItem('counter', $scope.counter);
             $scope.facilityData= JSON.parse(localStorage.getItem('FacilityData'));
             $scope.showotherfacility = false;        
-            $scope.showothertestfacility = false;        
+            $scope.showothertestfacility = false; 
+            $scope.showothertestmodality = false; 
+
             $scope.showotherdistrict = false;        
             $scope.showothercity = false;        
              $scope.recency ={};

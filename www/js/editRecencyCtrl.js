@@ -248,6 +248,10 @@ if( $scope.recency.facility_name =="Other" && ($scope.recency.otherfacility != u
   $scope.showothertestfacility = true;
   $scope.recency.testing_facility_name="Other"
  }
+ if( $scope.recency.testingModalityName =="Other" && ($scope.recency.othertestingmodality != undefined && $scope.recency.othertestingmodality!="")){
+  $scope.showothertestmodality = true;
+  $scope.recency.testingModalityName="Other"
+ }
  if( $scope.recency.districtname =="Other" && $scope.recency.location[1]!="" && ($scope.recency.otherDistrict != undefined && $scope.recency.otherDistrict!="")){
   $scope.showotherdistrict = true;
 
@@ -1212,6 +1216,24 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
       }
      
      }
+     $scope.getTestingModality=function(facilitytypeid){
+ 
+      if(facilitytypeid!=""){
+        $scope.recency.testingModalityName = $("#testingModality option:selected").text();
+      }
+      if($scope.recency.testingModalityName =='-- Select --' || facilitytypeid=="" ){
+       $scope.showothertestmodality = false;
+       $scope.recency.testingModalityName = "";
+      }
+      if($scope.recency.testingModalityName=='Other'){
+        $scope.showothertestmodality = true;
+      }
+     else
+     {
+       $scope.showothertestmodality = false;
+     }
+    
+    }
      $scope.checkotherdistrict = function(districtid){
       if(districtid!=null){
         var cityData = $scope.cityData
@@ -1472,6 +1494,8 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
          // console.log( $scope.recency[keyname])     
       }
   } 
+  if($("#other-recency").hasClass('active')){
+  }else{
   if($scope.mandatoryData.length>0){
     for(i=0;i<$scope.mandatoryData.length;i++){
       var id ="#"+$scope.mandatoryData[i];
@@ -1580,7 +1604,7 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
           $scope.showToastAlert(mandatorytitle);  
           return false;
         }
-              if($scope.mandatoryData[i]=='testKitLotNo' && $scope.recency.testKitLotNo==""){
+          if($scope.mandatoryData[i]=='testKitLotNo' && $scope.recency.testKitLotNo==""){
           $scope.showRecencyTick = false;
           $scope.showToastAlert(mandatorytitle); 
           return false;
@@ -1605,6 +1629,17 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
             var mandatorytitle = 'Please Enter Other Testing Facility';
             $scope.showToastAlert(mandatorytitle); 
           return false;
+        }
+        if($scope.mandatoryData[i]=='testingModality' && $scope.recency.testingModality==""){
+          $scope.showRecencyTick = false;
+          $scope.showToastAlert(mandatorytitle); 
+        return false;
+        }
+        if($scope.mandatoryData[i]=='testingModality' && $scope.recency.testingModalityName == 'Other' && $scope.recency.othertestingmodality==""){
+          $scope.showRecencyTick = false;
+          var mandatorytitle = 'Please Enter Other Testing Facility Type';
+          $scope.showToastAlert(mandatorytitle); 
+        return false;
         }
         if($scope.recency.testNotPerformed==true){
           if( $scope.recency.recencyreason==""){
@@ -1664,7 +1699,7 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
         }
     }  
   }
-
+  }
   }
   $scope.behaviourValidation = function(){
     if($scope.mandatoryData.length>0){
@@ -1920,6 +1955,18 @@ $scope.getFinalOutcome = function(termOutcome,vlLoadResult){
             $scope.showToastAlert(mandatorytitle); 
           return false;
         }
+        if($scope.mandatoryData[i]=='testingModality' && $scope.recency.testingModality==""){
+          $scope.showRecencyTick = false;
+        var mandatorytitle = 'Please Choose Testing Modality';
+          $scope.showToastAlert(mandatorytitle); 
+        return false;
+        } 
+        if($scope.mandatoryData[i]=='testingModality' && $scope.recency.testingModalityName == 'Other' && $scope.recency.othertestingmodality==""){
+          $scope.showRecencyTick = false;
+          var mandatorytitle = 'Please Enter Other Testing Modality';
+          $scope.showToastAlert(mandatorytitle); 
+        return false;
+      }
         if($scope.recency.testNotPerformed==true){
           if( $scope.recency.recencyreason==""){
           var mandatorytitle = 'Please Choose Reason of Recency Test Not Performed';

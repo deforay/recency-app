@@ -112,13 +112,13 @@ app=angular.module('starter.loginCtrl', ['starter.services'])
           $localStorage.set('apppassword',$scope.confirmpasscode);
           
           $preLoader.show();
-          $cordovaToast
-          .show('App Password Created Successfully', 'long', 'center')
-          .then(function(success) {
-            // success
-          }, function (error) {
-            // error
-          });
+          // $cordovaToast
+          // .show('App Password Created Successfully', 'long', 'center')
+          // .then(function(success) {
+          //   // success
+          // }, function (error) {
+          //   // error
+          // });
           $timeout(function() {
             $location.path('/app/addRecency');
             $preLoader.hide();
@@ -308,7 +308,17 @@ $scope.userId = JSON.parse(localStorage.getItem('userId'));
            "facility_name":"Other"
          })
         localStorage.setItem('TestingFacilityData',JSON.stringify($scope.facilityTestData)) 
-               
+
+        $scope.facilityTestTypeData = data.testingFacilityType;
+        var testtypelen = $scope.facilityTestTypeData.length - 1;
+        var facilitytesttypelen = $scope.facilityTestTypeData[testtypelen];  
+        var facilitytesttypeid = (parseInt(facilitytesttypelen['testing_facility_type_id'])+1).toString();
+         $scope.facilityTestTypeData.push({
+           "testing_facility_type_id": facilitytesttypeid,
+           "testing_facility_type_name":"Other"
+         })
+        
+        localStorage.setItem('TestingFacilityTypeData',JSON.stringify($scope.facilityTestTypeData));      
         });
  
 
@@ -460,12 +470,12 @@ $scope.userId = JSON.parse(localStorage.getItem('userId'));
                 $localStorage.set('userId',response.data.userDetails['userId']);
                 $localStorage.set('userName',response.data.userDetails['userName']); 
 
-            $cordovaToast.show('Successfully Logged in', 'long', 'bottom')
-              .then(function(success) {
-                // success
-              }, function (error) {
-                // error
-              });
+            // $cordovaToast.show('Successfully Logged in', 'long', 'bottom')
+            //   .then(function(success) {
+            //     // success
+            //   }, function (error) {
+            //     // error
+            //   });
               $scope.viewLogin = false;
               $scope.viewAddPassword = true;
               $scope.viewConfirmPassword = false;

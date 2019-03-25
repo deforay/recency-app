@@ -116,7 +116,7 @@
                               <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
                                       <p>Other Facility <span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='facilityId'" style="color:#df3838;"> *</span></p>
                                   </span>
-                            <div class="form-logo"><img src="img/population.png"></div> 
+                            <div class="form-logo"><img src="img/medical-center.png"></div> 
                             <input id="otherfacility" type="text" class="otherfacility" name="otherfacility"  ng-model="recency.otherfacility" 
                             placeholder="Other Facility" ng-keyup="partialRecencyData()">
                            
@@ -266,29 +266,7 @@
                             </select>   
                         </div>
                   </div>
-                  <div class="row"  ng-if="optionalFieldsFlag.testingFacility==true">
-                        <div class="input-field col ">
-                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                      <p>Testing Facility<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testingFacility'"  style="color:#df3838;"> *</span></p>
-                                  </span>
-                            <div class="form-logo "><img src="img/facility.png"></div> 
-                            <select class="ng-valid" id="testingFacility"  name="testingFacility"  title="Please Choose Testing Facility" ng-model="recency.testingFacility" ng-change="checkOtherTestingFacility();partialRecencyData();" >
-                                <option value="">-- Select --</option>
-                                <option ng-repeat="test in facilityTestData" value="{{test['facility_id']}}">{{test['facility_name']| underscorefilter}}</option>
-                              </select>   
-                          
-                        </div>
-                    </div>
-                    <div class="row" ng-if="showothertestfacility==true && optionalFieldsFlag.testingFacility==true">
-                        <div class="input-field col ">
-                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                      <p>Other Testing Facility <span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testingFacility'" style="color:#df3838;"> *</span></p>
-                                  </span>
-                            <div class="form-logo"><img src="img/population.png"></div> 
-                            <input id="othertestingfacility" type="text" class="othertestingfacility" name="othertestingfacility"  ng-model="recency.othertestingfacility" placeholder="Other Testing Facility" ng-click="partialRecencyData()">
-                           
-                        </div>
-                    </div>
+
                 </div>
                 
     
@@ -327,6 +305,52 @@
                             <div class="form-logo"><img src="img/population.png"></div> 
                             <input id="otherreason" type="text" class="otherreason" name="otherreason" ng-model="recency.otherreason" placeholder="Other Reason" ng-keyup="partialRecencyData()">
                            
+                        </div>
+                    </div>
+                    <div class="row"  ng-if="recency.testNotPerformed!=true && optionalFieldsFlag.testingFacility==true">
+                        <div class="input-field col ">
+                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                      <p>Testing Facility<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testingFacility'"  style="color:#df3838;"> *</span></p>
+                                  </span>
+                            <div class="form-logo "><img src="img/facility.png"></div> 
+                            <select class="ng-valid" id="testingFacility"  name="testingFacility"  title="Please Choose Testing Facility" ng-model="recency.testingFacility" ng-change="checkOtherTestingFacility();partialRecencyData();" >
+                                <option value="">-- Select --</option>
+                                <option ng-repeat="test in facilityTestData" value="{{test['facility_id']}}">{{test['facility_name']| underscorefilter}}</option>
+                              </select>   
+                          
+                        </div>
+                    </div>
+
+                    <div class="row" ng-if="recency.testNotPerformed!=true && showothertestfacility==true && optionalFieldsFlag.testingFacility==true">
+                        <div class="input-field col ">
+                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                      <p>Other Testing Facility <span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testingFacility'" style="color:#df3838;"> *</span></p>
+                                  </span>
+                            <div class="form-logo"><img src="img/medical-center.png"></div> 
+                            <input id="othertestingfacility" type="text" class="othertestingfacility" name="othertestingfacility"  ng-model="recency.othertestingfacility" placeholder="Other Testing Facility" ng-click="partialRecencyData()">
+                           
+                        </div>
+                    </div>
+                    <div class="row"  ng-if="recency.testNotPerformed!=true && optionalFieldsFlag.testingModality==true">
+                        <div class="input-field col ">
+                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                      <p>Testing Modality<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testingModality'"  style="color:#df3838;"> *</span></p>
+                                  </span>
+                            <div class="form-logo "><img src="img/facility.png"></div> 
+                            <select class="ng-valid" id="testingModality"  name="testingModality"  title="Please Choose Testing Modality" ng-model="recency.testingModality" ng-change="checkOthertestingModality();partialRecencyData();" >
+                                <option value="">-- Select --</option>
+                                <option ng-repeat="test in facilityTestTypeData" value="{{test['testing_facility_type_id']}}">{{test['testing_facility_type_name']}}</option>
+                              </select>   
+                          
+                        </div>
+                    </div>
+                    <div class="row" ng-if="recency.testNotPerformed!=true && showothertestmodality==true && optionalFieldsFlag.testingModality==true">
+                        <div class="input-field col ">
+                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                                <p>Other Testing Modality<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testingModality'" style="color:#df3838;"> *</span></p>
+                                  </span>
+                            <div class="form-logo"><img src="img/medical-center.png"></div> 
+                            <input id="othertestingmodality" type="text" class="othertestingmodality" name="othertestingmodality" ng-model="recency.othertestingmodality" placeholder="Other Testing Modality" ng-keyup="partialRecencyData()">
                         </div>
                     </div>
                 <div class="row" ng-if="recency.testNotPerformed!=true && optionalFieldsFlag.hivRecencyDate==true">
