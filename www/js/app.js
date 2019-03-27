@@ -17,6 +17,7 @@ angular.module('starter',  ['ionic',
                             'starter.editLotInfoCtrl',
                             'starter.recencyDataCtrl',
                             'starter.tatRecencyReportCtrl',
+                            'starter.techSupportCtrl',
                             'starter.recencyDataWithVlCtrl',
                             'starter.pendingRecencyResultCtrl',
                             'starter.serverQcDataCtrl',
@@ -222,7 +223,15 @@ angular.module('starter',  ['ionic',
       }
     }
   })
-
+  .state('app.techSupport', {
+    url: '/techSupport',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/techSupport.html',
+        controller:"techSupportCtrl"
+      }
+    }
+  })
   var datePickerObj = {
     inputDate: new Date(),
     titleLabel: 'Select a Date',

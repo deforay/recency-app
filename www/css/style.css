@@ -1217,3 +1217,8 @@ height: 100px;
     background-color: DodgerBlue !important; 
     color: #ffffff; 
   }
+
+  /*Tech Support Page*/
+  .tech-table tr td{
+    border:none !important;
+  }
