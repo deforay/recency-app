@@ -153,12 +153,12 @@ $scope.doRefresh = function() {
                     localStorage.setItem('counter',$scope.QCDataList.length);
                     $preLoader.hide();
 
-                //   $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
-                //   .then(function(success) {
-                //        // success
-                //    }, function (error) {
-                //         // error
-                //    });
+                  $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
+                  .then(function(success) {
+                       // success
+                   }, function (error) {
+                        // error
+                   });
                     $scope.onLoadQc();
              }
             })
