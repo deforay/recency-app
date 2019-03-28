@@ -115,8 +115,6 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
                    // console.log(data)
                     $scope.response =data.syncData.response;
                     $scope.syncCount =data.syncCount.response[0].Total;
-                  //  console.log($scope.response);
-                  //  console.log($scope.syncCount);
                     localStorage.setItem('syncCount', $scope.syncCount)
                     for(i=0;i< $scope.response.length;i++){
                       $scope.recencyList.splice(i);

@@ -1,0 +1,46 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.deforay.recency"
+    },
+    "cordova-plugin-geolocation": {
+      "PACKAGE_NAME": "com.deforay.recency"
+    },
+    "cordova-plugin-ionic-keyboard": {
+      "PACKAGE_NAME": "com.deforay.recency"
+    },
+    "cordova-plugin-ionic-webview": {
+      "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+",
+      "PACKAGE_NAME": "com.deforay.recency"
+    },
+    "cordova-plugin-network-information": {
+      "PACKAGE_NAME": "com.deforay.recency"
+    },
+    "cordova-plugin-networkinterface": {
+      "PACKAGE_NAME": "com.deforay.recency"
+    },
+    "cordova-plugin-sim": {
+      "PACKAGE_NAME": "com.deforay.recency"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "com.deforay.recency"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "com.deforay.recency"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.deforay.recency"
+    },
+    "cordova-plugin-x-toast": {
+      "PACKAGE_NAME": "com.deforay.recency"
+    }
+  },
+  "dependent_plugins": {}
+}

@@ -13,6 +13,7 @@ app=angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
         }
 
       });
+$scope.facilityTestData= JSON.parse(localStorage.getItem('TestingFacilityData'));
          
 $scope.qcOutcomeCheck = function(){
   var qcLocalDatas = JSON.parse(localStorage.getItem('QCData'));
@@ -138,6 +139,8 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
         $scope.qcAssurance.recencyOutcome="";
         $scope.qcAssurance.testerName = "";
         $scope.qcAssurance.testerNameAvailability = "";
+        $scope.qcAssurance.testingFacility = "";
+        $scope.qcAssurance.testingFacilityName="";
       }else{
         $scope.qcAssurance = JSON.parse(localStorage.getItem('PartialQCData'));
         if($scope.qcAssurance.recencyOutcome=='Invalid-Please Verify' || $scope.qcAssurance.recencyOutcome =='Assay HIV Negative'){
@@ -251,6 +254,9 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
         $scope.qcAssurance.recencyOutcome="";
         $scope.qcAssurance.testerName = "";
         $scope.qcAssurance.testerNameAvailability = "";
+        $scope.qcAssurance.testingFacility = "";
+        $scope.qcAssurance.testingFacilityName="";
+
       }else{
         $scope.qcAssurance = JSON.parse(localStorage.getItem('PartialQCData'));
         if($scope.qcAssurance.recencyOutcome=='Invalid-Please Verify' || $scope.qcAssurance.recencyOutcome =='Assay HIV Negative'){
@@ -472,7 +478,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
 
 
   $scope.partialQcData = function(){
-    //console.log($scope.qcAssurance)
+  // console.log($scope.qcAssurance)
     var partialQCData = $scope.qcAssurance;
         if($scope.qcAssurance.formInitDateTime=='' || $scope.qcAssurance.formInitDateTime==null || $scope.qcAssurance.formInitDateTime==undefined){
            var currentdatetime = new Date();
@@ -541,7 +547,14 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
           $ionicPopup.alert({title:'Alert!',template:'Please Enter Tester Name'});
           return false;
         }
-       
+
+        if($scope.qcAssurance.testingFacility!=""){
+          $scope.qcAssurance.testingFacilityName =   $("#testingFacility").find("option:selected").text();
+        }
+        else{
+          $ionicPopup.alert({title:'Alert!',template:'Please Choose Testing Facility'});
+          return false;
+        }
         var currentdate = new Date();
         $scope.qcAssurance.formSavedDateTime = currentdate.getFullYear() + "-"
         + (currentdate.getMonth()+1)  + "-" 

@@ -2,7 +2,9 @@
 app=angular.module('starter.techSupportCtrl', ['starter.services'])
 
 .controller('techSupportCtrl', function($scope,  $window,$rootScope, $stateParams) {
-
+   
+   
+$scope.techSupportData = JSON.parse(localStorage.getItem('TechSupportData'));
 
 })
 .filter('replace', [function () {

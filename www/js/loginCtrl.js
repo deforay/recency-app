@@ -290,23 +290,23 @@ $scope.userId = JSON.parse(localStorage.getItem('userId'));
         $http.get($localStorage.get('apiUrl')+'/api/facility?userId='+$scope.userId)
            .success(function(data) {
             $scope.facilityData = data.facility;
-            var len = $scope.facilityData.length - 1;
-           var facilitylen = $scope.facilityData[len];  
-           var facilityid = (parseInt(facilitylen['facility_id'])+1).toString();
-            $scope.facilityData.push({
-             "facility_id": facilityid,
-             "facility_name":"Other"
-           })
+            // var len = $scope.facilityData.length - 1;
+            // var facilitylen = $scope.facilityData[len];  
+            // var facilityid = (parseInt(facilitylen['facility_id'])+1).toString();
+            //   $scope.facilityData.push({
+            //    "facility_id": facilityid,
+            //    "facility_name":"Other"
+            //   })
         localStorage.setItem('FacilityData',JSON.stringify($scope.facilityData))  
         
         $scope.facilityTestData = data.facilityTest;
-        var testlen = $scope.facilityTestData.length - 1;
-        var facilitytestlen = $scope.facilityTestData[testlen];  
-        var facilitytestid = (parseInt(facilitytestlen['facility_id'])+1).toString();
-         $scope.facilityTestData.push({
-           "facility_id": facilitytestid,
-           "facility_name":"Other"
-         })
+        // var testlen = $scope.facilityTestData.length - 1;
+        // var facilitytestlen = $scope.facilityTestData[testlen];  
+        // var facilitytestid = (parseInt(facilitytestlen['facility_id'])+1).toString();
+        //  $scope.facilityTestData.push({
+        //    "facility_id": facilitytestid,
+        //    "facility_name":"Other"
+        //  })
         localStorage.setItem('TestingFacilityData',JSON.stringify($scope.facilityTestData)) 
 
         $scope.facilityTestTypeData = data.testingFacilityType;
@@ -377,6 +377,15 @@ $scope.userId = JSON.parse(localStorage.getItem('userId'));
        //console.log(hideFields)
       localStorage.setItem('OptionalData',JSON.stringify(hideFields))  
      
+      });
+      $http.get($localStorage.get('apiUrl')+'/api/technical-support')
+      .success(function(data) {
+        if(data.status=="success"){
+       $scope.techSupportData =data.result;
+       localStorage.setItem('TechSupportData',JSON.stringify(data.result))  
+      }else{
+        localStorage.setItem('TechSupportData','')
+       }    
       });
       $http.get($localStorage.get('apiUrl')+'/api/province')
       .success(function(data) {

@@ -179,7 +179,7 @@ $scope.updateBadge = function(){
     $scope.displayqcbadge=false;
   }
   
-  $scope.appVersion = 1.9;
+  $scope.appVersion = 2.0;
 }
 
 // $rootScope.displaybadge=true;
@@ -202,7 +202,7 @@ if(QCDataList != null){
   $scope.displayqcbadge=false;
 }
 
-$scope.appVersion = 1.9;
+$scope.appVersion = 2.0;
 localStorage.setItem('AppVersion',$scope.appVersion);
 
 $scope.addRecency = function(){
@@ -303,28 +303,27 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
   .success(function(data) {
     console.log(data);
    $scope.facilityData = data.facility;
-   var faciltiydataObj = data.facility;
-   var maxid = Math.max.apply(Math,faciltiydataObj.map(function(o){return o.facility_id;}))
 
-   var len = $scope.facilityData.length - 1;
-  //var facilitylen = $scope.facilityData[len];  
-  var facilityid = (maxid+1).toString();
-  console.log(facilityid)
-   $scope.facilityData.push({
-    "facility_id": facilityid,
-    "facility_name":"Other"
-  })
+  //  var faciltiydataObj = data.facility;
+  //  var maxid = Math.max.apply(Math,faciltiydataObj.map(function(o){return o.facility_id;}))
+  //  var len = $scope.facilityData.length - 1;
+  //  var facilityid = (maxid+1).toString();
+  // console.log(facilityid)
+  //  $scope.facilityData.push({
+  //   "facility_id": facilityid,
+  //   "facility_name":"Other"
+  // })
   localStorage.setItem('FacilityData',JSON.stringify($scope.facilityData))    
 
    $scope.facilityTestData = data.facilityTest;
 
-   var testlen = $scope.facilityTestData.length - 1;
-   var facilitytestlen = $scope.facilityTestData[testlen];  
-   var facilitytestid = (parseInt(facilitytestlen['facility_id'])+1).toString();
-    $scope.facilityTestData.push({
-      "facility_id": facilitytestid,
-      "facility_name":"Other"
-    })
+  //  var testlen = $scope.facilityTestData.length - 1;
+  //  var facilitytestlen = $scope.facilityTestData[testlen];  
+  //  var facilitytestid = (parseInt(facilitytestlen['facility_id'])+1).toString();
+  //   $scope.facilityTestData.push({
+  //     "facility_id": facilitytestid,
+  //     "facility_name":"Other"
+  //   })
     localStorage.setItem('TestingFacilityData',JSON.stringify($scope.facilityTestData));
     $scope.facilityTestTypeData = data.testingFacilityType;
 
@@ -399,6 +398,16 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
       //console.log(hideFields)
      localStorage.setItem('OptionalData',JSON.stringify(hideFields)) 
    
+    });
+
+    $http.get($localStorage.get('apiUrl')+'/api/technical-support')
+    .success(function(data) {
+      if(data.status=="success"){
+     $scope.techSupportData =data.result;
+     localStorage.setItem('TechSupportData',JSON.stringify(data.result))  
+    }else{
+      localStorage.setItem('TechSupportData','')
+     }    
     });
     $http.get($localStorage.get('apiUrl')+'/api/province')
     .success(function(data) {

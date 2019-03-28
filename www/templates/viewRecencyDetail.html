@@ -43,8 +43,9 @@
               <tr>
                 <td style="font: size 14px;"><b>Facility</b> </td>
                 <td>&nbsp;:&nbsp; </td>
-                <td ng-if="recencyDetail.facility_name!='Other'" style="font-size:14px;text-transform: capitalize"> {{recencyDetail.facility_name | replace: '_':' '}} </td>
-                <td ng-if="recencyDetail.facility_name=='Other'" style="font-size:14px;text-transform: capitalize"> {{recencyDetail.otherfacility | replace: '_':' '}} </td>
+                <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.facility_name | replace: '_':' '}} </td>
+                <!-- <td ng-if="recencyDetail.facility_name!='Other'" style="font-size:14px;text-transform: capitalize"> {{recencyDetail.facility_name | replace: '_':' '}} </td>
+                <td ng-if="recencyDetail.facility_name=='Other'" style="font-size:14px;text-transform: capitalize"> {{recencyDetail.otherfacility | replace: '_':' '}} </td> -->
               </tr>        
               <tr>
                 <td style="font: size 14px;"><b>HIV+ Diag. Date</b> </td>
@@ -71,6 +72,17 @@
                 <td>&nbsp;:&nbsp; </td>
                 <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.testLast12Month| replace: '_':' '}} </td>
               </tr>
+              <tr>
+                  <td style="font: size 14px;"><b>Tester Name</b> </td>
+                  <td>&nbsp;:&nbsp; </td>
+                  <td style="font-size:14px;"> {{recencyDetail.testerName}} </td>
+                </tr>
+                <tr>
+                    <td style="font: size 14px;"><b>Testing Modality</b> </td>
+                    <td>&nbsp;:&nbsp; </td>
+                    <td ng-if="recencyDetail.testingModalityName!='Other'" style="font-size:14px;text-transform: capitalize"> {{recencyDetail.testingModalityName | replace: '_':' '}} </td>
+                    <td ng-if="recencyDetail.testingModalityName=='Other'" style="font-size:14px;text-transform: capitalize"> {{recencyDetail.othertestingmodality | replace: '_':' '}} </td>
+                  </tr> 
               <tr ng-if="recencyDetail.testNotPerformed==true">
                 <td style="font: size 14px;"><b>Is Recency Not Performed</b> </td>
                 <td>&nbsp;:&nbsp; </td>
@@ -83,18 +95,14 @@
                 <td ng-if="recencyDetail.recencyreason=='other'" style="font-size:14px;"> {{recencyDetail.otherreason}} </td>
               </tr>
               <div> 
-                  <tr ng-if="recencyDetail.testNotPerformed!=true">
+              <tr ng-if="recencyDetail.testNotPerformed!=true">
                       <td style="font: size 14px;"><b>Testing Facility</b> </td>
                       <td>&nbsp;:&nbsp; </td>
-                      <td ng-if="recencyDetail.testing_facility_name!='Other'" style="font-size:14px;text-transform: capitalize"> {{recencyDetail.testing_facility_name | replace: '_':' '}} </td>
-                      <td ng-if="recencyDetail.testing_facility_name=='Other'" style="font-size:14px;text-transform: capitalize"> {{recencyDetail.othertestingfacility | replace: '_':' '}} </td>
-                    </tr>
-                    <tr ng-if="recencyDetail.testNotPerformed!=true">
-                      <td style="font: size 14px;"><b>Testing Modality</b> </td>
-                      <td>&nbsp;:&nbsp; </td>
-                      <td ng-if="recencyDetail.testingModalityName!='Other'" style="font-size:14px;text-transform: capitalize"> {{recencyDetail.testingModalityName | replace: '_':' '}} </td>
-                      <td ng-if="recencyDetail.testingModalityName=='Other'" style="font-size:14px;text-transform: capitalize"> {{recencyDetail.othertestingmodality | replace: '_':' '}} </td>
-                    </tr>  
+                      <td  style="font-size:14px;text-transform: capitalize"> {{recencyDetail.testing_facility_name | replace: '_':' '}} </td>
+                      <!-- <td ng-if="recencyDetail.testing_facility_name!='Other'" style="font-size:14px;text-transform: capitalize"> {{recencyDetail.testing_facility_name | replace: '_':' '}} </td>
+                      <td ng-if="recencyDetail.testing_facility_name=='Other'" style="font-size:14px;text-transform: capitalize"> {{recencyDetail.othertestingfacility | replace: '_':' '}} </td> -->
+              </tr>
+ 
                            
               <tr  ng-if="recencyDetail.testNotPerformed!=true">
                 <td style="font: size 14px;"><b>HIV+ Rec. Date</b> </td>
@@ -127,17 +135,11 @@
                   <td style="font-size:14px;"> {{recencyDetail.testKitExpDate}} </td>
                 </tr>
                 <tr>
-                  <td style="font: size 14px;"><b>Tester Name</b> </td>
-                  <td>&nbsp;:&nbsp; </td>
-                  <td style="font-size:14px;"> {{recencyDetail.testerName}} </td>
-                </tr>
-
-                  <tr>
                       <td style="font: size 14px;"><b>Viral Load Test Date</b> </td>
                       <td>&nbsp;:&nbsp; </td>
                       <td style="font-size:14px;"> {{recencyDetail.vlTestDate}} </td>
-                  </tr>
-                  <tr>
+                </tr>
+                <tr>
                       <td style="font: size 14px;"><b>Viral Load Result</b> </td>
                       <td>&nbsp;:&nbsp; </td>
                       <td ng-if="recencyDetail.vlLoadResult!='BDL' && recencyDetail.vlLoadResult!='TND'" style="font-size:14px;"> {{recencyDetail.vlLoadResult}} </td>

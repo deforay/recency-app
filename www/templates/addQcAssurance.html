@@ -143,6 +143,19 @@
                     </select>   
                 </div>
             </div>
+            <div class="row" >
+                <div class="input-field col ">
+                      <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                              <p>Testing Facility<span style="color:#df3838;"> *</span></p>
+                          </span>
+                    <div class="form-logo "><img src="img/facility.png"></div> 
+                    <select class="ng-valid" id="testingFacility"  name="testingFacility"  title="Please Choose Testing Facility" ng-model="qcAssurance.testingFacility" ng-change="partialQcData();" >
+                        <option value="">-- Select --</option>
+                        <option ng-repeat="test in facilityTestData" value="{{test['facility_id']}}">{{test['facility_name']| underscorefilter}}</option>
+                      </select>   
+                  
+                </div>
+            </div>
 
          
               <div class="row" >

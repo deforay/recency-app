@@ -1,0 +1,111 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "cordova-plugin-networkinterface@^2.0.0",
+        "scope": null,
+        "escapedName": "cordova-plugin-networkinterface",
+        "name": "cordova-plugin-networkinterface",
+        "rawSpec": "^2.0.0",
+        "spec": ">=2.0.0 <3.0.0",
+        "type": "range"
+      },
+      "/var/www/recency-web/public/recency-app"
+    ]
+  ],
+  "_from": "cordova-plugin-networkinterface@>=2.0.0 <3.0.0",
+  "_id": "cordova-plugin-networkinterface@2.0.0",
+  "_inCache": true,
+  "_location": "/cordova-plugin-networkinterface",
+  "_nodeVersion": "9.7.1",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/cordova-plugin-networkinterface_2.0.0_1522275695166_0.18047509668932515"
+  },
+  "_npmUser": {
+    "name": "salbahra",
+    "email": "salbahra@gmail.com"
+  },
+  "_npmVersion": "5.6.0",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "cordova-plugin-networkinterface@^2.0.0",
+    "scope": null,
+    "escapedName": "cordova-plugin-networkinterface",
+    "name": "cordova-plugin-networkinterface",
+    "rawSpec": "^2.0.0",
+    "spec": ">=2.0.0 <3.0.0",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-networkinterface/-/cordova-plugin-networkinterface-2.0.0.tgz",
+  "_shasum": "b26871b75a788c8bdfa1cfcf7a8d67584bfeca59",
+  "_shrinkwrap": null,
+  "_spec": "cordova-plugin-networkinterface@^2.0.0",
+  "_where": "/var/www/recency-web/public/recency-app",
+  "author": {
+    "name": "Samer Albahra, tombolaLtd"
+  },
+  "bugs": {
+    "url": "https://github.com/salbahra/cordova-plugin-networkinterface/issues"
+  },
+  "cordova": {
+    "id": "cordova-plugin-networkinterface",
+    "platforms": [
+      "ios",
+      "android",
+      "browser",
+      "windows"
+    ]
+  },
+  "dependencies": {},
+  "description": "This plugin allows your application to retrieve the local wifi address and http proxy information.",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "integrity": "sha512-cvKkzUxhDhU1EYjFsj1wSYXBnK2qoop/7GiDenGPGR9JFHTYgi55HoJFxxBEaiPxH0uiKd97Bc/mw7ywdemjJQ==",
+    "shasum": "b26871b75a788c8bdfa1cfcf7a8d67584bfeca59",
+    "tarball": "https://registry.npmjs.org/cordova-plugin-networkinterface/-/cordova-plugin-networkinterface-2.0.0.tgz",
+    "fileCount": 9,
+    "unpackedSize": 22893
+  },
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.1.0"
+    }
+  ],
+  "gitHead": "1e325426063e208f9482540845e6b3ddb697f653",
+  "homepage": "https://github.com/salbahra/cordova-plugin-networkinterface#readme",
+  "keywords": [
+    "local",
+    "ip",
+    "wifi",
+    "network",
+    "proxy",
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova-android",
+    "cordova-browser",
+    "cordova-windows"
+  ],
+  "license": "MIT",
+  "maintainers": [
+    {
+      "name": "salbahra",
+      "email": "salbahra@gmail.com"
+    }
+  ],
+  "name": "cordova-plugin-networkinterface",
+  "optionalDependencies": {},
+  "readme": "Network Interface\n=================\n\nNetwork interface information plugin for Cordova/PhoneGap that supports Android, Browser, iOS, and Windows 10.\n\n## Command Line Install\n\n    cordova plugin add cordova-plugin-networkinterface\n\n## PhoneGap Build\n\nTo include the Network Interface plugin in your PhoneGap Build application, add this to your config.xml:\n\n    <plugin name=\"cordova-plugin-networkinterface\" source=\"npm\" />\n\n## Ionic 2+ (w/ Typescript) Usage\n\nFirst install the wrapper:\n\n```sh\nnpm install @ionic-native/network-interface\n```\n\nDefine it in your modules:\n\n```ts\nimport { NetworkInterface } from '@ionic-native/network-interface';\n\n@NgModule( {\n    ...\n    providers: [\n        NetworkInterface\n    ],\n} )\n```\n\nThen use it as follows:\n\n```ts\nimport { NetworkInterface } from '@ionic-native/network-interface';\n\nconstructor( private networkInterface: NetworkInterface ) {\n    this.networkInterface.getWiFiIPAddress( ip => alert( ip ) );\n    this.networkInterface.getCarrierIPAddress( ip => alert( ip ) );\n}\n```\n\n## Global Usage\n\nThe plugin creates the global object `networkinterface`, with the following methods:\n\n* getWiFiIPAddress(onSuccess, onError)\n* getCarrierIPAddress(onSuccess, onError)\n* getHttpProxyInformation (url, onSuccess, onError)\n\n### Using getWiFiIPAddress and getCarrierIPAddress\nThe onSuccess() callback has one argument object with the properties `ip` and `subnet` (changed in 2.x). The onError() callback is provided with a single value describing the error.\n\n```javascript\nfunction onSuccess( ipInformation ) {\n    alert( \"IP: \" + ipInformation.ip + \" subnet:\" + ipInformation.subnet );\n}\n\nfunction onError( error ) {\n\n    // Note: onError() will be called when an IP address can't be found. eg WiFi is disabled, no SIM card, Airplane mode etc.\n    alert( error );\n}\n\nnetworkinterface.getWiFiIPAddress( onSuccess, onError );\nnetworkinterface.getCarrierIPAddress( onSuccess, onError );\n```\n\n### Using getHttpProxyInformation\nThis function gets the relevant proxies for the passed URL in order of application. `onSuccess` we will get an array of objects, each having a `type`, `host` and `port` property. Where the url is not passed via a proxy, the `type` is \"DIRECT\" and both the host and port properties are set to \"none\"\n\n```javascript\nvar url = \"www.github.com\"; //The url you want to find out the proxies for.\n\nfunction onSuccess( proxyInformation ) {\n    proxyInformation.forEach( function( proxy ) {\n        alert( \"Type:\" + proxy.type + \" Host:\" + proxy.host + \" Port:\" + proxt.port );\n    } );\n}\n\nfunction onError( error ) {\n\n    // Note: onSuccess() will be called where there is no applicable proxy, not onError.\n    alert( error );\n}\n\nnetworkinterface.getHttpProxyInformation( url, resolve, reject );\n```\n\nThe type can be any of the following:\n* DIRECT - Not passing through a proxy. `host`/`port` values will be \"none\"\n* SOCKS\n* HTTP\n* HTTPS - iOS Only, seems to default back to HTTP\n* AUTOJS - iOS Only, proxy determined by AutoConfiguration Script. `host`/`port` values will be \"none\"\n* AUTOCONFIG - iOS Only, proxy determined by configuration at a URK `host`/`port` values will be \"none\"\n\n## License\n\nThe MIT License (MIT)\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in\nall copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\nTHE SOFTWARE.\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/salbahra/cordova-plugin-networkinterface.git"
+  },
+  "version": "2.0.0"
+}

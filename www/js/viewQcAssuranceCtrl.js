@@ -82,12 +82,11 @@ $scope.$on("$ionicView.Enter", function(event, data){
 
 });
 
-        $scope.doRefresh = function() {
-            $preLoader.show();
-            $window.location.reload(true);
-            $preLoader.hide();
-            
-          }
+$scope.doRefresh = function() {
+  $preLoader.show();
+  $window.location.reload(true);
+  $preLoader.hide();  
+}
 
           $scope.syncnow = function(){
             if($scope.displaymessage== true){
@@ -123,38 +122,43 @@ $scope.$on("$ionicView.Enter", function(event, data){
              }
              else
              {
-                 $scope.response =data.syncData.response;
+                $scope.response =data.syncData.response;
                 $scope.syncQcCount =data.syncCount.response[0].Total;
                 $scope.tenRecord = data.syncCount.tenRecord;
-                //console.log($scope.tenRecord)
                 localStorage.setItem('lastTenQcData',JSON.stringify($scope.tenRecord) )
-               localStorage.setItem('syncQcCount', $scope.syncQcCount)
-               var responselen = $scope.response.length ;
-              // console.log($scope.QCDataList[responselen - 1].testerName);
-               var currentdate = new Date();
-               localStorage.setItem('LastTesterName',$scope.QCDataList[responselen - 1].testerName)
-               localStorage.setItem('LastTestDate',currentdate)
- 
-                    for(i=0;i< $scope.response.length;i++){
+                localStorage.setItem('syncQcCount', $scope.syncQcCount)
+                var responselen = $scope.response.length ;
+                var currentdate = new Date();
+                localStorage.setItem('LastTesterName',$scope.QCDataList[responselen - 1].testerName)
+                localStorage.setItem('LastTestDate',currentdate)
+                console.log($scope.response);
+                for(i=0;i< $scope.response.length;i++){
                           $scope.QCDataList.splice(i);
-                     }
-                    // console.log( $scope.QCDataList)
-              localStorage.setItem('QCData',$scope.QCDataList);
-                       if(localStorage.getItem('QCData')=="")
-                        {
+                }
+                console.log( $scope.QCDataList)
+                if($scope.QCDataList.length==0)
+                {
+                   localStorage.setItem('QCData',($scope.QCDataList));
+                }
+                else
+                {
+                   localStorage.setItem('QCData',JSON.stringify($scope.QCDataList));
+                }
+                if(localStorage.getItem('QCData')=="")
+                    {
                        localStorage.removeItem('QCData');
                        localStorage.removeItem('QcStartDate');
                        localStorage.removeItem('QcAlertDate');
-                        } 
-               localStorage.setItem('qccounter',0);
-               $preLoader.hide();
+                    } 
+                    localStorage.setItem('counter',$scope.QCDataList.length);
+                    $preLoader.hide();
 
-                  $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
-                  .then(function(success) {
-                       // success
-                   }, function (error) {
-                        // error
-                   });
+                //   $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
+                //   .then(function(success) {
+                //        // success
+                //    }, function (error) {
+                //         // error
+                //    });
                     $scope.onLoadQc();
              }
             })

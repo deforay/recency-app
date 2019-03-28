@@ -3,12 +3,13 @@
             <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
 
         <div class="card">
-
+<!-- 
          <div class="table-header">
             <span style="text-align: center;width: 100%;float: left; ">Technical Support</span>
-          </div>
+          </div> -->
          <table class="table  tech-table" style="width: 100%">
-            <tr>
+            <tbody ng-repeat="tech in filtered = (techSupportData)">
+            <tr ng-if="tech.global_name=='technical_support_name'">
               <td>
                 <div>
                   <span style="margin: 0 10px;"><img style="height: 24px;margin-bottom: -8px;" src="img/tech-support-name.png"></span>
@@ -16,10 +17,10 @@
                 </div>
               </td>     
             </tr>
-            <tr>
-              <td style="text-transform: capitalize;text-align:left;padding-left: 55px;">Sathish Kumar</td>       
+            <tr ng-if="tech.global_name=='technical_support_name'">
+              <td style="text-transform: capitalize;text-align:left;padding-left: 55px;">{{tech.global_value}}</td>       
             </tr>
-            <tr>
+            <tr ng-if="tech.global_name=='admin_email'">
               <td>
                 <div>
                   <span style="margin: 0 10px;"><img style="height: 24px;margin-bottom: -8px;" src="img/envelope.png"></span>
@@ -27,10 +28,10 @@
                 </div>
               </td>
             </tr>
-            <tr>
-              <td style="text-align:left;padding-left: 55px;">admin@gmail.com</td>       
+            <tr ng-if="tech.global_name=='admin_email'">
+              <td style="text-align:left;padding-left: 55px;"><a href="mailto:{{tech.global_value}}">{{tech.global_value}}</a></td>       
             </tr>
-            <tr>
+            <tr ng-if="tech.global_name=='admin_phone'">
               <td>
                 <div>
                   <span style="margin: 0 10px;"><img style="height: 24px;margin-bottom: -8px;" src="img/call.png"></span>
@@ -38,9 +39,10 @@
                 </div>
               </td>     
             </tr>
-            <tr>
-              <td style="text-align:left;padding-left: 55px;">99999999999</td>       
+            <tr ng-if="tech.global_name=='admin_phone'">                  
+              <td style="text-align:left;padding-left: 55px;"><a ng-href="tel:{{tech.global_value}}">{{tech.global_value}}</a></td>       
             </tr>
+        </tbody>
         </table>
         <!-- <table class="table  tech-table" style="width: 100%" >
             <tr>
