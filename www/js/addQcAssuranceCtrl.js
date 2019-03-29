@@ -129,7 +129,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
         $scope.qcAssurance.testKitLotNo="";
         $scope.qcAssurance.testKitExpDate="";
         $scope.qcAssurance.testKitLotAvailability="";
-        $scope.qcAssurance.hivRecencyDate="";
+        $scope.qcAssurance.hivRecencyTestDate="";
         $scope.qcAssurance.ctrlLine="";
         $scope.qcAssurance.ctrlLineName="";
         $scope.qcAssurance.positiveLine="";
@@ -244,7 +244,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
         $scope.qcAssurance.testKitLotNo="";
         $scope.qcAssurance.testKitExpDate="";
         $scope.qcAssurance.testKitLotAvailability="";
-        $scope.qcAssurance.hivRecencyDate="";
+        $scope.qcAssurance.hivRecencyTestDate="";
         $scope.qcAssurance.ctrlLine="";
         $scope.qcAssurance.ctrlLineName="";
         $scope.qcAssurance.positiveLine="";
@@ -452,9 +452,9 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
     var ipObj2 = {
       callback: function (val) { 
      
-      var hivRecencyDate = new Date(val);
-      //console.log(hivRecencyDate);
-      $scope.qcAssurance.hivRecencyDate =  $filter('date')(hivRecencyDate , "dd-MMM-yyyy");
+      var hivRecencyTestDate = new Date(val);
+      //console.log(hivRecencyTestDate);
+      $scope.qcAssurance.hivRecencyTestDate =  $filter('date')(hivRecencyTestDate , "dd-MMM-yyyy");
       $scope.partialQcData();
       },
     to: new Date(),
@@ -518,7 +518,7 @@ $scope.$on("$ionicView.beforeEnter", function(event, data){
           $ionicPopup.alert({title:'Alert!',template:'Please Enter Test Kit Expiry Date'});
           return false;
         }
-         if($scope.qcAssurance.hivRecencyDate==""){
+         if($scope.qcAssurance.hivRecencyTestDate==""){
             $ionicPopup.alert({title:'Alert!',template:'Please Choose HIV+ Recency Date'});
             return false;
           }

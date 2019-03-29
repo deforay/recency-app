@@ -115,7 +115,7 @@ app.controller('addRecencyCtrl', function($scope,$rootScope, $http, $timeout, $s
       $scope.recency.facility_name="";
       //$scope.recency.otherfacility="";
       $scope.recency.hivDiagnosisDate="";
-      $scope.recency.hivRecencyDate="";
+      $scope.recency.hivRecencyTestDate="";
       $scope.recency.ctrlLine="";
       $scope.recency.ctrlLineName="";
       $scope.recency.positiveLine="";
@@ -681,7 +681,7 @@ app.controller('addRecencyCtrl', function($scope,$rootScope, $http, $timeout, $s
       }
       $scope.recencyNotPerformed = function(testNotPerformed){
         if(testNotPerformed==true){
-          $scope.recency.hivRecencyDate="";
+          $scope.recency.hivRecencyTestDate="";
           $scope.recency.ctrlLine="";
           $scope.recency.positiveLine="";
           $scope.recency.longTermLine="";
@@ -907,8 +907,8 @@ app.controller('addRecencyCtrl', function($scope,$rootScope, $http, $timeout, $s
     var ipObj4 = {
       callback: function (val) { 
      
-      var hivRecencyDate = new Date(val);
-      $scope.recency.hivRecencyDate =  $filter('date')(hivRecencyDate , "dd-MMM-yyyy");
+      var hivRecencyTestDate = new Date(val);
+      $scope.recency.hivRecencyTestDate =  $filter('date')(hivRecencyTestDate , "dd-MMM-yyyy");
        $scope.partialRecencyData();
       },
       to: new Date(),
@@ -1424,7 +1424,7 @@ $scope.checkothercity = function(city){
         }
     }
     $scope.showToastAlert = function(mandatorytitle){
- //  $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+   //$ionicPopup.alert({title:'Alert!',template:mandatorytitle});
     $cordovaToast.show(mandatorytitle, 'long', 'center')
               .then(function(success) {
                 // success
@@ -1615,7 +1615,7 @@ $scope.checkothercity = function(city){
           $scope.showToastAlert(mandatorytitle); 
         return false;
         } 
-        if($scope.mandatoryData[i]=='hivRecencyDate' && $scope.recency.hivRecencyDate==""){
+        if($scope.mandatoryData[i]=='hivRecencyTestDate' && $scope.recency.hivRecencyTestDate==""){
           $scope.showRecencyTick = false;
           $scope.showToastAlert(mandatorytitle); 
           return false;
@@ -1647,7 +1647,7 @@ $scope.checkothercity = function(city){
         }
       }
       if($scope.recency.sampleId!="" || $scope.recency.patientId!="" || $scope.recency.facilityId!="" ||$scope.recency.hivDiagnosisDate!="" ||
-          $scope.recency.hivRecencyDate!=""||$scope.recency.ctrlLine!="" ||$scope.recency.positiveLine!="" || $scope.recency.longTermLine!="" ||
+          $scope.recency.hivRecencyTestDate!=""||$scope.recency.ctrlLine!="" ||$scope.recency.positiveLine!="" || $scope.recency.longTermLine!="" ||
           $scope.recency.pastHivTesting!="" || $scope.recency.lastHivStatus!=""|| $scope.recency.patientOnArt!=""||$scope.recency.location_one!=""||
           $scope.recency.location_two!="" ||$scope.recency.location_three!="" || $scope.recency.testKitLotNo !=""|| $scope.recency.testKitExpDate !=""|| 
           $scope.recency.testerName !="" || $scope.recency.testingFacility !="" || $scope.recency.vlTestDate !="" || $scope.recency.vlLoadResult !="")
@@ -1952,9 +1952,9 @@ $scope.checkothercity = function(city){
           $scope.showToastAlert(mandatorytitle); 
         return false;
         } 
-        if($scope.mandatoryData[i]=='hivRecencyDate' && $scope.recency.hivRecencyDate==""){
+        if($scope.mandatoryData[i]=='hivRecencyTestDate' && $scope.recency.hivRecencyTestDate==""){
           $scope.showRecencyTick = false;
-          var mandatorytitle = 'Please Enter HIV+ Recency Date';
+          var mandatorytitle = 'Please Enter HIV Recency Test Date';
           $scope.showToastAlert(mandatorytitle); 
           return false;
         }

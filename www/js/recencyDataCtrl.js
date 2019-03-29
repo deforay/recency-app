@@ -180,7 +180,7 @@ app=angular.module('starter.recencyDataCtrl', ['starter.services'])
                     
                    $http.get($localStorage.get('apiUrl')+'/api/recency?authToken='+$localStorage.get('authToken')+'&start='+$rootScope.fromDate+'&end='+$rootScope.toDate)
                    .then(function(response) {
-                     //console.log(response);
+                     console.log(response);
                      if(response.data.status =="success"){
                       $localStorage.set('ServerRecencyData','login');
                       $preLoader.hide();

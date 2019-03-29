@@ -150,7 +150,7 @@ $scope.doRefresh = function() {
                        localStorage.removeItem('QcStartDate');
                        localStorage.removeItem('QcAlertDate');
                     } 
-                    localStorage.setItem('counter',$scope.QCDataList.length);
+                    localStorage.setItem('qccounter',$scope.QCDataList.length);
                     $preLoader.hide();
 
                   $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')

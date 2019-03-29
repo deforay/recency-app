@@ -170,10 +170,10 @@
                   <div class="row" ng-if="optionalFieldsFlag.hivDiagnosisDate==true">
                       <div class="input-field col col-90">
                             <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                <p>HIV+ Diag Date<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='hivDiagnosisDate'"  style="color:#df3838;"> *</span></p>                             
+                                <p>HIV Diagnosis Date<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='hivDiagnosisDate'"  style="color:#df3838;"> *</span></p>                             
                             </span>
                           <div class="form-logo date-img"><img src="img/date.png"></div> 
-                          <input id="hivDiagnosisDate" type="text" class="hivDiagnosisDate" name="hivDiagnosisDate" title="Please Enter HIV+ Diagnosis Date"  ng-click="setDiagDate()" ng-model='recency.hivDiagnosisDate' placeholder="HIV+ Diag Date" readonly required>
+                          <input id="hivDiagnosisDate" type="text" class="hivDiagnosisDate" name="hivDiagnosisDate" title="Please Enter HIV Diagnosis Date"  ng-click="setDiagDate()" ng-model='recency.hivDiagnosisDate' placeholder="HIV Diagnosis Date" readonly required>
                        
                       </div>
                       <div class="input-field col " style="padding:0">
@@ -355,17 +355,17 @@
                                 </div> -->
 
 
-                        <div class="row" ng-if="recency.testNotPerformed!=true && optionalFieldsFlag.hivRecencyDate==true">
+                        <div class="row" ng-if="recency.testNotPerformed!=true && optionalFieldsFlag.hivRecencyTestDate==true">
                       <div class="input-field col col-90">
                             <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                <p>HIV+ Recency Date<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='hivRecencyDate'" style="color:#df3838;"> *</span></p>                                    
+                                <p>HIV Recency Test Date<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='hivRecencyTestDate'" style="color:#df3838;"> *</span></p>                                    
                                 </span>
                           <div class="form-logo date-img"><img src="img/date.png"></div> 
-                          <input id="hivRecencyDate" type="text" class="hivRecencyDate" name="hivRecencyDate" title="Please Enter HIV+ Recency Date" ng-click="setRecencyDate()" ng-model='recency.hivRecencyDate' placeholder="HIV+ Recency Date" readonly required>
+                          <input id="hivRecencyTestDate" type="text" class="hivRecencyTestDate" name="hivRecencyTestDate" title="Please Enter HIV Recency Test Date" ng-click="setRecencyDate()" ng-model='recency.hivRecencyTestDate' placeholder="HIV Recency Test Date" readonly required>
                          
                       </div>
                       <div class="input-field col " style="padding:0">
-                        <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="recency.hivRecencyDate =''"><img src="img/clear.png" style="height: 26px;"></div> 
+                        <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="recency.hivRecencyTestDate =''"><img src="img/clear.png" style="height: 26px;"></div> 
                        </div>
                   </div>
                   <div class="row" ng-if="recency.testNotPerformed!=true && optionalFieldsFlag.ctrlLine==true">
@@ -441,7 +441,7 @@
                           ng-keyup="getFinalOutcome(recency.recencyOutcome,recency.vlLoadResult)" ng-disabled="recency.recencyOutcome=='Assay Negative'||recency.recencyOutcome=='Invalid-Please Verify' ||recency.recencyOutcome==''|| recency.vlLoadResultDropdown!=''"> 
                     </div>  
                 </div>
-                <div class="row" ng-if="recency.testNotPerformed!=true">
+                <div class="row" ng-if="recency.testNotPerformed!=true && optionalFieldsFlag.vlLoadResult==true">
                     <div class=" input-field col" style="padding:0 10px">
                         <div style="width: 100%; height: 16px;border-bottom: 0.5px solid #b3acac;text-align: center;margin-bottom: 7px;">
                             <span style="font-size: 15px; background-color: #ffffff;padding: 0px 10px;line-height: 30px;">

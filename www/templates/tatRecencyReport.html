@@ -81,34 +81,34 @@
                 <table class="table table-bordered table-striped order-table" style="width: 100%" id="ordertable">
                   <tr style="white-space: nowrap">
 
-                    <th style="text-align: center" ng-click="sortBy('sample_id','hiv_recency_date')">Sample ID
+                    <th style="text-align: center" ng-click="sortBy('sample_id','hiv_recency_test_date')">Sample ID
                         <span class="sortorder" ng-show="propertyName === 'sample_id'" ng-class="{reverse: reverse}"></span>
     
                     </th>
-                    <th style="text-align: center" ng-click="sortBy('final_outcome','hiv_recency_date')">Final Outcome
+                    <th style="text-align: center" ng-click="sortBy('final_outcome','hiv_recency_test_date')">Final Outcome
                         <span class="sortorder" ng-show="propertyName === 'final_outcome'" ng-class="{reverse: reverse}"></span>
                     </th>
     
-                    <th style="text-align: center" ng-click="sortByDate('hiv_recency_date')">Sample Recency Testing Date
-                        <span class="sortorder" ng-show="propertyName === 'hiv_recency_date'" ng-class="{reverse: reverse}"></span>
+                    <th style="text-align: center" ng-click="sortByDate('hiv_recency_test_date')">Sample Recency Testing Date
+                        <span class="sortorder" ng-show="propertyName === 'hiv_recency_test_date'" ng-class="{reverse: reverse}"></span>
                     </th>
-                    <th style="text-align: center"  ng-click="sortBy('vl_test_date','hiv_recency_date')">Viral Load Tested Date
+                    <th style="text-align: center"  ng-click="sortBy('vl_test_date','hiv_recency_test_date')">Viral Load Tested Date
                         <span class="sortorder" ng-show="propertyName === 'vl_test_date'" ng-class="{reverse: reverse}"></span>
                     </th>
-                    <th style="text-align: center" ng-click="sortBy('vl_result_entry_date','hiv_recency_date')">Viral Load Entered Date
+                    <th style="text-align: center" ng-click="sortBy('vl_result_entry_date','hiv_recency_test_date')">Viral Load Entered Date
                         <span class="sortorder" ng-show="propertyName === 'vl_result_entry_date'" ng-class="{reverse: reverse}"></span>
                     </th>
-                    <th style="text-align: center" ng-click="sortBy('diffInDays','hiv_recency_date')">Difference (TAT)
+                    <th style="text-align: center" ng-click="sortBy('diffInDays','hiv_recency_test_date')">Difference (TAT)
                         <span class="sortorder" ng-show="propertyName === 'diffInDays'" ng-class="{reverse: reverse}"></span>
                     </th>
 
                   </tr>
-                  <tr ng-repeat="recency in tatDatas | orderBy:'hiv_recency_date' | orderBy:propertyName:reverse " >
+                  <tr ng-repeat="recency in tatDatas | orderBy:'hiv_recency_test_date' | orderBy:propertyName:reverse " >
                     <td style="text-align: center" class="orderid">
                         <p>{{ recency['sample_id'] }} </p>
                    </td>
                    <td style="text-align: center">{{ recency['final_outcome']}}</td>
-                   <td style="text-align: center">{{ recency['hiv_recency_date']| date: "dd-MMM-yyyy"}}</td>
+                   <td style="text-align: center">{{ recency['hiv_recency_test_date']| date: "dd-MMM-yyyy"}}</td>
                    <td style="text-align: center">{{ recency['vl_test_date']| date: "dd-MMM-yyyy"}}</td>
                    <td style="text-align: center">{{ recency['vl_result_entry_date']| date: "dd-MMM-yyyy" }}</td>
                    <td style="text-align: center">{{ recency['diffInDays']}}</td>
