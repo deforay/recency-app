@@ -460,6 +460,14 @@ else if($scope.recency.finalOutcome =='Assay Negative'){
     }  
     console.log($scope.recency.facility_name)
     }
+
+    $scope.checkVlResult = function(){
+      if($scope.recency.vlLoadResult==undefined)
+      {
+        $scope.recency.vlLoadResult='';
+        $("#vlLoadResult").val("");
+      }
+    }  
   $scope.setmainactive = function(){
     $scope.recencydisplay=true;
     if($("#main-recency").hasClass('active')){

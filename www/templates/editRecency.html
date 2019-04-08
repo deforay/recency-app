@@ -438,7 +438,7 @@
                               </span>  
                      <div class="form-logo"><img src="img/lab.png"></div> 
                         <input id="vlLoadResult" type="number" class="vlLoadResult" name="vlLoadResult" title="Please Enter Viral Load Result" ng-model='recency.vlLoadResult' placeholder="Viral Load Test Result"
-                          ng-keyup="getFinalOutcome(recency.recencyOutcome,recency.vlLoadResult)" ng-disabled="recency.recencyOutcome=='Assay Negative'||recency.recencyOutcome=='Invalid-Please Verify' ||recency.recencyOutcome==''|| recency.vlLoadResultDropdown!=''"> 
+                         ng-change="checkVlResult()" ng-keyup="getFinalOutcome(recency.recencyOutcome,recency.vlLoadResult)" ng-disabled="recency.recencyOutcome=='Assay Negative'||recency.recencyOutcome=='Invalid-Please Verify' ||recency.recencyOutcome==''|| recency.vlLoadResultDropdown!=''"> 
                     </div>  
                 </div>
                 <div class="row" ng-if="recency.testNotPerformed!=true && optionalFieldsFlag.vlLoadResult==true">

@@ -465,9 +465,14 @@ app.controller('addRecencyCtrl', function($scope,$rootScope, $http, $timeout, $s
       }, 1000);
 
     }
-
+ 
     $scope.partialRecencyData = function(){
-      
+
+      if($scope.recency.vlLoadResult==undefined)
+      {
+        $scope.recency.vlLoadResult='';
+        $("#vlLoadResult").val("");
+      }
       var partialData = $scope.recency;
     if($scope.recency.formInitDateTime=='' || $scope.recency.formInitDateTime==null || $scope.recency.formInitDateTime==undefined){
       var currentdatetime = new Date();
@@ -506,6 +511,8 @@ app.controller('addRecencyCtrl', function($scope,$rootScope, $http, $timeout, $s
 
        localStorage.setItem('PartialRecencyData',JSON.stringify(partialData)) ;
    }
+
+
     $scope.setmainactive = function(){
      $scope.recencydisplay=true;
 
