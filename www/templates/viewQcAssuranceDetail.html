@@ -1,85 +1,76 @@
 <ion-view view-title="QC Detail">
-    <ion-content class="animate-fade-slide-in">
-      <div class="recency-view row">
-        
-          <div class="card " >
-            <div class="col">
+  <ion-content class="animate-fade-slide-in">
+    <div class="recency-view row">
+      <div class="card ">
+        <div class="col">
+          <table class="item item-stacked-label item-text-wrap" style="border-top:none">
+            <p style="padding-left: 20px;padding-top: 9px;margin: 0;font-size: 16px;font-weight: bold;color: #10559a;">
+              QC Test
+            </p>
+            <tr>
+              <td style="font-size:14px;"><b>Date Of QC Test</b></td>
+              <td>&nbsp;:&nbsp; </td>
+              <td style="font-size:14px;"> {{viewqcDetail.qcTestDate}}</td>
+            </tr>
+            <tr>
+              <td style="font-size:14px;"><b>QC Sample ID</b></td>
+              <td>&nbsp;:&nbsp; </td>
+              <td style="font-size:14px;"> {{viewqcDetail.qcsampleId}}</td>
+            </tr>
+            <tr>
+              <td style="font-size:14px;"><b>Reference Result</b></td>
+              <td>&nbsp;:&nbsp; </td>
+              <td style="font-size:14px;text-transform: capitalize;"> {{viewqcDetail.referenceResult| replace: '_':' '}}
+              </td>
+            </tr>
 
-            
-              <table class="item item-stacked-label item-text-wrap" style="border-top:none">
-              <p style="padding-left: 20px;padding-top: 9px;margin: 0;font-size: 16px;font-weight: bold;color: #10559a;">QC Test</p>
+            <tr>
+              <td style="font: size 14px;"><b>Test Kit Lot Number</b> </td>
+              <td>&nbsp;:&nbsp; </td>
+              <td style="font-size:14px;"> {{viewqcDetail.testKitLotNo}} </td>
+            </tr>
+            <tr>
+              <td style="font: size 14px;"><b>Test Kit Expiry Date</b> </td>
+              <td>&nbsp;:&nbsp; </td>
+              <td style="font-size:14px;"> {{viewqcDetail.testKitExpDate}} </td>
+            </tr>
 
+            <div>
               <tr>
-                  <td style="font-size:14px;"><b>Date Of QC Test</b></td>
-                  <td>&nbsp;:&nbsp; </td>
-                  <td style="font-size:14px;"> {{viewqcDetail.qcTestDate}}</td>
-                </tr>
-                <tr>
-                  <td style="font-size:14px;"><b>QC Sample ID</b></td>
-                  <td>&nbsp;:&nbsp; </td>
-                  <td style="font-size:14px;"> {{viewqcDetail.qcsampleId}}</td>
-                </tr>
-                <tr>
-                  <td style="font-size:14px;"><b>Reference Result</b></td>
-                  <td>&nbsp;:&nbsp; </td>
-                  <td style="font-size:14px;text-transform: capitalize;"> {{viewqcDetail.referenceResult| replace: '_':' '}}</td>
-                </tr>
-     
-                  <tr>
-                    <td style="font: size 14px;"><b>Test Kit Lot Number</b> </td>
-                    <td>&nbsp;:&nbsp; </td>
-                    <td style="font-size:14px;"> {{viewqcDetail.testKitLotNo}} </td>
-                  </tr>
-                  <tr>
-                    <td style="font: size 14px;"><b>Test Kit Expiry Date</b> </td>
-                    <td>&nbsp;:&nbsp; </td>
-                    <td style="font-size:14px;"> {{viewqcDetail.testKitExpDate}} </td>
-                  </tr>
-                  <!-- <tr ng-if="viewqcDetail.testNotPerformed==true">
-                    <td style="font: size 14px;"><b>Is Recency Not Performed</b> </td>
-                    <td>&nbsp;:&nbsp; </td>
-                    <td style="font-size:14px;"> Yes </td>
-                  </tr>
-                  -->
-              <div >              
-                <tr>
-                  <td style="font: size 14px;"><b>HIV+ Rec. Date</b> </td>
-                  <td>&nbsp;:&nbsp; </td>
-                  <td style="font-size:14px;"> {{viewqcDetail.hivRecencyTestDate}} </td>
-                </tr>
-                <tr>
-                  <td style="font: size 14px;"><b>Control Line</b> </td>
-                  <td>&nbsp;:&nbsp; </td>
-                  <td style="font-size:14px;text-transform: capitalize;"> {{viewqcDetail.ctrlLineName}} </td>
-                </tr>
-                <tr> 
-                    <td style="font: size 14px;"><b>Positive Verification Line</b> </td>
-                    <td>&nbsp;:&nbsp; </td>
-                    <td style="font-size:14px;text-transform: capitalize;"> {{viewqcDetail.positiveLineName}} </td>
-                  </tr>
-                <tr>
-                    <td style="font: size 14px;"><b>Long Term Verification Line</b> </td>
-                    <td>&nbsp;:&nbsp; </td>
-                    <td style="font-size:14px;text-transform: capitalize;"> {{viewqcDetail.longTermLineName}} </td>
-                  </tr>
-                </div>
-  
-                  <tr>
-                    <td style="font: size 14px;"><b>Tester Name</b> </td>
-                    <td>&nbsp;:&nbsp; </td>
-                    <td style="font-size:14px;"> {{viewqcDetail.testerName}} </td>
-                  </tr>
-                  <tr>
-                    <td style="font: size 14px;"><b>Testing Facility</b> </td>
-                    <td>&nbsp;:&nbsp; </td>
-                    <td style="font-size:14px;"> {{viewqcDetail.testingFacilityName}} </td>
-                  </tr>
-                
-                  </table>        
-                </div>
+                <td style="font: size 14px;"><b>HIV+ Rec. Date</b> </td>
+                <td>&nbsp;:&nbsp; </td>
+                <td style="font-size:14px;"> {{viewqcDetail.hivRecencyTestDate}} </td>
+              </tr>
+              <tr>
+                <td style="font: size 14px;"><b>Control Line</b> </td>
+                <td>&nbsp;:&nbsp; </td>
+                <td style="font-size:14px;text-transform: capitalize;"> {{viewqcDetail.ctrlLineName}} </td>
+              </tr>
+              <tr>
+                <td style="font: size 14px;"><b>Positive Verification Line</b> </td>
+                <td>&nbsp;:&nbsp; </td>
+                <td style="font-size:14px;text-transform: capitalize;"> {{viewqcDetail.positiveLineName}} </td>
+              </tr>
+              <tr>
+                <td style="font: size 14px;"><b>Long Term Verification Line</b> </td>
+                <td>&nbsp;:&nbsp; </td>
+                <td style="font-size:14px;text-transform: capitalize;"> {{viewqcDetail.longTermLineName}} </td>
+              </tr>
+            </div>
 
-            </div>  
+            <tr>
+              <td style="font: size 14px;"><b>Tester Name</b> </td>
+              <td>&nbsp;:&nbsp; </td>
+              <td style="font-size:14px;"> {{viewqcDetail.testerName}} </td>
+            </tr>
+            <tr>
+              <td style="font: size 14px;"><b>Testing Facility</b> </td>
+              <td>&nbsp;:&nbsp; </td>
+              <td style="font-size:14px;"> {{viewqcDetail.testingFacilityName}} </td>
+            </tr>
+          </table>
+        </div>
       </div>
-    </ion-content>
-  </ion-view>
-  
+    </div>
+  </ion-content>
+</ion-view>

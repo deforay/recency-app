@@ -1,37 +1,38 @@
+<ion-view view-title="QC Data  {{qcUnsynCount}}">
 
-<ion-view  view-title="QC Data  {{qcUnsynCount}}">
+
+  <ion-content class="animate-fade-slide-in">
 
 
-  <ion-content class="animate-fade-slide-in" >
 
-     
-  
-      <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
-     
+    <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
+
     <div class="recency-view" style="margin-bottom:45px">
-     <div class="card" style="border:none;padding-top: 0; padding-bottom: 0;" ng-repeat="qc in filtered = (QCDataList)   ">  
+      <div class="card" style="border:none;padding-top: 0; padding-bottom: 0;"
+        ng-repeat="qc in filtered = (QCDataList)   ">
         <a ng-click="viewqc(qc,$index)" class=" stable-bg ink ink-dark">
-            <div class="table-header">
-              <span style="float: left ">QC Test</span>
-            </div>
-            <div class="item item-text-wrap" style="border: 1px solid #e4e4e4;">
-              <p><b>Date Of QC Test:</b>&nbsp;&nbsp;&nbsp; {{qc.qcTestDate}} </p>
-              <p><b>QC Sample ID :</b>&nbsp;&nbsp;&nbsp; {{qc.qcsampleId}} </p>
-              <p style="text-transform: capitalize"><b>Reference Result :</b>&nbsp;&nbsp;&nbsp; {{qc.referenceResult | replace: '_':' '}} </p>
-              <p><b>Test Kit Lot Number :</b>&nbsp;&nbsp;&nbsp; {{qc.testKitLotNo}} </p>
-              <p><b>Test Kit Expiry Date :</b>&nbsp;&nbsp;&nbsp; {{qc.testKitExpDate}} </p>
-              <p><b>Tester Name :</b>&nbsp;&nbsp;&nbsp; {{qc.testerName}} </p>
-             </div>
+          <div class="table-header">
+            <span style="float: left ">QC Test</span>
+          </div>
+          <div class="item item-text-wrap" style="border: 1px solid #e4e4e4;">
+            <p><b>Date Of QC Test:</b>&nbsp;&nbsp;&nbsp; {{qc.qcTestDate}} </p>
+            <p><b>QC Sample ID :</b>&nbsp;&nbsp;&nbsp; {{qc.qcsampleId}} </p>
+            <p style="text-transform: capitalize"><b>Reference Result :</b>&nbsp;&nbsp;&nbsp;
+              {{qc.referenceResult | replace: '_':' '}} </p>
+            <p><b>Test Kit Lot Number :</b>&nbsp;&nbsp;&nbsp; {{qc.testKitLotNo}} </p>
+            <p><b>Test Kit Expiry Date :</b>&nbsp;&nbsp;&nbsp; {{qc.testKitExpDate}} </p>
+            <p><b>Tester Name :</b>&nbsp;&nbsp;&nbsp; {{qc.testerName}} </p>
+          </div>
         </a>
       </div>
-      <p style="text-align: center;margin: 10px;" ng-show="displaymessage">No Records Found. Total {{syncQcCount}} records have been synced with the server.</p>
+      <p style="text-align: center;margin: 10px;" ng-show="displaymessage">No Records Found. Total {{syncQcCount}}
+        records have been synced with the server.</p>
     </div>
-    
   </ion-content>
-
   <div class="bar bar-footer bar-positive" style="padding: 0;">
-      <button class="button button-block  waves-effect waves-light sync-button" type="submit" style="margin:0;border:none;"  ng-click="syncnow()">
-          <p style="margin-bottom: 0">SYNC NOW </p>
-      </button>
-  </div> 
+    <button class="button button-block  waves-effect waves-light sync-button" type="submit"
+      style="margin:0;border:none;" ng-click="syncnow()">
+      <p style="margin-bottom: 0">SYNC NOW </p>
+    </button>
+  </div>
 </ion-view>

@@ -1,38 +1,33 @@
+app = angular.module('starter.viewRecencyDetailCtrl', ['starter.services'])
 
-app=angular.module('starter.viewRecencyDetailCtrl', ['starter.services'])
+  .controller('viewRecencyDetailCtrl', function ($scope, $window, $rootScope, $stateParams) {
+    console.log($rootScope.recencyDetail);
 
-.controller('viewRecencyDetailCtrl', function($scope,  $window,$rootScope, $stateParams) {
-    console.log( $rootScope.recencyDetail);
-  
-  $scope.displaybadge = false;
+    $scope.displaybadge = false;
 
-    $scope.doRefresh = function() {
+    $scope.doRefresh = function () {
       $preLoader.show();
       $window.location.reload(true);
       $preLoader.hide();
     };
-  
+
     $scope.recencyDetail = JSON.parse(localStorage.getItem('viewRecency'));
 
-    $scope.editRecency = function(recency){
+    $scope.editRecency = function (recency) {
       $scope.recencyDetail = recency;
-      $window.location.href = '#/app/editRecency/'+recency.unique_id;
-  }
+      $window.location.href = '#/app/editRecency/' + recency.unique_id;
+    }
 
-})
-.filter('replace', [function () {
+  })
+  .filter('replace', [function () {
 
     return function (input, from, to) {
-      
-      if(input === undefined) {
+      if (input === undefined) {
         return;
       }
-  
-      var regex = new RegExp(from, 'g');
-      return   input.replace(regex, to);
 
-       
+      var regex = new RegExp(from, 'g');
+      return input.replace(regex, to);
     };
-  
-  
+
   }]);

@@ -1,102 +1,105 @@
-<ion-view view-title="Pending Results" >
-    <div class="backgroundimg" ng-show="showauth" >
-        <div class="authWrapper">
-            <div class="container" >
-              <ion-content >
-                <!-- <div class="logo"> <img src="img/icon.png" alt=""></div> -->
-                <div class="loginFields">
-                    <div class="row">
-                      <form class="col loginForm" name="loginForm" >
-                   
-                            <div class="row">
-                                <div class="input-field col ">
-                                    <input id="email" type="email" name ="email" class="userName" ng-model='loginData.email' placeholder="abc@deforay.com" required>
-                                    <span style="color:red" ng-show="loginForm.email.$dirty && loginForm.email.$invalid">
-                                          <span ng-show="loginForm.email.$error.required">Email is required.</span>
-                                          <span ng-show="loginForm.email.$error.email">Invalid email address.</span>
-                                          </span>
-                                  </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col ">
-                                    <input id="serverpassword" type="password" class="password" name="serverpassword" ng-model='loginData.serverpassword' placeholder="Server Password" minlength="3"  required>
-                                    <span style="color:red" ng-show="loginForm.serverpassword.$dirty && loginForm.serverpassword.$invalid">
-                                          <span ng-show="loginForm.serverpassword.$error.required">Server Password is required.</span>
-                                          </span> 
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col ">
-                                    <button class="button button-block  waves-effect waves-light" type="submit" name="action" ng-disabled="loginForm.serverHost.$dirty && loginForm.serverHost.$invalid ||
-                                     loginForm.serverpassword.$dirty && loginForm.serverpassword.$invalid ||
-                                    loginForm.email.$dirty && loginForm.email.$invalid" ng-click="doLogin(loginData)">LOGIN
-                                    </button>
-                                </div>
-                              </div>
-                        </form>
-                        
-                    </div>
+<ion-view view-title="Pending Results">
+  <div class="backgroundimg" ng-show="showauth">
+    <div class="authWrapper">
+      <div class="container">
+        <ion-content>
+          <div class="loginFields">
+            <div class="row">
+              <form class="col loginForm" name="loginForm">
+
+                <div class="row">
+                  <div class="input-field col ">
+                    <input id="email" type="email" name="email" class="userName" ng-model='loginData.email'
+                      placeholder="abc@deforay.com" required>
+                    <span style="color:red" ng-show="loginForm.email.$dirty && loginForm.email.$invalid">
+                      <span ng-show="loginForm.email.$error.required">Email is required.</span>
+                      <span ng-show="loginForm.email.$error.email">Invalid email address.</span>
+                    </span>
+                  </div>
                 </div>
-                </ion-content>
-            </div>      
-        </div>
+                <div class="row">
+                  <div class="input-field col ">
+                    <input id="serverpassword" type="password" class="password" name="serverpassword"
+                      ng-model='loginData.serverpassword' placeholder="Server Password" minlength="3" required>
+                    <span style="color:red"
+                      ng-show="loginForm.serverpassword.$dirty && loginForm.serverpassword.$invalid">
+                      <span ng-show="loginForm.serverpassword.$error.required">Server Password is required.</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col ">
+                    <button class="button button-block  waves-effect waves-light" type="submit" name="action"
+                      ng-disabled="loginForm.serverHost.$dirty && loginForm.serverHost.$invalid ||
+                                     loginForm.serverpassword.$dirty && loginForm.serverpassword.$invalid ||
+                                    loginForm.email.$dirty && loginForm.email.$invalid"
+                      ng-click="doLogin(loginData)">LOGIN
+                    </button>
+                  </div>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </ion-content>
       </div>
-        
-          <div class="RecencyForm">
-          <ion-content class="animate-fade-slide-in"  ng-hide="showauth">
-                  
-                <ion-list type="list-inset"  >
-                    <h3 style="font-size:17px"> Recency Pending Results</h3>
-          
-                <p ng-show="displayVlCount">Pending Viral Load results : {{recencyVlCount}} 
-                </p>
-                <div style="overflow-x:auto;margin-bottom: 30px;" class="">
-      
-                          
-                <table class="table table-bordered table-striped order-table" style="width: 100%" id="ordertable">
-                  <tr style="white-space: nowrap">
-                        <th style="text-align: center"  ng-click="sortByDate('hiv_recency_test_date')">Date Of Testing
-                                <span class="sortorder" ng-show="propertyName === 'hiv_recency_test_date'" ng-class="{reverse: reverse}"></span>
-                            </th>
-                    <th style="text-align: center" ng-click="sortBy('sample_id','hiv_recency_test_date')">Sample ID
-                        <span class="sortorder" ng-show="propertyName === 'sample_id'" ng-class="{reverse: reverse}"></span>
-                    </th>
-                    <th style="text-align: center" ng-click="sortBy('term_outcome','hiv_recency_test_date')">Assay Test Result
-                        <span class="sortorder" ng-show="propertyName === 'term_outcome'" ng-class="{reverse: reverse}"></span>
-                    </th>
-                    <th style="text-align: center" ng-click="sortBy('final_outcome','hiv_recency_test_date')">Final Result
-                        <span class="sortorder" ng-show="propertyName === 'final_outcome'" ng-class="{reverse: reverse}"></span>
-                    </th>
-                    <th style="text-align: center" ng-click="sortBy('facility_name','hiv_recency_test_date')">Facility Name
-                        <span class="sortorder" ng-show="propertyName === 'facility_name'" ng-class="{reverse: reverse}"></span>
-                    </th>
-                   
-                   
-                  </tr>
-                  <tr ng-repeat="recency in recencyVlDatas | orderBy:'hiv_recency_test_date' | orderBy:propertyName:reverse " >
-                    <td style="text-align: center">{{ recency['hiv_recency_test_date'] | date: "dd-MMM-yyyy" }}</td>                                       
-                    <td style="text-align: center">{{ recency['sample_id']}}</td>                   
-                    <td style="text-align: center"> 
-                        <p style="color:red"  ng-if="recency['term_outcome']!='Long Term' && recency['term_outcome']!='Assay Recent'">{{recency['term_outcome']}}</p>
-                        <p ng-if="recency['term_outcome']=='Long Term' || recency['term_outcome']=='Assay Recent'">{{recency['term_outcome']}}</p>
-                    </td>
-                    <td style="text-align: center">{{ recency['final_outcome']}}</td>
-    
-                    <td style="text-align: center;white-space: nowrap;">{{ recency['facility_name'] }}</td>                  
-                  </tr>
-                  
-                  <tr ng-show="displaymessage">
-                    <td colspan="5" style="text-align: center;margin: 10px;" >No Records Found.</td>
-    
-                  </tr>
-                </table>
-              </div>
-             </ion-list>
-              </ion-content>
-              </div>
-    </ion-view>
-    
-    
-         
-         
-    
+    </div>
+  </div>
+
+  <div class="RecencyForm">
+    <ion-content class="animate-fade-slide-in" ng-hide="showauth">
+
+      <ion-list type="list-inset">
+        <h3 style="font-size:17px"> Recency Pending Results</h3>
+
+        <p ng-show="displayVlCount">Pending Viral Load results : {{recencyVlCount}}
+        </p>
+        <div style="overflow-x:auto;margin-bottom: 30px;" class="">
+
+
+          <table class="table table-bordered table-striped order-table" style="width: 100%" id="ordertable">
+            <tr style="white-space: nowrap">
+              <th style="text-align: center" ng-click="sortByDate('hiv_recency_test_date')">Date Of Testing
+                <span class="sortorder" ng-show="propertyName === 'hiv_recency_test_date'"
+                  ng-class="{reverse: reverse}"></span>
+              </th>
+              <th style="text-align: center" ng-click="sortBy('sample_id','hiv_recency_test_date')">Sample ID
+                <span class="sortorder" ng-show="propertyName === 'sample_id'" ng-class="{reverse: reverse}"></span>
+              </th>
+              <th style="text-align: center" ng-click="sortBy('term_outcome','hiv_recency_test_date')">Assay Test Result
+                <span class="sortorder" ng-show="propertyName === 'term_outcome'" ng-class="{reverse: reverse}"></span>
+              </th>
+              <th style="text-align: center" ng-click="sortBy('final_outcome','hiv_recency_test_date')">Final Result
+                <span class="sortorder" ng-show="propertyName === 'final_outcome'" ng-class="{reverse: reverse}"></span>
+              </th>
+              <th style="text-align: center" ng-click="sortBy('facility_name','hiv_recency_test_date')">Facility Name
+                <span class="sortorder" ng-show="propertyName === 'facility_name'" ng-class="{reverse: reverse}"></span>
+              </th>
+
+
+            </tr>
+            <tr ng-repeat="recency in recencyVlDatas | orderBy:'hiv_recency_test_date' | orderBy:propertyName:reverse ">
+              <td style="text-align: center">{{ recency['hiv_recency_test_date'] | date: "dd-MMM-yyyy" }}</td>
+              <td style="text-align: center">{{ recency['sample_id']}}</td>
+              <td style="text-align: center">
+                <p style="color:red"
+                  ng-if="recency['term_outcome']!='Long Term' && recency['term_outcome']!='Assay Recent'">
+                  {{recency['term_outcome']}}</p>
+                <p ng-if="recency['term_outcome']=='Long Term' || recency['term_outcome']=='Assay Recent'">
+                  {{recency['term_outcome']}}</p>
+              </td>
+              <td style="text-align: center">{{ recency['final_outcome']}}</td>
+
+              <td style="text-align: center;white-space: nowrap;">{{ recency['facility_name'] }}</td>
+            </tr>
+
+            <tr ng-show="displaymessage">
+              <td colspan="5" style="text-align: center;margin: 10px;">No Records Found.</td>
+
+            </tr>
+          </table>
+        </div>
+      </ion-list>
+    </ion-content>
+  </div>
+</ion-view>

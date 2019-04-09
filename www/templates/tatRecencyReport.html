@@ -1,133 +1,131 @@
-<ion-view view-title="TAT Reports" >
-    <div class="backgroundimg" ng-show="showauth" >
-        <div class="authWrapper">
-            <div class="container" >
-              <ion-content >
-                <!-- <div class="logo"> <img src="img/icon.png" alt=""></div> -->
-                <div class="loginFields">
-                    <div class="row">
-                      <form class="col loginForm" name="loginForm" >
-                   
-                            <div class="row">
-                                <div class="input-field col ">
-                                    <input id="email" type="email" name ="email" class="userName" ng-model='loginData.email' placeholder="abc@deforay.com" required>
-                                    <span style="color:red" ng-show="loginForm.email.$dirty && loginForm.email.$invalid">
-                                          <span ng-show="loginForm.email.$error.required">Email is required.</span>
-                                          <span ng-show="loginForm.email.$error.email">Invalid email address.</span>
-                                          </span>
-                                  </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col ">
-                                    <input id="serverpassword" type="password" class="password" name="serverpassword" ng-model='loginData.serverpassword' placeholder="Server Password" minlength="3" required>
-                                    <span style="color:red" ng-show="loginForm.serverpassword.$dirty && loginForm.serverpassword.$invalid">
-                                          <span ng-show="loginForm.serverpassword.$error.required">Server Password is required.</span>
-                                          </span> 
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col ">
-                                    <button class="button button-block  waves-effect waves-light" type="submit" name="action" ng-disabled="loginForm.serverHost.$dirty && loginForm.serverHost.$invalid ||
-                                     loginForm.serverpassword.$dirty && loginForm.serverpassword.$invalid ||
-                                    loginForm.email.$dirty && loginForm.email.$invalid" ng-click="doLogin(loginData)">LOGIN
-                                    </button>
-                                </div>
-                              </div>
-                        </form>
-                        
-                    </div>
+<ion-view view-title="TAT Reports">
+  <div class="backgroundimg" ng-show="showauth">
+    <div class="authWrapper">
+      <div class="container">
+        <ion-content>
+          <div class="loginFields">
+            <div class="row">
+              <form class="col loginForm" name="loginForm">
+
+                <div class="row">
+                  <div class="input-field col ">
+                    <input id="email" type="email" name="email" class="userName" ng-model='loginData.email'
+                      placeholder="abc@deforay.com" required>
+                    <span style="color:red" ng-show="loginForm.email.$dirty && loginForm.email.$invalid">
+                      <span ng-show="loginForm.email.$error.required">Email is required.</span>
+                      <span ng-show="loginForm.email.$error.email">Invalid email address.</span>
+                    </span>
+                  </div>
                 </div>
-                </ion-content>
-            </div>      
-        </div>
+                <div class="row">
+                  <div class="input-field col ">
+                    <input id="serverpassword" type="password" class="password" name="serverpassword"
+                      ng-model='loginData.serverpassword' placeholder="Server Password" minlength="3" required>
+                    <span style="color:red"
+                      ng-show="loginForm.serverpassword.$dirty && loginForm.serverpassword.$invalid">
+                      <span ng-show="loginForm.serverpassword.$error.required">Server Password is required.</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col ">
+                    <button class="button button-block  waves-effect waves-light" type="submit" name="action"
+                      ng-disabled="loginForm.serverHost.$dirty && loginForm.serverHost.$invalid ||
+                                     loginForm.serverpassword.$dirty && loginForm.serverpassword.$invalid ||
+                                    loginForm.email.$dirty && loginForm.email.$invalid"
+                      ng-click="doLogin(loginData)">LOGIN
+                    </button>
+                  </div>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </ion-content>
       </div>
-        
-          <div class="RecencyForm">
-          <ion-content class="animate-fade-slide-in"  ng-hide="showauth">
-                  
-                <ion-list type="list-inset"  >
-                    <h3 style="font-size:17px"> TAT Reports</h3>
-                    <div class="loginFields">  
-                        <div class="row">
-                                    <div class="input-field col col-90">
-                                          <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                                  <p>Recency Test Date From :</p>
-                                              </span>
-                                        <div class="form-logo date-img"><img src="img/date.png"></div> 
-                                        <input id="fromDate" type="text" class="fromDate" name="fromDate" title="Please Enter From Date"  ng-click="setfromDate();" ng-model='fromDate' placeholder="From Date" readonly required>
-                                    </div>
-                                    <div class="input-field col " style="padding:0">
-                                      <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="clearfromDate()"><img src="img/clear.png" style="height: 26px;"></div> 
-                                     </div>
-                       </div>
-                       <div class="row">
-                            <div class="input-field col col-90">
-                                  <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                          <p>Recency Test Date To :</p>
-                                      </span>
-                                <div class="form-logo date-img"><img src="img/date.png"></div> 
-                                <input id="toDate" type="text" class="toDate" name="toDate" title="Please Enter To Date"  ng-click="settoDate();" ng-model='toDate' placeholder="To Date" readonly required>
-                            </div>
-                            <div class="input-field col " style="padding:0">
-                              <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="cleartoDate()"><img src="img/clear.png" style="height: 26px;"></div> 
-                             </div>
-                        </div>
-                    </div>
-                    <p>TAT (in days) = Viral Load Result Entered Date - Recency Test Date 
-                    </p>
-                  <div style="overflow-x:auto;margin-bottom: 30px;" class="">
-               
-                        
-                <table class="table table-bordered table-striped order-table" style="width: 100%" id="ordertable">
-                  <tr style="white-space: nowrap">
+    </div>
+  </div>
+  <div class="RecencyForm">
+    <ion-content class="animate-fade-slide-in" ng-hide="showauth">
+      <ion-list type="list-inset">
+        <h3 style="font-size:17px"> TAT Reports</h3>
+        <div class="loginFields">
+          <div class="row">
+            <div class="input-field col col-90">
+              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                <p>Recency Test Date From :</p>
+              </span>
+              <div class="form-logo date-img"><img src="img/date.png"></div>
+              <input id="fromDate" type="text" class="fromDate" name="fromDate" title="Please Enter From Date"
+                ng-click="setfromDate();" ng-model='fromDate' placeholder="From Date" readonly required>
+            </div>
+            <div class="input-field col " style="padding:0">
+              <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="clearfromDate()"><img
+                  src="img/clear.png" style="height: 26px;"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col col-90">
+              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                <p>Recency Test Date To :</p>
+              </span>
+              <div class="form-logo date-img"><img src="img/date.png"></div>
+              <input id="toDate" type="text" class="toDate" name="toDate" title="Please Enter To Date"
+                ng-click="settoDate();" ng-model='toDate' placeholder="To Date" readonly required>
+            </div>
+            <div class="input-field col " style="padding:0">
+              <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="cleartoDate()"><img
+                  src="img/clear.png" style="height: 26px;"></div>
+            </div>
+          </div>
+        </div>
+        <p>TAT (in days) = Viral Load Result Entered Date - Recency Test Date
+        </p>
+        <div style="overflow-x:auto;margin-bottom: 30px;" class="">
+          <table class="table table-bordered table-striped order-table" style="width: 100%" id="ordertable">
+            <tr style="white-space: nowrap">
 
-                    <th style="text-align: center" ng-click="sortBy('sample_id','hiv_recency_test_date')">Sample ID
-                        <span class="sortorder" ng-show="propertyName === 'sample_id'" ng-class="{reverse: reverse}"></span>
-    
-                    </th>
-                    <th style="text-align: center" ng-click="sortBy('final_outcome','hiv_recency_test_date')">Final Outcome
-                        <span class="sortorder" ng-show="propertyName === 'final_outcome'" ng-class="{reverse: reverse}"></span>
-                    </th>
-    
-                    <th style="text-align: center" ng-click="sortByDate('hiv_recency_test_date')">Sample Recency Testing Date
-                        <span class="sortorder" ng-show="propertyName === 'hiv_recency_test_date'" ng-class="{reverse: reverse}"></span>
-                    </th>
-                    <th style="text-align: center"  ng-click="sortBy('vl_test_date','hiv_recency_test_date')">Viral Load Tested Date
-                        <span class="sortorder" ng-show="propertyName === 'vl_test_date'" ng-class="{reverse: reverse}"></span>
-                    </th>
-                    <th style="text-align: center" ng-click="sortBy('vl_result_entry_date','hiv_recency_test_date')">Viral Load Entered Date
-                        <span class="sortorder" ng-show="propertyName === 'vl_result_entry_date'" ng-class="{reverse: reverse}"></span>
-                    </th>
-                    <th style="text-align: center" ng-click="sortBy('diffInDays','hiv_recency_test_date')">Difference (TAT)
-                        <span class="sortorder" ng-show="propertyName === 'diffInDays'" ng-class="{reverse: reverse}"></span>
-                    </th>
+              <th style="text-align: center" ng-click="sortBy('sample_id','hiv_recency_test_date')">Sample ID
+                <span class="sortorder" ng-show="propertyName === 'sample_id'" ng-class="{reverse: reverse}"></span>
 
-                  </tr>
-                  <tr ng-repeat="recency in tatDatas | orderBy:'hiv_recency_test_date' | orderBy:propertyName:reverse " >
-                    <td style="text-align: center" class="orderid">
-                        <p>{{ recency['sample_id'] }} </p>
-                   </td>
-                   <td style="text-align: center">{{ recency['final_outcome']}}</td>
-                   <td style="text-align: center">{{ recency['hiv_recency_test_date']| date: "dd-MMM-yyyy"}}</td>
-                   <td style="text-align: center">{{ recency['vl_test_date']| date: "dd-MMM-yyyy"}}</td>
-                   <td style="text-align: center">{{ recency['vl_result_entry_date']| date: "dd-MMM-yyyy" }}</td>
-                   <td style="text-align: center">{{ recency['diffInDays']}}</td>
+              </th>
+              <th style="text-align: center" ng-click="sortBy('final_outcome','hiv_recency_test_date')">Final Outcome
+                <span class="sortorder" ng-show="propertyName === 'final_outcome'" ng-class="{reverse: reverse}"></span>
+              </th>
 
-                   
-                  </tr>
-                  
-                  <tr ng-show="displaymessage">
-                    <td colspan="6" style="text-align: center;margin: 10px;" >No Records Found.</td>
-    
-                  </tr>
-                </table>
-              </div>
-             </ion-list>
-              </ion-content>
-              </div>
-    </ion-view>
-    
-    
-         
-         
-    
+              <th style="text-align: center" ng-click="sortByDate('hiv_recency_test_date')">Sample Recency Testing Date
+                <span class="sortorder" ng-show="propertyName === 'hiv_recency_test_date'"
+                  ng-class="{reverse: reverse}"></span>
+              </th>
+              <th style="text-align: center" ng-click="sortBy('vl_test_date','hiv_recency_test_date')">Viral Load Tested
+                Date
+                <span class="sortorder" ng-show="propertyName === 'vl_test_date'" ng-class="{reverse: reverse}"></span>
+              </th>
+              <th style="text-align: center" ng-click="sortBy('vl_result_entry_date','hiv_recency_test_date')">Viral
+                Load Entered Date
+                <span class="sortorder" ng-show="propertyName === 'vl_result_entry_date'"
+                  ng-class="{reverse: reverse}"></span>
+              </th>
+              <th style="text-align: center" ng-click="sortBy('diffInDays','hiv_recency_test_date')">Difference (TAT)
+                <span class="sortorder" ng-show="propertyName === 'diffInDays'" ng-class="{reverse: reverse}"></span>
+              </th>
+            </tr>
+            <tr ng-repeat="recency in tatDatas | orderBy:'hiv_recency_test_date' | orderBy:propertyName:reverse ">
+              <td style="text-align: center" class="orderid">
+                <p>{{ recency['sample_id'] }} </p>
+              </td>
+              <td style="text-align: center">{{ recency['final_outcome']}}</td>
+              <td style="text-align: center">{{ recency['hiv_recency_test_date']| date: "dd-MMM-yyyy"}}</td>
+              <td style="text-align: center">{{ recency['vl_test_date']| date: "dd-MMM-yyyy"}}</td>
+              <td style="text-align: center">{{ recency['vl_result_entry_date']| date: "dd-MMM-yyyy" }}</td>
+              <td style="text-align: center">{{ recency['diffInDays']}}</td>
+            </tr>
+            <tr ng-show="displaymessage">
+              <td colspan="6" style="text-align: center;margin: 10px;">No Records Found.</td>
+            </tr>
+          </table>
+        </div>
+      </ion-list>
+    </ion-content>
+  </div>
+</ion-view>

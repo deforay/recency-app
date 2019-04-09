@@ -1,251 +1,282 @@
 <div class="backgroundimg">
   <div class="authWrapper">
-      <div class="container" >
-        <ion-content  >
-          <!-- <div class="logo"> <img src="img/icon.png" alt=""></div> -->
-          <div class="loginFields">
+    <div class="container">
+      <ion-content>
+        <div class="loginFields">
+          <div class="row">
+            <form class="col loginForm" name="loginForm" ng-show="viewLogin">
               <div class="row">
-                <form class="col loginForm" name="loginForm" ng-show="viewLogin">
-                      <div class="row">
-                          <div class="input-field col ">
-                              <input id="serverHost" type="text" class="serverHost" name="serverHost" ng-model='loginData.serverHost' placeholder="https://recency.deforay.in" ng-keyup="scrollupform()" required>
-                              <span style="color:red" ng-show="loginForm.serverHost.$dirty && loginForm.serverHost.$invalid">
-                                    <span ng-show="loginForm.serverHost.$error.required">Server Host is required.</span>
-                                </span>
-                          </div>
-                      </div>
-                      <div class="row">
-                          <div class="input-field col ">
-                              <input id="email" type="email" name ="email" class="userName" ng-model='loginData.email' placeholder="abc@deforay.com" required>
-                              <span style="color:red" ng-show="loginForm.email.$dirty && loginForm.email.$invalid">
-                                    <span ng-show="loginForm.email.$error.required">Email is required.</span>
-                                    <span ng-show="loginForm.email.$error.email">Invalid email address.</span>
-                                    </span>
-                            </div>
-                      </div>
-                      <div class="row">
-                          <div class="input-field col ">
-                              <input id="serverpassword" type="password" class="password" name="serverpassword" ng-model='loginData.serverpassword' placeholder="Password" minlength="3" required>
-                              <span style="color:red" ng-show="loginForm.serverpassword.$dirty && loginForm.serverpassword.$invalid">
-                                    <span ng-show="loginForm.serverpassword.$error.required">Server Password is required.</span>
-                                    </span> 
-                          </div>
-                      </div>
-                      <div class="row">
-                          <div class="input-field col ">
-                              <button class="button button-block  waves-effect waves-light" type="submit" name="action" ng-disabled="loginForm.serverHost.$dirty && loginForm.serverHost.$invalid ||
+                <div class="input-field col ">
+                  <input id="serverHost" type="text" class="serverHost" name="serverHost"
+                    ng-model='loginData.serverHost' placeholder="https://recency.deforay.in" ng-keyup="scrollupform()"
+                    required>
+                  <span style="color:red" ng-show="loginForm.serverHost.$dirty && loginForm.serverHost.$invalid">
+                    <span ng-show="loginForm.serverHost.$error.required">Server Host is required.</span>
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col ">
+                  <input id="email" type="email" name="email" class="userName" ng-model='loginData.email'
+                    placeholder="abc@deforay.com" required>
+                  <span style="color:red" ng-show="loginForm.email.$dirty && loginForm.email.$invalid">
+                    <span ng-show="loginForm.email.$error.required">Email is required.</span>
+                    <span ng-show="loginForm.email.$error.email">Invalid email address.</span>
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col ">
+                  <input id="serverpassword" type="password" class="password" name="serverpassword"
+                    ng-model='loginData.serverpassword' placeholder="Password" minlength="3" required>
+                  <span style="color:red"
+                    ng-show="loginForm.serverpassword.$dirty && loginForm.serverpassword.$invalid">
+                    <span ng-show="loginForm.serverpassword.$error.required">Server Password is required.</span>
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col ">
+                  <button class="button button-block  waves-effect waves-light" type="submit" name="action" ng-disabled="loginForm.serverHost.$dirty && loginForm.serverHost.$invalid ||
                                loginForm.serverpassword.$dirty && loginForm.serverpassword.$invalid ||
                               loginForm.email.$dirty && loginForm.email.$invalid" ng-click="doLogin(loginData)">LOGIN
-                              </button>
-                          </div>
-                        </div>
-                  </form>
-                 
-                    <form class="col AddPasswordForm" name="AddPasswordForm" ng-show="viewAddPassword" novalidate>
-                        <div  ng-init="initCreateApp()" class="passlock"> 
-                                <h3 style="font-size: 15px;color: #000;text-align: center;">Choose App Password </h3>
-                                <p style="color: #000;text-align: center;">This will be used each time you login to the app.</p>
-                            <div >
-                                
-                              <div class="row passcode-tab" >
-                                  <div class="col col-10 col-offset-15 add-passcode-col" >
-                                      <input class="col " style="background: transparent;padding-left:5px;text-align:center;color: #000;" type="password" minlength="4" maxlength="4" ng-model="createpassword.one">
-                                  </div>
-                                  <div class="col col-10 col-offset-10  add-passcode-col">
-                                          <input class="col " style="background: transparent;padding-left:5px;text-align:center;color: #000;" type="password" minlength="4" maxlength="4" ng-model="createpassword.two">
-                                  </div>
-                                  <div class="col col-10 col-offset-10  add-passcode-col" >
-                                          <input class="col " style="background: transparent;padding-left:5px;text-align:center;color: #000;" type="password" minlength="4" maxlength="4" ng-model="createpassword.three">
-                                  </div>
-                                  <div class="col col-10 col-offset-10  add-passcode-col">
-                                          <input class="col " style="background: transparent;padding-left:5px;text-align:center;color: #000;" type="password" minlength="4" maxlength="4" ng-model="createpassword.four">
-                                  </div>
-                              </div>
-                          </div>
-                          <div style="margin-top: 50px">
-                              <div class="row">
-                                  <div class="col col-20 col-offset-20">
-                                      <button class="button button-light button-stretch" ng-click="createApp(1)">1</button>
-                                  </div>
-                                  <div class="col col-20">
-                                      <button class="button button-light button-stretch" ng-click="createApp(2)">2</button>
-                                  </div>
-                                  <div class="col col-20">
-                                      <button class="button button-light button-stretch" ng-click="createApp(3)">3</button>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col col-20 col-offset-20">
-                                      <button class="button button-light button-stretch" ng-click="createApp(4)">4</button>
-                                  </div>
-                                  <div class="col col-20">
-                                      <button class="button button-light button-stretch" ng-click="createApp(5)">5</button>
-                                  </div>
-                                  <div class="col col-20">
-                                      <button class="button button-light button-stretch" ng-click="createApp(6)">6</button>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col col-20 col-offset-20">
-                                      <button class="button button-light button-stretch" ng-click="createApp(7)">7</button>
-                                  </div>
-                                  <div class="col col-20">
-                                      <button class="button button-light button-stretch" ng-click="createApp(8)">8</button>
-                                  </div>
-                                  <div class="col col-20">
-                                      <button class="button button-light button-stretch" ng-click="createApp(9)">9</button>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col col-20 col-offset-20">
-                                  </div>
-                                  <div class="col col-20">
-                                      <button class="button button-light button-stretch" ng-click="createApp(0)">0</button>
-                                  </div>
-                                  <div class="col col-20">
-                                    <button class="button  icon ion-close-circled button-light button-stretch"  ng-click="deleteCreate()"></button>
-                                   </div>
-                              </div>
-                          </div>
-                      </div>
-                  </form>
-                  <form class="col ConfirmPasswordForm" name="ConfirmPasswordForm" ng-show="viewConfirmPassword" novalidate>
-                        <div  ng-init="initConfirmApp()" class="passlock" > 
-                                <h3 style="font-size: 15px;color: #000;text-align: center;">Confirm App Password </h3>
-                            <div >
-                                
-                              <div class="row passcode-tab" >
-                                  <div class="col col-10 col-offset-15 view-passcode-col" >
-                                      <input class="col " style="background: transparent;padding-left:5px;text-align:center;color: #000;" type="password" minlength="4" maxlength="4" ng-model="confirmpassword.one">
-                                  </div>
-                                  <div class="col col-10 col-offset-10  view-passcode-col">
-                                          <input class="col " style="background: transparent;padding-left:5px;text-align:center;color: #000;" type="password" minlength="4" maxlength="4" ng-model="confirmpassword.two">
-                                  </div>
-                                  <div class="col col-10 col-offset-10  view-passcode-col" >
-                                          <input class="col " style="background: transparent;padding-left:5px;text-align:center;color: #000;" type="password" minlength="4" maxlength="4" ng-model="confirmpassword.three">
-                                  </div>
-                                  <div class="col col-10 col-offset-10  view-passcode-col">
-                                          <input class="col " style="background: transparent;padding-left:5px;text-align:center;color: #000;" type="password" minlength="4" maxlength="4" ng-model="confirmpassword.four">
-                                  </div>
-                              </div>
-                          </div>
-                          <div style="margin-top: 50px">
-                              <div class="row">
-                                  <div class="col col-20 col-offset-20">
-                                      <button class="button button-light button-stretch" ng-click="ConfirmApp(1)">1</button>
-                                  </div>
-                                  <div class="col col-20">
-                                      <button class="button button-light button-stretch" ng-click="ConfirmApp(2)">2</button>
-                                  </div>
-                                  <div class="col col-20">
-                                      <button class="button button-light button-stretch" ng-click="ConfirmApp(3)">3</button>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col col-20 col-offset-20">
-                                      <button class="button button-light button-stretch" ng-click="ConfirmApp(4)">4</button>
-                                  </div>
-                                  <div class="col col-20">
-                                      <button class="button button-light button-stretch" ng-click="ConfirmApp(5)">5</button>
-                                  </div>
-                                  <div class="col col-20">
-                                      <button class="button button-light button-stretch" ng-click="ConfirmApp(6)">6</button>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col col-20 col-offset-20">
-                                      <button class="button button-light button-stretch" ng-click="ConfirmApp(7)">7</button>
-                                  </div>
-                                  <div class="col col-20">
-                                      <button class="button button-light button-stretch" ng-click="ConfirmApp(8)">8</button>
-                                  </div>
-                                  <div class="col col-20">
-                                      <button class="button button-light button-stretch" ng-click="ConfirmApp(9)">9</button>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col col-20 col-offset-20">
-                                  </div>
-                                  <div class="col col-20">
-                                      <button class="button button-light button-stretch" ng-click="ConfirmApp(0)">0</button>
-                                  </div>
-                                  <div class="col col-20">
-                                    <button class="button  icon ion-close-circled button-light button-stretch"  ng-click="deleteConfirm()"></button>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </form>    
-                    <form class="col LoginPasswordForm" name="LoginPasswordForm"  ng-show="viewLoginPassword" novalidate>
-                          <div  ng-init="initAppLogin()" class="passlock"> 
-                                <h3 style="font-size: 15px;color: #000;text-align: center;">Login App Password </h3>
-
-                              <div >
-                                <div class="row passcode-tab" >
-                                    <div class="col col-10 col-offset-15 passcode-col" >
-                                        <input class="col " style="background: transparent;padding-left:5px;text-align:center;color: #000;" type="password" minlength="4" maxlength="4" ng-model="password.one">
-                                    </div>
-                                    <div class="col col-10 col-offset-10 passcode-col">
-                                            <input class="col " style="background: transparent;padding-left:5px;text-align:center;color: #000;" type="password" minlength="4" maxlength="4" ng-model="password.two">
-                                    </div>
-                                    <div class="col col-10 col-offset-10 passcode-col" >
-                                            <input class="col " style="background: transparent;padding-left:5px;text-align:center;color: #000;" type="password" minlength="4" maxlength="4" ng-model="password.three">
-                                    </div>
-                                    <div class="col col-10 col-offset-10 passcode-col">
-                                            <input class="col " style="background: transparent;padding-left:5px;text-align:center;color: #000;" type="password" minlength="4" maxlength="4" ng-model="password.four">
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="margin-top: 50px">
-                                <div class="row">
-                                    <div class="col col-20 col-offset-20">
-                                        <button class="button button-light button-stretch" ng-click="add(1)">1</button>
-                                    </div>
-                                    <div class="col col-20">
-                                        <button class="button button-light button-stretch" ng-click="add(2)">2</button>
-                                    </div>
-                                    <div class="col col-20">
-                                        <button class="button button-light button-stretch" ng-click="add(3)">3</button>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col col-20 col-offset-20">
-                                        <button class="button button-light button-stretch" ng-click="add(4)">4</button>
-                                    </div>
-                                    <div class="col col-20">
-                                        <button class="button button-light button-stretch" ng-click="add(5)">5</button>
-                                    </div>
-                                    <div class="col col-20">
-                                        <button class="button button-light button-stretch" ng-click="add(6)">6</button>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col col-20 col-offset-20">
-                                        <button class="button button-light button-stretch" ng-click="add(7)">7</button>
-                                    </div>
-                                    <div class="col col-20">
-                                        <button class="button button-light button-stretch" ng-click="add(8)">8</button>
-                                    </div>
-                                    <div class="col col-20">
-                                        <button class="button button-light button-stretch" ng-click="add(9)">9</button>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col col-20 col-offset-20">
-                                    </div>
-                                    <div class="col col-20">
-                                        <button class="button button-light button-stretch" ng-click="add(0)">0</button>
-                                    </div>
-                                    <div class="col col-20">
-                                      <button class="button  icon ion-close-circled button-light button-stretch"  ng-click="delete()"></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                  </button>
+                </div>
               </div>
+            </form>
+
+            <form class="col AddPasswordForm" name="AddPasswordForm" ng-show="viewAddPassword" novalidate>
+              <div ng-init="initCreateApp()" class="passlock">
+                <h3 style="font-size: 15px;color: #000;text-align: center;">Choose App Password </h3>
+                <p style="color: #000;text-align: center;">This will be used each time you login to the app.</p>
+                <div>
+
+                  <div class="row passcode-tab">
+                    <div class="col col-10 col-offset-15 add-passcode-col">
+                      <input class="col "
+                        style="background: transparent;padding-left:5px;text-align:center;color: #000;" type="password"
+                        minlength="4" maxlength="4" ng-model="createpassword.one">
+                    </div>
+                    <div class="col col-10 col-offset-10  add-passcode-col">
+                      <input class="col "
+                        style="background: transparent;padding-left:5px;text-align:center;color: #000;" type="password"
+                        minlength="4" maxlength="4" ng-model="createpassword.two">
+                    </div>
+                    <div class="col col-10 col-offset-10  add-passcode-col">
+                      <input class="col "
+                        style="background: transparent;padding-left:5px;text-align:center;color: #000;" type="password"
+                        minlength="4" maxlength="4" ng-model="createpassword.three">
+                    </div>
+                    <div class="col col-10 col-offset-10  add-passcode-col">
+                      <input class="col "
+                        style="background: transparent;padding-left:5px;text-align:center;color: #000;" type="password"
+                        minlength="4" maxlength="4" ng-model="createpassword.four">
+                    </div>
+                  </div>
+                </div>
+                <div style="margin-top: 50px">
+                  <div class="row">
+                    <div class="col col-20 col-offset-20">
+                      <button class="button button-light button-stretch" ng-click="createApp(1)">1</button>
+                    </div>
+                    <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="createApp(2)">2</button>
+                    </div>
+                    <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="createApp(3)">3</button>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col col-20 col-offset-20">
+                      <button class="button button-light button-stretch" ng-click="createApp(4)">4</button>
+                    </div>
+                    <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="createApp(5)">5</button>
+                    </div>
+                    <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="createApp(6)">6</button>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col col-20 col-offset-20">
+                      <button class="button button-light button-stretch" ng-click="createApp(7)">7</button>
+                    </div>
+                    <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="createApp(8)">8</button>
+                    </div>
+                    <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="createApp(9)">9</button>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col col-20 col-offset-20">
+                    </div>
+                    <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="createApp(0)">0</button>
+                    </div>
+                    <div class="col col-20">
+                      <button class="button  icon ion-close-circled button-light button-stretch"
+                        ng-click="deleteCreate()"></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <form class="col ConfirmPasswordForm" name="ConfirmPasswordForm" ng-show="viewConfirmPassword" novalidate>
+              <div ng-init="initConfirmApp()" class="passlock">
+                <h3 style="font-size: 15px;color: #000;text-align: center;">Confirm App Password </h3>
+                <div>
+
+                  <div class="row passcode-tab">
+                    <div class="col col-10 col-offset-15 view-passcode-col">
+                      <input class="col "
+                        style="background: transparent;padding-left:5px;text-align:center;color: #000;" type="password"
+                        minlength="4" maxlength="4" ng-model="confirmpassword.one">
+                    </div>
+                    <div class="col col-10 col-offset-10  view-passcode-col">
+                      <input class="col "
+                        style="background: transparent;padding-left:5px;text-align:center;color: #000;" type="password"
+                        minlength="4" maxlength="4" ng-model="confirmpassword.two">
+                    </div>
+                    <div class="col col-10 col-offset-10  view-passcode-col">
+                      <input class="col "
+                        style="background: transparent;padding-left:5px;text-align:center;color: #000;" type="password"
+                        minlength="4" maxlength="4" ng-model="confirmpassword.three">
+                    </div>
+                    <div class="col col-10 col-offset-10  view-passcode-col">
+                      <input class="col "
+                        style="background: transparent;padding-left:5px;text-align:center;color: #000;" type="password"
+                        minlength="4" maxlength="4" ng-model="confirmpassword.four">
+                    </div>
+                  </div>
+                </div>
+                <div style="margin-top: 50px">
+                  <div class="row">
+                    <div class="col col-20 col-offset-20">
+                      <button class="button button-light button-stretch" ng-click="ConfirmApp(1)">1</button>
+                    </div>
+                    <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="ConfirmApp(2)">2</button>
+                    </div>
+                    <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="ConfirmApp(3)">3</button>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col col-20 col-offset-20">
+                      <button class="button button-light button-stretch" ng-click="ConfirmApp(4)">4</button>
+                    </div>
+                    <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="ConfirmApp(5)">5</button>
+                    </div>
+                    <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="ConfirmApp(6)">6</button>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col col-20 col-offset-20">
+                      <button class="button button-light button-stretch" ng-click="ConfirmApp(7)">7</button>
+                    </div>
+                    <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="ConfirmApp(8)">8</button>
+                    </div>
+                    <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="ConfirmApp(9)">9</button>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col col-20 col-offset-20">
+                    </div>
+                    <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="ConfirmApp(0)">0</button>
+                    </div>
+                    <div class="col col-20">
+                      <button class="button  icon ion-close-circled button-light button-stretch"
+                        ng-click="deleteConfirm()"></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <form class="col LoginPasswordForm" name="LoginPasswordForm" ng-show="viewLoginPassword" novalidate>
+              <div ng-init="initAppLogin()" class="passlock">
+                <h3 style="font-size: 15px;color: #000;text-align: center;">Login App Password </h3>
+
+                <div>
+                  <div class="row passcode-tab">
+                    <div class="col col-10 col-offset-15 passcode-col">
+                      <input class="col "
+                        style="background: transparent;padding-left:5px;text-align:center;color: #000;" type="password"
+                        minlength="4" maxlength="4" ng-model="password.one">
+                    </div>
+                    <div class="col col-10 col-offset-10 passcode-col">
+                      <input class="col "
+                        style="background: transparent;padding-left:5px;text-align:center;color: #000;" type="password"
+                        minlength="4" maxlength="4" ng-model="password.two">
+                    </div>
+                    <div class="col col-10 col-offset-10 passcode-col">
+                      <input class="col "
+                        style="background: transparent;padding-left:5px;text-align:center;color: #000;" type="password"
+                        minlength="4" maxlength="4" ng-model="password.three">
+                    </div>
+                    <div class="col col-10 col-offset-10 passcode-col">
+                      <input class="col "
+                        style="background: transparent;padding-left:5px;text-align:center;color: #000;" type="password"
+                        minlength="4" maxlength="4" ng-model="password.four">
+                    </div>
+                  </div>
+                </div>
+                <div style="margin-top: 50px">
+                  <div class="row">
+                    <div class="col col-20 col-offset-20">
+                      <button class="button button-light button-stretch" ng-click="add(1)">1</button>
+                    </div>
+                    <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="add(2)">2</button>
+                    </div>
+                    <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="add(3)">3</button>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col col-20 col-offset-20">
+                      <button class="button button-light button-stretch" ng-click="add(4)">4</button>
+                    </div>
+                    <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="add(5)">5</button>
+                    </div>
+                    <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="add(6)">6</button>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col col-20 col-offset-20">
+                      <button class="button button-light button-stretch" ng-click="add(7)">7</button>
+                    </div>
+                    <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="add(8)">8</button>
+                    </div>
+                    <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="add(9)">9</button>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col col-20 col-offset-20">
+                    </div>
+                    <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="add(0)">0</button>
+                    </div>
+                    <div class="col col-20">
+                      <button class="button  icon ion-close-circled button-light button-stretch"
+                        ng-click="delete()"></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
           </div>
-          </ion-content>
-      </div>      
+        </div>
+      </ion-content>
+    </div>
   </div>
 </div>

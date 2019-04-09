@@ -1,682 +1,772 @@
-
 <ion-view view-title="Edit Recency">
-        <header class="row recency-tab" >
-                <button id="main-recency" class="col button recency-head active" ng-click="setmainactive();">Section 1/2
-                    <span ng-if="showRecencyTick==true" class="tickMark"><i class="icon ion-checkmark-circled"></i></span>
-                </button>
-                <button id="other-recency" class="col button recency-head" ng-click="patientvalidation();setothersactive();">Section 2/2
-                    <span ng-if="showBehaviourTick==true" class="tickMark"><i class="icon ion-checkmark-circled"></i></span>
-                </button>
-            </header>
-<div class="RecencyForm">        
-  <ion-content style="top:0!important;bottom: 100px;">
- 
-        <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
+  <header class="row recency-tab">
+    <button id="main-recency" class="col button recency-head active" ng-click="setmainactive();">Section 1/2
+      <span ng-if="showRecencyTick==true" class="tickMark"><i class="icon ion-checkmark-circled"></i></span>
+    </button>
+    <button id="other-recency" class="col button recency-head" ng-click="patientvalidation();setothersactive();">Section
+      2/2
+      <span ng-if="showBehaviourTick==true" class="tickMark"><i class="icon ion-checkmark-circled"></i></span>
+    </button>
+  </header>
+  <div class="RecencyForm">
+    <ion-content style="top:0!important;bottom: 100px;">
 
-    <div class="loginFields">
+      <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
+
+      <div class="loginFields">
         <div class="row">
-        <form class="col loginForm" name="editform" >
-                <div class="row" >
-                        <div class=" input-field col">
-                            <span>
-                                 <span class="outcome" style="margin-left: 10px;font-weight: bold" >{{announcement}}  </span></span> 
-                            </span> 
-                                
-                        </div>
-                     </div> 
-            <div ng-if="recencydisplay==true">    
-                  <div class="row" ng-if="optionalFieldsFlag.sampleId==true">
-                      <div class="input-field col "> 
-                            <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                <p>Sample ID<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='sampleId'"  style="color:#df3838;"> *</span></p>
-                                </span>  
-                       <div class="form-logo"><img src="img/lab.png"></div> 
-                          <input id="sampleId" type="text" class="sampleId" name="sampleId" title="Please Enter Sample ID" ng-model='recency.sampleId' placeholder="Sample ID" > 
-                      </div>  
-                  </div>
-            
-                  <div class="row" ng-if="optionalFieldsFlag.patientId==true">     
-                      <div class="input-field col ">
-                            <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                <p>Patient ID<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='patientId'"  style="color:#df3838;"> *</span></p>                                   
-                                </span>
-                          <div class="form-logo"><img src="img/id-card.png"></div> 
-                          <input id="patientId" type="text" name ="patientId" class="patientId" title="Please Enter Patient ID" ng-model='recency.patientId' placeholder="Patient ID" >
-                         
-                        </div>
-                  </div>
-                        <div class="row" ng-if="optionalFieldsFlag.sampleCollectionDate==true" >
-                          <div class="input-field col col-90">
-                                <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                        <p>Sample Collection Date<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='sampleCollectionDate'"  style="color:#df3838;"> *</span></p>
-                                    </span>
-                              <div class="form-logo date-img"><img src="img/date.png"></div> 
-                              <input id="sampleCollectionDate" type="text" class="sampleCollectionDate" name="sampleCollectionDate" title="Please Enter Sample Collection Date from the Client"  ng-click="setSampleCollectionDate();" ng-model='recency.sampleCollectionDate' placeholder="HIV+ Diag Date" readonly required>
-                          </div>
-                          <div class="input-field col " style="padding:0">
-                            <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="recency.sampleCollectionDate ='';partialRecencyData();"><img src="img/clear.png" style="height: 26px;"></div> 
-                           </div>
-                      </div>
-                        <div class="row" ng-if="optionalFieldsFlag.sampleReceiptDate==true" >
-                            <div class="input-field col col-90">
-                                  <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                          <p>Sample Receipt Date<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='sampleReceiptDate'"  style="color:#df3838;"> *</span></p>
-                                      </span>
-                                <div class="form-logo date-img"><img src="img/date.png"></div> 
-                                <input id="sampleReceiptDate" type="text" class="sampleReceiptDate" name="sampleReceiptDate" title="Please Enter Sample Receipt Date at the Recency Testing Site"  ng-click="setsampleReceiptDate();" ng-model='recency.sampleReceiptDate' placeholder="HIV+ Diag Date" readonly required>
-                            </div>
-                            <div class="input-field col " style="padding:0">
-                              <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="recency.sampleReceiptDate ='';partialRecencyData();"><img src="img/clear.png" style="height: 26px;"></div> 
-                             </div>
-                        </div>
-                        <div class="row" ng-if="optionalFieldsFlag.receivedSpecimenType==true" > 
-                          <div class="input-field col " >
-                                <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                        <p>Received Specimen Type<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='receivedSpecimenType'" style="color:#df3838;"> *</span></p>
-                                    </span>
-                              <div class="form-logo "><img src="img/testtime.png"></div> 
-                              <select class="ng-valid" id="receivedSpecimenType" name="receivedSpecimenType" title="Please Choose Received Specimen Type" ng-model="recency.receivedSpecimenType" ng-change="partialRecencyData()">
-                                      <option value="">-- Select --</option>
-                                      <option value="whole_blood">Whole Blood</option> 
-                                      <option value="plasma">Plasma</option>
-                              </select>                               
-                           </div>
-                        </div>
-              
-                    <div class="row" ng-if="optionalFieldsFlag.facilityId==true">
-                        <div class="input-field col ">
-                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                <p>Facility<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='facilityId'"  style="color:#df3838;"> *</span></p>                                
-                            </span>
-                            <div class="form-logo "><img src="img/facility.png"></div> 
-                             
-                               <select class="ng-valid" id="facilityId"  name="facilityId"  title="Please Choose Facility" ng-model="recency.facilityId" ng-change="getFacility(recency.facilityId)">
-                                <option value="">-- Select --</option>
-                                <option ng-repeat="facility in facilityData" value="{{facility['facility_id']}}">{{facility['facility_name']| underscorefilter}}</option>
-                              </select>  
+          <form class="col loginForm" name="editform">
+            <div class="row">
+              <div class=" input-field col">
+                <span>
+                  <span class="outcome" style="margin-left: 10px;font-weight: bold">{{announcement}} </span></span>
+                </span>
 
-                        </div>
-                    </div>
-                    <!-- <div class="row" style="margin-top: 10px" ng-if="optionalFieldsFlag.facilityId==true">
-                        <div class="input-field col ">
-                            <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                               <p style="z-index: 1; position: absolute; margin-top: -20px;">Facility<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='facilityId'"  style="color:#df3838;"> *</span></p>
-                            </span>
-                            <div class="form-logo "><img src="img/facility.png"></div> 
-                            <input type="text" class="name" id="searchfacility"  ng-model="recency.facility_name" placeholder="Type to search facility..." 
-                            ng-keyup="facilityautocomplete()" />
-                            <input type="hidden" id="facilityId"  name="facilityId" title="Please Choose Facility"  ng-model="recency.facilityId" class="value" />
-                        </div>
-                    </div> -->
-                    <!-- <div class="row" ng-if="showotherfacility==true && optionalFieldsFlag.facilityId==true">
-                        <div class="input-field col ">
-                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                      <p>Other Facility <span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='facilityId'" style="color:#df3838;"> *</span></p>
-                                  </span>
-                            <div class="form-logo"><img src="img/medical-center.png"></div> 
-                            <input id="otherfacility" type="text" class="otherfacility" name="otherfacility"  ng-model="recency.otherfacility" placeholder="Other Facility" >
-                           
-                        </div>
-                    </div> -->
-                    <div class="card" style="margin-top:0;">
-
-                        <h4 style="font-size: 14px;margin-left: 12px;margin-bottom: 0;font-weight: bold;">Client Location</h4>
-                    <div class="row" ng-repeat="loc in configdata">
-                        <div class="input-field col" ng-if="optionalFieldsFlag.location[$index]==true" >
-                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                <p>{{loc.global_value}}<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory==loc.global_name" style="color:#df3838;"> *</span> </p>                               
-                                  </span>
-                            <div class="form-logo date-img"><img src="img/house.png"></div>
-
-                             <select id="{{loc.global_name}}" ng-if="loc.global_name=='location_one'" name="{{loc.global_name}}" title="Please Choose {{loc.global_value}}" ng-model='recency.location[0]' 
-                                     ng-change="GetDistrictValue(recency.location[0])"  >
-                              <option value="">-- Select --</option>
-                              <option ng-repeat="province in provinceData" value="{{province['province_id']}}">{{province['province_name']}}</option>
-                             </select> 
-
-                            <select id="{{loc.global_name}}" ng-if="loc.global_name=='location_two'" name="{{loc.global_name}}" title="Please Choose {{loc.global_value}}" ng-model='recency.location[1]' 
-                              ng-change="GetCityValue(recency.location[1]);checkotherdistrict(recency.location[1]);"  >
-                              <option value="">-- Select --</option>
-                              <option ng-repeat="district in districtData" value="{{district['district_id']}}">{{district['district_name']}}</option>
-                            </select>
-
-                            <div ng-if="loc.global_name=='location_two' && showotherdistrict==true">
-                                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                            <p>Other {{loc.global_value}}<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory==loc.global_name" style="color:#df3838;"> *</span> </p>
-                                    </span>
-                                  <div class="form-logo date-img"><img src="img/house.png"></div> 
-                                    <input id="otherDistrict" type="text" class="otherDistrict" name="otherDistrict"  title="Please Enter Other {{loc.global_value}}" ng-model="recency.otherDistrict" placeholder="Other {{loc.global_value}}">
-                            </div>
-
-                             <select id="{{loc.global_name}}" ng-if="loc.global_name=='location_three'" name="{{loc.global_name}}" title="Please Choose {{loc.global_value}}"  ng-model='recency.location[2]'
-                               ng-change="checkothercity(recency.location[2])">
-                               <option value="">-- Select --</option>
-                              <option ng-repeat="city in cityData" value="{{city['city_id']}}">{{city['city_name']}}</option>
-                             </select>
-
-                             <div ng-if="loc.global_name=='location_three' && showothercity==true">
-                                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                            <p>Other {{loc.global_value}}<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory==loc.global_name" style="color:#df3838;"> *</span> </p>
-                                    </span>
-                                  <div class="form-logo date-img"><img src="img/house.png"></div> 
-                                    <input id="otherCity" type="text" class="otherCity" name="otherCity"  ng-model="recency.otherCity" title="Please Enter Other {{loc.global_value}}" placeholder="Other {{loc.global_value}}">
-                             </div> 
-                             
-                        </div>
-                    </div>
+              </div>
+            </div>
+            <div ng-if="recencydisplay==true">
+              <div class="row" ng-if="optionalFieldsFlag.sampleId==true">
+                <div class="input-field col ">
+                  <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                    <p>Sample ID<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='sampleId'"
+                        style="color:#df3838;"> *</span></p>
+                  </span>
+                  <div class="form-logo"><img src="img/lab.png"></div>
+                  <input id="sampleId" type="text" class="sampleId" name="sampleId" title="Please Enter Sample ID"
+                    ng-model='recency.sampleId' placeholder="Sample ID">
                 </div>
-                <div class="card" style="margin-top:0;margin-bottom: 0;" ng-if="optionalFieldsFlag.hivDiagnosisDate==true || optionalFieldsFlag.pastHivTesting==true || optionalFieldsFlag.testLast12Month==true">
-                    <h4 style="font-size: 14px;margin-left: 12px;margin-bottom: 0;font-weight: bold;">HIV Diagnosis Test</h4>
-                  <div class="row" ng-if="optionalFieldsFlag.hivDiagnosisDate==true">
-                      <div class="input-field col col-90">
-                            <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                <p>HIV Diagnosis Date<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='hivDiagnosisDate'"  style="color:#df3838;"> *</span></p>                             
-                            </span>
-                          <div class="form-logo date-img"><img src="img/date.png"></div> 
-                          <input id="hivDiagnosisDate" type="text" class="hivDiagnosisDate" name="hivDiagnosisDate" title="Please Enter HIV Diagnosis Date"  ng-click="setDiagDate()" ng-model='recency.hivDiagnosisDate' placeholder="HIV Diagnosis Date" readonly required>
-                       
-                      </div>
-                      <div class="input-field col " style="padding:0">
-                        <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="recency.hivDiagnosisDate =''"><img src="img/clear.png" style="height: 26px;"></div> 
-                       </div>
-                  </div>
-                  <div class="row" ng-if="optionalFieldsFlag.pastHivTesting==true">
-                    <div class="input-field col ">
-                          <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                            <p>Past HIV Testing<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='pastHivTesting'" style="color:#df3838;"> *</span></p>
-                              </span>
-                        <div class="form-logo "><img src="img/hiv-test.png"></div> 
-                        <select class="ng-valid" id="pastHivTesting" name="pastHivTesting" title="Please Choose Past HIV Testing" ng-model="recency.pastHivTesting">
-                                <option value="">-- Select --</option>
-                                <option value="yes">Yes</option> 
-                                <option value="no">No</option>
-                                <option value="not_known">Not Known</option>
-                         
-                              </select>                               
-                    </div>
+              </div>
+
+              <div class="row" ng-if="optionalFieldsFlag.patientId==true">
+                <div class="input-field col ">
+                  <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                    <p>Patient ID<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='patientId'"
+                        style="color:#df3838;"> *</span></p>
+                  </span>
+                  <div class="form-logo"><img src="img/id-card.png"></div>
+                  <input id="patientId" type="text" name="patientId" class="patientId" title="Please Enter Patient ID"
+                    ng-model='recency.patientId' placeholder="Patient ID">
+
                 </div>
-                <div class="row" ng-if="(recency.pastHivTesting=='yes' || recency.pastHivTesting=='')&& optionalFieldsFlag.testLast12Month==true">
-                    <div class="input-field col ">
-                          <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                            <p>Tested in last 12Months<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testLast12Month'" style="color:#df3838;"> *</span></p>
-                              </span>
-                        <div class="form-logo "><img src="img/testtime.png"></div> 
-                        <select class="ng-valid" id="testLast12Month" name="testLast12Month" title="Please Choose Tested in last 12Months" ng-model="recency.testLast12Month">
-                                <option value="">-- Select --</option>
-                                <option value="yes">Yes</option> 
-                                <option value="no">No</option>
-                                <option value="not_known">Not Known</option>
-                        </select>                               
+              </div>
+              <div class="row" ng-if="optionalFieldsFlag.sampleCollectionDate==true">
+                <div class="input-field col col-90">
+                  <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                    <p>Sample Collection Date<span ng-repeat="mandatory in mandatoryData"
+                        ng-if="mandatory=='sampleCollectionDate'" style="color:#df3838;"> *</span></p>
+                  </span>
+                  <div class="form-logo date-img"><img src="img/date.png"></div>
+                  <input id="sampleCollectionDate" type="text" class="sampleCollectionDate" name="sampleCollectionDate"
+                    title="Please Enter Sample Collection Date from the Client" ng-click="setSampleCollectionDate();"
+                    ng-model='recency.sampleCollectionDate' placeholder="HIV+ Diag Date" readonly required>
+                </div>
+                <div class="input-field col " style="padding:0">
+                  <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;"
+                    ng-click="recency.sampleCollectionDate ='';partialRecencyData();"><img src="img/clear.png"
+                      style="height: 26px;"></div>
+                </div>
+              </div>
+              <div class="row" ng-if="optionalFieldsFlag.sampleReceiptDate==true">
+                <div class="input-field col col-90">
+                  <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                    <p>Sample Receipt Date<span ng-repeat="mandatory in mandatoryData"
+                        ng-if="mandatory=='sampleReceiptDate'" style="color:#df3838;"> *</span></p>
+                  </span>
+                  <div class="form-logo date-img"><img src="img/date.png"></div>
+                  <input id="sampleReceiptDate" type="text" class="sampleReceiptDate" name="sampleReceiptDate"
+                    title="Please Enter Sample Receipt Date at the Recency Testing Site"
+                    ng-click="setsampleReceiptDate();" ng-model='recency.sampleReceiptDate' placeholder="HIV+ Diag Date"
+                    readonly required>
+                </div>
+                <div class="input-field col " style="padding:0">
+                  <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;"
+                    ng-click="recency.sampleReceiptDate ='';partialRecencyData();"><img src="img/clear.png"
+                      style="height: 26px;"></div>
+                </div>
+              </div>
+              <div class="row" ng-if="optionalFieldsFlag.receivedSpecimenType==true">
+                <div class="input-field col ">
+                  <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                    <p>Received Specimen Type<span ng-repeat="mandatory in mandatoryData"
+                        ng-if="mandatory=='receivedSpecimenType'" style="color:#df3838;"> *</span></p>
+                  </span>
+                  <div class="form-logo "><img src="img/testtime.png"></div>
+                  <select class="ng-valid" id="receivedSpecimenType" name="receivedSpecimenType"
+                    title="Please Choose Received Specimen Type" ng-model="recency.receivedSpecimenType"
+                    ng-change="partialRecencyData()">
+                    <option value="">-- Select --</option>
+                    <option value="whole_blood">Whole Blood</option>
+                    <option value="plasma">Plasma</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row" ng-if="optionalFieldsFlag.facilityId==true">
+                <div class="input-field col ">
+                  <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                    <p>Facility<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='facilityId'"
+                        style="color:#df3838;"> *</span></p>
+                  </span>
+                  <div class="form-logo "><img src="img/facility.png"></div>
+
+                  <select class="ng-valid" id="facilityId" name="facilityId" title="Please Choose Facility"
+                    ng-model="recency.facilityId" ng-change="getFacility(recency.facilityId)">
+                    <option value="">-- Select --</option>
+                    <option ng-repeat="facility in facilityData" value="{{facility['facility_id']}}">
+                      {{facility['facility_name']| underscorefilter}}</option>
+                  </select>
+
+                </div>
+              </div>
+
+              <div class="card" style="margin-top:0;">
+
+                <h4 style="font-size: 14px;margin-left: 12px;margin-bottom: 0;font-weight: bold;">Client Location</h4>
+                <div class="row" ng-repeat="loc in configdata">
+                  <div class="input-field col" ng-if="optionalFieldsFlag.location[$index]==true">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>{{loc.global_value}}<span ng-repeat="mandatory in mandatoryData"
+                          ng-if="mandatory==loc.global_name" style="color:#df3838;"> *</span> </p>
+                    </span>
+                    <div class="form-logo date-img"><img src="img/house.png"></div>
+
+                    <select id="{{loc.global_name}}" ng-if="loc.global_name=='location_one'" name="{{loc.global_name}}"
+                      title="Please Choose {{loc.global_value}}" ng-model='recency.location[0]'
+                      ng-change="GetDistrictValue(recency.location[0])">
+                      <option value="">-- Select --</option>
+                      <option ng-repeat="province in provinceData" value="{{province['province_id']}}">
+                        {{province['province_name']}}</option>
+                    </select>
+
+                    <select id="{{loc.global_name}}" ng-if="loc.global_name=='location_two'" name="{{loc.global_name}}"
+                      title="Please Choose {{loc.global_value}}" ng-model='recency.location[1]'
+                      ng-change="GetCityValue(recency.location[1]);checkotherdistrict(recency.location[1]);">
+                      <option value="">-- Select --</option>
+                      <option ng-repeat="district in districtData" value="{{district['district_id']}}">
+                        {{district['district_name']}}</option>
+                    </select>
+
+                    <div ng-if="loc.global_name=='location_two' && showotherdistrict==true">
+                      <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                        <p>Other {{loc.global_value}}<span ng-repeat="mandatory in mandatoryData"
+                            ng-if="mandatory==loc.global_name" style="color:#df3838;"> *</span> </p>
+                      </span>
+                      <div class="form-logo date-img"><img src="img/house.png"></div>
+                      <input id="otherDistrict" type="text" class="otherDistrict" name="otherDistrict"
+                        title="Please Enter Other {{loc.global_value}}" ng-model="recency.otherDistrict"
+                        placeholder="Other {{loc.global_value}}">
                     </div>
+
+                    <select id="{{loc.global_name}}" ng-if="loc.global_name=='location_three'"
+                      name="{{loc.global_name}}" title="Please Choose {{loc.global_value}}"
+                      ng-model='recency.location[2]' ng-change="checkothercity(recency.location[2])">
+                      <option value="">-- Select --</option>
+                      <option ng-repeat="city in cityData" value="{{city['city_id']}}">{{city['city_name']}}</option>
+                    </select>
+
+                    <div ng-if="loc.global_name=='location_three' && showothercity==true">
+                      <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                        <p>Other {{loc.global_value}}<span ng-repeat="mandatory in mandatoryData"
+                            ng-if="mandatory==loc.global_name" style="color:#df3838;"> *</span> </p>
+                      </span>
+                      <div class="form-logo date-img"><img src="img/house.png"></div>
+                      <input id="otherCity" type="text" class="otherCity" name="otherCity" ng-model="recency.otherCity"
+                        title="Please Enter Other {{loc.global_value}}" placeholder="Other {{loc.global_value}}">
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <div class="card" style="margin-top:0;margin-bottom: 0;"
+                ng-if="optionalFieldsFlag.hivDiagnosisDate==true || optionalFieldsFlag.pastHivTesting==true || optionalFieldsFlag.testLast12Month==true">
+                <h4 style="font-size: 14px;margin-left: 12px;margin-bottom: 0;font-weight: bold;">HIV Diagnosis Test
+                </h4>
+                <div class="row" ng-if="optionalFieldsFlag.hivDiagnosisDate==true">
+                  <div class="input-field col col-90">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>HIV Diagnosis Date<span ng-repeat="mandatory in mandatoryData"
+                          ng-if="mandatory=='hivDiagnosisDate'" style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo date-img"><img src="img/date.png"></div>
+                    <input id="hivDiagnosisDate" type="text" class="hivDiagnosisDate" name="hivDiagnosisDate"
+                      title="Please Enter HIV Diagnosis Date" ng-click="setDiagDate()"
+                      ng-model='recency.hivDiagnosisDate' placeholder="HIV Diagnosis Date" readonly required>
+
+                  </div>
+                  <div class="input-field col " style="padding:0">
+                    <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;"
+                      ng-click="recency.hivDiagnosisDate =''"><img src="img/clear.png" style="height: 26px;"></div>
+                  </div>
+                </div>
+                <div class="row" ng-if="optionalFieldsFlag.pastHivTesting==true">
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Past HIV Testing<span ng-repeat="mandatory in mandatoryData"
+                          ng-if="mandatory=='pastHivTesting'" style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo "><img src="img/hiv-test.png"></div>
+                    <select class="ng-valid" id="pastHivTesting" name="pastHivTesting"
+                      title="Please Choose Past HIV Testing" ng-model="recency.pastHivTesting">
+                      <option value="">-- Select --</option>
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
+                      <option value="not_known">Not Known</option>
+
+                    </select>
+                  </div>
+                </div>
+                <div class="row"
+                  ng-if="(recency.pastHivTesting=='yes' || recency.pastHivTesting=='')&& optionalFieldsFlag.testLast12Month==true">
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Tested in last 12Months<span ng-repeat="mandatory in mandatoryData"
+                          ng-if="mandatory=='testLast12Month'" style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo "><img src="img/testtime.png"></div>
+                    <select class="ng-valid" id="testLast12Month" name="testLast12Month"
+                      title="Please Choose Tested in last 12Months" ng-model="recency.testLast12Month">
+                      <option value="">-- Select --</option>
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
+                      <option value="not_known">Not Known</option>
+                    </select>
+                  </div>
                 </div>
                 <div class="row" ng-if="recency.pastHivTesting=='yes' && optionalFieldsFlag.lastHivStatus==true">
-                    <div class="input-field col ">
-                          <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                  <p>What was the Last HIV Status?<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='pastHivTesting'" style="color:#df3838;"> *</span></p>
-                              </span>
-                        <div class="form-logo "><img src="img/hiv-test.png"></div> 
-                        <select class="ng-valid" id="lastHivStatus" name="lastHivStatus" title="Please Choose Last HIV Status" ng-model="recency.lastHivStatus">
-                                <option value="">-- Select --</option>
-                                <option value="positive">Positive</option> 
-                                <option value="negative">Negative</option>
-                              </select>                               
-                    </div>
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>What was the Last HIV Status?<span ng-repeat="mandatory in mandatoryData"
+                          ng-if="mandatory=='pastHivTesting'" style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo "><img src="img/hiv-test.png"></div>
+                    <select class="ng-valid" id="lastHivStatus" name="lastHivStatus"
+                      title="Please Choose Last HIV Status" ng-model="recency.lastHivStatus">
+                      <option value="">-- Select --</option>
+                      <option value="positive">Positive</option>
+                      <option value="negative">Negative</option>
+                    </select>
+                  </div>
                 </div>
-                <div class="row" ng-if="recency.lastHivStatus=='positive' && recency.pastHivTesting=='yes' && optionalFieldsFlag.patientOnArt==true">
-                    <div class="input-field col ">
-                          <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                  <p>Is the Patient on ART ?<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='pastHivTesting'" style="color:#df3838;"> *</span></p>
-                              </span>
-                        <div class="form-logo "><img src="img/hiv-test.png"></div> 
-                        <select class="ng-valid" id="patientOnArt" name="patientOnArt" title="Please Choose whether the Patient on ART" ng-model="recency.patientOnArt">
-                                <option value="">-- Select --</option>
-                                <option value="yes">Yes</option> 
-                                <option value="no">No</option>
-                              </select>                               
-                    </div>
+                <div class="row"
+                  ng-if="recency.lastHivStatus=='positive' && recency.pastHivTesting=='yes' && optionalFieldsFlag.patientOnArt==true">
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Is the Patient on ART ?<span ng-repeat="mandatory in mandatoryData"
+                          ng-if="mandatory=='pastHivTesting'" style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo "><img src="img/hiv-test.png"></div>
+                    <select class="ng-valid" id="patientOnArt" name="patientOnArt"
+                      title="Please Choose whether the Patient on ART" ng-model="recency.patientOnArt">
+                      <option value="">-- Select --</option>
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
+                    </select>
+                  </div>
                 </div>
-                             
-            <div class="row" ng-if="optionalFieldsFlag.testKitLotNo==true">
-                    <div class="input-field col ">
-                          <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                            <p>Test Kit Lot Number<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testKitLotNo'"  style="color:#df3838;"> *</span></p>
-                              </span>
-                        <div class="form-logo "><img src="img/lab.png"></div> 
-                        <select class="ng-valid" id="testKitLotNo"  name="testKitLotNo"  title="Please Enter Test Kit Lot Number" ng-model="recency.testKitLotNo" ng-change="getTestKitExpDate(recency.testKitLotNo)">
-                                <option value="">-- Select --</option>
-                                <option ng-repeat="lot in TestKitLotList" value="{{lot['testKitLotNo']}}">{{lot['testKitLotNo']}}</option>
-                        </select>   
-                    </div>
+
+                <div class="row" ng-if="optionalFieldsFlag.testKitLotNo==true">
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Test Kit Lot Number<span ng-repeat="mandatory in mandatoryData"
+                          ng-if="mandatory=='testKitLotNo'" style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo "><img src="img/lab.png"></div>
+                    <select class="ng-valid" id="testKitLotNo" name="testKitLotNo"
+                      title="Please Enter Test Kit Lot Number" ng-model="recency.testKitLotNo"
+                      ng-change="getTestKitExpDate(recency.testKitLotNo)">
+                      <option value="">-- Select --</option>
+                      <option ng-repeat="lot in TestKitLotList" value="{{lot['testKitLotNo']}}">{{lot['testKitLotNo']}}
+                      </option>
+                    </select>
+                  </div>
                 </div>
                 <div class="row" ng-if="optionalFieldsFlag.testKitExpDate==true">
-                    <div class="input-field col">
-                          <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                  <p>Test Kit Expiry Date<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testKitExpDate'"  style="color:#df3838;"> *</span></p>
-                              </span>
-                        <div class="form-logo date-img"><img src="img/date.png"></div> 
-                        <input id="testKitExpDate" type="text" class="testKitExpDate" name="testKitExpDate" title="Please Enter Test Kit Expiry Date"   ng-model='recency.testKitExpDate' placeholder="Test Kit Expiry Date" readonly required>
-                    </div>
+                  <div class="input-field col">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Test Kit Expiry Date<span ng-repeat="mandatory in mandatoryData"
+                          ng-if="mandatory=='testKitExpDate'" style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo date-img"><img src="img/date.png"></div>
+                    <input id="testKitExpDate" type="text" class="testKitExpDate" name="testKitExpDate"
+                      title="Please Enter Test Kit Expiry Date" ng-model='recency.testKitExpDate'
+                      placeholder="Test Kit Expiry Date" readonly required>
+                  </div>
                 </div>
-             
+
                 <div class="row" ng-if="optionalFieldsFlag.testerName==true">
-                    <div class="input-field col ">
-                          <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                            <p>Tester Name<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testerName'"  style="color:#df3838;"> *</span></p>
-                              </span>
-                        <div class="form-logo "><img src="img/doctor.png"></div> 
-                        <select class="ng-valid" id="testerName"  name="testerName"  title="Please Enter Tester Name" ng-model="recency.testerName">
-                                <option value="">-- Select --</option>
-                                <option ng-repeat="test in TesterNameList" value="{{test['testerName']}}">{{test['testerName']}}</option>
-                        </select>   
-                    </div>
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Tester Name<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testerName'"
+                          style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo "><img src="img/doctor.png"></div>
+                    <select class="ng-valid" id="testerName" name="testerName" title="Please Enter Tester Name"
+                      ng-model="recency.testerName">
+                      <option value="">-- Select --</option>
+                      <option ng-repeat="test in TesterNameList" value="{{test['testerName']}}">{{test['testerName']}}
+                      </option>
+                    </select>
+                  </div>
                 </div>
-                <div class="row"  ng-if="optionalFieldsFlag.testingFacility==true">
-                        <div class="input-field col ">
-                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                      <p>Testing Modality<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testingModality'"  style="color:#df3838;"> *</span></p>
-                                  </span>
-                            <div class="form-logo "><img src="img/facility.png"></div> 
-                            <select class="ng-valid" id="testingModality"  name="testingModality"  title="Please Choose Testing Modality" ng-model="recency.testingModality" ng-change="getTestingModality(recency.testingModality)" >
-                                <option value="">-- Select --</option>
-                                <option ng-repeat="test in facilityTestTypeData" value="{{test['testing_facility_type_id']}}">{{test['testing_facility_type_name']| underscorefilter}}</option>
-                              </select>   
-                        </div>
-                    </div>
+                <div class="row" ng-if="optionalFieldsFlag.testingFacility==true">
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Testing Modality<span ng-repeat="mandatory in mandatoryData"
+                          ng-if="mandatory=='testingModality'" style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo "><img src="img/facility.png"></div>
+                    <select class="ng-valid" id="testingModality" name="testingModality"
+                      title="Please Choose Testing Modality" ng-model="recency.testingModality"
+                      ng-change="getTestingModality(recency.testingModality)">
+                      <option value="">-- Select --</option>
+                      <option ng-repeat="test in facilityTestTypeData" value="{{test['testing_facility_type_id']}}">
+                        {{test['testing_facility_type_name']| underscorefilter}}</option>
+                    </select>
+                  </div>
+                </div>
                 <div class="row" ng-if="showothertestmodality==true && optionalFieldsFlag.testingFacility==true">
-                    <div class="input-field col ">
-                            <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                             <p>Other Testing Modality<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testingModality'" style="color:#df3838;"> *</span></p>
-                            </span>
-                            <div class="form-logo"><img src="img/medical-center.png"></div> 
-                            <input id="othertestingmodality" type="text" class="othertestingmodality" name="othertestingmodality" ng-model="recency.othertestingmodality" placeholder="Other Testing Modality" >
-                    </div>
-                </div>
-
-            </div>
-          
-                <div class="card" style="margin-top:0;margin-bottom: 0;" >
-
-                        <h4 style="font-size: 14px;margin-left: 12px;margin-bottom: 0;font-weight: bold;">Recency Test Result</h4>
-                        <div class="row">
-                                <div class="input-field col ">
-                                    <ion-list >
-                                        <ion-checkbox style="padding-top: 16px;" ng-model="recency.testNotPerformed" ng-change="recencyNotPerformed(recency.testNotPerformed)" >Recency Test not Performed</ion-checkbox>
-                                      </ion-list>                              
-                                </div>
-                            </div>
-                                <div class="row" ng-if="recency.testNotPerformed==true">
-                                    <div class="input-field col ">
-                                            <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                                <p>Reason of Rec.Test Not Performed<span style="color:#df3838;"> *</span></p>
-                                            </span>
-                                            <div class="form-logo"><img src="img/recencyresult.png"></div> 
-                                         <select class="ng-valid" id="recencyreason" name="recencyreason" ng-model="recency.recencyreason" 
-                                         title="Please Choose Reason of Recency Test Not Performed" ng-change="getReasonName(recency.recencyreason)" >
-                                           <option value="">-- Select --</option>
-                                           <option value="no_consent_from_the_client">No consent from the Client</option>
-                                           <option value="sample_was_not_collected">Sample was not collected (Phlebotomy failure)</option>
-                                           <option value="not_newly_diagnosed">Not newly diagnosed</option>
-                                           <option value="sample_rejected">Sample Rejected</option>
-                                           <option value="other">Other, please specify</option>
-                                        </select>  
-                                     </div>
-                                 </div>
-                                <div class="row" ng-if="recency.testNotPerformed==true && recency.recencyreason=='other'">
-                                    <div class="input-field col ">
-                                          <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                            <p>Other Reasons<span style="color:#df3838;"> *</span></p>
-                                              </span>
-                                        <div class="form-logo"><img src="img/population.png"></div> 
-                                        <input id="otherreason" type="text" class="otherreason" name="otherreason" ng-model="recency.otherreason" placeholder="Other Reason"  >
-                                       
-                                    </div>
-                                </div>
-                                <div class="row" ng-if="recency.testNotPerformed!=true &&  optionalFieldsFlag.testingFacility==true">
-                                    <div class="input-field col ">
-                                          <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                                  <p>Testing Facility<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testingFacility'"  style="color:#df3838;"> *</span></p>
-                                              </span>
-                                        <div class="form-logo "><img src="img/facility.png"></div> 
-                                        <select class="ng-valid" id="testingFacility"  name="testingFacility"  title="Please Choose Testing Facility" ng-model="recency.testingFacility">
-                                            <option value="">-- Select --</option>
-                                            <option ng-repeat="facility in facilityTestData" value="{{facility['facility_id']}}">{{facility['facility_name']| underscorefilter}}</option>
-                                          </select>    
-                                    </div>
-                                </div>
-                                <!-- <div class="row" ng-if="recency.testNotPerformed!=true &&  showothertestfacility==true && optionalFieldsFlag.testingFacility==true">
-                                    <div class="input-field col ">
-                                          <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                                  <p>Other Testing Facility <span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='testingFacility'" style="color:#df3838;"> *</span></p>
-                                              </span>
-                                        <div class="form-logo"><img src="img/medical-center.png"></div> 
-                                        <input id="othertestingfacility" type="text" class="othertestingfacility" name="othertestingfacility"  ng-model="recency.othertestingfacility" placeholder="Other Testing Facility" >
-                                       
-                                    </div>
-                                </div> -->
-
-
-                        <div class="row" ng-if="recency.testNotPerformed!=true && optionalFieldsFlag.hivRecencyTestDate==true">
-                      <div class="input-field col col-90">
-                            <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                <p>HIV Recency Test Date<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='hivRecencyTestDate'" style="color:#df3838;"> *</span></p>                                    
-                                </span>
-                          <div class="form-logo date-img"><img src="img/date.png"></div> 
-                          <input id="hivRecencyTestDate" type="text" class="hivRecencyTestDate" name="hivRecencyTestDate" title="Please Enter HIV Recency Test Date" ng-click="setRecencyDate()" ng-model='recency.hivRecencyTestDate' placeholder="HIV Recency Test Date" readonly required>
-                         
-                      </div>
-                      <div class="input-field col " style="padding:0">
-                        <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="recency.hivRecencyTestDate =''"><img src="img/clear.png" style="height: 26px;"></div> 
-                       </div>
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Other Testing Modality<span ng-repeat="mandatory in mandatoryData"
+                          ng-if="mandatory=='testingModality'" style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo"><img src="img/medical-center.png"></div>
+                    <input id="othertestingmodality" type="text" class="othertestingmodality"
+                      name="othertestingmodality" ng-model="recency.othertestingmodality"
+                      placeholder="Other Testing Modality">
                   </div>
-                  <div class="row" ng-if="recency.testNotPerformed!=true && optionalFieldsFlag.ctrlLine==true">
-                    <div class="input-field col ">
-                            <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                <p>Control Line<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='ctrlLine'" style="color:#df3838;"> *</span></p>
-                            </span>
-                            <div class="form-logo"><img src="img/recencyresult.png"></div> 
-                         <select class="ng-valid" id="ctrlLine" name="ctrlLine" ng-model="recency.ctrlLine" title="Please Choose Control Line" ng-change="getControlLine(recency.ctrlLine);getOutcome(recency.ctrlLine,recency.positiveLine,recency.longTermLine);OnVlLoadChange(recency.vlLoadResultDropdown);">
-                           <option value="">-- Select --</option>
-                           <option value="present">Present</option>
-                           <option value="absent">Absent</option>
-                        </select>  
-                     </div>
-                 </div>
-                 <div class="row" ng-if="recency.testNotPerformed!=true && optionalFieldsFlag.positiveLine==true">
-                   <div class="input-field col ">
-                         <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                              <p>Positive Verification Line<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='positiveLine'" style="color:#df3838;"> *</span></p>                                    
-                         </span>
-                       <div class="form-logo"><img src="img/recencyresult.png"></div> 
-                       <select class="ng-valid" id="positiveLine" name="positiveLine" title="Please Choose Positive Verification Line" ng-model="recency.positiveLine" ng-change="OnPositiveLineChange(recency.positiveLine);getOutcome(recency.ctrlLine,recency.positiveLine,recency.longTermLine);OnVlLoadChange(recency.vlLoadResultDropdown);" >
-                         <option value="">-- Select --</option>
-                         <option value="present">Present(Positive/P)</option>
-                         <option value="absent">Absent(Negative/N)</option>
-                      </select>   
-                   </div>
-               </div> 
-               <div class="row" ng-if="recency.testNotPerformed!=true && optionalFieldsFlag.longTermLine==true">
-                   <div class="input-field col ">
-                         <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                            <p>Long Term Line<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='longTermLine'" style="color:#df3838;"> *</span></p>                                  
-                         </span>
-                       <div class="form-logo"><img src="img/recencyresult.png"></div> 
-                       <select class="ng-valid" id="longTermLine" name="longTermLine" title="Please Choose LongTerm Line"  ng-model="recency.longTermLine"
-                        ng-change="OnLongtermChange(recency.longTermLine);getOutcome(recency.ctrlLine,recency.positiveLine,recency.longTermLine);OnVlLoadChange(recency.vlLoadResultDropdown);">
-                         <option value="">-- Select --</option>
-                         <option value="present">Present(Long Term/LT)</option>
-                         <option value="absent">Absent(Recent/R)</option>
-                      </select> 
-                   </div>
-               </div>
-               <div class="row" ng-if="recency.testNotPerformed!=true">
-                <div class=" input-field col">
-                        <span ng-if="recency.showtermOutcome==true">Assay Outcome:    <span id="termOutcome" ng-class="setoutcomecolor" class="outcome" style="margin-left: 10px;" >{{recency.recencyOutcome}} {{recencyOutcomeDisplay}} </span></span> 
-                       <!-- <span>Outcome:<span ng-if="recency.recencyOutcome=='Assay HIV Negative' || recency.recencyOutcome=='Invalid-Please Verify'" style="margin-left: 10px;color:red" >{{recency.recencyOutcome}}  </span></span>
-                        <span ng-if="recency.recencyOutcome!='Assay HIV Negative' &&  recency.recencyOutcome!='Invalid-Please Verify'"style="margin-left: 10px;" >{{recency.recencyOutcome}}  </span> -->
-
                 </div>
-             </div>
 
-            <div class="row" ng-if="recency.testNotPerformed!=true && optionalFieldsFlag.vlTestDate==true">
-                    <div class="input-field col col-90">
-                          <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                  <p>Viral Load Test Date<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='vlTestDate'" style="color:#df3838;"> *</span></p>
-                              </span>
-                        <div class="form-logo date-img"><img src="img/date.png"></div> 
-                        <input id="vlTestDate" type="text" class="vlTestDate" name="vlTestDate" title="Please Enter Viral Load Test Date" ng-click="setVlTestDate();" ng-model='recency.vlTestDate'
-                         placeholder="Viral Load Test Date" ng-disabled="recency.recencyOutcome=='Assay Negative'||recency.recencyOutcome=='Invalid-Please Verify' ||recency.recencyOutcome==''">
-                       
-                    </div>
-                    <div class="input-field col " style="padding:0">
-                      <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="recency.vlTestDate =''"><img src="img/clear.png" style="height: 26px;"></div> 
-                     </div>
+              </div>
+
+              <div class="card" style="margin-top:0;margin-bottom: 0;">
+
+                <h4 style="font-size: 14px;margin-left: 12px;margin-bottom: 0;font-weight: bold;">Recency Test Result
+                </h4>
+                <div class="row">
+                  <div class="input-field col ">
+                    <ion-list>
+                      <ion-checkbox style="padding-top: 16px;" ng-model="recency.testNotPerformed"
+                        ng-change="recencyNotPerformed(recency.testNotPerformed)">Recency Test not Performed
+                      </ion-checkbox>
+                    </ion-list>
+                  </div>
+                </div>
+                <div class="row" ng-if="recency.testNotPerformed==true">
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Reason of Rec.Test Not Performed<span style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo"><img src="img/recencyresult.png"></div>
+                    <select class="ng-valid" id="recencyreason" name="recencyreason" ng-model="recency.recencyreason"
+                      title="Please Choose Reason of Recency Test Not Performed"
+                      ng-change="getReasonName(recency.recencyreason)">
+                      <option value="">-- Select --</option>
+                      <option value="no_consent_from_the_client">No consent from the Client</option>
+                      <option value="sample_was_not_collected">Sample was not collected (Phlebotomy failure)</option>
+                      <option value="not_newly_diagnosed">Not newly diagnosed</option>
+                      <option value="sample_rejected">Sample Rejected</option>
+                      <option value="other">Other, please specify</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row" ng-if="recency.testNotPerformed==true && recency.recencyreason=='other'">
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Other Reasons<span style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo"><img src="img/population.png"></div>
+                    <input id="otherreason" type="text" class="otherreason" name="otherreason"
+                      ng-model="recency.otherreason" placeholder="Other Reason">
+
+                  </div>
+                </div>
+                <div class="row" ng-if="recency.testNotPerformed!=true &&  optionalFieldsFlag.testingFacility==true">
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Testing Facility<span ng-repeat="mandatory in mandatoryData"
+                          ng-if="mandatory=='testingFacility'" style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo "><img src="img/facility.png"></div>
+                    <select class="ng-valid" id="testingFacility" name="testingFacility"
+                      title="Please Choose Testing Facility" ng-model="recency.testingFacility">
+                      <option value="">-- Select --</option>
+                      <option ng-repeat="facility in facilityTestData" value="{{facility['facility_id']}}">
+                        {{facility['facility_name']| underscorefilter}}</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row" ng-if="recency.testNotPerformed!=true && optionalFieldsFlag.hivRecencyTestDate==true">
+                  <div class="input-field col col-90">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>HIV Recency Test Date<span ng-repeat="mandatory in mandatoryData"
+                          ng-if="mandatory=='hivRecencyTestDate'" style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo date-img"><img src="img/date.png"></div>
+                    <input id="hivRecencyTestDate" type="text" class="hivRecencyTestDate" name="hivRecencyTestDate"
+                      title="Please Enter HIV Recency Test Date" ng-click="setRecencyDate()"
+                      ng-model='recency.hivRecencyTestDate' placeholder="HIV Recency Test Date" readonly required>
+
+                  </div>
+                  <div class="input-field col " style="padding:0">
+                    <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;"
+                      ng-click="recency.hivRecencyTestDate =''"><img src="img/clear.png" style="height: 26px;"></div>
+                  </div>
+                </div>
+                <div class="row" ng-if="recency.testNotPerformed!=true && optionalFieldsFlag.ctrlLine==true">
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Control Line<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='ctrlLine'"
+                          style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo"><img src="img/recencyresult.png"></div>
+                    <select class="ng-valid" id="ctrlLine" name="ctrlLine" ng-model="recency.ctrlLine"
+                      title="Please Choose Control Line"
+                      ng-change="getControlLine(recency.ctrlLine);getOutcome(recency.ctrlLine,recency.positiveLine,recency.longTermLine);OnVlLoadChange(recency.vlLoadResultDropdown);">
+                      <option value="">-- Select --</option>
+                      <option value="present">Present</option>
+                      <option value="absent">Absent</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row" ng-if="recency.testNotPerformed!=true && optionalFieldsFlag.positiveLine==true">
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Positive Verification Line<span ng-repeat="mandatory in mandatoryData"
+                          ng-if="mandatory=='positiveLine'" style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo"><img src="img/recencyresult.png"></div>
+                    <select class="ng-valid" id="positiveLine" name="positiveLine"
+                      title="Please Choose Positive Verification Line" ng-model="recency.positiveLine"
+                      ng-change="OnPositiveLineChange(recency.positiveLine);getOutcome(recency.ctrlLine,recency.positiveLine,recency.longTermLine);OnVlLoadChange(recency.vlLoadResultDropdown);">
+                      <option value="">-- Select --</option>
+                      <option value="present">Present(Positive/P)</option>
+                      <option value="absent">Absent(Negative/N)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row" ng-if="recency.testNotPerformed!=true && optionalFieldsFlag.longTermLine==true">
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Long Term Line<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='longTermLine'"
+                          style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo"><img src="img/recencyresult.png"></div>
+                    <select class="ng-valid" id="longTermLine" name="longTermLine" title="Please Choose LongTerm Line"
+                      ng-model="recency.longTermLine"
+                      ng-change="OnLongtermChange(recency.longTermLine);getOutcome(recency.ctrlLine,recency.positiveLine,recency.longTermLine);OnVlLoadChange(recency.vlLoadResultDropdown);">
+                      <option value="">-- Select --</option>
+                      <option value="present">Present(Long Term/LT)</option>
+                      <option value="absent">Absent(Recent/R)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row" ng-if="recency.testNotPerformed!=true">
+                  <div class=" input-field col">
+                    <span ng-if="recency.showtermOutcome==true">Assay Outcome: <span id="termOutcome"
+                        ng-class="setoutcomecolor" class="outcome" style="margin-left: 10px;">{{recency.recencyOutcome}}
+                        {{recencyOutcomeDisplay}} </span></span>
+
+                  </div>
+                </div>
+
+                <div class="row" ng-if="recency.testNotPerformed!=true && optionalFieldsFlag.vlTestDate==true">
+                  <div class="input-field col col-90">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Viral Load Test Date<span ng-repeat="mandatory in mandatoryData"
+                          ng-if="mandatory=='vlTestDate'" style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo date-img"><img src="img/date.png"></div>
+                    <input id="vlTestDate" type="text" class="vlTestDate" name="vlTestDate"
+                      title="Please Enter Viral Load Test Date" ng-click="setVlTestDate();"
+                      ng-model='recency.vlTestDate' placeholder="Viral Load Test Date"
+                      ng-disabled="recency.recencyOutcome=='Assay Negative'||recency.recencyOutcome=='Invalid-Please Verify' ||recency.recencyOutcome==''">
+
+                  </div>
+                  <div class="input-field col " style="padding:0">
+                    <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;"
+                      ng-click="recency.vlTestDate =''"><img src="img/clear.png" style="height: 26px;"></div>
+                  </div>
                 </div>
                 <div class="row" ng-if="recency.testNotPerformed!=true && optionalFieldsFlag.vlLoadResult==true">
-                    <div class="input-field col "> 
-                          <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                  <p>Viral Load Result<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='vlLoadResult'"  style="color:#df3838;"> *</span></p>
-                              </span>  
-                     <div class="form-logo"><img src="img/lab.png"></div> 
-                        <input id="vlLoadResult" type="number" class="vlLoadResult" name="vlLoadResult" title="Please Enter Viral Load Result" ng-model='recency.vlLoadResult' placeholder="Viral Load Test Result"
-                         ng-change="checkVlResult()" ng-keyup="getFinalOutcome(recency.recencyOutcome,recency.vlLoadResult)" ng-disabled="recency.recencyOutcome=='Assay Negative'||recency.recencyOutcome=='Invalid-Please Verify' ||recency.recencyOutcome==''|| recency.vlLoadResultDropdown!=''"> 
-                    </div>  
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Viral Load Result<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='vlLoadResult'"
+                          style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo"><img src="img/lab.png"></div>
+                    <input id="vlLoadResult" type="number" class="vlLoadResult" name="vlLoadResult"
+                      title="Please Enter Viral Load Result" ng-model='recency.vlLoadResult'
+                      placeholder="Viral Load Test Result" ng-change="checkVlResult()"
+                      ng-keyup="getFinalOutcome(recency.recencyOutcome,recency.vlLoadResult)"
+                      ng-disabled="recency.recencyOutcome=='Assay Negative'||recency.recencyOutcome=='Invalid-Please Verify' ||recency.recencyOutcome==''|| recency.vlLoadResultDropdown!=''">
+                  </div>
                 </div>
                 <div class="row" ng-if="recency.testNotPerformed!=true && optionalFieldsFlag.vlLoadResult==true">
-                    <div class=" input-field col" style="padding:0 10px">
-                        <div style="width: 100%; height: 16px;border-bottom: 0.5px solid #b3acac;text-align: center;margin-bottom: 7px;">
-                            <span style="font-size: 15px; background-color: #ffffff;padding: 0px 10px;line-height: 30px;">
-                                OR 
-                            </span>
-                        </div>                              
-                    </div>
-                 </div> 
-                <div class="row" ng-if="recency.testNotPerformed!=true && optionalFieldsFlag.vlLoadResult==true">
-                    <div class="input-field col ">
-                          <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                  <p>Viral Load Result<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='vlLoadResult'" style="color:#df3838;"> *</span></p>
-                          </span>
-                        <div class="form-logo"><img src="img/lab.png"></div> 
-                        <select class="ng-valid" id="vlLoadResultDropdown" name="vlLoadResultDropdown" title="Please Choose LongTerm Line" ng-model="recency.vlLoadResultDropdown"
-                         ng-disabled="recency.recencyOutcome=='Assay Negative'||recency.recencyOutcome=='Invalid-Please Verify' ||recency.recencyOutcome==''||recency.vlLoadResult!=''"
-                         ng-change="OnVlLoadChange(recency.vlLoadResultDropdown);partialRecencyData();" >
-                          <option value="">-- Select --</option>
-                          <option value="TND">Target not detected</option>
-                          <option value="BDL">Below Detection Line</option>
-                          <option value="Failed">Failed</option>
-                          <option value="< 20">< 20</option>
-                          <option value="< 40">< 40</option>
-
-                       </select> 
-                    </div>
-                </div>
-                 <div class="row" ng-if="recency.testNotPerformed!=true">
-                    <div class=" input-field col">
-                            <span ng-if="recency.showFinalOutcome==true">Final Outcome:    <span id="finalOutcome" ng-class="setfinalcolor" class="outcome" style="margin-left: 10px;" >{{recency.finalOutcome}}  </span></span> 
-                           <!-- <span>Final Outcome:<span ng-if="recency.finalOutcome=='Assay Negative' || recency.finalOutcome=='Invalid'" style="margin-left: 10px;color:red" >{{recency.finalOutcome}}  </span></span>
-                            <span ng-if="recency.finalOutcome!='Assay Negative' &&  recency.finalOutcome!='Invalid'"style="margin-left: 10px;" >{{recency.finalOutcome}}  </span> -->
-    
-                    </div>
-                 </div>
-            </div>
-
-                <div class="row" >
-                    <div class="input-field col ">
-                        <button class="button button-block  icon-right ion-chevron-right button-calm waves-effect waves-light" style="background:#3592f0 !important;" type="button"
-                        ng-click="patientvalidation();setothersactive();">  
-                           NEXT
-                        </button>
+                  <div class=" input-field col" style="padding:0 10px">
+                    <div
+                      style="width: 100%; height: 16px;border-bottom: 0.5px solid #b3acac;text-align: center;margin-bottom: 7px;">
+                      <span style="font-size: 15px; background-color: #ffffff;padding: 0px 10px;line-height: 30px;">
+                        OR
+                      </span>
                     </div>
                   </div>
-       
-            </div>
-            <div ng-if="recencydisplay==false"> 
-                    <div class="row" ng-if="optionalFieldsFlag.dob==true">
-                            <div class="input-field col col-90">
-                                  <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                    <p>Date Of Birth<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='dob'" style="color:#df3838;"> *</span></p>                                   
-                                    </span>
-                                <div class="form-logo date-img"><img src="img/date.png"></div> 
-                                <input id="dob" type="text" class="dob" name="dob" title="Please Choose Date Of Birth" ng-model='recency.dob' ng-click="setDob()"  placeholder="DOB" readonly required>
-                               
+                </div>
+                <div class="row" ng-if="recency.testNotPerformed!=true && optionalFieldsFlag.vlLoadResult==true">
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Viral Load Result<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='vlLoadResult'"
+                          style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo"><img src="img/lab.png"></div>
+                    <select class="ng-valid" id="vlLoadResultDropdown" name="vlLoadResultDropdown"
+                      title="Please Choose LongTerm Line" ng-model="recency.vlLoadResultDropdown"
+                      ng-disabled="recency.recencyOutcome=='Assay Negative'||recency.recencyOutcome=='Invalid-Please Verify' ||recency.recencyOutcome==''||recency.vlLoadResult!=''"
+                      ng-change="OnVlLoadChange(recency.vlLoadResultDropdown);partialRecencyData();">
+                      <option value="">-- Select --</option>
+                      <option value="TND">Target not detected</option>
+                      <option value="BDL">Below Detection Line</option>
+                      <option value="Failed">Failed</option>
+                      <option value="< 20">
+                        < 20</option> <option value="< 40">
+                          < 40</option> </select> </div> </div> <div class="row" ng-if="recency.testNotPerformed!=true">
+                            <div class=" input-field col">
+                              <span ng-if="recency.showFinalOutcome==true">Final Outcome: <span id="finalOutcome"
+                                  ng-class="setfinalcolor" class="outcome"
+                                  style="margin-left: 10px;">{{recency.finalOutcome}} </span></span>
                             </div>
-                            <div class="input-field col " style="padding:0" >
-                                <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="recency.dob =''"><img src="img/clear.png" style="height: 26px;"></div> 
-                               </div>
-                        </div>
-                        <div class="row" ng-if="optionalFieldsFlag.age==true">
-                                <div class="input-field col ">
-                                      <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                        <p>Age in Years<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='age'" style="color:#df3838;"> *</span></p>                                         
-                                      </span>
-                                    <div class="form-logo date-img"><img src="img/date.png"></div> 
-                                    <input id="age" type="number" class="age" name="age" title="Please Enter Age" ng-model='recency.age' ng-change="cleardob(recency.age)" placeholder="Age"  required>
-                                   
-                                </div>
-                        </div>
-                        
-                      <div class="row" ng-if="optionalFieldsFlag.gender==true">
-                         <div class="input-field col ">
-                            <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                <p>Gender<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='gender'" style="color:#df3838;"> *</span></p>
-                            </span>
-                             <div class="form-logo "><img src="img/martial_status.png"></div> 
-                               <select class="ng-valid" id="gender" name="gender" title="Please Choose Gender" ng-model="recency.gender">
-                                  <option value="">-- Select --</option>
-                                  <option value="male">Male</option>
-                                  <option value="female">Female</option>
-                                  <option value="not_reported">Not Reported</option>
-                               </select>                               
-                        </div>
-                      </div>
-                  <div class="row" ng-if="optionalFieldsFlag.maritalStatus==true">
-                        <div class="input-field col ">
-                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                <p>Marital Status<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='maritalStatus'" style="color:#df3838;"> *</span></p>                                  
-                                  </span>
-                            <div class="form-logo "><img src="img/martial_status.png"></div> 
-                            <select class="ng-valid" id="maritalStatus" name="maritalStatus" title="Please Choose Marital Status" ng-model="recency.maritalStatus">
-                                    <option value="">-- Select --</option>
-                                    <option value="never_married">Never Married</option>
-                                <option value="married_cohabited">Married - Cohabited</option>
-                                <option value="married_cohabiting">Married Cohabiting</option>
-                                <option value="widow">Widow</option>
-                                <option value="divorce_separated">Divorce - Separated</option>
-                                  </select>                               
-                        </div>
-                    </div>
-                    <div class="row" ng-if="optionalFieldsFlag.residence==true">
-                        <div class="input-field col ">
-                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                <p>Residence<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='residence'" style="color:#df3838;"> *</span></p>
-                                  </span>
-                            <div class="form-logo "><img src="img/house.png"></div> 
-                            <select class="ng-valid" id="residence" name="residence" title="Please Choose Residence" ng-model="recency.residence" >
-                                    <option value="">-- Select --</option>
-                                    <option value="urban">Urban</option> 
-                                    <option value="rural">Rural</option>
-                                  </select>                               
-                        </div>
-                    </div>
-                    <div class="row" ng-if="optionalFieldsFlag.educationLevel==true">
-                        <div class="input-field col ">
-                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                <p>Education Level<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='educationLevel'" style="color:#df3838;"> *</span></p>
-                                      
-                                  </span>
-                            <div class="form-logo "><img src="img/education.png"></div> 
-                            <select class="ng-valid" id="educationLevel" name="educationLevel" title="Please Choose Education Level" ng-model="recency.educationLevel">
-                                    <option value="">-- Select --</option>
-                                    <option value="primary">Primary</option> 
-                                    <option value="secondary">Secondary</option> 
-                                    <option value="university_or_higher">University or Higher</option>
-                             
-                                  </select>                               
-                        </div>
-                    </div>
-                    <div class="row" ng-if="optionalFieldsFlag.residence==true">
-                        <div class="input-field col ">
-                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                <p>Risk Population/s<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='riskPopulation'" style="color:#df3838;"> *</span></p>
-                                  </span>
-                            <div class="form-logo "><img src="img/population.png"></div> 
-                            <select class="ng-valid" id="riskPopulation" name="riskPopulation"  title="Please Choose Risk Population/s" ng-model="recency.riskPopulation" ng-change="checkriskpopulation(recency.otherriskPopulation)">
-                                    <option value="">-- Select --</option>
-                                    <option ng-repeat="rp in riskpopulations" value="{{rp['rp_id']}}">{{rp['name']| underscorefilter}}</option>
-                                  </select>                               
-                        </div>
-                    </div>
-                    <div class="row" ng-if="otherpopulation==true && optionalFieldsFlag.residence==true">
-                        <div class="input-field col ">
-                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                <p>Other Risk Population<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='riskPopulation'" style="color:#df3838;"> *</span></p>
-                                  </span>
-                            <div class="form-logo"><img src="img/population.png"></div> 
-                            <input id="otherriskPopulation" type="text" class="otherriskPopulation" name="otherriskPopulation" ng-model="recency.otherriskPopulation" placeholder="Other Risk Population"  required>
-                           
-                        </div>
-                    </div>
-                     <div class="row" ng-if="recency.gender!='male' && optionalFieldsFlag.pregnancyStatus==true">
-                        <div class="input-field col ">
-                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                <p>Pregnancy Status<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='pregnancyStatus'" style="color:#df3838;"> *</span></p>                                     
-                                  </span>
-                            <div class="form-logo "><img src="img/pregnancy-test.png"></div> 
-                            <select class="ng-valid" id="pregnancyStatus"  name="pregnancyStatus" title="Please Choose Pregnancy Status" ng-model="recency.pregnancyStatus">
-                                    <option value="">-- Select --</option>
-                                    <option value="currently_pregnant">Currently Pregnant</option> 
-                                    <option value="not_pregnant">Not Pregnant</option>
-                                    <option value="not_known">Not Known</option>
-                            </select>                               
-                        </div>
-                    </div>
-                     <div class="row" ng-if="optionalFieldsFlag.currentSexualPartner==true">
-                        <div class="input-field col ">
-                              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                <p>Current Sexual Partners<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='currentSexualPartner'" style="color:#df3838;"> *</span></p>
-                                  </span>
-                            <div class="form-logo "><img src="img/gender.png"></div> 
-                            <select class="ng-valid" id="currentSexualPartner" name="currentSexualPartner" title="Please Choose Current Sexual Partner" ng-model="recency.currentSexualPartner">
-                                    <option value="">-- Select --</option>
-                                    <option value="1">1</option> 
-                                    <option value="2_3">2-3</option>
-                                    <option value=">3"> >3</option>
-                            </select>                               
-                        </div>
-                    </div> 
-                    <div class="row" ng-if="optionalFieldsFlag.violenceLast12Month==true">
-                            <div class="input-field col ">
-                                  <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                          <p>Experienced violence in last 12Months<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='violenceLast12Month'" style="color:#df3838;"> *</span></p>
-                                      </span>
-                                <div class="form-logo "><img src="img/testtime.png"></div> 
-                                <select class="ng-valid" id="violenceLast12Month" name="violenceLast12Month" title="Please Choose Experienced violence in last 12Months" ng-model="recency.violenceLast12Month">
-                                        <option value="">-- Select --</option>
-                                        <option value="yes">Yes</option> 
-                                        <option value="no">No</option>
-                                        <option value="not_known">Don't Know</option>
-                                </select>                               
-                            </div>
-                        </div>
-                        <div class="row" ng-if="optionalFieldsFlag.notes==true">
-                            <div class="input-field col "> 
-                                  <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                          <p>Notes<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='notes'"  style="color:#df3838;"> *</span></p>
-                                      </span>  
-                             <div class="form-logo"><img src="img/notes.png"></div> 
-                             <textarea id="notes" name="notes" title="Please Enter Notes" style="height: auto" rows=2 placeholder="Notes" ng-model="recency.notes"></textarea>
+                  </div>
+                </div>
 
-                            </div>  
-                        </div>
-     
-                    <div class="row">
-                        <div class=" input-field col">
-                                <p style="margin-left: 10px;font-size: 13px;" ng-show="giserror">GIS Information is Not Available  </p>
-                                    
-                                 <p style="margin-left: 10px;font-size: 12px;" ng-show="gis"> Latitude :&nbsp; {{recency.latitude}}&nbsp;&nbsp; Longitude:&nbsp;{{recency.longitude}}</p>
-                             </div>
-                     </div> 
-               </div>
-                  
-                  <div class="row" ng-hide="recencydisplay">
-                        <div class="input-field col ">
-                                <button class="button button-block  icon-left ion-chevron-left waves-effect waves-light" style="background: #3592f0 !important;font-size: 15px;" type="button"
-                                   ng-click="behaviourValidation();setmainactive();">
-                                  PREVIOUS
-                                </button>
-                            </div>
-                      <div class="input-field col  ">
-                          <button class="button button-block waves-effect waves-light" type="submit" style="font-size: 15px;"
-                             ng-click="editRecency()">
-                             SAVE 
-                          </button>
-                      </div>
-                    </div>
+                <div class="row">
+                  <div class="input-field col ">
+                    <button
+                      class="button button-block  icon-right ion-chevron-right button-calm waves-effect waves-light"
+                      style="background:#3592f0 !important;" type="button"
+                      ng-click="patientvalidation();setothersactive();">
+                      NEXT
+                    </button>
+                  </div>
+                </div>
 
-              </form>
-        
-           
-          </div>
+              </div>
+              <div ng-if="recencydisplay==false">
+                <div class="row" ng-if="optionalFieldsFlag.dob==true">
+                  <div class="input-field col col-90">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Date Of Birth<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='dob'"
+                          style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo date-img"><img src="img/date.png"></div>
+                    <input id="dob" type="text" class="dob" name="dob" title="Please Choose Date Of Birth"
+                      ng-model='recency.dob' ng-click="setDob()" placeholder="DOB" readonly required>
+
+                  </div>
+                  <div class="input-field col " style="padding:0">
+                    <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="recency.dob =''">
+                      <img src="img/clear.png" style="height: 26px;"></div>
+                  </div>
+                </div>
+                <div class="row" ng-if="optionalFieldsFlag.age==true">
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Age in Years<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='age'"
+                          style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo date-img"><img src="img/date.png"></div>
+                    <input id="age" type="number" class="age" name="age" title="Please Enter Age" ng-model='recency.age'
+                      ng-change="cleardob(recency.age)" placeholder="Age" required>
+
+                  </div>
+                </div>
+
+                <div class="row" ng-if="optionalFieldsFlag.gender==true">
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Gender<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='gender'"
+                          style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo "><img src="img/martial_status.png"></div>
+                    <select class="ng-valid" id="gender" name="gender" title="Please Choose Gender"
+                      ng-model="recency.gender">
+                      <option value="">-- Select --</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="not_reported">Not Reported</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row" ng-if="optionalFieldsFlag.maritalStatus==true">
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Marital Status<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='maritalStatus'"
+                          style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo "><img src="img/martial_status.png"></div>
+                    <select class="ng-valid" id="maritalStatus" name="maritalStatus"
+                      title="Please Choose Marital Status" ng-model="recency.maritalStatus">
+                      <option value="">-- Select --</option>
+                      <option value="never_married">Never Married</option>
+                      <option value="married_cohabited">Married - Cohabited</option>
+                      <option value="married_cohabiting">Married Cohabiting</option>
+                      <option value="widow">Widow</option>
+                      <option value="divorce_separated">Divorce - Separated</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row" ng-if="optionalFieldsFlag.residence==true">
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Residence<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='residence'"
+                          style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo "><img src="img/house.png"></div>
+                    <select class="ng-valid" id="residence" name="residence" title="Please Choose Residence"
+                      ng-model="recency.residence">
+                      <option value="">-- Select --</option>
+                      <option value="urban">Urban</option>
+                      <option value="rural">Rural</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row" ng-if="optionalFieldsFlag.educationLevel==true">
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Education Level<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='educationLevel'"
+                          style="color:#df3838;"> *</span></p>
+
+                    </span>
+                    <div class="form-logo "><img src="img/education.png"></div>
+                    <select class="ng-valid" id="educationLevel" name="educationLevel"
+                      title="Please Choose Education Level" ng-model="recency.educationLevel">
+                      <option value="">-- Select --</option>
+                      <option value="primary">Primary</option>
+                      <option value="secondary">Secondary</option>
+                      <option value="university_or_higher">University or Higher</option>
+
+                    </select>
+                  </div>
+                </div>
+                <div class="row" ng-if="optionalFieldsFlag.residence==true">
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Risk Population/s<span ng-repeat="mandatory in mandatoryData"
+                          ng-if="mandatory=='riskPopulation'" style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo "><img src="img/population.png"></div>
+                    <select class="ng-valid" id="riskPopulation" name="riskPopulation"
+                      title="Please Choose Risk Population/s" ng-model="recency.riskPopulation"
+                      ng-change="checkriskpopulation(recency.otherriskPopulation)">
+                      <option value="">-- Select --</option>
+                      <option ng-repeat="rp in riskpopulations" value="{{rp['rp_id']}}">{{rp['name']| underscorefilter}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row" ng-if="otherpopulation==true && optionalFieldsFlag.residence==true">
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Other Risk Population<span ng-repeat="mandatory in mandatoryData"
+                          ng-if="mandatory=='riskPopulation'" style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo"><img src="img/population.png"></div>
+                    <input id="otherriskPopulation" type="text" class="otherriskPopulation" name="otherriskPopulation"
+                      ng-model="recency.otherriskPopulation" placeholder="Other Risk Population" required>
+
+                  </div>
+                </div>
+                <div class="row" ng-if="recency.gender!='male' && optionalFieldsFlag.pregnancyStatus==true">
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Pregnancy Status<span ng-repeat="mandatory in mandatoryData"
+                          ng-if="mandatory=='pregnancyStatus'" style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo "><img src="img/pregnancy-test.png"></div>
+                    <select class="ng-valid" id="pregnancyStatus" name="pregnancyStatus"
+                      title="Please Choose Pregnancy Status" ng-model="recency.pregnancyStatus">
+                      <option value="">-- Select --</option>
+                      <option value="currently_pregnant">Currently Pregnant</option>
+                      <option value="not_pregnant">Not Pregnant</option>
+                      <option value="not_known">Not Known</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row" ng-if="optionalFieldsFlag.currentSexualPartner==true">
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Current Sexual Partners<span ng-repeat="mandatory in mandatoryData"
+                          ng-if="mandatory=='currentSexualPartner'" style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo "><img src="img/gender.png"></div>
+                    <select class="ng-valid" id="currentSexualPartner" name="currentSexualPartner"
+                      title="Please Choose Current Sexual Partner" ng-model="recency.currentSexualPartner">
+                      <option value="">-- Select --</option>
+                      <option value="1">1</option>
+                      <option value="2_3">2-3</option>
+                      <option value=">3"> >3</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row" ng-if="optionalFieldsFlag.violenceLast12Month==true">
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Experienced violence in last 12Months<span ng-repeat="mandatory in mandatoryData"
+                          ng-if="mandatory=='violenceLast12Month'" style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo "><img src="img/testtime.png"></div>
+                    <select class="ng-valid" id="violenceLast12Month" name="violenceLast12Month"
+                      title="Please Choose Experienced violence in last 12Months"
+                      ng-model="recency.violenceLast12Month">
+                      <option value="">-- Select --</option>
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
+                      <option value="not_known">Don't Know</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row" ng-if="optionalFieldsFlag.notes==true">
+                  <div class="input-field col ">
+                    <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                      <p>Notes<span ng-repeat="mandatory in mandatoryData" ng-if="mandatory=='notes'"
+                          style="color:#df3838;"> *</span></p>
+                    </span>
+                    <div class="form-logo"><img src="img/notes.png"></div>
+                    <textarea id="notes" name="notes" title="Please Enter Notes" style="height: auto" rows=2
+                      placeholder="Notes" ng-model="recency.notes"></textarea>
+
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class=" input-field col">
+                    <p style="margin-left: 10px;font-size: 13px;" ng-show="giserror">GIS Information is Not Available
+                    </p>
+
+                    <p style="margin-left: 10px;font-size: 12px;" ng-show="gis"> Latitude :&nbsp;
+                      {{recency.latitude}}&nbsp;&nbsp; Longitude:&nbsp;{{recency.longitude}}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row" ng-hide="recencydisplay">
+                <div class="input-field col ">
+                  <button class="button button-block  icon-left ion-chevron-left waves-effect waves-light"
+                    style="background: #3592f0 !important;font-size: 15px;" type="button"
+                    ng-click="behaviourValidation();setmainactive();">
+                    PREVIOUS
+                  </button>
+                </div>
+                <div class="input-field col  ">
+                  <button class="button button-block waves-effect waves-light" type="submit" style="font-size: 15px;"
+                    ng-click="editRecency()">
+                    SAVE
+                  </button>
+                </div>
+              </div>
+          </form>
+        </div>
       </div>
-  </ion-content>
+    </ion-content>
   </div>
 </ion-view>

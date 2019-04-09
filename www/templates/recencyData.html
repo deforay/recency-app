@@ -1,170 +1,195 @@
-<ion-view view-title="Server Recency Data" >
+<ion-view view-title="Server Recency Data">
 
-    <div class="backgroundimg" ng-show="showauth" >
-        <div class="authWrapper">
-            <div class="container" >
-              <ion-content >
-                <!-- <div class="logo"> <img src="img/icon.png" alt=""></div> -->
-                <div class="loginFields">
-                    <div class="row">
-                      <form class="col loginForm" name="loginForm" >
-                   
-                            <div class="row">
-                                <div class="input-field col ">
-                                    <input id="email" type="email" name ="email" class="userName" ng-model='loginData.email' placeholder="abc@deforay.com" required>
-                                    <span style="color:red" ng-show="loginForm.email.$dirty && loginForm.email.$invalid">
-                                          <span ng-show="loginForm.email.$error.required">Email is required.</span>
-                                          <span ng-show="loginForm.email.$error.email">Invalid email address.</span>
-                                          </span>
-                                  </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col ">
-                                    <input id="serverpassword" type="password" class="password" name="serverpassword" ng-model='loginData.serverpassword' placeholder="Server Password" minlength="3"  required>
-                                    <span style="color:red" ng-show="loginForm.serverpassword.$dirty && loginForm.serverpassword.$invalid">
-                                          <span ng-show="loginForm.serverpassword.$error.required">Server Password is required.</span>
-                                          </span> 
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col ">
-                                    <button class="button button-block  waves-effect waves-light" type="submit" name="action" ng-disabled="loginForm.serverHost.$dirty && loginForm.serverHost.$invalid ||
-                                     loginForm.serverpassword.$dirty && loginForm.serverpassword.$invalid ||
-                                    loginForm.email.$dirty && loginForm.email.$invalid" ng-click="doLogin(loginData)">LOGIN
-                                    </button>
-                                </div>
-                              </div>
-                        </form>
-                        
-                    </div>
-                </div>
-                </ion-content>
-            </div>      
-        </div>
-      </div>
-      <div class="RecencyForm">
-      <ion-content class="animate-fade-slide-in"  ng-hide="showauth">
+  <div class="backgroundimg" ng-show="showauth">
+    <div class="authWrapper">
+      <div class="container">
+        <ion-content>
+          <div class="loginFields">
+            <div class="row">
+              <form class="col loginForm" name="loginForm">
 
-            <ion-list type="list-inset"  ng-hide="showauth">
-                <h3 style="font-size:17px"> Recency Reporting</h3>
-                   <div class="loginFields">  
                 <div class="row">
-                            <div class="input-field col col-90">
-                                  <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                          <p>From :</p>
-                                      </span>
-                                <div class="form-logo date-img"><img src="img/date.png"></div> 
-                                <input id="fromDate" type="text" class="fromDate" name="fromDate" title="Please Enter From Date"  ng-click="setFromDate();" ng-model='fromDate' placeholder="From Date" readonly required>
-                            </div>
-                            <div class="input-field col " style="padding:0">
-                              <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="clearFromDate()"><img src="img/clear.png" style="height: 26px;"></div> 
-                             </div>
-               </div>
-               <div class="row">
-                    <div class="input-field col col-90">
-                          <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                                  <p>To :</p>
-                              </span>
-                        <div class="form-logo date-img"><img src="img/date.png"></div> 
-                        <input id="toDate" type="text" class="toDate" name="toDate" title="Please Enter To Date"  ng-click="settoDate();" ng-model='toDate' placeholder="To Date" readonly required>
-                    </div>
-                    <div class="input-field col " style="padding:0">
-                      <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="cleartoDate()"><img src="img/clear.png" style="height: 26px;"></div> 
-                     </div>
+                  <div class="input-field col ">
+                    <input id="email" type="email" name="email" class="userName" ng-model='loginData.email'
+                      placeholder="abc@deforay.com" required>
+                    <span style="color:red" ng-show="loginForm.email.$dirty && loginForm.email.$invalid">
+                      <span ng-show="loginForm.email.$error.required">Email is required.</span>
+                      <span ng-show="loginForm.email.$error.email">Invalid email address.</span>
+                    </span>
+                  </div>
                 </div>
-            </div>   
-            <p ng-show="displayCount"> Total Recency data for the Selected Date Range : {{recencyCount}}</p>
-            <div style="overflow-x:auto;margin-bottom: 30px;" class="">
+                <div class="row">
+                  <div class="input-field col ">
+                    <input id="serverpassword" type="password" class="password" name="serverpassword"
+                      ng-model='loginData.serverpassword' placeholder="Server Password" minlength="3" required>
+                    <span style="color:red"
+                      ng-show="loginForm.serverpassword.$dirty && loginForm.serverpassword.$invalid">
+                      <span ng-show="loginForm.serverpassword.$error.required">Server Password is required.</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col ">
+                    <button class="button button-block  waves-effect waves-light" type="submit" name="action"
+                      ng-disabled="loginForm.serverHost.$dirty && loginForm.serverHost.$invalid ||
+                                     loginForm.serverpassword.$dirty && loginForm.serverpassword.$invalid ||
+                                    loginForm.email.$dirty && loginForm.email.$invalid"
+                      ng-click="doLogin(loginData)">LOGIN
+                    </button>
+                  </div>
+                </div>
+              </form>
 
-        
-           <table class="table table-bordered table-striped order-table" style="width: 100%" id="ordertable">
-              <tr style="white-space: nowrap">
-                <th style="text-align: center" ng-click="sortByDate('hiv_recency_test_date')">Date Of Testing
-                    <span class="sortorder" ng-show="propertyName === 'hiv_recency_test_date'" ng-class="{reverse: reverse}"></span>
-                </th>
-                <th style="text-align: center" ng-click="sortBy('sample_id')">Sample ID / Patient ID
-                    <span class="sortorder" ng-show="propertyName === 'sample_id'" ng-class="{reverse: reverse}"></span>
-                </th>
-                <th style="text-align: center" ng-click="sortBy('sample_collection_date','hiv_recency_test_date')">Sample Collection Date
-                    <span class="sortorder" ng-show="propertyName === 'sample_collection_date'" ng-class="{reverse: reverse}"></span>
-                </th>
-                <th style="text-align: center" ng-click="sortBy('sample_receipt_date','hiv_recency_test_date')">Sample Receipt Date
-                    <span class="sortorder" ng-show="propertyName === 'sample_receipt_date'" ng-class="{reverse: reverse}"></span>
-                </th>
-                <th style="text-align: center" ng-click="sortBy('received_specimen_type','hiv_recency_test_date')">Received Specimen Type
-                    <span class="sortorder" ng-show="propertyName === 'received_specimen_type'" ng-class="{reverse: reverse}"></span>
-                </th>
-                <th style="text-align: center" ng-click="sortBy('term_outcome','hiv_recency_test_date')">Assay Test Result
-                    <span class="sortorder" ng-show="propertyName === 'term_outcome'" ng-class="{reverse: reverse}"></span>
-                </th>
-
-                <th style="text-align: center" ng-click="sortBy('final_outcome','hiv_recency_test_date')">Final Result
-                    <span class="sortorder" ng-show="propertyName === 'final_outcome'" ng-class="{reverse: reverse}"></span>
-                </th>
-                <th style="text-align: center" ng-click="sortBy('facility_name','hiv_recency_test_date')">Facility Name
-                    <span class="sortorder" ng-show="propertyName === 'facility_name'" ng-class="{reverse: reverse}"></span>
-                </th>
-                <th style="text-align: center" ng-click="sortBy('vl_result','hiv_recency_test_date')">VL Result
-                    <span class="sortorder" ng-show="propertyName === 'vl_result'" ng-class="{reverse: reverse}"></span>
-                </th>
-                <th style="text-align: center"  ng-click="sortBy('vl_test_date','hiv_recency_test_date')">VL Test Date
-                    <span class="sortorder" ng-show="propertyName === 'vl_test_date'" ng-class="{reverse: reverse}"></span>
-                </th>
-                <th style="text-align: center"  ng-click="sortBy('hiv_diagnosis_date','hiv_recency_test_date')">HIV+ Diag Date
-                    <span class="sortorder" ng-show="propertyName === 'hiv_diagnosis_date'" ng-class="{reverse: reverse}"></span>
-                </th>
-                <th style="text-align: center" ng-click="sortBy('control_line','hiv_recency_test_date')">Control Line
-                    <span class="sortorder" ng-show="propertyName === 'control_line'" ng-class="{reverse: reverse}"></span>
-                </th>
-                <th style="text-align: center" ng-click="sortBy('positive_verification_line','hiv_recency_test_date')">Positive Verification Line
-                    <span class="sortorder" ng-show="propertyName === 'positive_verification_line'" ng-class="{reverse: reverse}"></span>
-                </th>
-                <th style="text-align: center" ng-click="sortBy('long_term_verification_line','hiv_recency_test_date')">Long Term Verification Line
-                    <span class="sortorder" ng-show="propertyName === 'long_term_verification_line'" ng-class="{reverse: reverse}"></span>
-                </th>
-              </tr>
-              <tr ng-repeat="recency in recencyDatas | orderBy:'hiv_recency_test_date' | orderBy:propertyName:reverse " >
-                <td style="text-align: center">{{ recency['hiv_recency_test_date']| date: "dd-MMM-yyyy"}}</td>
-                <td style="text-align: center" class="orderid">
-                    <p>{{ recency['sample_id'] }} </p> 
-                    <p>{{recency['patient_id'] }}</p>
-               </td>
-               <td style="text-align: center">{{ recency['sample_collection_date']| date: "dd-MMM-yyyy"}}</td>
-               <td style="text-align: center">{{ recency['sample_receipt_date']| date: "dd-MMM-yyyy"}}</td>
-               <td ng-if="recency['received_specimen_type']!=null" style="text-align: center;text-transform: capitalize">{{ recency['received_specimen_type'] | replace: '_':' '}}</td>
-               <td ng-if="recency['received_specimen_type']==null" style="text-align: center;text-transform: capitalize">{{ recency['received_specimen_type'] }}</td>
-
-                <td style="text-align: center"> 
-                    <p style="color:red"  ng-if="recency['term_outcome']!='Assay Long Term' && recency['term_outcome']!='Assay Negative' && recency['term_outcome']!='Assay Recent'">{{recency['term_outcome']}}</p>
-                    <p style="color:blue" ng-if="recency['term_outcome']=='Assay Negative'">{{recency['term_outcome']}}</p>
-                    <p ng-if="recency['term_outcome']=='Assay Long Term' || recency['term_outcome']=='Assay Recent'">{{recency['term_outcome']}}</p>
-                </td>
-                <td style="text-align: center"> 
-                        <p style="color:blue" ng-if="recency['final_outcome']=='Inconclusive' || recency['final_outcome']=='RITA Recent'">{{recency['final_outcome']}}</p>
-                        <p ng-if="recency['final_outcome']!='Inconclusive' && recency['final_outcome']!='RITA Recent'">{{recency['final_outcome']}}</p>
-                 </td>
-                <!-- <td style="text-align: center;white-space: nowrap;">{{ recency['final_outcome'] }}</td> -->
-                <td style="text-align: center;white-space: nowrap;">{{ recency['facility_name'] }}</td>
-                <td style="text-align: center;white-space: nowrap;" ng-bind-html=" recency['vl_result']  | trusted" ></td>
-                <td style="text-align: center;white-space: nowrap;">{{ recency['vl_test_date'] | date: "dd-MMM-yyyy"}}</td>
-                
-                <td style="text-align: center">{{ recency['hiv_diagnosis_date'] | date: "dd-MMM-yyyy" }}</td>
-                <td style="text-transform: capitalize;text-align: center">{{recency['control_line']}}</td>
-                <td style="text-transform: capitalize;text-align: center">{{recency['positive_verification_line']}}</td>
-                <td style="text-transform: capitalize;text-align: center">{{recency['long_term_verification_line']}}</td>               
-              </tr>
-              
-              <tr ng-show="displaymessage">
-                <td colspan="11" style="text-align: center;margin: 10px;" >No Records Found.</td>
-
-              </tr>
-            </table>
+            </div>
           </div>
-         </ion-list>
-          </ion-content>
+        </ion-content>
+      </div>
+    </div>
+  </div>
+  <div class="RecencyForm">
+    <ion-content class="animate-fade-slide-in" ng-hide="showauth">
+
+      <ion-list type="list-inset" ng-hide="showauth">
+        <h3 style="font-size:17px"> Recency Reporting</h3>
+        <div class="loginFields">
+          <div class="row">
+            <div class="input-field col col-90">
+              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                <p>From :</p>
+              </span>
+              <div class="form-logo date-img"><img src="img/date.png"></div>
+              <input id="fromDate" type="text" class="fromDate" name="fromDate" title="Please Enter From Date"
+                ng-click="setFromDate();" ng-model='fromDate' placeholder="From Date" readonly required>
+            </div>
+            <div class="input-field col " style="padding:0">
+              <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="clearFromDate()"><img
+                  src="img/clear.png" style="height: 26px;"></div>
+            </div>
           </div>
+          <div class="row">
+            <div class="input-field col col-90">
+              <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                <p>To :</p>
+              </span>
+              <div class="form-logo date-img"><img src="img/date.png"></div>
+              <input id="toDate" type="text" class="toDate" name="toDate" title="Please Enter To Date"
+                ng-click="settoDate();" ng-model='toDate' placeholder="To Date" readonly required>
+            </div>
+            <div class="input-field col " style="padding:0">
+              <div class="form-logo date-img" style="padding-left: 0;cursor:pointer;" ng-click="cleartoDate()"><img
+                  src="img/clear.png" style="height: 26px;"></div>
+            </div>
+          </div>
+        </div>
+        <p ng-show="displayCount"> Total Recency data for the Selected Date Range : {{recencyCount}}</p>
+        <div style="overflow-x:auto;margin-bottom: 30px;" class="">
+
+
+          <table class="table table-bordered table-striped order-table" style="width: 100%" id="ordertable">
+            <tr style="white-space: nowrap">
+              <th style="text-align: center" ng-click="sortByDate('hiv_recency_test_date')">Date Of Testing
+                <span class="sortorder" ng-show="propertyName === 'hiv_recency_test_date'"
+                  ng-class="{reverse: reverse}"></span>
+              </th>
+              <th style="text-align: center" ng-click="sortBy('sample_id')">Sample ID / Patient ID
+                <span class="sortorder" ng-show="propertyName === 'sample_id'" ng-class="{reverse: reverse}"></span>
+              </th>
+              <th style="text-align: center" ng-click="sortBy('sample_collection_date','hiv_recency_test_date')">Sample
+                Collection Date
+                <span class="sortorder" ng-show="propertyName === 'sample_collection_date'"
+                  ng-class="{reverse: reverse}"></span>
+              </th>
+              <th style="text-align: center" ng-click="sortBy('sample_receipt_date','hiv_recency_test_date')">Sample
+                Receipt Date
+                <span class="sortorder" ng-show="propertyName === 'sample_receipt_date'"
+                  ng-class="{reverse: reverse}"></span>
+              </th>
+              <th style="text-align: center" ng-click="sortBy('received_specimen_type','hiv_recency_test_date')">
+                Received Specimen Type
+                <span class="sortorder" ng-show="propertyName === 'received_specimen_type'"
+                  ng-class="{reverse: reverse}"></span>
+              </th>
+              <th style="text-align: center" ng-click="sortBy('term_outcome','hiv_recency_test_date')">Assay Test Result
+                <span class="sortorder" ng-show="propertyName === 'term_outcome'" ng-class="{reverse: reverse}"></span>
+              </th>
+
+              <th style="text-align: center" ng-click="sortBy('final_outcome','hiv_recency_test_date')">Final Result
+                <span class="sortorder" ng-show="propertyName === 'final_outcome'" ng-class="{reverse: reverse}"></span>
+              </th>
+              <th style="text-align: center" ng-click="sortBy('facility_name','hiv_recency_test_date')">Facility Name
+                <span class="sortorder" ng-show="propertyName === 'facility_name'" ng-class="{reverse: reverse}"></span>
+              </th>
+              <th style="text-align: center" ng-click="sortBy('vl_result','hiv_recency_test_date')">VL Result
+                <span class="sortorder" ng-show="propertyName === 'vl_result'" ng-class="{reverse: reverse}"></span>
+              </th>
+              <th style="text-align: center" ng-click="sortBy('vl_test_date','hiv_recency_test_date')">VL Test Date
+                <span class="sortorder" ng-show="propertyName === 'vl_test_date'" ng-class="{reverse: reverse}"></span>
+              </th>
+              <th style="text-align: center" ng-click="sortBy('hiv_diagnosis_date','hiv_recency_test_date')">HIV+ Diag
+                Date
+                <span class="sortorder" ng-show="propertyName === 'hiv_diagnosis_date'"
+                  ng-class="{reverse: reverse}"></span>
+              </th>
+              <th style="text-align: center" ng-click="sortBy('control_line','hiv_recency_test_date')">Control Line
+                <span class="sortorder" ng-show="propertyName === 'control_line'" ng-class="{reverse: reverse}"></span>
+              </th>
+              <th style="text-align: center" ng-click="sortBy('positive_verification_line','hiv_recency_test_date')">
+                Positive Verification Line
+                <span class="sortorder" ng-show="propertyName === 'positive_verification_line'"
+                  ng-class="{reverse: reverse}"></span>
+              </th>
+              <th style="text-align: center" ng-click="sortBy('long_term_verification_line','hiv_recency_test_date')">
+                Long Term Verification Line
+                <span class="sortorder" ng-show="propertyName === 'long_term_verification_line'"
+                  ng-class="{reverse: reverse}"></span>
+              </th>
+            </tr>
+            <tr ng-repeat="recency in recencyDatas | orderBy:'hiv_recency_test_date' | orderBy:propertyName:reverse ">
+              <td style="text-align: center">{{ recency['hiv_recency_test_date']| date: "dd-MMM-yyyy"}}</td>
+              <td style="text-align: center" class="orderid">
+                <p>{{ recency['sample_id'] }} </p>
+                <p>{{recency['patient_id'] }}</p>
+              </td>
+              <td style="text-align: center">{{ recency['sample_collection_date']| date: "dd-MMM-yyyy"}}</td>
+              <td style="text-align: center">{{ recency['sample_receipt_date']| date: "dd-MMM-yyyy"}}</td>
+              <td ng-if="recency['received_specimen_type']!=null" style="text-align: center;text-transform: capitalize">
+                {{ recency['received_specimen_type'] | replace: '_':' '}}</td>
+              <td ng-if="recency['received_specimen_type']==null" style="text-align: center;text-transform: capitalize">
+                {{ recency['received_specimen_type'] }}</td>
+
+              <td style="text-align: center">
+                <p style="color:red"
+                  ng-if="recency['term_outcome']!='Assay Long Term' && recency['term_outcome']!='Assay Negative' && recency['term_outcome']!='Assay Recent'">
+                  {{recency['term_outcome']}}</p>
+                <p style="color:blue" ng-if="recency['term_outcome']=='Assay Negative'">{{recency['term_outcome']}}</p>
+                <p ng-if="recency['term_outcome']=='Assay Long Term' || recency['term_outcome']=='Assay Recent'">
+                  {{recency['term_outcome']}}</p>
+              </td>
+              <td style="text-align: center">
+                <p style="color:blue"
+                  ng-if="recency['final_outcome']=='Inconclusive' || recency['final_outcome']=='RITA Recent'">
+                  {{recency['final_outcome']}}</p>
+                <p ng-if="recency['final_outcome']!='Inconclusive' && recency['final_outcome']!='RITA Recent'">
+                  {{recency['final_outcome']}}</p>
+              </td>
+              <td style="text-align: center;white-space: nowrap;">{{ recency['facility_name'] }}</td>
+              <td style="text-align: center;white-space: nowrap;" ng-bind-html=" recency['vl_result']  | trusted"></td>
+              <td style="text-align: center;white-space: nowrap;">{{ recency['vl_test_date'] | date: "dd-MMM-yyyy"}}
+              </td>
+
+              <td style="text-align: center">{{ recency['hiv_diagnosis_date'] | date: "dd-MMM-yyyy" }}</td>
+              <td style="text-transform: capitalize;text-align: center">{{recency['control_line']}}</td>
+              <td style="text-transform: capitalize;text-align: center">{{recency['positive_verification_line']}}</td>
+              <td style="text-transform: capitalize;text-align: center">{{recency['long_term_verification_line']}}</td>
+            </tr>
+
+            <tr ng-show="displaymessage">
+              <td colspan="11" style="text-align: center;margin: 10px;">No Records Found.</td>
+
+            </tr>
+          </table>
+        </div>
+      </ion-list>
+    </ion-content>
+  </div>
 </ion-view>
-
-
-     
-     

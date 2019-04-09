@@ -1,34 +1,26 @@
+app = angular.module('starter.viewQcAssuranceDetailCtrl', ['starter.services'])
 
-app=angular.module('starter.viewQcAssuranceDetailCtrl', ['starter.services'])
+  .controller('viewQcAssuranceDetailCtrl', function ($scope, $window, $rootScope, $stateParams) {
 
-.controller('viewQcAssuranceDetailCtrl', function($scope,  $window,$rootScope, $stateParams) {
- // console.log( $rootScope.viewqcDetail);
-  
-  $scope.displaybadge = false;
+    $scope.displaybadge = false;
 
-    $scope.doRefresh = function() {
+    $scope.doRefresh = function () {
       $preLoader.show();
       $window.location.reload(true);
       $preLoader.hide();
     };
-  
+
     $scope.viewqcDetail = JSON.parse(localStorage.getItem('viewQcAssurance'));
-
-
-})
-.filter('replace', [function () {
+  })
+  .filter('replace', [function () {
 
     return function (input, from, to) {
-      
-      if(input === undefined) {
+
+      if (input === undefined) {
         return;
       }
-  
       var regex = new RegExp(from, 'g');
-      return   input.replace(regex, to);
+      return input.replace(regex, to);
 
-       
     };
-  
-  
   }]);

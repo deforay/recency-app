@@ -1,83 +1,49 @@
 <ion-view view-title="Technical Support">
-    <ion-content class="animate-fade-slide-in">
-            <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
+  <ion-content class="animate-fade-slide-in">
+    <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
+    <div class="card">
 
-        <div class="card">
-<!-- 
-         <div class="table-header">
-            <span style="text-align: center;width: 100%;float: left; ">Technical Support</span>
-          </div> -->
-         <table class="table  tech-table" style="width: 100%">
-            <tbody ng-repeat="tech in filtered = (techSupportData)">
-            <tr ng-if="tech.global_name=='technical_support_name'">
-              <td>
-                <div>
-                  <span style="margin: 0 10px;"><img style="height: 24px;margin-bottom: -8px;" src="img/tech-support-name.png"></span>
-                  <span>Technical Support Name  :</span>
-                </div>
-              </td>     
-            </tr>
-            <tr ng-if="tech.global_name=='technical_support_name'">
-              <td style="text-transform: capitalize;text-align:left;padding-left: 55px;">{{tech.global_value}}</td>       
-            </tr>
-            <tr ng-if="tech.global_name=='admin_email'">
-              <td>
-                <div>
-                  <span style="margin: 0 10px;"><img style="height: 24px;margin-bottom: -8px;" src="img/envelope.png"></span>
-                  <span>Technical Support Email :</span>
-                </div>
-              </td>
-            </tr>
-            <tr ng-if="tech.global_name=='admin_email'">
-              <td style="text-align:left;padding-left: 55px;"><a href="mailto:{{tech.global_value}}">{{tech.global_value}}</a></td>       
-            </tr>
-            <tr ng-if="tech.global_name=='admin_phone'">
-              <td>
-                <div>
-                  <span style="margin: 0 10px;"><img style="height: 24px;margin-bottom: -8px;" src="img/call.png"></span>
-                  <span>Technical Support Phone :</span>
-                </div>
-              </td>     
-            </tr>
-            <tr ng-if="tech.global_name=='admin_phone'">                  
-              <td style="text-align:left;padding-left: 55px;"><a ng-href="tel:{{tech.global_value}}">{{tech.global_value}}</a></td>       
-            </tr>
+      <table class="table  tech-table" style="width: 100%">
+        <tbody ng-repeat="tech in filtered = (techSupportData)">
+          <tr ng-if="tech.global_name=='technical_support_name'">
+            <td>
+              <div>
+                <span style="margin: 0 10px;"><img style="height: 24px;margin-bottom: -8px;"
+                    src="img/tech-support-name.png"></span>
+                <span>Technical Support Name :</span>
+              </div>
+            </td>
+          </tr>
+          <tr ng-if="tech.global_name=='technical_support_name'">
+            <td style="text-transform: capitalize;text-align:left;padding-left: 55px;">{{tech.global_value}}</td>
+          </tr>
+          <tr ng-if="tech.global_name=='admin_email'">
+            <td>
+              <div>
+                <span style="margin: 0 10px;"><img style="height: 24px;margin-bottom: -8px;"
+                    src="img/envelope.png"></span>
+                <span>Technical Support Email :</span>
+              </div>
+            </td>
+          </tr>
+          <tr ng-if="tech.global_name=='admin_email'">
+            <td style="text-align:left;padding-left: 55px;"><a
+                href="mailto:{{tech.global_value}}">{{tech.global_value}}</a></td>
+          </tr>
+          <tr ng-if="tech.global_name=='admin_phone'">
+            <td>
+              <div>
+                <span style="margin: 0 10px;"><img style="height: 24px;margin-bottom: -8px;" src="img/call.png"></span>
+                <span>Technical Support Phone :</span>
+              </div>
+            </td>
+          </tr>
+          <tr ng-if="tech.global_name=='admin_phone'">
+            <td style="text-align:left;padding-left: 55px;"><a
+                ng-href="tel:{{tech.global_value}}">{{tech.global_value}}</a></td>
+          </tr>
         </tbody>
-        </table>
-        <!-- <table class="table  tech-table" style="width: 100%" >
-            <tr>
-                <td>
-                    <div>
-                      <span style="margin: 0 10px;"><img style="height: 24px;margin-bottom: -8px;" src="img/tech-support-name.png"></span>
-                      <span>Technical Support Name  :</span>
-                    </div>
-                </td>     
-                <td style="text-transform: capitalize;text-align:right;padding-right: 15px;">Sathish Kumar</td> 
-            </tr>
-            <tr>
-                <td>
-                    <div>
-                      <span style="margin: 0 10px;"><img style="height: 24px;margin-bottom: -8px;" src="img/envelope.png"></span>
-                      <span>Technical Support Email :</span>
-                    </div>
-                </td>
-                <td style="text-align:right;padding-right: 15px;">admin@gmail.com</td>
-            </tr>
-            <tr>
-                <td>
-                    <div>
-                      <span style="margin: 0 10px;"><img style="height: 24px;margin-bottom: -8px;" src="img/call.png"></span>
-                      <span>Technical Support Phone :</span>
-                    </div>
-                </td>     
-                <td style="text-align:right;padding-right: 15px;">99999999999</td>
-            </tr>
-            <tr ng-show="displaymessage">
-              <td colspan="3" style="text-align: center;margin: 10px;" >No Records Found.</td>
-            </tr>            
-        </table> -->
-    </div> 
-
-    </ion-content>
-  </ion-view>
-  
+      </table>
+    </div>
+  </ion-content>
+</ion-view>
