@@ -14,7 +14,36 @@ app = angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
 
     });
     $scope.facilityTestData = JSON.parse(localStorage.getItem('TestingFacilityData'));
+    $scope.sampleInfoObj1 = [];
+    $scope.sampleInfoObj2 = [];
+    $scope.SampleInfoList = JSON.parse(localStorage.getItem('SampleIdInfo'));
+    if($scope.SampleInfoList!=null){
+      var sampleInfoListLen = Object.keys($scope.SampleInfoList).length;
+      for (i = 0; i < sampleInfoListLen; i++) {
+        if ($scope.SampleInfoList[i].available != 'yes') {
+          $scope.sampleInfoObj1.push({
+            "qcSampleId": $scope.SampleInfoList[i].qcSampleId,
+            "qcSampleNo": $scope.SampleInfoList[i].qcSampleNo,
+            "qcSampleStatus": $scope.SampleInfoList[i].qcSampleStatus,
+            "available": $scope.SampleInfoList[i].available,
+            "isLocal":$scope.SampleInfoList[i].isLocal
+          })
+        } else {
+          $scope.sampleInfoObj2.push({
+            "qcSampleId": $scope.SampleInfoList[i].qcSampleId,
+            "qcSampleNo": $scope.SampleInfoList[i].qcSampleNo,
+            "qcSampleStatus": $scope.SampleInfoList[i].qcSampleStatus,
+            "available": $scope.SampleInfoList[i].available,
+            "isLocal":$scope.SampleInfoList[i].isLocal
+          })
+        }
+      }
+      for (i = 0; i < $scope.sampleInfoObj2.length; i++) {
+        $scope.sampleInfoObj1.unshift($scope.sampleInfoObj2[i])
+      }
 
+      $scope.SampleInfoList = $scope.sampleInfoObj1;
+    }
     $scope.qcOutcomeCheck = function () {
       var qcLocalDatas = JSON.parse(localStorage.getItem('QCData'));
       if (qcLocalDatas != null) {
@@ -67,6 +96,8 @@ app = angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
               "testKitExpDate": $scope.TestKitLotList[i].testKitExpDate,
               "label": $scope.TestKitLotList[i].label,
               "available": $scope.TestKitLotList[i].available,
+              "isLocal": $scope.TestKitLotList[i].isLocal
+
             })
           } else {
             $scope.testkitlotObj2.push({
@@ -77,6 +108,8 @@ app = angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
               "testKitExpDate": $scope.TestKitLotList[i].testKitExpDate,
               "label": $scope.TestKitLotList[i].label,
               "available": $scope.TestKitLotList[i].available,
+              "isLocal": $scope.TestKitLotList[i].isLocal
+
             })
           }
         }
@@ -318,7 +351,7 @@ app = angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
 
       if (lotNo != "") {
         for (i = 0; i < $scope.TestKitLotList.length; i++) {
-          if (lotNo == $scope.TestKitLotList[i].testKitLotNo) {
+          if (lotNo == $scope.TestKitLotList[i].LotNumber) {
             $scope.ExpDate = $scope.TestKitLotList[i].testKitExpDate;
             $scope.ManufacturerName = $scope.TestKitLotList[i].testKitManufacturerName;
           }

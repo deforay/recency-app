@@ -1,0 +1,69 @@
+<ion-view view-title="Edit Sample Information">
+
+        <ion-content>
+          <div class="RecencyForm">
+            <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
+      
+            <div class="loginFields">
+              <div class="row">
+                <form class="col loginForm" name="editSample">
+                  <div>
+                   
+                    <div class="row">
+                      <div class="input-field col ">
+                        <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                          <p>Sample ID</p>
+                        </span>
+                        <div class="form-logo"><img src="img/lab.png"></div>
+                        <input type="text"id="qcSampleNo" class="qcSampleNo" name="qcSampleNo"
+                        title="Please Enter Sample ID"  placeholder="Sample ID"  ng-model="qcSampleInfo.qcSampleNo">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="toggle-div">
+                        <div class="input-field col col-60" style="height: 100%;width:100%">
+                          <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                            <p style="margin-left: 10px;">Available</p>
+                          </span>
+      
+                        </div>
+                        <div class="col col-40" style="float:right;margin-top: -25px;">
+                          <h6 ng-if="qcSampleInfo.available" style="float: left;padding:14px;padding-bottom:0;">Yes</h6>
+                          <h6 ng-if="!qcSampleInfo.available" style="float: left;padding:14px;padding-bottom:0;">No</h6>
+                          <label class="toggle" style="float: left;margin-top: 8px;">
+                            <input type="checkbox" ng-model="qcSampleInfo.available" />
+                            <div class="track">
+                              <div class="handle"></div>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col savebtn ">
+                          <button class="button button-block waves-effect waves-light"
+                            ng-disabled="qcSampleInfo.qcSampleNo==''"
+                            type="submit" ng-click="updateSampleInfo()">
+                            SAVE
+                          </button>
+                        </div>
+                      </div>
+
+
+
+
+
+
+
+
+
+
+
+                  </div>
+                </form>
+              </div>
+            </div>
+        </ion-content>
+        </div>
+      </ion-view>
+      

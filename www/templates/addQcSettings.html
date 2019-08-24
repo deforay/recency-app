@@ -1,9 +1,11 @@
 <ion-view view-title="Settings">
   <header class="row recency-tab">
     <button id="main-addqcsetting" class="col button recency-head " ng-click="setmainactive();">Tester
-      Information</button>
+      Info</button>
     <button id="other-addqcsetting" class="col button recency-head" ng-click="setothersactive();">Lot
-      Information</button>
+      Info</button>
+      <button id="sample-addqcsetting" class="col button recency-head" ng-click="setsampleactive();">Sample ID
+        Info</button>
   </header>
   <div class="RecencyForm">
     <ion-content style="top:0!important;bottom: 100px;">
@@ -12,7 +14,7 @@
       <div class="loginFields">
         <div class="row">
           <form class="col loginForm" name="addSettings" ng-init="testerinit()">
-            <div ng-show="qcsettingsdisplay">
+            <div ng-if="qcsettingsdisplay==0">
               <div class="row">
                 <div class="input-field col ">
                   <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
@@ -86,7 +88,7 @@
                 </div>
               </ion-list>
             </div>
-            <div ng-hide="qcsettingsdisplay">
+            <div ng-if="qcsettingsdisplay==1">
               <div class="row">
                 <div class="input-field col ">
                   <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
@@ -195,6 +197,83 @@
                   </table>
                 </div>
               </ion-list>
+            </div>
+            <div ng-if="qcsettingsdisplay==2">          
+                  <div class="row">
+                    <div class="input-field col ">
+                      <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                        <p>Sample ID</p>
+                      </span>
+                      <div class="form-logo"><img src="img/lab.png"></div>
+                      <input type="text"id="qcSampleNo" class="qcSampleNo" name="qcSampleNo"
+                      title="Please Enter Sample ID"  placeholder="Sample ID"  ng-model="qcSample.qcSampleNo">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="toggle-div">
+                      <div class="input-field col col-60" style="height: 100%;width:100%">
+                        <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
+                          <p style="margin-left: 10px;">Available</p>
+                        </span>
+    
+                      </div>
+                      <div class="col col-40" style="float:right;margin-top: -25px;">
+                        <h6 ng-if="qcSample.available" style="float: left;padding:14px;padding-bottom:0;">Yes</h6>
+                        <h6 ng-if="!qcSample.available" style="float: left;padding:14px;padding-bottom:0;">No</h6>
+                        <label class="toggle" style="float: left;margin-top: 8px;">
+                          <input type="checkbox" ng-model="qcSample.available" />
+                          <div class="track">
+                            <div class="handle"></div>
+                          </div>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class="input-field col savebtn ">
+                        <button class="button button-block waves-effect waves-light"
+                          ng-disabled="qcSample.qcSampleNo==''"
+                          type="submit" ng-click="addSampleInfo()">
+                          SAVE
+                        </button>
+                      </div>
+                    </div>
+                    <ion-list type="list-inset">
+                        <h3 style="font-size:17px"> Sample ID List</h3>
+                        <div style="overflow-x:auto;margin-bottom: 30px;">
+                          <table class="table table-bordered table-striped order-table" style="width: 100%;white-space: nowrap;"
+                            id="ordertable">
+                            <tr style="white-space: nowrap">
+                              <th>Sample ID</th>
+                              <th style="text-align: center">Available</th>
+
+                              <th style="text-align: center">Action</th>
+                            </tr>
+                            <tr ng-repeat="qcsample in SampleInfoList ">
+                              <td style="padding-left: 10px;">{{qcsample.qcSampleNo }}</td>
+                              <td style="text-transform: capitalize;text-align: center">{{qcsample.available }}</td>
+                             
+                              <td style="text-align: center">
+                                <a style="font-size: 15px;min-height: 21px;margin-left:5px;height:35px;line-height:30px;background-color: #3592f0;"
+                                  class="button  button-calm" ng-click="editSampleInfo(qcsample,$index)">
+                                  <div class="form-logo" style="line-height: 35px;"><img src="img/edit.png" style="height:14px">
+                                  </div>
+                                </a>
+                                <a style="font-size: 15px;min-height: 21px;margin-left:5px;height:35px;line-height:30px;"
+                                  class="button  button-assertive" ng-click="deleteSampleInfo(qcsample,$index)">
+                                  <div class="form-logo" style="line-height: 35px;"><img src="img/delete.png"
+                                      style="height:17px"></div>
+                                </a>
+                              </td>
+                            </tr>
+                            <tr ng-show="isVisibleSample">
+                              <td colspan="5">
+                                <p style="text-align:center">No data available</p>
+                              </td>
+                            </tr>
+                          </table>
+                        </div>
+                      </ion-list>
             </div>
           </form>
         </div>

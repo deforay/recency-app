@@ -2,7 +2,7 @@ app = angular.module('starter.editLotInfoCtrl', ['starter.services'])
   .controller('editLotInfoCtrl', function ($scope, $http, $timeout, $stateParams, $cordovaToast, $location, $window, ionicDatePicker, $ionicPopup, $preLoader, $localStorage, $cordovaGeolocation, $window, $filter, $cordovaNetwork) {
     $scope.qcLotKit = {};
 
-    $scope.TesterListData = {};
+    //$scope.TesterListData = {};
 
     $scope.qcLotKit = JSON.parse(localStorage.getItem('viewLotInfo'));
     if ($scope.qcLotKit.available == 'yes') {
@@ -12,9 +12,9 @@ app = angular.module('starter.editLotInfoCtrl', ['starter.services'])
     }
     $(document).ready(function () {
 
-      if (!localStorage.getItem('Testercounter')) {
-        $scope.Testercounter = 0;
-        localStorage.setItem('Testercounter', $scope.Testercounter);
+      if (!localStorage.getItem('Lotcounter')) {
+        $scope.Lotcounter = 0;
+        localStorage.setItem('Lotcounter', $scope.Lotcounter);
       }
     });
     $scope.doRefresh = function () {
@@ -23,15 +23,15 @@ app = angular.module('starter.editLotInfoCtrl', ['starter.services'])
       $preLoader.hide();
 
     }
-    $scope.editTesterInfo = function (qc) {
-      $scope.qcTesterInfo = qc;
+    // $scope.editTesterInfo = function (qc) {
+    //   $scope.qcTesterInfo = qc;
 
-      if (qc.available == 'yes') {
-        $scope.qcTesterInfo.isavailable = true;
-      } else {
-        $scope.qcTesterInfo.isavailable = false;
-      }
-    }
+    //   if (qc.available == 'yes') {
+    //     $scope.qcTesterInfo.isavailable = true;
+    //   } else {
+    //     $scope.qcTesterInfo.isavailable = false;
+    //   }
+    // }
 
     $scope.setTestKitExpDate = function (val) {
       var ipObj3 = {

@@ -32,6 +32,14 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
       }
 
     }
+    $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams)
+     {
+        $rootScope.previousState = from.name;
+         $rootScope.currentState = to.name;
+         if($rootScope.previousState == 'app.editRecency'){
+          $window.location.reload(true);
+         }      
+      });
     $scope.$on("$ionicView.beforeEnter", function (event, data) {
       $scope.recencyList = [];
       $scope.unSyncCount = '';

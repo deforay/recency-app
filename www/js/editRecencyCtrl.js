@@ -6,6 +6,7 @@ app = angular.module('starter.editRecencyCtrl', ['starter.services'])
     $scope.displaybadge = false;
     $scope.showotherdistrict = false;
     $scope.showothercity = false;
+    $scope.regex = '^[0-9]*$';
 
     $scope.provinceData = JSON.parse(localStorage.getItem('ProvinceData'));
     $scope.recencyDetails = JSON.parse(localStorage.getItem('viewRecency'));
@@ -33,6 +34,7 @@ app = angular.module('starter.editRecencyCtrl', ['starter.services'])
             "testKitExpDate": $scope.TestKitLotList[i].testKitExpDate,
             "label": $scope.TestKitLotList[i].label,
             "available": $scope.TestKitLotList[i].available,
+            "isLocal": $scope.TestKitLotList[i].isLocal
           })
         } else {
           $scope.testkitlotObj2.push({
@@ -43,6 +45,7 @@ app = angular.module('starter.editRecencyCtrl', ['starter.services'])
             "testKitExpDate": $scope.TestKitLotList[i].testKitExpDate,
             "label": $scope.TestKitLotList[i].label,
             "available": $scope.TestKitLotList[i].available,
+            "isLocal": $scope.TestKitLotList[i].isLocal
           })
         }
       }
@@ -184,7 +187,7 @@ app = angular.module('starter.editRecencyCtrl', ['starter.services'])
       $scope.recency.riskPopulationName = "Other"
     }
     //Term Outcome
-    if ($scope.recency.recencyOutcome == 'Invalid-Please Verify') {
+    if ($scope.recency.recencyOutcome == 'Invalid') {
       $scope.recency.showtermOutcome = true;
       $scope.setoutcomecolor = 'red';
     } else if ($scope.recency.recencyOutcome == 'Assay Negative') {
@@ -455,7 +458,7 @@ app = angular.module('starter.editRecencyCtrl', ['starter.services'])
     $scope.getTestKitExpDate = function (lotNo) {
       if (lotNo != "") {
         for (i = 0; i < $scope.TestKitLotList.length; i++) {
-          if (lotNo == $scope.TestKitLotList[i].testKitLotNo) {
+          if (lotNo == $scope.TestKitLotList[i].LotNumber) {
             $scope.ExpDate = $scope.TestKitLotList[i].testKitExpDate
             $scope.ManufacturerName = $scope.TestKitLotList[i].testKitManufacturerName;
           }
@@ -661,7 +664,7 @@ app = angular.module('starter.editRecencyCtrl', ['starter.services'])
         $scope.recency.positiveLine = "";
         $scope.recency.longTermLine = "";
         $scope.recency.recencyOutcome = "";
-        $scope.recencyOutcomeDisplay = "";
+        $scope.recency.recencyOutcomeDisplay = "";
         $scope.recency.vlTestDate = "";
         $scope.recency.vlLoadResult = "";
         $scope.recency.vlLoadResultDropdown = "";
@@ -677,22 +680,22 @@ app = angular.module('starter.editRecencyCtrl', ['starter.services'])
 
       if (vlLoadResultDropdown == 'TND' && ($scope.recency.recencyOutcome == 'Assay Recent' || $scope.recency.recencyOutcome == 'Assay Long Term')) {
         $scope.recency.finalOutcome = "RITA Recent";
-        $scope.recencyOutcomeDisplay = "";
+        $scope.recency.recencyOutcomeDisplay = "";
         $scope.recency.showFinalOutcome = true;
         $scope.setfinalcolor = 'blue';
       } else if ((vlLoadResultDropdown == '< 20' || vlLoadResultDropdown == '< 40' || vlLoadResultDropdown == 'BDL') && ($scope.recency.recencyOutcome == 'Assay Recent' || $scope.recency.recencyOutcome == 'Assay Long Term')) {
         $scope.recency.finalOutcome = "RITA Long Term";
-        $scope.recencyOutcomeDisplay = "";
+        $scope.recency.recencyOutcomeDisplay = "";
         $scope.recency.showFinalOutcome = true;
         $scope.setfinalcolor = 'black';
       } else if (vlLoadResultDropdown == 'Failed' && ($scope.recency.recencyOutcome == 'Assay Recent' || $scope.recency.recencyOutcome == 'Assay Long Term')) {
         $scope.recency.finalOutcome = "Inconclusive";
-        $scope.recencyOutcomeDisplay = "";
+        $scope.recency.recencyOutcomeDisplay = "";
         $scope.setfinalcolor = 'blue';
         $scope.recency.showFinalOutcome = true;
       }
       if (vlLoadResultDropdown == '' && $scope.recency.vlLoadResult == "" && $scope.recency.recencyOutcome == 'Assay Recent') {
-        $scope.recencyOutcomeDisplay = "- Please ensure you add Viral Load Result";
+        $scope.recency.recencyOutcomeDisplay = "- Please ensure you add Viral Load Result";
 
       }
     }
@@ -703,8 +706,8 @@ app = angular.module('starter.editRecencyCtrl', ['starter.services'])
         (controlLine == 'absent' && positiveLine == 'absent' && longTermLine == 'present') ||
         (controlLine == 'absent' && positiveLine == 'present' && longTermLine == 'absent') ||
         (controlLine == 'absent' && positiveLine == 'present' && longTermLine == 'present')) {
-        $scope.recency.recencyOutcome = "Invalid-Please Verify";
-        $scope.recencyOutcomeDisplay = "";
+        $scope.recency.recencyOutcome = "Invalid";
+        $scope.recency.recencyOutcomeDisplay = "-Please Verify";
         $scope.recency.showtermOutcome = true;
         $scope.recency.showFinalOutcome = false;
         $scope.setoutcomecolor = 'red';
@@ -716,8 +719,8 @@ app = angular.module('starter.editRecencyCtrl', ['starter.services'])
       if ((controlLine == 'present' && positiveLine == 'absent' && longTermLine == 'present')) {
         $scope.recency.showFinalOutcome = true;
         $scope.setfinalcolor = 'blue';
-        $scope.recency.recencyOutcome = "Invalid-Please Verify";
-        $scope.recencyOutcomeDisplay = "";
+        $scope.recency.recencyOutcome = "Invalid";
+        $scope.recency.recencyOutcomeDisplay = "-Please Verify";
         $scope.recency.showtermOutcome = true;
         $scope.setoutcomecolor = 'red';
         $scope.recency.finalOutcome = "Inconclusive";
@@ -727,7 +730,7 @@ app = angular.module('starter.editRecencyCtrl', ['starter.services'])
       }
       if (controlLine == 'present' && positiveLine == 'absent' && longTermLine == 'absent') {
         $scope.recency.recencyOutcome = "Assay Negative";
-        $scope.recencyOutcomeDisplay = "";
+        $scope.recency.recencyOutcomeDisplay = "";
         $scope.recency.showtermOutcome = true;
         $scope.setoutcomecolor = 'blue';
         $scope.recency.finalOutcome = "Inconclusive";
@@ -745,15 +748,15 @@ app = angular.module('starter.editRecencyCtrl', ['starter.services'])
         $scope.recency.finalOutcome = "";
         $scope.recency.showFinalOutcome = false;
         if ($scope.recency.vlLoadResult == "" && $scope.recency.vlLoadResultDropdown == "") {
-          $scope.recencyOutcomeDisplay = "- Please ensure you add Viral Load Result";
+          $scope.recency.recencyOutcomeDisplay = "- Please ensure you add Viral Load Result";
         } else {
-          $scope.recencyOutcomeDisplay = "";
+          $scope.recency.recencyOutcomeDisplay = "";
         }
 
       }
       if (controlLine == 'present' && positiveLine == 'present' && longTermLine == 'present') {
         $scope.recency.recencyOutcome = "Assay Long Term";
-        $scope.recencyOutcomeDisplay = "";
+        $scope.recency.recencyOutcomeDisplay = "";
         $scope.recency.showtermOutcome = true;
         $scope.setoutcomecolor = 'black';
         $scope.recency.finalOutcome = "Long Term";
@@ -763,7 +766,7 @@ app = angular.module('starter.editRecencyCtrl', ['starter.services'])
       if (controlLine == "" || positiveLine == "" || longTermLine == "") {
         $scope.recency.recencyOutcome = "";
         $scope.recency.finalOutcome = "";
-        $scope.recencyOutcomeDisplay = "";
+        $scope.recency.recencyOutcomeDisplay = "";
         $scope.recency.vlTestDate = "";
         $scope.recency.vlLoadResult = "";
         $scope.recency.vlLoadResultDropdown = "";
@@ -775,13 +778,13 @@ app = angular.module('starter.editRecencyCtrl', ['starter.services'])
     // Final Outcome
     $scope.getFinalOutcome = function (termOutcome, vlLoadResult) {
       if (termOutcome == "Assay Recent" && vlLoadResult > 1000) {
-        $scope.recencyOutcomeDisplay = "";
+        $scope.recency.recencyOutcomeDisplay = "";
         $scope.recency.finalOutcome = "RITA Recent";
         $scope.recency.showFinalOutcome = true;
         $scope.setfinalcolor = 'blue';
       } else if (termOutcome == "Assay Recent" && (vlLoadResult <= 1000 && vlLoadResult != "" && vlLoadResult != null)) {
         $scope.recency.finalOutcome = "RITA Long Term";
-        $scope.recencyOutcomeDisplay = "";
+        $scope.recency.recencyOutcomeDisplay = "";
         $scope.recency.showFinalOutcome = true;
         $scope.setfinalcolor = 'black';
       } else if (termOutcome == "Assay Recent" && (vlLoadResult == "" || vlLoadResult == null)) {
@@ -789,7 +792,7 @@ app = angular.module('starter.editRecencyCtrl', ['starter.services'])
         $scope.recency.vlTestDate = "";
         $scope.recency.vlLoadResult = "";
         $scope.recency.vlLoadResultDropdown = "";
-        $scope.recencyOutcomeDisplay = "- Please ensure you add Viral Load Result";
+        $scope.recency.recencyOutcomeDisplay = "- Please ensure you add Viral Load Result";
         $scope.recency.showFinalOutcome = false;
       } else if (termOutcome == "Assay Long Term" && (vlLoadResult == "" || vlLoadResult == null)) {
         $scope.recency.finalOutcome = "Long Term";
@@ -1070,25 +1073,45 @@ app = angular.module('starter.editRecencyCtrl', ['starter.services'])
       ionicDatePicker.openDatePicker(ipObj6);
     }
     $scope.setDob = function (val) {
+      var currentYear = new Date().getFullYear();
+      var currentDate = new Date().getDate();
+      var fromYear = currentYear - 99;
+      var toYear = currentYear - 15;
+      var currentMonth = new Date().getMonth();
       var ipObj7 = {
         callback: function (val) { //Mandatory
           var dob = new Date(val);
           var ageDifMs = Date.now() - dob.getTime();
           var ageDate = new Date(ageDifMs); // miliseconds from epoch
           $scope.recency.dob = $filter('date')(dob, "dd-MMM-yyyy");
-          $scope.recency.age = Math.abs(ageDate.getUTCFullYear() - 1970);
+        $scope.recency.age = Math.abs(currentYear - dob.getUTCFullYear());
+
+         // $scope.recency.age = Math.abs(ageDate.getUTCFullYear() - 1970);
         },
-        to: new Date(),
+        from: new Date(fromYear,currentMonth,1),
+        to: new Date(toYear,currentMonth,31),
+        inputDate: new Date(toYear,currentMonth,currentDate)
       };
       ionicDatePicker.openDatePicker(ipObj7);
     }
 
     $scope.cleardob = function (age) {
+
       if (age != null || age != undefined) {
         $scope.recency.dob = "";
       } else {
         $scope.recency.age = "";
       }
+        if(age.toString().length>1 && age<15){
+          $scope.recency.age = "";
+        }
+        var agelen = age.toString();
+      
+        if(agelen.length>2){
+          agelen=agelen.slice(0,2);
+          $scope.recency.age=parseInt(agelen); 
+        }
+      
     }
     $scope.clearTestKitExpDate = function () {
       $scope.recency.testKitExpDate = '';
@@ -1293,12 +1316,12 @@ app = angular.module('starter.editRecencyCtrl', ['starter.services'])
                 return false;
               }
 
-              if ($scope.mandatoryData[i] == 'vlTestDate' && $scope.recency.vlTestDate == "" && ($scope.recency.recencyOutcome != 'Assay Negative' && $scope.recency.recencyOutcome != 'Invalid-Please Verify' && $scope.recency.recencyOutcome != '')) {
+              if ($scope.mandatoryData[i] == 'vlTestDate' && $scope.recency.vlTestDate == "" && ($scope.recency.recencyOutcome != 'Assay Negative' && $scope.recency.recencyOutcome != 'Invalid' && $scope.recency.recencyOutcome != '')) {
                 $scope.showRecencyTick = false;
                 $scope.showToastAlert(mandatorytitle);
                 return false;
               }
-              if ($scope.mandatoryData[i] == 'vlLoadResult' && ($scope.recency.vlLoadResult == "" || $scope.recency.vlLoadResult == null) && $scope.recency.vlLoadResultDropdown == "" && ($scope.recency.recencyOutcome != 'Assay Negative' && $scope.recency.recencyOutcome != 'Invalid-Please Verify' && $scope.recency.recencyOutcome != '')) {
+              if ($scope.mandatoryData[i] == 'vlLoadResult' && ($scope.recency.vlLoadResult == "" || $scope.recency.vlLoadResult == null) && $scope.recency.vlLoadResultDropdown == "" && ($scope.recency.recencyOutcome != 'Assay Negative' && $scope.recency.recencyOutcome != 'Invalid' && $scope.recency.recencyOutcome != '')) {
                 $scope.showRecencyTick = false;
                 $scope.showToastAlert(mandatorytitle);
                 return false;
@@ -1327,14 +1350,14 @@ app = angular.module('starter.editRecencyCtrl', ['starter.services'])
           var mandatoryField = $scope.mandatoryData[i];
 
 
-          if (($scope.mandatoryData[i] == 'dob' && $scope.recency.dob == "" && ($scope.recency.age == "" || $scope.recency.age == null))) {
+          if (($scope.mandatoryData[i] == 'dob' && $scope.recency.dob == "" && ($scope.recency.age == "" || $scope.recency.age == null|| $scope.recency.age>15))) {
             var mandatorytitle = 'Please Enter Date Of Birth or Age';
             $scope.showBehaviourTick = false;
             $scope.showToastAlert(mandatorytitle);
             return false;
           }
 
-          if (($scope.mandatoryData[i] == 'age' && $scope.recency.dob == "" && ($scope.recency.age == "" || $scope.recency.age == null))) {
+          if (($scope.mandatoryData[i] == 'age' && $scope.recency.dob == "" && ($scope.recency.age == "" || $scope.recency.age == null|| $scope.recency.age>15))) {
             var mandatorytitle = 'Please Enter Date Of Birth or Age';
             $scope.showBehaviourTick = false;
             $scope.showToastAlert(mandatorytitle);
@@ -1612,27 +1635,27 @@ app = angular.module('starter.editRecencyCtrl', ['starter.services'])
             return false;
           }
 
-          if ($scope.mandatoryData[i] == 'vlTestDate' && $scope.recency.vlTestDate == "" && ($scope.recency.recencyOutcome != 'Assay Negative' && $scope.recency.recencyOutcome != 'Invalid-Please Verify' && $scope.recency.recencyOutcome != '')) {
+          if ($scope.mandatoryData[i] == 'vlTestDate' && $scope.recency.vlTestDate == "" && ($scope.recency.recencyOutcome != 'Assay Negative' && $scope.recency.recencyOutcome != 'Invalid' && $scope.recency.recencyOutcome != '')) {
             $scope.showRecencyTick = false;
             var mandatorytitle = 'Please Enter Viral Load Test Date';
             $scope.showToastAlert(mandatorytitle);
             return false;
           }
-          if ($scope.mandatoryData[i] == 'vlLoadResult' && ($scope.recency.vlLoadResult == "" || $scope.recency.vlLoadResult == null) && $scope.recency.vlLoadResultDropdown == "" && ($scope.recency.recencyOutcome != 'Assay Negative' && $scope.recency.recencyOutcome != 'Invalid-Please Verify' && $scope.recency.recencyOutcome != '')) {
+          if ($scope.mandatoryData[i] == 'vlLoadResult' && ($scope.recency.vlLoadResult == "" || $scope.recency.vlLoadResult == null) && $scope.recency.vlLoadResultDropdown == "" && ($scope.recency.recencyOutcome != 'Assay Negative' && $scope.recency.recencyOutcome != 'Invalid' && $scope.recency.recencyOutcome != '')) {
             $scope.showRecencyTick = false;
             var mandatorytitle = 'Please Enter Viral Load Result';
             $scope.showToastAlert(mandatorytitle);
             return false;
           }
         }
-        if (($scope.mandatoryData[i] == 'dob' && $scope.recency.dob == "" && ($scope.recency.age == "" || $scope.recency.age == null))) {
+        if (($scope.mandatoryData[i] == 'dob' && $scope.recency.dob == "" && ($scope.recency.age == "" || $scope.recency.age == null|| $scope.recency.age>15))) {
           var mandatorytitle = 'Please Enter Date Of Birth or Age';
           $scope.showBehaviourTick = false;
           $scope.showToastAlert(mandatorytitle);
           return false;
         }
 
-        if (($scope.mandatoryData[i] == 'age' && $scope.recency.dob == "" && ($scope.recency.age == "" || $scope.recency.age == null))) {
+        if (($scope.mandatoryData[i] == 'age' && $scope.recency.dob == "" && ($scope.recency.age == "" || $scope.recency.age == null|| $scope.recency.age>15))) {
           var mandatorytitle = 'Please Enter Date Of Birth or Age';
           $scope.showBehaviourTick = false;
           $scope.showToastAlert(mandatorytitle);
@@ -1686,9 +1709,10 @@ app = angular.module('starter.editRecencyCtrl', ['starter.services'])
 
       $("#main-recency").addClass("active");
       $("#other-recency").removeClass('active');
-      $window.location.reload(true);
-
       $location.path('/app/viewRecency');
+
+    //  
+
       $preLoader.hide();
     }
   })

@@ -235,7 +235,7 @@ angular.module('starter.controllers', [])
 
       $http.get($localStorage.get('apiUrl') + '/api/facility?userId=' + $scope.userId)
         .success(function (data) {
-          console.log(data);
+        //  console.log(data);
           $scope.facilityData = data.facility;
 
           localStorage.setItem('FacilityData', JSON.stringify($scope.facilityData))
@@ -275,7 +275,72 @@ angular.module('starter.controllers', [])
           localStorage.setItem('GlobalConfig', JSON.stringify($scope.configdata))
           localStorage.setItem('Announcement', JSON.stringify($scope.announcement))
         });
-
+        $http.get($localStorage.get('apiUrl') + '/api/sample')
+        .success(function (resp) {
+          $scope.sampleInfo = [];
+          if(resp.status=='success'){
+            var serverSampleInfo = resp.data;
+            for(i=0;i<serverSampleInfo.length;i++){
+        
+              $scope.sampleInfo.push({
+                "qcSampleId":serverSampleInfo[i].qcSampleId,
+                "qcSampleNo": serverSampleInfo[i].qcSampleNo,
+                "qcSampleStatus":serverSampleInfo[i].qcSampleStatus,
+                "available": 'yes',                  
+                "isLocal":false
+              })
+            }
+            if(localStorage.getItem('SampleIdInfo')){ 
+              var sampleinfo =  JSON.parse(localStorage.getItem('SampleIdInfo'))
+              for (i = 0; i < sampleinfo.length; i++) {
+                if(sampleinfo[i].isLocal==true){
+                 $scope.sampleInfo.push(sampleinfo[i])
+                }
+             }
+             console.log($scope.sampleInfo);
+             }
+          }
+        })
+        $http.get($localStorage.get('apiUrl') + '/api/test-kit-info')
+        .success(function (resp) {
+        //  console.log(resp)
+          $scope.testerLotInfo = [];
+          
+          if(resp.status=='success'){
+            var serverLotInfo = resp.data;
+            for(i=0;i<serverLotInfo.length;i++){
+              var testKitLotNo = serverLotInfo[i].reference_result + ' - ' + serverLotInfo[i].kit_lot_no;
+              var manufacturerName;
+            if(serverLotInfo[i].reference_result=='SED'){
+              manufacturerName = "SEDIA Bioscience (SED)";
+            }
+            else if (serverLotInfo[i].reference_result == 'MAX'){
+              manufacturerName = "Maxim Biomedical (MAX)";
+            }
+              $scope.testerLotInfo.push({
+                "testKitManufacturer":serverLotInfo[i].reference_result,
+                "testKitManufacturerName": manufacturerName,
+                "LotNumber":serverLotInfo[i].kit_lot_no,
+                "testKitLotNo":testKitLotNo,
+                "testKitExpDate":serverLotInfo[i].kit_expiry_date,
+                "available": 'yes',
+                "isLocal":false
+              })
+            }
+            if(localStorage.getItem('LotInfo')){ 
+             var lotinfo =  JSON.parse(localStorage.getItem('LotInfo'))
+           //  console.log(lotinfo);
+             for (i = 0; i < lotinfo.length; i++) {
+               if(lotinfo[i].isLocal==true){
+                $scope.testerLotInfo.push(lotinfo[i])
+               }
+            }
+           // console.log($scope.testerLotInfo);
+            }
+           localStorage.setItem('LotInfo', JSON.stringify($scope.testerLotInfo));
+           localStorage.setItem('Lotcounter', $scope.testerLotInfo.length);
+          }
+        })
       $http.get($localStorage.get('apiUrl') + '/api/recency-mandatory')
         .success(function (data) {
           $scope.mandatoryData = data.fields;

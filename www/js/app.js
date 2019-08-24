@@ -13,6 +13,7 @@ angular.module('starter', ['ionic',
     'starter.addQcAssuranceCtrl',
     'starter.addQcSettingsCtrl',
     'starter.editTesterInfoCtrl',
+    'starter.editSampleInfoCtrl',
     'starter.editLotInfoCtrl',
     'starter.recencyDataCtrl',
     'starter.tatRecencyReportCtrl',
@@ -193,6 +194,15 @@ angular.module('starter', ['ionic',
           }
         }
       })
+      .state('app.editSampleInfo', {
+        url: '/editSampleInfo/:qcSampleId',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/editSampleInfo.html',
+            controller: "editSampleInfoCtrl"
+          }
+        }
+      })
       .state('app.editLotInfo', {
         url: '/editLotInfo/:testKitLotNo',
         views: {
@@ -242,8 +252,8 @@ angular.module('starter', ['ionic',
       weeksList: [],
       monthsList: ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"],
       templateType: 'popup',
-      from: new Date(1900, 1, 1),
-      to: new Date(2040, 12, 31),
+      from: new Date(1900, 0, 1),
+      to: new Date(2040, 11, 31),
       showTodayButton: false,
       dateFormat: 'MMMM yyyy',
       closeOnSelect: false,

@@ -16,7 +16,7 @@
       <div class="loginFields">
         <div class="row">
           <form class="col loginForm" name="editform">
-            <div class="row">
+            <div class="row" ng-if="announcement">
               <div class=" input-field col">
                 <span>
                   <span class="outcome" style="margin-left: 10px;font-weight: bold">{{announcement}} </span></span>
@@ -275,7 +275,7 @@
                       title="Please Enter Test Kit Lot Number" ng-model="recency.testKitLotNo"
                       ng-change="getTestKitExpDate(recency.testKitLotNo)">
                       <option value="">-- Select --</option>
-                      <option ng-repeat="lot in TestKitLotList" value="{{lot['testKitLotNo']}}">{{lot['testKitLotNo']}}
+                      <option ng-repeat="lot in TestKitLotList" value="{{lot['LotNumber']}}">{{lot['LotNumber']}}
                       </option>
                     </select>
                   </div>
@@ -466,7 +466,7 @@
                   <div class=" input-field col">
                     <span ng-if="recency.showtermOutcome==true">Assay Outcome: <span id="termOutcome"
                         ng-class="setoutcomecolor" class="outcome" style="margin-left: 10px;">{{recency.recencyOutcome}}
-                        {{recencyOutcomeDisplay}} </span></span>
+                        {{recency.recencyOutcomeDisplay}} </span></span>
 
                   </div>
                 </div>
@@ -576,8 +576,13 @@
                     </span>
                     <div class="form-logo date-img"><img src="img/date.png"></div>
                     <input id="age" type="number" class="age" name="age" title="Please Enter Age" ng-model='recency.age'
-                      ng-change="cleardob(recency.age)" placeholder="Age" required>
-
+                      ng-change="cleardob(recency.age)" placeholder="Age" ng-pattern="regex" required>
+                      <div role="alert" ng-show="recency.age<15">
+                          <span class="info-span"><img src="img/info.png"></span>
+                         <span class="alert-error">
+                           Age must be from 15 to 99
+                         </span>
+                       </div>
                   </div>
                 </div>
 

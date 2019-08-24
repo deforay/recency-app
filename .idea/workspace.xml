@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c55a43db-94b2-4fe6-855b-f357e2fa8978" name="Default" comment="" />
+    <list default="true" id="c55a43db-94b2-4fe6-855b-f357e2fa8978" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config.xml" afterPath="$PROJECT_DIR$/config.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/addRecencyCtrl.js" afterPath="$PROJECT_DIR$/www/js/addRecencyCtrl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/loginCtrl.js" afterPath="$PROJECT_DIR$/www/js/loginCtrl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/addRecency.html" afterPath="$PROJECT_DIR$/www/templates/addRecency.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/editRecency.html" afterPath="$PROJECT_DIR$/www/templates/editRecency.html" />
+    </list>
     <ignored path="recency-app.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -209,5 +216,8 @@
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
+  </component>
+  <component name="hg4idea.settings">
+    <option name="RECENT_HG_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
 </project>
