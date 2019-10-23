@@ -650,13 +650,14 @@ select[disabled]#vlLoadResultDropdown
     background-color: #efefef  !important;
 
 }
-#finalOutcome.red,#termOutcome.red{
+#finalOutcome.red,#termOutcome.red,#newtermOutcome.red
+{
     color:red
 }
-#finalOutcome.blue,#termOutcome.blue{
+#finalOutcome.blue,#termOutcome.blue,#newtermOutcome.blue{
     color:blue
 }
-#finalOutcome.black,#termOutcome.black{
+#finalOutcome.black,#termOutcome.black,#newtermOutcome.black{
     color:black
 }
 .recency-view .sync-button{

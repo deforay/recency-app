@@ -8,38 +8,38 @@
   },
   "installed_plugins": {
     "cordova-plugin-device": {
-      "PACKAGE_NAME": "com.deforay.recency"
+      "PACKAGE_NAME": "com.deforay.rtri"
     },
     "cordova-plugin-geolocation": {
-      "PACKAGE_NAME": "com.deforay.recency"
+      "PACKAGE_NAME": "com.deforay.rtri"
     },
     "cordova-plugin-ionic-keyboard": {
-      "PACKAGE_NAME": "com.deforay.recency"
+      "PACKAGE_NAME": "com.deforay.rtri"
     },
     "cordova-plugin-ionic-webview": {
       "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+",
-      "PACKAGE_NAME": "com.deforay.recency"
+      "PACKAGE_NAME": "com.deforay.rtri"
     },
     "cordova-plugin-network-information": {
-      "PACKAGE_NAME": "com.deforay.recency"
+      "PACKAGE_NAME": "com.deforay.rtri"
     },
     "cordova-plugin-networkinterface": {
-      "PACKAGE_NAME": "com.deforay.recency"
+      "PACKAGE_NAME": "com.deforay.rtri"
     },
     "cordova-plugin-sim": {
-      "PACKAGE_NAME": "com.deforay.recency"
+      "PACKAGE_NAME": "com.deforay.rtri"
     },
     "cordova-plugin-splashscreen": {
-      "PACKAGE_NAME": "com.deforay.recency"
+      "PACKAGE_NAME": "com.deforay.rtri"
     },
     "cordova-plugin-statusbar": {
-      "PACKAGE_NAME": "com.deforay.recency"
+      "PACKAGE_NAME": "com.deforay.rtri"
     },
     "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.deforay.recency"
+      "PACKAGE_NAME": "com.deforay.rtri"
     },
     "cordova-plugin-x-toast": {
-      "PACKAGE_NAME": "com.deforay.recency"
+      "PACKAGE_NAME": "com.deforay.rtri"
     }
   },
   "dependent_plugins": {}

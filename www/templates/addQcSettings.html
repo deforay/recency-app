@@ -1,11 +1,8 @@
 <ion-view view-title="Settings">
   <header class="row recency-tab">
-    <button id="main-addqcsetting" class="col button recency-head " ng-click="setmainactive();">Tester
-      Info</button>
-    <button id="other-addqcsetting" class="col button recency-head" ng-click="setothersactive();">Lot
-      Info</button>
-      <button id="sample-addqcsetting" class="col button recency-head" ng-click="setsampleactive();">Sample ID
-        Info</button>
+    <button id="main-addqcsetting" class="col button recency-head " ng-click="setmainactive();">Testers</button>
+    <button id="other-addqcsetting" class="col button recency-head" ng-click="setothersactive();">Recency Testkits</button>
+      <button id="sample-addqcsetting" class="col button recency-head" ng-click="setsampleactive();">QC Sample IDs</button>
   </header>
   <div class="RecencyForm">
     <ion-content style="top:0!important;bottom: 100px;">
@@ -54,7 +51,7 @@
                 </div>
               </div>
               <ion-list type="list-inset">
-                <h3 style="font-size:17px"> Tester Name List</h3>
+                <h3 style="font-size:17px">Testers</h3>
                 <div style="overflow-x:auto;margin-bottom: 30px;">
                   <table class="table table-bordered table-striped order-table" style="width: 100%;white-space: nowrap;"
                     id="ordertable">
@@ -160,7 +157,7 @@
                 </div>
               </div>
               <ion-list type="list-inset">
-                <h3 style="font-size:17px"> Lot Number List</h3>
+                <h3 style="font-size:17px">Recency Testkits</h3>
                 <div style="overflow-x:auto;margin-bottom: 30px;">
                   <table class="table table-bordered table-striped order-table" style="width: 100%;white-space: nowrap;"
                     id="ordertable">
@@ -202,7 +199,7 @@
                   <div class="row">
                     <div class="input-field col ">
                       <span class="input-label item-stacked-label" style="margin-bottom: -30px;">
-                        <p>Sample ID</p>
+                        <p>QC Sample ID</p>
                       </span>
                       <div class="form-logo"><img src="img/lab.png"></div>
                       <input type="text"id="qcSampleNo" class="qcSampleNo" name="qcSampleNo"
@@ -239,12 +236,12 @@
                       </div>
                     </div>
                     <ion-list type="list-inset">
-                        <h3 style="font-size:17px"> Sample ID List</h3>
+                        <h3 style="font-size:17px">QC Sample IDs</h3>
                         <div style="overflow-x:auto;margin-bottom: 30px;">
                           <table class="table table-bordered table-striped order-table" style="width: 100%;white-space: nowrap;"
                             id="ordertable">
                             <tr style="white-space: nowrap">
-                              <th>Sample ID</th>
+                              <th>QC Sample ID</th>
                               <th style="text-align: center">Available</th>
 
                               <th style="text-align: center">Action</th>

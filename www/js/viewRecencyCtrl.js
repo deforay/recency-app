@@ -94,6 +94,36 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
         for (i = 0; i < $scope.recencyList.length; i++) {
           $scope.recencyList[i].syncedBy = localStorage.getItem('userId');
           var currentdatetime = new Date();
+
+          if($scope.recencyList[i].recencyOutcome=='Invalid'){
+              $scope.recencyList[i].invalidControlLine = $scope.recencyList[i].ctrlLine;
+              $scope.recencyList[i].invalidControlLineName = $scope.recencyList[i].ctrlLineName;
+              $scope.recencyList[i].invalidPositiveLine = $scope.recencyList[i].positiveLine;
+              $scope.recencyList[i].invalidPositiveLineName = $scope.recencyList[i].positiveLineName;
+              $scope.recencyList[i].invalidLongTermLine = $scope.recencyList[i].longTermLine;
+              $scope.recencyList[i].invalidLongTermLineName = $scope.recencyList[i].longTermLineName;
+              $scope.recencyList[i].invalidRecencyOutcome = $scope.recencyList[i].recencyOutcome;
+              $scope.recencyList[i].invalidRecencyOutcomeDisplay = $scope.recencyList[i].recencyOutcomeDisplay;
+
+            
+              $scope.recencyList[i].ctrlLine = $scope.recencyList[i].newControlLine;
+              $scope.recencyList[i].ctrlLineName = $scope.recencyList[i].newControlLineName;
+              $scope.recencyList[i].positiveLine = $scope.recencyList[i].newPositiveLine;
+              $scope.recencyList[i].positiveLineName = $scope.recencyList[i].newPositiveLineName;
+              $scope.recencyList[i].longTermLine = $scope.recencyList[i].newLongTermLine;
+              $scope.recencyList[i].longTermLineName = $scope.recencyList[i].newLongTermLineName;
+              $scope.recencyList[i].recencyOutcome = $scope.recencyList[i].newRecencyOutcome;
+              $scope.recencyList[i].recencyOutcomeDisplay = $scope.recencyList[i].newRecencyOutcomeName;
+
+              $scope.recencyList[i].newControlLine = "";
+              $scope.recencyList[i].newControlLineName = "";
+              $scope.recencyList[i].newPositiveLine = "";
+              $scope.recencyList[i].newPositiveLineName = ""
+              $scope.recencyList[i].newLongTermLine = "";
+              $scope.recencyList[i].newLongTermLineName = "";
+              $scope.recencyList[i].newRecencyOutcome = "";
+              $scope.recencyList[i].newRecencyOutcomeDisplay = "";
+          }
           $scope.recencyList[i].formTransferDateTime = currentdatetime.getFullYear() + "-" +
             (currentdatetime.getMonth() + 1) + "-" +
             currentdatetime.getDate() + " " +
@@ -102,7 +132,7 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
             currentdatetime.getSeconds();
 
         }
-        $preLoader.show();
+       $preLoader.show();
 
         $http.post($rootScope.apiUrl + "/api/recency", {
             "form": $scope.recencyList
@@ -137,12 +167,12 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
 
               $preLoader.hide();
               // Hide Toast During Debugging 
-              $cordovaToast.show($scope.response.length + '  Data has been Successfully Synced', 'long', 'bottom')
-                .then(function (success) {
-                  // success
-                }, function (error) {
-                  // error
-                });
+              // $cordovaToast.show($scope.response.length + '  Data has been Successfully Synced', 'long', 'bottom')
+              //   .then(function (success) {
+              //     // success
+              //   }, function (error) {
+              //     // error
+              //   });
 
               $scope.onLoadRecency();
             }

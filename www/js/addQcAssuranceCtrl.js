@@ -6,44 +6,14 @@ app = angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
     $scope.displaybadge = false;
 
     $(document).ready(function () {
-
       if (!localStorage.getItem('qccounter')) {
         $scope.counter = 0;
         localStorage.setItem('qccounter', $scope.counter);
       }
-
     });
-    $scope.facilityTestData = JSON.parse(localStorage.getItem('TestingFacilityData'));
-    $scope.sampleInfoObj1 = [];
-    $scope.sampleInfoObj2 = [];
-    $scope.SampleInfoList = JSON.parse(localStorage.getItem('SampleIdInfo'));
-    if($scope.SampleInfoList!=null){
-      var sampleInfoListLen = Object.keys($scope.SampleInfoList).length;
-      for (i = 0; i < sampleInfoListLen; i++) {
-        if ($scope.SampleInfoList[i].available != 'yes') {
-          $scope.sampleInfoObj1.push({
-            "qcSampleId": $scope.SampleInfoList[i].qcSampleId,
-            "qcSampleNo": $scope.SampleInfoList[i].qcSampleNo,
-            "qcSampleStatus": $scope.SampleInfoList[i].qcSampleStatus,
-            "available": $scope.SampleInfoList[i].available,
-            "isLocal":$scope.SampleInfoList[i].isLocal
-          })
-        } else {
-          $scope.sampleInfoObj2.push({
-            "qcSampleId": $scope.SampleInfoList[i].qcSampleId,
-            "qcSampleNo": $scope.SampleInfoList[i].qcSampleNo,
-            "qcSampleStatus": $scope.SampleInfoList[i].qcSampleStatus,
-            "available": $scope.SampleInfoList[i].available,
-            "isLocal":$scope.SampleInfoList[i].isLocal
-          })
-        }
-      }
-      for (i = 0; i < $scope.sampleInfoObj2.length; i++) {
-        $scope.sampleInfoObj1.unshift($scope.sampleInfoObj2[i])
-      }
 
-      $scope.SampleInfoList = $scope.sampleInfoObj1;
-    }
+    $scope.facilityTestData = JSON.parse(localStorage.getItem('TestingFacilityData'));
+
     $scope.qcOutcomeCheck = function () {
       var qcLocalDatas = JSON.parse(localStorage.getItem('QCData'));
       if (qcLocalDatas != null) {
@@ -79,70 +49,59 @@ app = angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
     }
     $scope.qcOutcomeCheck();
     $scope.$on("$ionicView.beforeEnter", function (event, data) {
+      $scope.SampleInfoList = [];
+      $scope.sampleInfoObj = JSON.parse(localStorage.getItem('SampleIdInfo'));
+      if($scope.sampleInfoObj !=null){
+        var sampleInfoListLen = Object.keys($scope.sampleInfoObj).length;
+        for (i = 0; i < sampleInfoListLen; i++) {
+          if ($scope.sampleInfoObj[i].available == 'yes') {
+            $scope.SampleInfoList.push({
+              "qcSampleId": $scope.sampleInfoObj[i].qcSampleId,
+              "qcSampleNo": $scope.sampleInfoObj[i].qcSampleNo,
+              "qcSampleStatus": $scope.sampleInfoObj[i].qcSampleStatus,
+              "available": $scope.sampleInfoObj[i].available,
+              "isLocal":$scope.sampleInfoObj[i].isLocal
+            })
+          }
+        } 
+      }
+     // console.log($scope.SampleInfoList)
+      $scope.TestKitLotList = [];
+      $scope.testkitlotObj = JSON.parse(localStorage.getItem('LotInfo'));
 
-      $scope.testkitlotObj1 = [];
-      $scope.testkitlotObj2 = [];
-      $scope.TestKitLotList = JSON.parse(localStorage.getItem('LotInfo'));
-
-      if ($scope.TestKitLotList != null) {
-        var TestKitLotListLen = Object.keys($scope.TestKitLotList).length;
+      if ($scope.testkitlotObj != null) {
+        var TestKitLotListLen = Object.keys($scope.testkitlotObj).length;
         for (i = 0; i < TestKitLotListLen; i++) {
-          if ($scope.TestKitLotList[i].available != 'yes') {
-            $scope.testkitlotObj1.push({
-              "testKitManufacturer": $scope.TestKitLotList[i].testKitManufacturer,
-              "testKitManufacturerName": $scope.TestKitLotList[i].testKitManufacturerName,
-              "LotNumber": $scope.TestKitLotList[i].LotNumber,
-              "testKitLotNo": $scope.TestKitLotList[i].testKitLotNo,
-              "testKitExpDate": $scope.TestKitLotList[i].testKitExpDate,
-              "label": $scope.TestKitLotList[i].label,
-              "available": $scope.TestKitLotList[i].available,
-              "isLocal": $scope.TestKitLotList[i].isLocal
-
+          if ($scope.testkitlotObj[i].available == 'yes') {
+            $scope.TestKitLotList.push({
+              "testKitManufacturer": $scope.testkitlotObj[i].testKitManufacturer,
+              "testKitManufacturerName": $scope.testkitlotObj[i].testKitManufacturerName,
+              "LotNumber": $scope.testkitlotObj[i].LotNumber,
+              "testKitLotNo": $scope.testkitlotObj[i].testKitLotNo,
+              "testKitExpDate": $scope.testkitlotObj[i].testKitExpDate,
+              "label": $scope.testkitlotObj[i].label,
+              "available": $scope.testkitlotObj[i].available,
+              "isLocal": $scope.testkitlotObj[i].isLocal
             })
-          } else {
-            $scope.testkitlotObj2.push({
-              "testKitManufacturer": $scope.TestKitLotList[i].testKitManufacturer,
-              "testKitManufacturerName": $scope.TestKitLotList[i].testKitManufacturerName,
-              "LotNumber": $scope.TestKitLotList[i].LotNumber,
-              "testKitLotNo": $scope.TestKitLotList[i].testKitLotNo,
-              "testKitExpDate": $scope.TestKitLotList[i].testKitExpDate,
-              "label": $scope.TestKitLotList[i].label,
-              "available": $scope.TestKitLotList[i].available,
-              "isLocal": $scope.TestKitLotList[i].isLocal
-
-            })
-          }
+          } 
         }
-        for (i = 0; i < $scope.testkitlotObj2.length; i++) {
-          $scope.testkitlotObj1.unshift($scope.testkitlotObj2[i])
-        }
-        $scope.TestKitLotList = $scope.testkitlotObj1;
       }
-      $scope.testerNameObj1 = [];
-      $scope.testerNameObj2 = [];
-      $scope.TesterNameList = JSON.parse(localStorage.getItem('TesterInfo'));
-      if ($scope.TesterNameList != null) {
-        var TesterNameListLen = Object.keys($scope.TesterNameList).length;
+
+      $scope.TesterNameList = [];
+      $scope.testerNameObj = JSON.parse(localStorage.getItem('TesterInfo'));
+      if ($scope.testerNameObj != null) {
+        var TesterNameListLen = Object.keys($scope.testerNameObj).length;
         for (i = 0; i < TesterNameListLen; i++) {
-          if ($scope.TesterNameList[i].available != 'yes') {
-            $scope.testerNameObj1.push({
-              "testerName": $scope.TesterNameList[i].testerName,
-              "label": $scope.TesterNameList[i].label,
-              "available": $scope.TesterNameList[i].available,
-            })
-          } else {
-            $scope.testerNameObj2.push({
-              "testerName": $scope.TesterNameList[i].testerName,
-              "label": $scope.TesterNameList[i].label,
-              "available": $scope.TesterNameList[i].available,
+          if ($scope.testerNameObj[i].available == 'yes') {
+            $scope.TesterNameList.push({
+              "testerName": $scope.testerNameObj[i].testerName,
+              "label": $scope.testerNameObj[i].label,
+              "available": $scope.testerNameObj[i].available,
             })
           }
         }
-        for (i = 0; i < $scope.testerNameObj2.length; i++) {
-          $scope.testerNameObj1.unshift($scope.testerNameObj2[i])
-        }
-        $scope.TesterNameList = $scope.testerNameObj1;
       }
+
       if (JSON.parse(localStorage.getItem('PartialQCData')) == null) {
         $scope.qcAssurance.appVersion = localStorage.getItem('AppVersion');
         $scope.qcAssurance.addedBy = localStorage.getItem('userId');
@@ -192,68 +151,57 @@ app = angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
       }
     });
     $scope.qcAssuranceinit = function () {
-      $scope.testkitlotObj1 = [];
-      $scope.testkitlotObj2 = [];
-      $scope.TestKitLotList = JSON.parse(localStorage.getItem('LotInfo'));
-
-      if ($scope.TestKitLotList != null) {
-        var TestKitLotListLen = Object.keys($scope.TestKitLotList).length;
-        for (i = 0; i < TestKitLotListLen; i++) {
-          if ($scope.TestKitLotList[i].available != 'yes') {
-            $scope.testkitlotObj1.push({
-              "testKitManufacturer": $scope.TestKitLotList[i].testKitManufacturer,
-              "testKitManufacturerName": $scope.TestKitLotList[i].testKitManufacturerName,
-              "LotNumber": $scope.TestKitLotList[i].LotNumber,
-              "testKitLotNo": $scope.TestKitLotList[i].testKitLotNo,
-              "testKitExpDate": $scope.TestKitLotList[i].testKitExpDate,
-              "label": $scope.TestKitLotList[i].label,
-              "available": $scope.TestKitLotList[i].available,
-            })
-          } else {
-            $scope.testkitlotObj2.push({
-              "testKitManufacturer": $scope.TestKitLotList[i].testKitManufacturer,
-              "testKitManufacturerName": $scope.TestKitLotList[i].testKitManufacturerName,
-              "LotNumber": $scope.TestKitLotList[i].LotNumber,
-              "testKitLotNo": $scope.TestKitLotList[i].testKitLotNo,
-              "testKitExpDate": $scope.TestKitLotList[i].testKitExpDate,
-              "label": $scope.TestKitLotList[i].label,
-              "available": $scope.TestKitLotList[i].available,
+      $scope.SampleInfoList = [];
+      $scope.sampleInfoObj = JSON.parse(localStorage.getItem('SampleIdInfo'));
+      if($scope.sampleInfoObj !=null){
+        var sampleInfoListLen = Object.keys($scope.sampleInfoObj).length;
+        for (i = 0; i < sampleInfoListLen; i++) {
+          if ($scope.sampleInfoObj[i].available == 'yes') {
+            $scope.SampleInfoList.push({
+              "qcSampleId": $scope.sampleInfoObj[i].qcSampleId,
+              "qcSampleNo": $scope.sampleInfoObj[i].qcSampleNo,
+              "qcSampleStatus": $scope.sampleInfoObj[i].qcSampleStatus,
+              "available": $scope.sampleInfoObj[i].available,
+              "isLocal":$scope.sampleInfoObj[i].isLocal
             })
           }
-        }
-        for (i = 0; i < $scope.testkitlotObj2.length; i++) {
-          $scope.testkitlotObj1.unshift($scope.testkitlotObj2[i])
-        }
+        } 
+      }
+      $scope.TestKitLotList = [];
+      $scope.testkitlotObj = JSON.parse(localStorage.getItem('LotInfo'));
 
-        $scope.TestKitLotList = $scope.testkitlotObj1;
+      if ($scope.testkitlotObj != null) {
+        var TestKitLotListLen = Object.keys($scope.testkitlotObj).length;
+        for (i = 0; i < TestKitLotListLen; i++) {
+          if ($scope.testkitlotObj[i].available == 'yes') {
+            $scope.TestKitLotList.push({
+              "testKitManufacturer": $scope.testkitlotObj[i].testKitManufacturer,
+              "testKitManufacturerName": $scope.testkitlotObj[i].testKitManufacturerName,
+              "LotNumber": $scope.testkitlotObj[i].LotNumber,
+              "testKitLotNo": $scope.testkitlotObj[i].testKitLotNo,
+              "testKitExpDate": $scope.testkitlotObj[i].testKitExpDate,
+              "label": $scope.testkitlotObj[i].label,
+              "available": $scope.testkitlotObj[i].available,
+              "isLocal": $scope.testkitlotObj[i].isLocal
+            })
+          } 
+        }
       }
 
 
-      $scope.testerNameObj1 = [];
-      $scope.testerNameObj2 = [];
-      $scope.TesterNameList = JSON.parse(localStorage.getItem('TesterInfo'));
-      if ($scope.TesterNameList != null) {
-        var TesterNameListLen = Object.keys($scope.TesterNameList).length;
+      $scope.TesterNameList = [];
+      $scope.testerNameObj = JSON.parse(localStorage.getItem('TesterInfo'));
+      if ($scope.testerNameObj != null) {
+        var TesterNameListLen = Object.keys($scope.testerNameObj).length;
         for (i = 0; i < TesterNameListLen; i++) {
-          if ($scope.TesterNameList[i].available != 'yes') {
-            $scope.testerNameObj1.push({
-              "testerName": $scope.TesterNameList[i].testerName,
-              "label": $scope.TesterNameList[i].label,
-              "available": $scope.TesterNameList[i].available,
-            })
-          } else {
-            $scope.testerNameObj2.push({
-              "testerName": $scope.TesterNameList[i].testerName,
-              "label": $scope.TesterNameList[i].label,
-              "available": $scope.TesterNameList[i].available,
+          if ($scope.testerNameObj[i].available == 'yes') {
+            $scope.TesterNameList.push({
+              "testerName": $scope.testerNameObj[i].testerName,
+              "label": $scope.testerNameObj[i].label,
+              "available": $scope.testerNameObj[i].available,
             })
           }
         }
-        for (i = 0; i < $scope.testerNameObj2.length; i++) {
-          $scope.testerNameObj1.unshift($scope.testerNameObj2[i])
-        }
-
-        $scope.TesterNameList = $scope.testerNameObj1;
       }
       if (JSON.parse(localStorage.getItem('PartialQCData')) == null) {
         $scope.qcAssurance.appVersion = localStorage.getItem('AppVersion');

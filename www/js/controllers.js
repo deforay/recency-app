@@ -235,7 +235,6 @@ angular.module('starter.controllers', [])
 
       $http.get($localStorage.get('apiUrl') + '/api/facility?userId=' + $scope.userId)
         .success(function (data) {
-        //  console.log(data);
           $scope.facilityData = data.facility;
 
           localStorage.setItem('FacilityData', JSON.stringify($scope.facilityData))
@@ -297,13 +296,11 @@ angular.module('starter.controllers', [])
                  $scope.sampleInfo.push(sampleinfo[i])
                 }
              }
-             console.log($scope.sampleInfo);
              }
           }
         })
         $http.get($localStorage.get('apiUrl') + '/api/test-kit-info')
         .success(function (resp) {
-        //  console.log(resp)
           $scope.testerLotInfo = [];
           
           if(resp.status=='success'){
@@ -335,7 +332,6 @@ angular.module('starter.controllers', [])
                 $scope.testerLotInfo.push(lotinfo[i])
                }
             }
-           // console.log($scope.testerLotInfo);
             }
            localStorage.setItem('LotInfo', JSON.stringify($scope.testerLotInfo));
            localStorage.setItem('Lotcounter', $scope.testerLotInfo.length);

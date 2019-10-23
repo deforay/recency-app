@@ -326,7 +326,7 @@ app = angular.module('starter.loginCtrl', ['starter.services'])
                    $scope.sampleInfo.push(sampleinfo[i])
                   }
                }
-               console.log($scope.sampleInfo);
+              // console.log($scope.sampleInfo);
                }
                localStorage.setItem('SampleIdInfo', JSON.stringify($scope.sampleInfo));
                localStorage.setItem('Samplecounter', $scope.sampleInfo.length);

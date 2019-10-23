@@ -1,15 +1,14 @@
 {
   "name": "Recency",
-  "type": "ionic1",
   "integrations": {
     "cordova": {},
     "gulp": {}
   },
+  "type": "ionic1",
   "watchPatterns": [
     "scss/**/*",
     "www/**/*",
     "!www/lib/**/*",
     "!www/**/*.map"
-  ],
-  "app_id": ""
+  ]
 }
