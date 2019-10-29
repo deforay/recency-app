@@ -603,9 +603,10 @@
                     <input id="vlTestDate" type="text" class="vlTestDate" name="vlTestDate"
                       title="Please Enter Viral Load Test Date" ng-click="setVlTestDate();"
                       ng-model='recency.vlTestDate' placeholder="Viral Load Test Date"
-                      ng-disabled="((recency.recencyOutcome=='Assay Negative'||recency.recencyOutcome=='Invalid' ||recency.recencyOutcome=='')
+                      ng-disabled="((recency.recencyOutcome=='Assay Negative'||recency.recencyOutcome=='Assay Long Term'||recency.recencyOutcome=='Invalid' ||recency.recencyOutcome=='')
                        && recency.newRecencyOutcome=='')
                       ||(recency.newRecencyOutcome=='Assay Negative'&& recency.recencyOutcome=='Invalid')
+                      ||(recency.newRecencyOutcome=='Assay Long Term'&& recency.recencyOutcome=='Invalid')
                       ||(recency.newRecencyOutcome=='Invalid'&& recency.recencyOutcome=='Invalid')
                       ||(recency.newRecencyOutcome==''&& recency.recencyOutcome=='Invalid')">
 
@@ -628,9 +629,10 @@
                       placeholder="Viral Load Test Result"
                       ng-keyup="partialRecencyData();getFinalOutcome(recency.recencyOutcome,recency.newRecencyOutcome,recency.vlLoadResult)"
                       ng-change="partialRecencyData();"
-                      ng-disabled="((recency.recencyOutcome=='Assay Negative'||recency.recencyOutcome=='Invalid' ||recency.recencyOutcome=='')
+                      ng-disabled="((recency.recencyOutcome=='Assay Negative'||recency.recencyOutcome=='Assay Long Term' ||recency.recencyOutcome=='Invalid' ||recency.recencyOutcome=='')
                       && recency.newRecencyOutcome=='')
                       ||(recency.newRecencyOutcome=='Assay Negative'&& recency.recencyOutcome=='Invalid')
+                      ||(recency.newRecencyOutcome=='Assay Long Term'&& recency.recencyOutcome=='Invalid')
                       ||(recency.newRecencyOutcome=='Invalid'&& recency.recencyOutcome=='Invalid')
                       ||(recency.newRecencyOutcome==''&& recency.recencyOutcome=='Invalid')
                       || recency.vlLoadResultDropdown!=''">
@@ -656,9 +658,10 @@
                     <div class="form-logo"><img src="img/lab.png"></div>
                     <select class="ng-valid" id="vlLoadResultDropdown" name="vlLoadResultDropdown"
                       title="Please Choose LongTerm Line" ng-model="recency.vlLoadResultDropdown"
-                      ng-disabled="((recency.recencyOutcome=='Assay Negative'||recency.recencyOutcome=='Invalid' ||recency.recencyOutcome=='')
+                      ng-disabled="((recency.recencyOutcome=='Assay Negative' ||recency.recencyOutcome=='Assay Long Term' ||recency.recencyOutcome=='Invalid' ||recency.recencyOutcome=='')
                       && recency.newRecencyOutcome=='')
                       ||(recency.newRecencyOutcome=='Assay Negative'&& recency.recencyOutcome=='Invalid')
+                      ||(recency.newRecencyOutcome=='Assay Long Term'&& recency.recencyOutcome=='Invalid')
                       ||(recency.newRecencyOutcome=='Invalid'&& recency.recencyOutcome=='Invalid')
                       ||(recency.newRecencyOutcome==''&& recency.recencyOutcome=='Invalid')||recency.vlLoadResult!=''"
                       ng-change="OnVlLoadChange(recency.vlLoadResultDropdown);partialRecencyData();">

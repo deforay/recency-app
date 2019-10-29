@@ -114,21 +114,71 @@
               <td>&nbsp;:&nbsp; </td>
               <td style="font-size:14px;"> {{recencyDetail.hivRecencyTestDate}} </td>
             </tr>
-            <tr ng-if="recencyDetail.testNotPerformed!=true">
+            <tr ng-if="recencyDetail.testNotPerformed!=true && recencyDetail.ctrlLine && recencyDetail.recencyOutcome!='Invalid'">
               <td style="font: size 14px;"><b>Control Line</b> </td>
               <td>&nbsp;:&nbsp; </td>
               <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.ctrlLineName}} </td>
             </tr>
-            <tr ng-if="recencyDetail.testNotPerformed!=true">
+            <tr ng-if="recencyDetail.testNotPerformed!=true && recencyDetail.positiveLine && recencyDetail.recencyOutcome!='Invalid'">
               <td style="font: size 14px;"><b>Positive Verification Line</b> </td>
               <td>&nbsp;:&nbsp; </td>
               <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.positiveLineName}} </td>
             </tr>
-            <tr ng-if="recencyDetail.testNotPerformed!=true">
+            <tr ng-if="recencyDetail.testNotPerformed!=true && recencyDetail.longTermLine && recencyDetail.recencyOutcome!='Invalid'" >
               <td style="font: size 14px;"><b>Long Term Verification Line</b> </td>
               <td>&nbsp;:&nbsp; </td>
               <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.longTermLineName}} </td>
             </tr>
+
+            <tr ng-if="recencyDetail.testNotPerformed!=true && recencyDetail.recencyOutcome!='Invalid'">
+              <td style="font: size 14px;"><b>Assay Outcome</b> </td>
+              <td>&nbsp;:&nbsp; </td>
+              <td style="font-size:14px;"> {{recencyDetail.recencyOutcome}}{{recencyDetail.recencyOutcomeDisplay}} </td>
+            </tr>
+
+
+            <tr ng-if="recencyDetail.testNotPerformed!=true && recencyDetail.ctrlLine && recencyDetail.recencyOutcome=='Invalid'">
+              <td style="font: size 14px;"><b>Invalid Control Line</b> </td>
+              <td>&nbsp;:&nbsp; </td>
+              <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.ctrlLineName}} </td>
+            </tr>
+            <tr ng-if="recencyDetail.testNotPerformed!=true && recencyDetail.positiveLine && recencyDetail.recencyOutcome=='Invalid'">
+              <td style="font: size 14px;"><b>Invalid Positive Verification Line</b> </td>
+              <td>&nbsp;:&nbsp; </td>
+              <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.positiveLineName}} </td>
+            </tr>
+            <tr ng-if="recencyDetail.testNotPerformed!=true && recencyDetail.longTermLine && recencyDetail.recencyOutcome=='Invalid'" >
+              <td style="font: size 14px;"><b>Invalid Long Term Verification Line</b> </td>
+              <td>&nbsp;:&nbsp; </td>
+              <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.longTermLineName}} </td>
+            </tr>
+            <tr ng-if="recencyDetail.testNotPerformed!=true && recencyDetail.recencyOutcome=='Invalid'">
+              <td style="font: size 14px;"><b>Assay Outcome</b> </td>
+              <td>&nbsp;:&nbsp; </td>
+              <td style="font-size:14px;"> {{recencyDetail.recencyOutcome}}{{recencyDetail.recencyOutcomeDisplay}} </td>
+            </tr>
+
+            <tr ng-if="recencyDetail.testNotPerformed!=true && recencyDetail.newControlLine && recencyDetail.recencyOutcome=='Invalid'">
+              <td style="font: size 14px;"><b> Control Line Actual</b> </td>
+              <td>&nbsp;:&nbsp; </td>
+              <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.newControlLineName}} </td>
+            </tr>
+            <tr ng-if="recencyDetail.testNotPerformed!=true && recencyDetail.newPositiveLine &&  recencyDetail.recencyOutcome=='Invalid'">
+              <td style="font: size 14px;"><b>Positive Verification Line Actual</b> </td>
+              <td>&nbsp;:&nbsp; </td>
+              <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.newPositiveLineName}} </td>
+            </tr>
+            <tr ng-if="recencyDetail.testNotPerformed!=true && recencyDetail.newLongTermLine &&  recencyDetail.recencyOutcome=='Invalid'">
+              <td style="font: size 14px;"><b>Long Term Verification Line Actual</b> </td>
+              <td>&nbsp;:&nbsp; </td>
+              <td style="font-size:14px;text-transform: capitalize"> {{recencyDetail.newLongTermLineName}} </td>
+            </tr>
+            <tr ng-if="recencyDetail.testNotPerformed!=true  &&  recencyDetail.recencyOutcome=='Invalid'">
+              <td style="font: size 14px;"><b>Assay Outcome Actual</b> </td>
+              <td>&nbsp;:&nbsp; </td>
+              <td style="font-size:14px;"> {{recencyDetail.newRecencyOutcome}}{{recencyDetail.newRecencyOutcomeDisplay}} </td>
+            </tr>
+
             <tr>
               <td style="font: size 14px;"><b>Test Kit Lot Number</b> </td>
               <td>&nbsp;:&nbsp; </td>
@@ -151,6 +201,12 @@
                 style="font-size:14px;"> {{recencyDetail.vlLoadResult}} </td>
               <td ng-if="recencyDetail.vlLoadResult=='BDL'" style="font-size:14px;"> Below Detection Line </td>
               <td ng-if="recencyDetail.vlLoadResult=='TND'" style="font-size:14px;"> Target not detected </td>
+            </tr>
+
+            <tr>
+              <td style="font: size 14px;" ng-if="recencyDetail.finalOutcome"><b>Final Outcome</b> </td>
+              <td>&nbsp;:&nbsp; </td>
+              <td style="font-size:14px;"> {{recencyDetail.finalOutcome}} </td>
             </tr>
           </div>
         </table>

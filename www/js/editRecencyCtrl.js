@@ -170,6 +170,8 @@ app = angular.module('starter.editRecencyCtrl', ['starter.services'])
       $scope.otherpopulation = true;
       $scope.recency.riskPopulationName = "Other"
     }
+    console.log($scope.recency.showTermOutcome);
+    console.log($scope.recency.recencyOutcome);
     //Term Outcome
     if ($scope.recency.recencyOutcome == 'Invalid') {
       $scope.recency.showTermOutcome = true;
@@ -179,18 +181,27 @@ app = angular.module('starter.editRecencyCtrl', ['starter.services'])
       $scope.recency.showTermOutcome = true;
       $scope.recency.recencyOutcomeDisplay = "";
       $scope.setoutcomecolor = 'blue';
-    } else if ($scope.recency.recencyOutcome == 'Assay Recent' || $scope.recency.recencyOutcome == 'Assay Long Term') {
-      $scope.recency.showTermOutcome = true;
+    }
+    else if ($scope.recency.recencyOutcome == "Assay Recent" && ($scope.recency.vlLoadResult == "" || $scope.recency.vlLoadResult == null) && ($scope.recency.vlLoadResultDropdown == "" || $scope.recency.vlLoadResultDropdown == null)) {
       $scope.recency.recencyOutcomeDisplay = "- Please ensure you add Viral Load Result";
       $scope.setoutcomecolor = 'black';
-    } else {
+      $scope.recency.showTermOutcome = true;
+    }
+    else if ($scope.recency.recencyOutcome == "Assay Recent" || $scope.recency.recencyOutcome == 'Assay Long Term') {
+    console.log($scope.recency.showTermOutcome);
+
+      $scope.recency.showTermOutcome = true;
+      $scope.recency.recencyOutcomeDisplay = "";
+      $scope.setoutcomecolor = 'black';
+    }
+  
+    else {
       $scope.recency.showTermOutcome = false;
       $scope.recency.recencyOutcomeDisplay = "";
-    }
+    console.log($scope.recency.showTermOutcome);
 
-    if ($scope.recency.recencyOutcome == "Assay Recent" && ($scope.recency.vlLoadResult == "" || $scope.recency.vlLoadResult == null) && ($scope.recency.vlLoadResultDropdown == "" || $scope.recency.vlLoadResultDropdown == null)) {
-      $scope.recency.recencyOutcomeDisplay = "- Please ensure you add Viral Load Result";
     }
+  
        //New Term Outcome
        if ($scope.recency.newRecencyOutcome == 'Invalid') {
         $scope.recency.showNewTermOutcome = true;
@@ -200,18 +211,25 @@ app = angular.module('starter.editRecencyCtrl', ['starter.services'])
         $scope.recency.showNewTermOutcome = true;
         $scope.recency.newRecencyOutcomeDisplay = "";
         $scope.newsetoutcomecolor = 'blue';
-      } else if ($scope.recency.newRecencyOutcome == 'Assay Recent' || $scope.recency.newRecencyOutcome == 'Assay Long Term') {
-        $scope.recency.showNewTermOutcome = true;
+      } 
+      else  if ($scope.recency.newRecencyOutcome == "Assay Recent" && ($scope.recency.vlLoadResult == "" || $scope.recency.vlLoadResult == null) && ($scope.recency.vlLoadResultDropdown == "" || $scope.recency.vlLoadResultDropdown == null)) {
         $scope.recency.newRecencyOutcomeDisplay = "- Please ensure you add Viral Load Result";
+        $scope.setoutcomecolor = 'black';
+        $scope.recency.showNewTermOutcome = true;
+      }
+      else if ($scope.recency.newRecencyOutcome == 'Assay Recent' || $scope.recency.newRecencyOutcome == 'Assay Long Term') {
+        $scope.recency.showNewTermOutcome = true;
+        $scope.recency.newRecencyOutcomeDisplay = "";
         $scope.newsetoutcomecolor = 'black';
-      } else {
+      }
+   
+     
+     else {
         $scope.recency.showNewTermOutcome = false;
         $scope.recency.newRecencyOutcomeDisplay = "";
       }
 
-      if ($scope.recency.newRecencyOutcome == "Assay Recent" && ($scope.recency.vlLoadResult == "" || $scope.recency.vlLoadResult == null) && ($scope.recency.vlLoadResultDropdown == "" || $scope.recency.vlLoadResultDropdown == null)) {
-        $scope.recency.newRecencyOutcomeDisplay = "- Please ensure you add Viral Load Result";
-      }
+  
 
 
     //Final Outcome
@@ -699,6 +717,33 @@ app = angular.module('starter.editRecencyCtrl', ['starter.services'])
     }
     //On Viral Load Change
     $scope.OnVlLoadChange = function (vlLoadResultDropdown) {
+
+      if($scope.recency.recencyOutcome=='Invalid'){
+        if (vlLoadResultDropdown == '' && ($scope.recency.newRecencyOutcome=='Assay Recent' || $scope.recency.newRecencyOutcome == 'Assay Long Term')) {
+          $scope.recency.showFinalOutcome = false;
+          $scope.recency.finalOutcome = "";
+        }
+        if (vlLoadResultDropdown == 'TND' && ($scope.recency.newRecencyOutcome == 'Assay Recent' || $scope.recency.newRecencyOutcome == 'Assay Long Term')) {
+          $scope.recency.finalOutcome = "RITA Recent";
+          $scope.recency.newRecencyOutcomeDisplay = "";
+          $scope.recency.showFinalOutcome = true;
+          $scope.setfinalcolor = 'blue';
+        } else if ((vlLoadResultDropdown == '< 20' || vlLoadResultDropdown == '< 40' || vlLoadResultDropdown == 'BDL') && ($scope.recency.newRecencyOutcome == 'Assay Recent' || $scope.recency.newRecencyOutcome == 'Assay Long Term')) {
+          $scope.recency.finalOutcome = "RITA Long Term";
+          $scope.recency.newRecencyOutcomeDisplay = "";
+          $scope.recency.showFinalOutcome = true;
+          $scope.setfinalcolor = 'black';
+        } else if (vlLoadResultDropdown == 'Failed' && ($scope.recency.newRecencyOutcome == 'Assay Recent' || $scope.recency.newRecencyOutcome == 'Assay Long Term')) {
+          $scope.recency.finalOutcome = "Inconclusive";
+          $scope.recency.newRecencyOutcomeDisplay = "";
+          $scope.setfinalcolor = 'blue';
+          $scope.recency.showFinalOutcome = true;
+        }
+        if (vlLoadResultDropdown == '' && $scope.recency.vlLoadResult == "" && $scope.recency.newRecencyOutcome == 'Assay Recent') {
+          $scope.recency.newRecencyOutcomeDisplay = "- Please ensure you add Viral Load Result";
+        }
+      }else{
+
       if (vlLoadResultDropdown == "") {
         $scope.recency.showFinalOutcome = false;
         $scope.recency.finalOutcome = "";
@@ -721,37 +766,10 @@ app = angular.module('starter.editRecencyCtrl', ['starter.services'])
       }
       if (vlLoadResultDropdown == '' && $scope.recency.vlLoadResult == "" && $scope.recency.recencyOutcome == 'Assay Recent') {
         $scope.recency.recencyOutcomeDisplay = "- Please ensure you add Viral Load Result";
-
+      }
       }
     }
 
-        //On New Viral Load Change
-        $scope.OnNewVlLoadChange = function (vlLoadResultDropdown) {
-
-          if (vlLoadResultDropdown == '' && ($scope.recency.newRecencyOutcome=='Assay Recent' || $scope.recency.newRecencyOutcome == 'Assay Long Term')) {
-            $scope.recency.showFinalOutcome = false;
-            $scope.recency.finalOutcome = "";
-          }
-          if (vlLoadResultDropdown == 'TND' && ($scope.recency.newRecencyOutcome == 'Assay Recent' || $scope.recency.newRecencyOutcome == 'Assay Long Term')) {
-            $scope.recency.finalOutcome = "RITA Recent";
-            $scope.recency.newRecencyOutcomeDisplay = "";
-            $scope.recency.showFinalOutcome = true;
-            $scope.setfinalcolor = 'blue';
-          } else if ((vlLoadResultDropdown == '< 20' || vlLoadResultDropdown == '< 40' || vlLoadResultDropdown == 'BDL') && ($scope.recency.newRecencyOutcome == 'Assay Recent' || $scope.recency.newRecencyOutcome == 'Assay Long Term')) {
-            $scope.recency.finalOutcome = "RITA Long Term";
-            $scope.recency.newRecencyOutcomeDisplay = "";
-            $scope.recency.showFinalOutcome = true;
-            $scope.setfinalcolor = 'black';
-          } else if (vlLoadResultDropdown == 'Failed' && ($scope.recency.newRecencyOutcome == 'Assay Recent' || $scope.recency.newRecencyOutcome == 'Assay Long Term')) {
-            $scope.recency.finalOutcome = "Inconclusive";
-            $scope.recency.newRecencyOutcomeDisplay = "";
-            $scope.setfinalcolor = 'blue';
-            $scope.recency.showFinalOutcome = true;
-          }
-          if (vlLoadResultDropdown == '' && $scope.recency.vlLoadResult == "" && $scope.recency.newRecencyOutcome == 'Assay Recent') {
-            $scope.recency.newRecencyOutcomeDisplay = "- Please ensure you add Viral Load Result";
-          }
-        }
 
     // Term Outcome 
     $scope.getOutcome = function (controlLine, positiveLine, longTermLine) {
@@ -919,7 +937,33 @@ $scope.getNewOutcome = function (controlLine, positiveLine, longTermLine) {
 
 
     // Final Outcome
-    $scope.getFinalOutcome = function (termOutcome, vlLoadResult) {
+    $scope.getFinalOutcome = function (termOutcome,newTermOutcome, vlLoadResult) {
+      if(termOutcome=='Invalid'){
+        if (newTermOutcome == "Assay Recent" && vlLoadResult > 1000) {
+          $scope.recency.finalOutcome = "RITA Recent";
+          $scope.recency.newRecencyOutcomeDisplay = "";
+          $scope.recency.showFinalOutcome = true;
+          $scope.setfinalcolor = 'blue';
+        } else if (newTermOutcome == "Assay Recent" && (vlLoadResult <= 1000 && vlLoadResult != "" && vlLoadResult != null)) {
+          $scope.recency.finalOutcome = "RITA Long Term";
+          $scope.recency.newRecencyOutcomeDisplay = "";
+          $scope.recency.showFinalOutcome = true;
+          $scope.setfinalcolor = 'black';
+        } else if (newTermOutcome == "Assay Recent" && (vlLoadResult == "" || vlLoadResult == null)) {
+          $scope.recency.finalOutcome = "";
+          // $scope.recency.vlTestDate = "";
+          // $scope.recency.vlLoadResult = "";
+          $scope.recency.newRecencyOutcomeDisplay = "- Please ensure you add Viral Load Result";
+          $scope.recency.showFinalOutcome = false;
+        } else if (newTermOutcome == "Assay Long Term" ) {
+          $scope.recency.finalOutcome = "Long Term";
+          $scope.recency.showFinalOutcome = true;
+          $scope.recency.vlTestDate = "";
+          $scope.recency.vlLoadResult = "";
+          $scope.setfinalcolor = 'black';
+        }
+
+      }else{
       if (termOutcome == "Assay Recent" && vlLoadResult > 1000) {
         $scope.recency.recencyOutcomeDisplay = "";
         $scope.recency.finalOutcome = "RITA Recent";
@@ -932,44 +976,26 @@ $scope.getNewOutcome = function (controlLine, positiveLine, longTermLine) {
         $scope.setfinalcolor = 'black';
       } else if (termOutcome == "Assay Recent" && (vlLoadResult == "" || vlLoadResult == null)) {
         $scope.recency.finalOutcome = "";
-        $scope.recency.vlTestDate = "";
-        $scope.recency.vlLoadResult = "";
+        // $scope.recency.vlTestDate = "";
+        // $scope.recency.vlLoadResult = "";
         $scope.recency.vlLoadResultDropdown = "";
         $scope.recency.recencyOutcomeDisplay = "- Please ensure you add Viral Load Result";
         $scope.recency.showFinalOutcome = false;
-      } else if (termOutcome == "Assay Long Term" && (vlLoadResult == "" || vlLoadResult == null)) {
+      } else if (termOutcome == "Assay Long Term") {
+        $scope.recency.vlTestDate = "";
+        $scope.recency.vlLoadResult = "";
+        $scope.recency.vlLoadResultDropdown = "";
         $scope.recency.finalOutcome = "Long Term";
+        $scope.recency.recencyOutcomeDisplay = "";
         $scope.recency.showFinalOutcome = true;
         $scope.setfinalcolor = 'black';
       }
+    
+
+    }
     }
 
-      // Final Outcome
-      $scope.getNewFinalOutcome = function (termOutcome, vlLoadResult) {
 
-        if (termOutcome == "Assay Recent" && vlLoadResult > 1000) {
-          $scope.recency.finalOutcome = "RITA Recent";
-          $scope.recency.newRecencyOutcomeDisplay = "";
-          $scope.recency.showFinalOutcome = true;
-          $scope.setfinalcolor = 'blue';
-        } else if (termOutcome == "Assay Recent" && (vlLoadResult <= 1000 && vlLoadResult != "" && vlLoadResult != null)) {
-          $scope.recency.finalOutcome = "RITA Long Term";
-          $scope.recency.newRecencyOutcomeDisplay = "";
-          $scope.recency.showFinalOutcome = true;
-          $scope.setfinalcolor = 'black';
-        } else if (termOutcome == "Assay Recent" && (vlLoadResult == "" || vlLoadResult == null)) {
-          $scope.recency.finalOutcome = "";
-          $scope.recency.vlTestDate = "";
-          $scope.recency.vlLoadResult = "";
-          $scope.recency.newRecencyOutcomeDisplay = "- Please ensure you add Viral Load Result";
-          $scope.recency.showFinalOutcome = false;
-        } else if (termOutcome == "Assay Long Term" && (vlLoadResult == "" || vlLoadResult == null)) {
-          $scope.recency.finalOutcome = "Long Term";
-          $scope.recency.showFinalOutcome = true;
-          $scope.setfinalcolor = 'black';
-        }
-    
-      }
     $scope.getReasonName = function (reason) {
       if (reason == 'no_consent_from_the_client') {
         $scope.recency.recencyreasonName = "No consent from the Client";
@@ -1222,30 +1248,71 @@ $scope.getNewOutcome = function (controlLine, positiveLine, longTermLine) {
         callback: function (val) {
           var sampleCollectionDate = new Date(val);
           $scope.recency.sampleCollectionDate = $filter('date')(sampleCollectionDate, "dd-MMM-yyyy");
+          $scope.recency.sampleReceiptDate='';
+          $scope.recency.hivRecencyTestDate='';
         },
         to: new Date(),
       };
       ionicDatePicker.openDatePicker(ipObj2);
     }
     $scope.setsampleReceiptDate = function () {
-      var ipObj3 = {
-        callback: function (val) {
-          var sampleReceiptDate = new Date(val);
-          $scope.recency.sampleReceiptDate = $filter('date')(sampleReceiptDate, "dd-MMM-yyyy");
-        },
-        to: new Date(),
-      };
+
+      if($scope.recency.sampleCollectionDate!='' && $scope.recency.sampleCollectionDate!=null){
+        var ipObj3 = {
+          callback: function (val) {
+            var sampleReceiptDate = new Date(val);
+            $scope.recency.sampleReceiptDate = $filter('date')(sampleReceiptDate, "dd-MMM-yyyy");
+            $scope.recency.hivRecencyTestDate='';
+          },
+          from:new Date($scope.recency.sampleCollectionDate),
+          to: new Date(),
+        };
+      }else{
+        var ipObj3 = {
+          callback: function (val) {
+            var sampleReceiptDate = new Date(val);
+            $scope.recency.sampleReceiptDate = $filter('date')(sampleReceiptDate, "dd-MMM-yyyy");
+            $scope.recency.hivRecencyTestDate='';
+          },        
+          to: new Date(),
+        };
+      }
+  
       ionicDatePicker.openDatePicker(ipObj3);
     }
     $scope.setRecencyDate = function (val) {
-      var ipObj4 = {
-        callback: function (val) { //Mandatory
+
+      if(($scope.recency.sampleCollectionDate!=''&& $scope.recency.sampleCollectionDate!=null &&  $scope.recency.sampleReceiptDate!='' && $scope.recency.sampleReceiptDate!=null)
+      ||(($scope.recency.sampleCollectionDate==''|| $scope.recency.sampleCollectionDate==null &&  $scope.recency.sampleReceiptDate!='' && $scope.recency.sampleReceiptDate!=null))){
+        var ipObj4 = {
+          callback: function (val) {
+            var hivRecencyTestDate = new Date(val);
+            $scope.recency.hivRecencyTestDate = $filter('date')(hivRecencyTestDate, "dd-MMM-yyyy");
+          },
+          from:new Date($scope.recency.sampleReceiptDate),
+          to: new Date(),
+        };
+      }
+      else if($scope.recency.sampleCollectionDate!=''&& $scope.recency.sampleCollectionDate!=null &&  $scope.recency.sampleReceiptDate==''|| $scope.recency.sampleReceiptDate==null){
+        var ipObj4 = {
+          callback: function (val) {
+            var hivRecencyTestDate = new Date(val);
+            $scope.recency.hivRecencyTestDate = $filter('date')(hivRecencyTestDate, "dd-MMM-yyyy");
+          },
+          from:new Date($scope.recency.sampleCollectionDate),
+          to: new Date(),
+        };
+      }
+      else{
+        var ipObj4 = {
+        callback: function (val) {
           var hivRecencyTestDate = new Date(val);
-          $scope.recency.hivRecencyTestDate = $filter('date')(hivRecencyTestDate, "dd-MMM-yyyy");
-        },
-        to: new Date(),
-      };
-      ionicDatePicker.openDatePicker(ipObj4);
+           $scope.recency.hivRecencyTestDate = $filter('date')(hivRecencyTestDate, "dd-MMM-yyyy");
+         },
+         to: new Date(),
+        };
+      }
+    ionicDatePicker.openDatePicker(ipObj4);
     }
     $scope.setVlTestDate = function (val) {
       var ipObj5 = {
@@ -1318,9 +1385,9 @@ $scope.getNewOutcome = function (controlLine, positiveLine, longTermLine) {
 
 
     $scope.showToastAlert = function (mandatorytitle) {
-      //  $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+       // $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
 
-      // Hide Debugging when debugging
+     // Hide Debugging when debugging
       $cordovaToast.show(mandatorytitle, 'long', 'center')
         .then(function (success) {
           // success
@@ -1910,13 +1977,13 @@ $scope.getNewOutcome = function (controlLine, positiveLine, longTermLine) {
       $scope.recency = {};
       $scope.recencydisplay = true;
 
-      // Hide Toast during debugging
-      // $cordovaToast.show('Edited Successfully', 'long', 'center')
-      //   .then(function (success) {
-      //     // success
-      //   }, function (error) {
-      //     // error
-      //   });
+    //  Hide Toast during debugging
+      $cordovaToast.show('Edited Successfully', 'long', 'center')
+        .then(function (success) {
+          // success
+        }, function (error) {
+          // error
+        });
 
       $("#main-recency").addClass("active");
       $("#other-recency").removeClass('active');

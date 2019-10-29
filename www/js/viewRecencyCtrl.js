@@ -7,7 +7,7 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
 
       $rootScope.apiUrl = localStorage.getItem('apiUrl');
       var recencyList = localStorage.getItem('RecencyData');
-      console.log(recencyList)
+    //  console.log(recencyList)
       if (recencyList != null) {
         recencyList = JSON.parse(recencyList);
         var unsyncount = Object.keys(recencyList).length;
@@ -123,7 +123,10 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
               $scope.recencyList[i].newLongTermLineName = "";
               $scope.recencyList[i].newRecencyOutcome = "";
               $scope.recencyList[i].newRecencyOutcomeDisplay = "";
+              
+       
           }
+        //  console.log($scope.recencyList[i])
           $scope.recencyList[i].formTransferDateTime = currentdatetime.getFullYear() + "-" +
             (currentdatetime.getMonth() + 1) + "-" +
             currentdatetime.getDate() + " " +
@@ -167,12 +170,12 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
 
               $preLoader.hide();
               // Hide Toast During Debugging 
-              // $cordovaToast.show($scope.response.length + '  Data has been Successfully Synced', 'long', 'bottom')
-              //   .then(function (success) {
-              //     // success
-              //   }, function (error) {
-              //     // error
-              //   });
+              $cordovaToast.show($scope.response.length + '  Data has been Successfully Synced', 'long', 'bottom')
+                .then(function (success) {
+                  // success
+                }, function (error) {
+                  // error
+                });
 
               $scope.onLoadRecency();
             }
