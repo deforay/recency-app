@@ -136,12 +136,14 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
 
         }
        $preLoader.show();
-
+       console.log("recencyList:",$scope.recencyList);
+       var encryptedRecencyList= CryptoJS.AES.encrypt(JSON.stringify($scope.recencyList),'secretkeyissecretphrasesecretphr' , {format: CryptoJSAesJson}).toString();
+       console.log("encryptedRecencyList:",encryptedRecencyList);
         $http.post($rootScope.apiUrl + "/api/recency", {
-            "form": $scope.recencyList
-
+            "form": encryptedRecencyList
           })
           .success(function (data) {
+            console.log(data);
             if (data.status == 'failed') {
               $preLoader.hide();
 
