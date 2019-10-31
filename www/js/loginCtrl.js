@@ -107,13 +107,13 @@ app = angular.module('starter.loginCtrl', ['starter.services'])
 
             $preLoader.show();
             // Hide Toast During Debugging 
-            $cordovaToast
-              .show('App Password Created Successfully', 'long', 'center')
-              .then(function (success) {
-                // success
-              }, function (error) {
-                // error
-              });
+            // $cordovaToast
+            //   .show('App Password Created Successfully', 'long', 'center')
+            //   .then(function (success) {
+            //     // success
+            //   }, function (error) {
+            //     // error
+            //   });
             $timeout(function () {
               $location.path('/app/addRecency');
               $preLoader.hide();
@@ -534,12 +534,12 @@ app = angular.module('starter.loginCtrl', ['starter.services'])
             $localStorage.set('userId', response.data.userDetails['userId']);
             $localStorage.set('userName', response.data.userDetails['userName']);
             // Hide Toast During Debugging  
-            $cordovaToast.show('Successfully Logged in', 'long', 'bottom')
-              .then(function (success) {
-                // success
-              }, function (error) {
-                // error
-              });
+            // $cordovaToast.show('Successfully Logged in', 'long', 'bottom')
+            //   .then(function (success) {
+            //     // success
+            //   }, function (error) {
+            //     // error
+            //   });
             $scope.viewLogin = false;
             $scope.viewAddPassword = true;
             $scope.viewConfirmPassword = false;

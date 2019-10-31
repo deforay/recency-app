@@ -190,6 +190,9 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
           });
       }
     }
+
+
+    
     $scope.viewRecency = function (recency, index) {
       $rootScope.recencyDetail = recency;
       recency.index = index;

@@ -1488,15 +1488,15 @@ app.controller('addRecencyCtrl', function ($scope, $rootScope, $http, $timeout, 
     }
   }
   $scope.showToastAlert = function (mandatorytitle) {
-   // $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+    $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
 
     // Hide Toast during Debug
-    $cordovaToast.show(mandatorytitle, 'long', 'center')
-      .then(function (success) {
-        // success
-      }, function (error) {
-        // error
-      });
+    // $cordovaToast.show(mandatorytitle, 'long', 'center')
+    //   .then(function (success) {
+    //     // success
+    //   }, function (error) {
+    //     // error
+    //   });
   }
 
   // Section 1 Mandatory Data Validation
