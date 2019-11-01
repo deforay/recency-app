@@ -312,6 +312,7 @@ app = angular.module('starter.loginCtrl', ['starter.services'])
               for(i=0;i<serverSampleInfo.length;i++){
           
                 $scope.sampleInfo.push({
+                  "index":i,
                   "qcSampleId":serverSampleInfo[i].qcSampleId,
                   "qcSampleNo": serverSampleInfo[i].qcSampleNo,
                   "qcSampleStatus":serverSampleInfo[i].qcSampleStatus,
@@ -323,7 +324,14 @@ app = angular.module('starter.loginCtrl', ['starter.services'])
                 var sampleinfo =  JSON.parse(localStorage.getItem('SampleIdInfo'))
                 for (i = 0; i < sampleinfo.length; i++) {
                   if(sampleinfo[i].isLocal==true){
-                   $scope.sampleInfo.push(sampleinfo[i])
+                   $scope.sampleInfo.push({
+                    "index":$scope.sampleInfo.length,
+                    "qcSampleId":sampleinfo[i].qcSampleId,
+                    "qcSampleNo": sampleinfo[i].qcSampleNo,
+                    "qcSampleStatus":sampleinfo[i].qcSampleStatus,
+                    "available": sampleinfo[i].available,                  
+                    "isLocal":sampleinfo[i].isLocal
+                    })
                   }
                }
               // console.log($scope.sampleInfo);
