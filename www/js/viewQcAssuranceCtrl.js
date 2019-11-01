@@ -1,7 +1,8 @@
 app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
 
-  .controller('viewQcAssuranceCtrl', function ($scope, $rootScope, $http, $q, $preLoader, $ionicPopup, $cordovaToast, $location, $window, $stateParams, $ionicPlatform, $cordovaLocalNotification, $cordovaBadge) {
-
+  .controller('viewQcAssuranceCtrl', function ($scope, $rootScope, $http, $q, $preLoader, $ionicPopup, $cordovaToast, $location, $window, $stateParams, $ionicPlatform, $cordovaLocalNotification, $cordovaBadge, $syncDataLimit) {
+  
+    $scope.syncDataLimit = $syncDataLimit.setSyncDataLimit();
     $scope.onLoadQc = function () {
 
       $rootScope.apiUrl = localStorage.getItem('apiUrl');

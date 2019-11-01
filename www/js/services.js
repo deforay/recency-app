@@ -89,5 +89,12 @@ angular.module('starter.services', [])
         //navigator.splashscreen.show();
       }
     }
+  })
 
+  .factory('$syncDataLimit', function ($rootScope) {
+    return {
+      setSyncDataLimit: function () {
+        return $rootScope.dataLimit=10;
+      }
+    }
   })
