@@ -21,36 +21,73 @@ app = angular.module('starter.editSampleInfoCtrl', ['starter.services'])
       $preLoader.hide();
 
     }
-
     $scope.updateSampleInfo = function () {
       $preLoader.show();
 
       $scope.index = $scope.qcSampleInfo.index;
-      $scope.qcSampleInfo.qcSampleId = $scope.qcSampleInfo.qcSampleNo
+      console.log($scope.qcSampleInfo.available)
+      if($scope.qcSampleInfo.isLocal==true){
+        $scope.qcSampleInfo.qcSampleId = $scope.qcSampleInfo.qcSampleNo
+      }
     
       if ($scope.qcSampleInfo.available == true) {
         $scope.qcSampleInfo.available = 'yes';
       } else {
         $scope.qcSampleInfo.available = 'no';
       }
+
       $scope.chkSampleInfo = JSON.parse(localStorage.getItem('SampleIdInfo'))
       $scope.chkSampleInfo[$scope.index] = $scope.qcSampleInfo;
 
       localStorage.setItem('SampleIdInfo', JSON.stringify($scope.chkSampleInfo));
       $scope.qcSampleInfo = {};
 
-      // Hide toast during debugging
-      $cordovaToast.show('Edited Successfully', 'long', 'center')
-        .then(function (success) {
-          // success
-        }, function (error) {
-          // error
-        });
+      // // Hide toast during debugging
+      // $cordovaToast.show('Edited Successfully', 'long', 'center')
+      //   .then(function (success) {
+      //     // success
+      //   }, function (error) {
+      //     // error
+      //   });
 
       $location.path('/app/addQcSettings');
       $preLoader.hide();
 
     }
+
+
+
+    // $scope.updateSampleInfo = function () {
+    //   $preLoader.show();
+
+    //   $scope.index = $scope.qcSampleInfo.index;
+    //   console.log($scope.index)
+    //   $scope.qcSampleInfo.qcSampleId = $scope.qcSampleInfo.qcSampleNo
+    
+    //   if ($scope.qcSampleInfo.available == true) {
+    //     $scope.qcSampleInfo.available = 'yes';
+    //   } else {
+    //     $scope.qcSampleInfo.available = 'no';
+    //   }
+
+    //   $scope.chkSampleInfo = JSON.parse(localStorage.getItem('SampleIdInfo'))
+    //   $scope.chkSampleInfo[$scope.index] = $scope.qcSampleInfo;
+
+    //   localStorage.setItem('SampleIdInfo', JSON.stringify($scope.chkSampleInfo));
+    //   $scope.qcSampleInfo = {};
+
+    //   // Hide toast during debugging
+    //   $cordovaToast.show('Edited Successfully', 'long', 'center')
+    //     .then(function (success) {
+    //       // success
+    //     }, function (error) {
+    //       // error
+    //     });
+
+    //   $location.path('/app/addQcSettings');
+    //   $preLoader.hide();
+
+    // }
   })
 
   .filter('underscorefilter', function () {

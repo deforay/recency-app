@@ -257,7 +257,7 @@
                                   </div>
                                 </a>
                                 <a style="font-size: 15px;min-height: 21px;margin-left:5px;height:35px;line-height:30px;"
-                                  class="button  button-assertive" ng-click="deleteSampleInfo(qcsample,$index)">
+                                  class="button  button-assertive" ng-if="qcsample.isLocal==true" ng-click="deleteSampleInfo(qcsample,$index)">
                                   <div class="form-logo" style="line-height: 35px;"><img src="img/delete.png"
                                       style="height:17px"></div>
                                 </a>

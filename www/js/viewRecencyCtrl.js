@@ -7,8 +7,11 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
 
       $rootScope.apiUrl = localStorage.getItem('apiUrl');
       var recencyList = localStorage.getItem('RecencyData');
+
     //  console.log(recencyList)
       if (recencyList != null) {
+
+       
         recencyList = JSON.parse(recencyList);
         var unsyncount = Object.keys(recencyList).length;
         if ($rootScope.recencyUnsyncCount != undefined) {} else {
@@ -46,10 +49,13 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
 
       $rootScope.apiUrl = localStorage.getItem('apiUrl');
       var recencyList = localStorage.getItem('RecencyData');
-
+  
       if (recencyList != null) {
         recencyList = JSON.parse(recencyList);
-
+        console.log(recencyList)
+        // var decrypted = JSON.parse(CryptoJS.AES.decrypt(recencyList[0], "secretkeyissecretphrasesecretphr", {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
+        // console.log(decrypted)
+        //alert(decrypted);
         var unsyncount = Object.keys(recencyList).length;
         if ($rootScope.recencyUnsyncCount != undefined) {} else {
           $rootScope.recencyUnsyncCount = '(' + unsyncount + ')';
@@ -174,12 +180,12 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
 
               $preLoader.hide();
               // Hide Toast During Debugging 
-              $cordovaToast.show($scope.response.length + '  Data has been Successfully Synced', 'long', 'bottom')
-                .then(function (success) {
-                  // success
-                }, function (error) {
-                  // error
-                });
+              // $cordovaToast.show($scope.response.length + '  Data has been Successfully Synced', 'long', 'bottom')
+              //   .then(function (success) {
+              //     // success
+              //   }, function (error) {
+              //     // error
+              //   });
 
               $scope.onLoadRecency();
             }
@@ -194,6 +200,9 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
           });
       }
     }
+
+
+    
     $scope.viewRecency = function (recency, index) {
       $rootScope.recencyDetail = recency;
       recency.index = index;
