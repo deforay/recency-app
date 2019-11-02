@@ -94,7 +94,15 @@ angular.module('starter.services', [])
   .factory('$syncDataLimit', function ($rootScope) {
     return {
       setSyncDataLimit: function () {
-        return $rootScope.dataLimit=10;
+        return $rootScope.dataLimit=2;
+      }
+    }
+  })
+  .factory('$secretKey',  function ($window,$rootScope)  {
+    return {
+      getSecretKey: function () {
+      //  return $rootScope.secretKey='secretkeyissecretphrasesecretphr';
+        return $rootScope.secretKey = $window.localStorage.getItem('secretKey')
       }
     }
   })

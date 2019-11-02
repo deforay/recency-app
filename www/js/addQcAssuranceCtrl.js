@@ -1,9 +1,10 @@
 app = angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
-  .controller('addQcAssuranceCtrl', function ($scope, $rootScope, $http, $timeout, $stateParams, $cordovaToast, ionicDatePicker, $ionicPopup, $preLoader, $localStorage, $cordovaGeolocation, $window, $filter, $cordovaNetwork) {
+  .controller('addQcAssuranceCtrl', function ($scope, $rootScope,$secretKey, $http, $timeout, $stateParams, $cordovaToast, ionicDatePicker, $ionicPopup, $preLoader, $localStorage, $cordovaGeolocation, $window, $filter, $cordovaNetwork) {
     $scope.qcAssurance = {};
     $scope.qcData = {};
     $scope.showLongTermLine = true;
     $scope.displaybadge = false;
+    $scope.secretKey = $secretKey.getSecretKey();
 
     $(document).ready(function () {
       if (!localStorage.getItem('qccounter')) {
@@ -596,7 +597,10 @@ app = angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
       $scope.counter = parseInt(count) + 1;
 
       $preLoader.show();
-      var qcAssurance = $scope.qcAssurance;
+     // var qcAssurance = $scope.qcAssurance;
+      var qcAssurance= CryptoJS.AES.encrypt(JSON.stringify($scope.qcAssurance),$scope.secretKey , {format: CryptoJSAesJson}).toString();
+
+
       if (JSON.parse(localStorage.getItem('QCData')) != null) {
         $scope.qcData = JSON.parse(localStorage.getItem('QCData'));
       }
@@ -606,12 +610,12 @@ app = angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
       localStorage.setItem('qccounter', $scope.counter);
 
       $scope.qcAssurance = {};
-      $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
-        .then(function (success) {
-          // success
-        }, function (error) {
-          // error
-        });
+      // $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
+      //   .then(function (success) {
+      //     // success
+      //   }, function (error) {
+      //     // error
+      //   });
       $scope.qcAssuranceinit();
       $scope.qcOutcomeCheck();
       $preLoader.hide();

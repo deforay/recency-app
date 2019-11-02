@@ -330,7 +330,7 @@ $scope.gettestKitManufacturer = function (manufacturer) {
       $scope.qcLotObj.isLocal = true;
       $scope.qcsettingsdisplay = 1;
       $scope.displayQcSettings();
-      
+
       //Hide Toast During Debug mode
       $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
         .then(function (success) {

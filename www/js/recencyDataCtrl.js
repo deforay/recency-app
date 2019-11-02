@@ -1,6 +1,6 @@
 app = angular.module('starter.recencyDataCtrl', ['starter.services'])
 
-  .controller('recencyDataCtrl', function ($scope, $rootScope, $filter, $cordovaToast, ionicDatePicker, $localStorage, $http, $preLoader, $ionicPopup, $location, $window, $stateParams) {
+  .controller('recencyDataCtrl', function ($scope, $rootScope,$secretKey, $filter, $cordovaToast, ionicDatePicker, $localStorage, $http, $preLoader, $ionicPopup, $location, $window, $stateParams) {
 
     $scope.propertyName = 'hiv_recency_date';
 
@@ -17,6 +17,10 @@ app = angular.module('starter.recencyDataCtrl', ['starter.services'])
       fromdate = fromdate.setFullYear(intYear);
       $rootScope.fromDate = $filter('date')(fromdate, "dd-MMM-yyyy");
       $rootScope.toDate = $filter('date')(todate, "dd-MMM-yyyy");
+      $scope.secretKey = $secretKey.getSecretKey();
+      $scope.userId = localStorage.getItem('userId');
+
+
       if (localStorage.getItem('ServerRecencyData') == 'logout' || localStorage.getItem('ServerRecencyData') == 'success') {
         $scope.showauth = true;
       } else {
@@ -32,7 +36,9 @@ app = angular.module('starter.recencyDataCtrl', ['starter.services'])
         }).then(function successCallback(response) {
           if (response.data.status == "success") {
             $localStorage.set('authToken', response.data.userDetails['authToken']);
-            $http.get($localStorage.get('apiUrl') + '/api/recency?authToken=' + $localStorage.get('authToken') + '&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate)
+            $localStorage.set('secretKey', response.data.userDetails['secretKey']);
+
+            $http.get($localStorage.get('apiUrl') + '/api/recency?authToken=' + $localStorage.get('authToken') + '&userId='+$scope.userId + '&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate)
               .then(function (response) {
                 if (response.data.status == "success") {
                   $localStorage.set('ServerRecencyData', 'login');
@@ -83,6 +89,8 @@ app = angular.module('starter.recencyDataCtrl', ['starter.services'])
     }
     $scope.init();
     $scope.getRecencyData = function () {
+      $scope.secretKey = $secretKey.getSecretKey();
+      $scope.userId = localStorage.getItem('userId');
 
       if (localStorage.getItem('ServerRecencyData') == 'logout' || localStorage.getItem('ServerRecencyData') == 'success') {
         $scope.showauth = true;
@@ -98,7 +106,9 @@ app = angular.module('starter.recencyDataCtrl', ['starter.services'])
         }).then(function successCallback(response) {
           if (response.data.status == "success") {
             $localStorage.set('authToken', response.data.userDetails['authToken']);
-            $http.get($localStorage.get('apiUrl') + '/api/recency?authToken=' + $localStorage.get('authToken') + '&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate)
+            $localStorage.set('secretKey', response.data.userDetails['secretKey']);
+           
+            $http.get($localStorage.get('apiUrl') + '/api/recency?authToken=' + $localStorage.get('authToken') + '&userId='+$scope.userId + '&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate)
               .then(function (response) {
                 if (response.data.status == "success") {
                   $localStorage.set('ServerRecencyData', 'login');
@@ -154,6 +164,10 @@ app = angular.module('starter.recencyDataCtrl', ['starter.services'])
       fromdate = fromdate.setFullYear(intYear);
       $rootScope.fromDate = $filter('date')(fromdate, "dd-MMM-yyyy");
       $rootScope.toDate = $filter('date')(todate, "dd-MMM-yyyy");
+      $scope.secretKey = $secretKey.getSecretKey();
+      $scope.userId = localStorage.getItem('userId');
+
+
       if (!credentials.email) {
         $ionicPopup.alert({
           title: 'Login Failed',
@@ -179,8 +193,9 @@ app = angular.module('starter.recencyDataCtrl', ['starter.services'])
 
           if (response.data.status == "success") {
             $localStorage.set('authToken', response.data.userDetails['authToken']);
+            $localStorage.set('secretKey', response.data.userDetails['secretKey']);
 
-            $http.get($localStorage.get('apiUrl') + '/api/recency?authToken=' + $localStorage.get('authToken') + '&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate)
+            $http.get($localStorage.get('apiUrl') + '/api/recency?authToken=' + $localStorage.get('authToken') + '&userId='+$scope.userId+ '&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate)
               .then(function (response) {
 
                 if (response.data.status == "success") {

@@ -1,6 +1,6 @@
 app = angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
 
-  .controller('tatRecencyReportCtrl', function ($scope, $rootScope, $filter, $cordovaToast, ionicDatePicker, $localStorage, $http, $preLoader, $ionicPopup, $location, $window, $stateParams) {
+  .controller('tatRecencyReportCtrl', function ($scope, $rootScope,$secretKey, $filter, $cordovaToast, ionicDatePicker, $localStorage, $http, $preLoader, $ionicPopup, $location, $window, $stateParams) {
 
     $scope.propertyName = 'hiv_recency_date';
     $rootScope.apiUrl = localStorage.getItem('apiUrl');
@@ -14,6 +14,8 @@ app = angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
       $rootScope.fromDate = $filter('date')(fromdate, "dd-MMM-yyyy");
       $rootScope.toDate = $filter('date')(todate, "dd-MMM-yyyy");
       $scope.tatDataCount = "";
+      $scope.secretKey = $secretKey.getSecretKey();
+      $scope.userId = localStorage.getItem('userId');
 
       if (localStorage.getItem('ServerRecencyData') == 'logout' || localStorage.getItem('ServerRecencyData') == 'success') {
         $scope.showauth = true;
@@ -29,7 +31,9 @@ app = angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
         }).then(function successCallback(response) {
           if (response.data.status == "success") {
             $localStorage.set('authToken', response.data.userDetails['authToken']);
-            $http.get($localStorage.get('apiUrl') + '/api/tat-report?authToken=' + $localStorage.get('authToken') + '&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate)
+            $localStorage.set('secretKey', response.data.userDetails['secretKey']);
+
+            $http.get($localStorage.get('apiUrl') + '/api/tat-report?authToken=' + $localStorage.get('authToken') + '&userId='+$scope.userId+'&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate)
               .then(function (response) {
                 if (response.data.status == "success") {
                   $localStorage.set('ServerRecencyData', 'login');
@@ -75,7 +79,8 @@ app = angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
     $scope.getRecencyData = function () {
 
       $scope.tatDataCount = "";
-
+      $scope.secretKey = $secretKey.getSecretKey();
+      $scope.userId = localStorage.getItem('userId');
       if (localStorage.getItem('ServerRecencyData') == 'logout' || localStorage.getItem('ServerRecencyData') == 'success') {
         $scope.showauth = true;
       } else {
@@ -91,7 +96,9 @@ app = angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
 
           if (response.data.status == "success") {
             $localStorage.set('authToken', response.data.userDetails['authToken']);
-            $http.get($localStorage.get('apiUrl') + '/api/tat-report?authToken=' + $localStorage.get('authToken') + '&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate)
+            $localStorage.set('secretKey', response.data.userDetails['secretKey']);
+
+            $http.get($localStorage.get('apiUrl') + '/api/tat-report?authToken=' + $localStorage.get('authToken') + '&userId='+$scope.userId + '&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate)
               .then(function (response) {
 
                 if (response.data.status == "success") {
@@ -147,6 +154,8 @@ app = angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
       $rootScope.toDate = $filter('date')(todate, "dd-MMM-yyyy");
 
       $scope.tatDataCount = "";
+      $scope.secretKey = $secretKey.getSecretKey();
+      $scope.userId = localStorage.getItem('userId');
 
       if (!credentials.email) {
         $ionicPopup.alert({
@@ -172,7 +181,9 @@ app = angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
         }).then(function successCallback(response) {
           if (response.data.status == "success") {
             $localStorage.set('authToken', response.data.userDetails['authToken']);
-            $http.get($localStorage.get('apiUrl') + '/api/tat-report?authToken=' + $localStorage.get('authToken') + '&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate)
+            $localStorage.set('secretKey', response.data.userDetails['secretKey']);
+
+            $http.get($localStorage.get('apiUrl') + '/api/tat-report?authToken=' + $localStorage.get('authToken') + '&userId='+$scope.userId + '&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate)
               .then(function (response) {
                 if (response.data.status == "success") {
                   $localStorage.set('ServerRecencyData', 'login');
