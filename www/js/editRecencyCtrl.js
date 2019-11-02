@@ -1970,8 +1970,11 @@ $scope.getNewOutcome = function (controlLine, positiveLine, longTermLine) {
       if ($scope.recency.vlLoadResult == "" && $scope.recency.vlLoadResultDropdown != "") {
         $scope.recency.vlLoadResult = $scope.recency.vlLoadResultDropdown;
       }
+
       $scope.chkrecency = JSON.parse(localStorage.getItem('RecencyData'))
-      $scope.chkrecency[$scope.index] = $scope.recency;
+      var recency= CryptoJS.AES.encrypt(JSON.stringify($scope.recency),'secretkeyissecretphrasesecretphr' , {format: CryptoJSAesJson}).toString();
+
+      $scope.chkrecency[$scope.index] = recency;
 
       localStorage.setItem('RecencyData', JSON.stringify($scope.chkrecency));
       $scope.recency = {};

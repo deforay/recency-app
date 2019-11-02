@@ -541,6 +541,9 @@ app = angular.module('starter.loginCtrl', ['starter.services'])
             $localStorage.set('serverpassword', credentials.serverpassword);
             $localStorage.set('userId', response.data.userDetails['userId']);
             $localStorage.set('userName', response.data.userDetails['userName']);
+            $localStorage.set('secretKey', 'secretkeyissecretphrasesecretphr');
+            //$localStorage.set('secretKey', response.data.userDetails['secretKey']);
+            
             // Hide Toast During Debugging  
             // $cordovaToast.show('Successfully Logged in', 'long', 'bottom')
             //   .then(function (success) {

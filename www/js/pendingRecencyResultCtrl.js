@@ -1,6 +1,6 @@
 app = angular.module('starter.pendingRecencyResultCtrl', ['starter.services'])
 
-  .controller('pendingRecencyResultCtrl', function ($scope, $rootScope, $filter, $cordovaToast, ionicDatePicker, $localStorage, $http, $preLoader, $ionicPopup, $location, $window, $stateParams) {
+  .controller('pendingRecencyResultCtrl', function ($scope, $rootScope,$secretKey, $filter, $cordovaToast, ionicDatePicker, $localStorage, $http, $preLoader, $ionicPopup, $location, $window, $stateParams) {
 
 
     $scope.propertyName = 'hiv_recency_date';
@@ -9,6 +9,8 @@ app = angular.module('starter.pendingRecencyResultCtrl', ['starter.services'])
     $scope.init = function () {
 
       $scope.recencyVlCount = "";
+      $scope.secretKey = $secretKey.getSecretKey();
+      $scope.userId = localStorage.getItem('userId');
 
       if (localStorage.getItem('ServerRecencyData') == 'logout' || localStorage.getItem('ServerRecencyData') == 'success') {
         $scope.showauth = true;
@@ -24,7 +26,9 @@ app = angular.module('starter.pendingRecencyResultCtrl', ['starter.services'])
         }).then(function successCallback(response) {
           if (response.data.status == "success") {
             $localStorage.set('authToken', response.data.userDetails['authToken']);
-            $http.get($localStorage.get('apiUrl') + '/api/pending-vl-result?authToken=' + $localStorage.get('authToken'))
+            $localStorage.set('secretKey', response.data.userDetails['secretKey']);
+
+            $http.get($localStorage.get('apiUrl') + '/api/pending-vl-result?authToken=' + $localStorage.get('authToken')+ '&userId='+$scope.userId)
               .then(function (response) {
                 if (response.data.status == "success") {
                   $localStorage.set('ServerRecencyData', 'login');
@@ -74,6 +78,8 @@ app = angular.module('starter.pendingRecencyResultCtrl', ['starter.services'])
     $scope.doLogin = function (credentials) {
 
       $scope.recencyVlCount = "";
+      $scope.secretKey = $secretKey.getSecretKey();
+      $scope.userId = localStorage.getItem('userId');
 
       if (!credentials.email) {
         $ionicPopup.alert({
@@ -100,8 +106,9 @@ app = angular.module('starter.pendingRecencyResultCtrl', ['starter.services'])
 
           if (response.data.status == "success") {
             $localStorage.set('authToken', response.data.userDetails['authToken']);
+            $localStorage.set('secretKey', response.data.userDetails['secretKey']);
 
-            $http.get($localStorage.get('apiUrl') + '/api/pending-vl-result?authToken=' + $localStorage.get('authToken'))
+            $http.get($localStorage.get('apiUrl') + '/api/pending-vl-result?authToken=' + $localStorage.get('authToken')+ '&userId='+$scope.userId)
               .then(function (response) {
 
                 if (response.data.status == "success") {

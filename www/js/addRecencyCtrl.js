@@ -1,12 +1,13 @@
 app = angular.module('starter.addRecencyCtrl', ['starter.services'])
 
 
-app.controller('addRecencyCtrl', function ($scope, $rootScope, $http, $timeout, $stateParams, $cordovaToast, ionicDatePicker, $ionicPopup, $preLoader, $localStorage, $cordovaGeolocation, $window, $filter, $cordovaNetwork) {
+app.controller('addRecencyCtrl', function ($scope, $rootScope, $http, $timeout, $stateParams, $cordovaToast, ionicDatePicker, $ionicPopup, $preLoader, $localStorage, $cordovaGeolocation, $window, $filter,$secretKey, $cordovaNetwork) {
   $scope.recency = {};
   $scope.recencyData = {};
   $scope.showLongTermLine = true;
   $scope.displaybadge = false;
   $scope.regex = '^[0-9]*$';
+  $scope.secretKey = $secretKey.getSecretKey();
   $(document).ready(function () {
     $scope.recencydisplay = true;
     $("#main-recency").addClass("active");
