@@ -129,7 +129,8 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
               $preLoader.show();
 
               $http.post($rootScope.apiUrl + "/api/quality-check", {
-                  "qc": $scope.slicedQCDataList
+                  "qc": $scope.slicedQCDataList,
+                  "userId":localStorage.getItem('userId')
                 })
                 .success(function (data) {
                   if (data.status == 'failed') {

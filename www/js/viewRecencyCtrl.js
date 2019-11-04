@@ -145,7 +145,7 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
       }else {  }
     }
     $scope.syncnow = function () {
-
+    
       if ($scope.displaymessage == true) {
         $preLoader.hide();
 
@@ -222,12 +222,12 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
               localStorage.setItem('syncCount', $scope.syncCount)
               for (i = 0; i < $scope.response.length; i++) {
                 if($scope.response[i]=='success'){
-                  $scope.recencySubList.splice(i);
+                  $scope.recencyEncrypt.splice(i);
                 }
                 else{
-                  $scope.recencyEncrypt.push( 
-                  $scope.recencySubList[i]
-                  );
+                  // $scope.recencyEncrypt.push( 
+                  // $scope.recencySubList[i]
+                  // );
                 }
               }
 
@@ -241,7 +241,6 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
               }
               localStorage.setItem('counter', $scope.recencyEncrypt.length);   
             }
-            $scope.responseRecCount++;
           })
           .error(function () {
 
@@ -251,7 +250,7 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
           });
 
         }else{
-   
+         
             $scope.responseRecCount = 1;
             
             for(i=0;i<$scope.syncDataCount;i++){
@@ -261,6 +260,7 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
                 "userId":localStorage.getItem('userId')
               })
               .success(function (data) {
+             
                 console.log(data);
                 if (data.status == 'failed') {
     
