@@ -1,14 +1,10 @@
 app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
 
-  .controller('viewQcAssuranceCtrl', function ($scope, $rootScope, $http, $q, $preLoader, $ionicPopup, $cordovaToast, $location, $window, $stateParams, $ionicPlatform, $cordovaLocalNotification, $cordovaBadge, $syncDataLimit) {
+  .controller('viewQcAssuranceCtrl', function ($scope, $rootScope, $http, $q, $preLoader, $ionicPopup, $cordovaToast, $location, $window, $stateParams, $ionicPlatform, $cordovaLocalNotification, $cordovaBadge, $syncDataLimit, $secretKey) {
 
     $scope.syncDataLimit = $syncDataLimit.setSyncDataLimit();
 
-
-
-
     $scope.onLoadQc = function () {
-
       $rootScope.apiUrl = localStorage.getItem('apiUrl');
       var QCDataList = localStorage.getItem('QCData');
       $scope.NewQcDataList = [];
@@ -40,26 +36,46 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
     }
 
     $scope.$on("$ionicView.beforeEnter", function (event, data) {
+      $scope.secretKey = $secretKey.getSecretKey();
       $rootScope.apiUrl = localStorage.getItem('apiUrl');
       var QCDataList = localStorage.getItem('QCData');
+
       $scope.NewQcDataList = [];
       $scope.NewQcObj = [];
       $scope.limitTo = 2;
+      $scope.QCDataDecrypt = [];
+      $scope.QCEncrypt = [];
       if (QCDataList != null) {
+
         QCDataList = JSON.parse(QCDataList);
 
-        var unSyncQcCount = Object.keys(QCDataList).length;
-        if ($rootScope.qcUnsynCount != undefined) {
+        //  var unSyncQcCount = Object.keys(QCDataList).length;
+        // if ($rootScope.qcUnsynCount != undefined) {
 
-        } else {
-          $rootScope.qcUnsynCount = '(' + unSyncQcCount + ')';
+        // } else {
+        //   $rootScope.qcUnsynCount = '(' + unSyncQcCount + ')';
+        // }
+        // var result = Object.keys(QCDataList).map(function (key, value) {
+        //   return [(key), QCDataList[value]];
+        // });
+        // $scope.QCDataList = [];
+        // for (i = 0; i < result.length; i++) {
+        //   $scope.QCDataList.push(result[i][1])
+        // }
+        for (i = 0; i < Object.keys(QCDataList).length; i++) {
+          $scope.decryptedData = {};
+          $scope.decryptedData = JSON.parse(CryptoJS.AES.decrypt(QCDataList[i], $scope.secretKey, {
+            format: CryptoJSAesJson
+          }).toString(CryptoJS.enc.Utf8));
+          $scope.QCDataDecrypt.push($scope.decryptedData);
         }
-        var result = Object.keys(QCDataList).map(function (key, value) {
-          return [(key), QCDataList[value]];
-        });
-        $scope.QCDataList = [];
-        for (i = 0; i < result.length; i++) {
-          $scope.QCDataList.push(result[i][1])
+
+        $scope.QCDataList = $scope.QCDataDecrypt;
+      //  console.log($scope.QCDataList);
+      //  console.log(JSON.stringify($scope.QCDataList));
+        var unsyncount = $scope.QCDataList.length;
+        if ($rootScope.qcUnsynCount != undefined) {} else {
+          $rootScope.qcUnsynCount = '(' + unsyncount + ')';
         }
         $scope.displaymessage = false;
         var qclen = $scope.QCDataList.length
@@ -93,8 +109,7 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
           template: '<center>There are no records to sync.</center>'
         });
       } else {
-    
-      
+
         $scope.QCDataList.forEach(function (element) {
           element.syncedBy = localStorage.getItem('userId');
           var currentdatetime = new Date();
@@ -105,7 +120,7 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
             currentdatetime.getMinutes() + ":" +
             currentdatetime.getSeconds();
         });
-        console.log($scope.QCDataList);
+     //   console.log($scope.QCDataList);
         $scope.copyQCDataList = Array.from($scope.QCDataList);
 
 
@@ -119,20 +134,27 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
           $scope.addOne = 0;
         }
         let iterationLength = quotient + $scope.addOne;
-        console.log(iterationLength);
+     //   console.log(iterationLength);
 
 
         for (let m = 0, p = Promise.resolve(); m < iterationLength; m++) {
           p = p.then(_ => new Promise(resolve =>
             setTimeout(function () {
+             
               $scope.slicedQCDataList = $scope.copyQCDataList.splice(0, $scope.syncDataLimit);
+              $scope.encryptedData = {};
+              $scope.encryptedData = CryptoJS.AES.encrypt(JSON.stringify($scope.slicedQCDataList), $scope.secretKey, {
+                format: CryptoJSAesJson
+              }).toString();
+              $scope.QCEncrypt.push($scope.encryptedData);
               $preLoader.show();
 
               $http.post($rootScope.apiUrl + "/api/quality-check", {
-                  "qc": $scope.slicedQCDataList,
-                  "userId":localStorage.getItem('userId')
+                  "qc": $scope.QCEncrypt,
+                  "userId": localStorage.getItem('userId')
                 })
                 .success(function (data) {
+               
                   if (data.status == 'failed') {
                     $preLoader.hide();
                     $ionicPopup.alert({
@@ -167,16 +189,16 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
                     localStorage.setItem('qccounter', $scope.copyQCDataList.length);
                     $scope.QCDataList = $scope.copyQCDataList;
                     $preLoader.hide();
-                    if (m == (iterationLength-1)) {
+                    if (m == (iterationLength - 1)) {
                       localStorage.setItem('LastTesterName', $scope.slicedQCDataList[responselen - 1].testerName)
                       localStorage.setItem('LastTestDate', currentdate);
-                    // Hide Toast during Debugging
-                    // $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
-                    //   .then(function (success) {
-                    //     // success
-                    //   }, function (error) {
-                    //     // error
-                    //   });
+                      // Hide Toast during Debugging
+                      // $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
+                      //   .then(function (success) {
+                      //     // success
+                      //   }, function (error) {
+                      //     // error
+                      //   });
                       $scope.onLoadQc();
                     }
                   }
