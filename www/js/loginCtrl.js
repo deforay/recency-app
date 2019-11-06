@@ -541,16 +541,16 @@ app = angular.module('starter.loginCtrl', ['starter.services'])
             $localStorage.set('serverpassword', credentials.serverpassword);
             $localStorage.set('userId', response.data.userDetails['userId']);
             $localStorage.set('userName', response.data.userDetails['userName']);
-            $localStorage.set('secretKey', 'secretkeyissecretphrasesecretphr');
-            //$localStorage.set('secretKey', response.data.userDetails['secretKey']);
+          //  $localStorage.set('secretKey', 'secretkeyissecretphrasesecretphr');
+          $localStorage.set('secretKey', response.data.userDetails['secretKey']);
             
-            // Hide Toast During Debugging  
-            // $cordovaToast.show('Successfully Logged in', 'long', 'bottom')
-            //   .then(function (success) {
-            //     // success
-            //   }, function (error) {
-            //     // error
-            //   });
+            // Hide secretKeyebugging  
+            // $cordsecretKey'Successfully Logged in', 'long', 'bottom')
+            //   .thsecretKeyuccess) {
+            //     /secretKey
+            //   }, secretKeyr) {
+            //     /secretKey
+            //   });secretKey
             $scope.viewLogin = false;
             $scope.viewAddPassword = true;
             $scope.viewConfirmPassword = false;

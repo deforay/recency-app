@@ -2107,7 +2107,7 @@ app.controller('addRecencyCtrl', function ($scope, $rootScope, $http, $timeout, 
 
     $preLoader.show();
     //var recency = $scope.recency;
-    var recency= CryptoJS.AES.encrypt(JSON.stringify($scope.recency),'secretkeyissecretphrasesecretphr' , {format: CryptoJSAesJson}).toString();
+    var recency= CryptoJS.AES.encrypt(JSON.stringify($scope.recency),$scope.secretKey , {format: CryptoJSAesJson}).toString();
     console.log("recency:",recency);
    
 

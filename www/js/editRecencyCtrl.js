@@ -1972,7 +1972,7 @@ $scope.getNewOutcome = function (controlLine, positiveLine, longTermLine) {
       }
 
       $scope.chkrecency = JSON.parse(localStorage.getItem('RecencyData'))
-      var recency= CryptoJS.AES.encrypt(JSON.stringify($scope.recency),'secretkeyissecretphrasesecretphr' , {format: CryptoJSAesJson}).toString();
+      var recency= CryptoJS.AES.encrypt(JSON.stringify($scope.recency),$scope.secretKey , {format: CryptoJSAesJson}).toString();
 
       $scope.chkrecency[$scope.index] = recency;
 

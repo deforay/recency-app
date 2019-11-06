@@ -9,6 +9,7 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
       $scope.recencyEncrypt=[];
 
       $scope.secretKey = $secretKey.getSecretKey();
+      console.log($scope.secretKey)
       $scope.DataLimit = $syncDataLimit.setSyncDataLimit();
 
       $rootScope.apiUrl = localStorage.getItem('apiUrl');
@@ -19,7 +20,7 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
         
         for(i=0;i<Object.keys(recencyList).length;i++){
            $scope.decryptedData ={};
-           $scope.decryptedData = JSON.parse(CryptoJS.AES.decrypt(recencyList[i], "secretkeyissecretphrasesecretphr", {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
+           $scope.decryptedData = JSON.parse(CryptoJS.AES.decrypt(recencyList[i], $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
            $scope.recencyDecrypt.push($scope.decryptedData);
         }
 
@@ -81,6 +82,7 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
       $scope.recencyEncrypt=[];
       $scope.secretKey = $secretKey.getSecretKey();
       $scope.DataLimit = $syncDataLimit.setSyncDataLimit();
+      console.log($scope.secretKey)
 
       $rootScope.apiUrl = localStorage.getItem('apiUrl');
       var recencyList = localStorage.getItem('RecencyData');
@@ -91,12 +93,14 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
 
         for(i=0;i<Object.keys(recencyList).length;i++){
           $scope.decryptedData ={};
-          $scope.decryptedData = JSON.parse(CryptoJS.AES.decrypt(recencyList[i], "secretkeyissecretphrasesecretphr", {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
+          $scope.decryptedData = JSON.parse(CryptoJS.AES.decrypt(recencyList[i], $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
         
          $scope.recencyDecrypt.push($scope.decryptedData);
         }
 
         $scope.recencyList = $scope.recencyDecrypt;
+        console.log($scope.recencyList);
+        console.log(JSON.stringify($scope.recencyList));
         var unsyncount = $scope.recencyList.length;
 
       //  var unsyncount = Object.keys(recencyList).length;
@@ -195,7 +199,7 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
           currentdatetime.getSeconds();
           $scope.encryptedData ={};
 
-          $scope.encryptedData= CryptoJS.AES.encrypt(JSON.stringify( $scope.recencyList[i]),'secretkeyissecretphrasesecretphr' , {format: CryptoJSAesJson}).toString();
+          $scope.encryptedData= CryptoJS.AES.encrypt(JSON.stringify( $scope.recencyList[i]),$scope.secretKey, {format: CryptoJSAesJson}).toString();
           $scope.recencyEncrypt.push(
             $scope.encryptedData);
       }
@@ -371,7 +375,7 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
         }
        $preLoader.show();
        console.log("recencyList:",$scope.recencyList);
-       var encryptedRecencyList= CryptoJS.AES.encrypt(JSON.stringify($scope.recencyList),'secretkeyissecretphrasesecretphr' , {format: CryptoJSAesJson}).toString();
+       var encryptedRecencyList= CryptoJS.AES.encrypt(JSON.stringify($scope.recencyList),$scope.secretKey , {format: CryptoJSAesJson}).toString();
 
        
        console.log("encryptedRecencyList:",encryptedRecencyList);
