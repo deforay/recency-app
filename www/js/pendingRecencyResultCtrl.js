@@ -37,7 +37,7 @@ app = angular.module('starter.pendingRecencyResultCtrl', ['starter.services'])
                   $localStorage.set('ServerRecencyData', 'login');
                   $preLoader.hide();
                   $scope.showauth = false;
-                  if (rdecryptedData.length > 0) {
+                  if (decryptedData.length > 0) {
                     $scope.displaymessage = false;
                     $preLoader.show();
                     $scope.recencyVlDatas =decryptedData;
