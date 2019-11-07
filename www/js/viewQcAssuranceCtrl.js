@@ -13,10 +13,9 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
       $scope.NewQcObj = [];
       $scope.QCDataDecrypt = [];
       $scope.QCEncrypt = [];
+
       if (QCDataList != null) {
-
         QCDataList = JSON.parse(QCDataList);
-
         //  var unSyncQcCount = Object.keys(QCDataList).length;
         // if ($rootScope.qcUnsynCount != undefined) {
 
