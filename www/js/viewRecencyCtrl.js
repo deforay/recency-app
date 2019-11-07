@@ -254,8 +254,8 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
           });
 
         }else{
-         
-            $scope.responseRecCount = 1;
+            $scope.responseRecCount = 0;
+            $scope.syncedCount = 0;
             
             for(i=0;i<$scope.syncDataCount;i++){
               $scope.recencySubList = $scope.recencyEncrypt.splice(0,$scope.DataLimit);
@@ -265,7 +265,6 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
               })
               .success(function (data) {
              
-                console.log(data);
                 if (data.status == 'failed') {
     
                   $ionicPopup.alert({
@@ -273,13 +272,14 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
                     template: data.message
                   });
                 } else {
-    
+                  $scope.responseRecCount =  $scope.responseRecCount +1;
                   $scope.response = data.syncData.response;
                   $scope.syncCount = data.syncCount.response[0].Total;
                   localStorage.setItem('syncCount', $scope.syncCount)
                   for (i = 0; i < $scope.response.length; i++) {
                     if($scope.response[i]=='success'){
                       $scope.recencySubList.splice(i);
+                      $scope.syncedCount = $scope.syncedCount + 1;
                     }
                     else{
                       $scope.recencyEncrypt.push( 
@@ -296,24 +296,25 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
                   if (localStorage.getItem('RecencyData') == "") {
                     localStorage.removeItem('RecencyData');
                   }
-                  localStorage.setItem('counter', $scope.recencyEncrypt.length);   
+                  localStorage.setItem('counter', $scope.recencyEncrypt.length);  
+                  if($scope.syncDataCount==$scope.responseRecCount && $scope.syncedCount!=0){
+                    $ionicPopup.alert({
+                      title: 'Success',
+                      template: $scope.syncedCount +' Data Has been Synced'
+                    });
+                    $scope.onLoadRecency();
+                  } 
                 }
-                $scope.responseRecCount++;
               })
               .error(function () {
     
                 $ionicPopup.alert({
-                  title: data.response
+                  title: data.message
                 });
-              });
-
-              if($scope.syncDataCount==$scope.responseRecCount){
-                $ionicPopup.alert({
-                  title: 'Success',
-                  template:'Data Has been Synced'
-                });
-              }
+              });         
           }
+
+    
         }
       }
     }
