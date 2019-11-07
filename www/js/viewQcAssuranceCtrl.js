@@ -160,9 +160,9 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
         for (let m = 0, p = Promise.resolve(); m < iterationLength; m++) {
           p = p.then(_ => new Promise(resolve =>
             setTimeout(function () {
-             
               $scope.slicedQCDataList = $scope.copyQCDataList.splice(0, $scope.syncDataLimit);
               $scope.encryptedData = {};
+              $scope.QCEncrypt=[];
               $scope.encryptedData = CryptoJS.AES.encrypt(JSON.stringify($scope.slicedQCDataList), $scope.secretKey, {
                 format: CryptoJSAesJson
               }).toString();
@@ -174,7 +174,7 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
                   "userId": localStorage.getItem('userId')
                 })
                 .success(function (data) {
-               
+            
                   if (data.status == 'failed') {
                     $preLoader.hide();
                     $ionicPopup.alert({
