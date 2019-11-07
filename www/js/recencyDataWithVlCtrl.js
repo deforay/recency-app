@@ -33,19 +33,21 @@ app = angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
           if (response.data.status == "success") {
             $localStorage.set('authToken', response.data.userDetails['authToken']);
             $localStorage.set('secretKey', response.data.userDetails['secretKey']);
+            $localStorage.set('userId', response.data.userDetails['userId']);
 
-
-            $http.get($localStorage.get('apiUrl') + '/api/recency-result-with-vl?authToken=' + $localStorage.get('authToken') + '&start=' + $rootScope.fromVlDate + '&end=' + $rootScope.toVlDate)
+            $http.get($localStorage.get('apiUrl') + '/api/recency-result-with-vl?authToken=' + response.data.userDetails['authToken'] + '&userId='+response.data.userDetails['userId'] + '&start=' + $rootScope.fromVlDate + '&end=' + $rootScope.toVlDate)
               .then(function (response) {
+        
                 if (response.data.status == "success") {
+                  var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.recency, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
                   $localStorage.set('ServerRecencyData', 'login');
                   $preLoader.hide();
                   $scope.showauth = false;
 
-                  if (response.data.recency.length > 0) {
+                  if (decryptedData.length > 0) {
                     $scope.displaymessage = false;
                     $preLoader.show();
-                    $scope.recencyVlDatas = response.data.recency;
+                    $scope.recencyVlDatas =decryptedData;
 
                     $scope.recencyVlCount = $scope.recencyVlDatas.length;
                     for (i = 0; i < $scope.recencyVlDatas.length; i++) {
@@ -109,20 +111,21 @@ app = angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
           if (response.data.status == "success") {
             $localStorage.set('authToken', response.data.userDetails['authToken']);
             $localStorage.set('secretKey', response.data.userDetails['secretKey']);
+            $localStorage.set('userId', response.data.userDetails['userId']);
 
-
-            $http.get($localStorage.get('apiUrl') + '/api/recency-result-with-vl?authToken=' + $localStorage.get('authToken') + '&start=' + $rootScope.fromVlDate + '&end=' + $rootScope.toVlDate)
+            $http.get($localStorage.get('apiUrl') + '/api/recency-result-with-vl?authToken='+ response.data.userDetails['authToken'] + '&userId='+response.data.userDetails['userId'] +  '&start=' + $rootScope.fromVlDate + '&end=' + $rootScope.toVlDate)
               .then(function (response) {
 
                 if (response.data.status == "success") {
+                  var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.recency, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
                   $localStorage.set('ServerRecencyData', 'login');
                   $preLoader.hide();
                   $scope.showauth = false;
 
-                  if (response.data.recency.length > 0) {
+                  if (decryptedData.length > 0) {
                     $scope.displaymessage = false;
                     $preLoader.show();
-                    $scope.recencyVlDatas = response.data.recency;
+                    $scope.recencyVlDatas =decryptedData;
 
                     $scope.recencyVlCount = $scope.recencyVlDatas.length;
                     for (i = 0; i < $scope.recencyVlDatas.length; i++) {
@@ -200,25 +203,27 @@ app = angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
           if (response.data.status == "success") {
             $localStorage.set('authToken', response.data.userDetails['authToken']);
             $localStorage.set('secretKey', response.data.userDetails['secretKey']);
+            $localStorage.set('userId', response.data.userDetails['userId']);
 
-            $http.get($localStorage.get('apiUrl') + '/api/recency-result-with-vl?authToken=' + $localStorage.get('authToken') + '&start=' + $rootScope.fromVlDate + '&end=' + $rootScope.toVlDate)
+            $http.get($localStorage.get('apiUrl') + '/api/recency-result-with-vl?authToken=' + response.data.userDetails['authToken'] + '&userId='+response.data.userDetails['userId'] + '&start=' + $rootScope.fromVlDate + '&end=' + $rootScope.toVlDate)
               .then(function (response) {
                 if (response.data.status == "success") {
+                  var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.recency, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
                   $localStorage.set('ServerRecencyData', 'login');
                   $preLoader.hide();
                   // Hide Toast During Debugging
-                  $cordovaToast.show('Authentication is Sucess', 'long', 'bottom')
-                    .then(function (success) {
-                      // success
-                    }, function (error) {
-                      // error
-                    });
+                  // $cordovaToast.show('Authentication is Sucess', 'long', 'bottom')
+                  //   .then(function (success) {
+                  //     // success
+                  //   }, function (error) {
+                  //     // error
+                  //   });
 
                   $scope.showauth = false;
-                  if (response.data.recency.length > 0) {
+                  if (decryptedData.length > 0) {
                     $scope.displaymessage = false;
                     $preLoader.show();
-                    $scope.recencyVlDatas = response.data.recency;
+                    $scope.recencyVlDatas = decryptedData;
 
                     $scope.recencyVlCount = $scope.recencyVlDatas.length;
                     for (i = 0; i < $scope.recencyVlDatas.length; i++) {
