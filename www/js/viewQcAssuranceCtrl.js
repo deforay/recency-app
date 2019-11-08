@@ -38,8 +38,8 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
         }
 
         $scope.QCDataList = $scope.QCDataDecrypt;
-      //  console.log($scope.QCDataList);
-      //  console.log(JSON.stringify($scope.QCDataList));
+        //  console.log($scope.QCDataList);
+        //  console.log(JSON.stringify($scope.QCDataList));
         var unsyncount = $scope.QCDataList.length;
         if ($rootScope.qcUnsynCount != undefined) {} else {
           $rootScope.qcUnsynCount = '(' + unsyncount + ')';
@@ -93,8 +93,8 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
         }
 
         $scope.QCDataList = $scope.QCDataDecrypt;
-      //  console.log($scope.QCDataList);
-      //  console.log(JSON.stringify($scope.QCDataList));
+        //  console.log($scope.QCDataList);
+        //  console.log(JSON.stringify($scope.QCDataList));
         var unsyncount = $scope.QCDataList.length;
         if ($rootScope.qcUnsynCount != undefined) {} else {
           $rootScope.qcUnsynCount = '(' + unsyncount + ')';
@@ -139,8 +139,9 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
             currentdatetime.getHours() + ":" +
             currentdatetime.getMinutes() + ":" +
             currentdatetime.getSeconds();
+
         });
-     //   console.log($scope.QCDataList);
+        //   console.log($scope.QCDataList);
         $scope.copyQCDataList = Array.from($scope.QCDataList);
 
 
@@ -154,19 +155,25 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
           $scope.addOne = 0;
         }
         let iterationLength = quotient + $scope.addOne;
-     //   console.log(iterationLength);
+        //   console.log(iterationLength);
 
 
         for (let m = 0, p = Promise.resolve(); m < iterationLength; m++) {
           p = p.then(_ => new Promise(resolve =>
             setTimeout(function () {
               $scope.slicedQCDataList = $scope.copyQCDataList.splice(0, $scope.syncDataLimit);
-              $scope.encryptedData = {};
               $scope.QCEncrypt=[];
-              $scope.encryptedData = CryptoJS.AES.encrypt(JSON.stringify($scope.slicedQCDataList), $scope.secretKey, {
-                format: CryptoJSAesJson
-              }).toString();
-              $scope.QCEncrypt.push($scope.encryptedData);
+              for (let n = 0; n < $scope.slicedQCDataList.length; n++) {
+             
+                $scope.encryptedData = {};
+                console.log($scope.slicedQCDataList[n])
+                $scope.encryptedData = CryptoJS.AES.encrypt(JSON.stringify($scope.slicedQCDataList[n]), $scope.secretKey, {
+                  format: CryptoJSAesJson
+                }).toString();
+                $scope.QCEncrypt.push(
+                  $scope.encryptedData);            
+              }
+              console.log($scope.QCEncrypt);
               $preLoader.show();
 
               $http.post($rootScope.apiUrl + "/api/quality-check", {
@@ -174,7 +181,7 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
                   "userId": localStorage.getItem('userId')
                 })
                 .success(function (data) {
-            
+
                   if (data.status == 'failed') {
                     $preLoader.hide();
                     $ionicPopup.alert({
@@ -194,7 +201,7 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
                     for (i = 0; i < $scope.response.length; i++) {
                       if ($scope.response[i] == 'fail') {
                         $scope.copyQCDataList.push($scope.slicedQCDataList[i]);
-                      }else{
+                      } else {
                         $scope.syncedCount = $scope.syncedCount + 1;
                       }
                     }
@@ -217,7 +224,7 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
                       localStorage.setItem('LastTestDate', currentdate);
                       $ionicPopup.alert({
                         title: 'Success',
-                        template: $scope.syncedCount +' Data Has been Synced'
+                        template: $scope.syncedCount + ' Data Has been Synced'
                       });
                       // Hide Toast during Debugging
                       // $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
