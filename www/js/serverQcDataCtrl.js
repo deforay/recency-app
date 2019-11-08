@@ -12,19 +12,13 @@ app = angular.module('starter.serverQcDataCtrl', ['starter.services'])
       $scope.propertyName = 'qc_test_date';
 
       if (lastQCDatas != null) {
-        $scope.lastQCDatas = [];
-        var decryptedData = JSON.parse(CryptoJS.AES.decrypt(lastQCDatas, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
-        $scope.lastQCDatas =decryptedData;
-       // lastQCDatas = JSON.parse(lastQCDatas);
-        // var result = Object.keys(lastQCDatas).map(function (key, value) {
-        //   return [(key), lastQCDatas[value]];
-        // });
 
+       lastQCDatas = JSON.parse(lastQCDatas);
 
-       // $scope.lastQCDatas = [];
-        // for (i = 0; i < result.length; i++) {
-        //   $scope.lastQCDatas.push(result[i][1])
-        // }
+       $scope.lastQCDatas = [];
+      
+        $scope.lastQCDatas = lastQCDatas;
+
         $scope.displaymessage = false;
       } else {
         $scope.displaymessage = true;
@@ -41,17 +35,12 @@ app = angular.module('starter.serverQcDataCtrl', ['starter.services'])
       if (lastQCDatas != null) {
       
         $scope.lastQCDatas = [];
-        var decryptedData = JSON.parse(CryptoJS.AES.decrypt(lastQCDatas, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
-        $scope.lastQCDatas =decryptedData;
-        // lastQCDatas = JSON.parse(lastQCDatas);
-        // var result = Object.keys(lastQCDatas).map(function (key, value) {
-        //   return [(key), lastQCDatas[value]];
-        // });
+  
+        lastQCDatas = JSON.parse(lastQCDatas);
+        $scope.lastQCDatas = [];
 
-        // $scope.lastQCDatas = [];
-        // for (i = 0; i < result.length; i++) {
-        //   $scope.lastQCDatas.push(result[i][1])
-        // }
+        $scope.lastQCDatas = lastQCDatas;
+
         $scope.displaymessage = false;
       } else {
         $scope.displaymessage = true;

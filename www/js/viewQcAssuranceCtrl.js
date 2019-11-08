@@ -196,7 +196,6 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
                     $scope.response = data.syncData.response;
                     $scope.syncQcCount = data.syncCount.response[0].Total;
                     $scope.tenRecord = data.syncCount.tenRecord;
-                    localStorage.setItem('lastTenQcData', JSON.stringify($scope.tenRecord))
                     localStorage.setItem('syncQcCount', $scope.syncQcCount)
                     var responselen = $scope.response.length;
                     var currentdate = new Date();
@@ -223,14 +222,18 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
                     $scope.QCDataList = $scope.copyQCDataList;
                     $preLoader.hide();
                     if (m == (iterationLength - 1)) {
+                      var decryptedTenData = JSON.parse(CryptoJS.AES.decrypt($scope.tenRecord, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
+                      //console.log(decryptedTenData);
+                    localStorage.setItem('lastTenQcData', JSON.stringify(decryptedTenData))
+
                       localStorage.setItem('LastTesterName', $scope.slicedQCDataList[responselen - 1].testerName)
                       localStorage.setItem('LastTestDate', currentdate);
-                      $ionicPopup.alert({
-                        title: 'Success',
-                        template: $scope.syncedCount + ' Data Has been Synced'
-                      });
+                      // $ionicPopup.alert({
+                      //   title: 'Success',
+                      //   template: $scope.syncedCount + ' Data Has been Synced'
+                      // });
                       // Hide Toast during Debugging
-                      $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
+                      $cordovaToast.show($scope.syncedCount + ' Data has been Successfully Synced', 'long', 'bottom')
                         .then(function (success) {
                           // success
                         }, function (error) {
