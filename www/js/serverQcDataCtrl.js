@@ -1,25 +1,30 @@
 app = angular.module('starter.serverQcDataCtrl', ['starter.services'])
 
-  .controller('serverQcDataCtrl', function ($scope, $rootScope, $cordovaToast, $localStorage, $http, $preLoader, $ionicPopup, $location, $window, $stateParams) {
+  .controller('serverQcDataCtrl', function ($scope, $rootScope, $cordovaToast, $localStorage, $http, $preLoader, $ionicPopup, $location, $window, $stateParams,$secretKey) {
 
 
-
+    $scope.secretKey = $secretKey.getSecretKey();
 
     $scope.$on("$ionicView.beforeEnter", function (event, data) {
+  
       $rootScope.apiUrl = localStorage.getItem('apiUrl');
       var lastQCDatas = localStorage.getItem('lastTenQcData');
       $scope.propertyName = 'qc_test_date';
 
       if (lastQCDatas != null) {
-        lastQCDatas = JSON.parse(lastQCDatas);
-        var result = Object.keys(lastQCDatas).map(function (key, value) {
-          return [(key), lastQCDatas[value]];
-        });
-
         $scope.lastQCDatas = [];
-        for (i = 0; i < result.length; i++) {
-          $scope.lastQCDatas.push(result[i][1])
-        }
+        var decryptedData = JSON.parse(CryptoJS.AES.decrypt(lastQCDatas, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
+        $scope.lastQCDatas =decryptedData;
+       // lastQCDatas = JSON.parse(lastQCDatas);
+        // var result = Object.keys(lastQCDatas).map(function (key, value) {
+        //   return [(key), lastQCDatas[value]];
+        // });
+
+
+       // $scope.lastQCDatas = [];
+        // for (i = 0; i < result.length; i++) {
+        //   $scope.lastQCDatas.push(result[i][1])
+        // }
         $scope.displaymessage = false;
       } else {
         $scope.displaymessage = true;
@@ -28,20 +33,25 @@ app = angular.module('starter.serverQcDataCtrl', ['starter.services'])
     });
 
     $scope.init = function () {
+   
       $rootScope.apiUrl = localStorage.getItem('apiUrl');
       var lastQCDatas = localStorage.getItem('lastTenQcData');
       $scope.propertyName = 'qc_test_date';
 
       if (lastQCDatas != null) {
-        lastQCDatas = JSON.parse(lastQCDatas);
-        var result = Object.keys(lastQCDatas).map(function (key, value) {
-          return [(key), lastQCDatas[value]];
-        });
-
+      
         $scope.lastQCDatas = [];
-        for (i = 0; i < result.length; i++) {
-          $scope.lastQCDatas.push(result[i][1])
-        }
+        var decryptedData = JSON.parse(CryptoJS.AES.decrypt(lastQCDatas, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
+        $scope.lastQCDatas =decryptedData;
+        // lastQCDatas = JSON.parse(lastQCDatas);
+        // var result = Object.keys(lastQCDatas).map(function (key, value) {
+        //   return [(key), lastQCDatas[value]];
+        // });
+
+        // $scope.lastQCDatas = [];
+        // for (i = 0; i < result.length; i++) {
+        //   $scope.lastQCDatas.push(result[i][1])
+        // }
         $scope.displaymessage = false;
       } else {
         $scope.displaymessage = true;
