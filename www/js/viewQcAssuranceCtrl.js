@@ -65,8 +65,13 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
 
       $scope.NewQcDataList = [];
       $scope.NewQcObj = [];
+
+
       $scope.QCDataDecrypt = [];
       $scope.QCEncrypt = [];
+
+      $scope.qcEncrypt = [];
+      $scope.qcSubList = [];
       if (QCDataList != null) {
 
         QCDataList = JSON.parse(QCDataList);
@@ -110,6 +115,7 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
         }
         $scope.displaymessage = true;
       }
+
     });
 
 
@@ -121,7 +127,7 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
       $window.location.reload(true);
       $preLoader.hide();
     }
-
+ 
     $scope.syncnow = function () {
       if ($scope.displaymessage == true) {
         $ionicPopup.alert({
