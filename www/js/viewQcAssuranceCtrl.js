@@ -65,8 +65,13 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
 
       $scope.NewQcDataList = [];
       $scope.NewQcObj = [];
+
+
       $scope.QCDataDecrypt = [];
       $scope.QCEncrypt = [];
+
+      $scope.qcEncrypt = [];
+      $scope.qcSubList = [];
       if (QCDataList != null) {
 
         QCDataList = JSON.parse(QCDataList);
@@ -110,6 +115,7 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
         }
         $scope.displaymessage = true;
       }
+
     });
 
 
@@ -121,7 +127,7 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
       $window.location.reload(true);
       $preLoader.hide();
     }
-
+ 
     $scope.syncnow = function () {
       if ($scope.displaymessage == true) {
         $ionicPopup.alert({
@@ -156,6 +162,7 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
         let iterationLength = quotient + $scope.addOne;
      //   console.log(iterationLength);
 
+     $scope.syncedCount = 0;
 
         for (let m = 0, p = Promise.resolve(); m < iterationLength; m++) {
           p = p.then(_ => new Promise(resolve =>
@@ -189,7 +196,6 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
                     localStorage.setItem('syncQcCount', $scope.syncQcCount)
                     var responselen = $scope.response.length;
                     var currentdate = new Date();
-                    $scope.syncedCount = 0;
 
                     for (i = 0; i < $scope.response.length; i++) {
                       if ($scope.response[i] == 'fail') {

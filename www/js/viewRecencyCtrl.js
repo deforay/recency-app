@@ -9,7 +9,6 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
       $scope.recencyEncrypt=[];
 
       $scope.secretKey = $secretKey.getSecretKey();
-      console.log($scope.secretKey)
       $scope.DataLimit = $syncDataLimit.setSyncDataLimit();
 
       $rootScope.apiUrl = localStorage.getItem('apiUrl');
@@ -82,7 +81,6 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
       $scope.recencyEncrypt=[];
       $scope.secretKey = $secretKey.getSecretKey();
       $scope.DataLimit = $syncDataLimit.setSyncDataLimit();
-      console.log($scope.secretKey)
 
       $rootScope.apiUrl = localStorage.getItem('apiUrl');
       var recencyList = localStorage.getItem('RecencyData');
@@ -99,8 +97,6 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
         }
 
         $scope.recencyList = $scope.recencyDecrypt;
-        console.log($scope.recencyList);
-        console.log(JSON.stringify($scope.recencyList));
         var unsyncount = $scope.recencyList.length;
 
       //  var unsyncount = Object.keys(recencyList).length;
@@ -206,6 +202,7 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
          var totLength = $scope.recencyEncrypt.length;
 
         if(totLength<=$scope.DataLimit){
+          $scope.syncedCount = 0;
 
           $http.post($rootScope.apiUrl + "/api/recency", {
             "form": $scope.recencyEncrypt,
@@ -227,6 +224,7 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
               for (i = 0; i < $scope.response.length; i++) {
                 if($scope.response[i]=='success'){
                   $scope.recencyEncrypt.splice(i);
+                  $scope.syncedCount = $scope.syncedCount + 1;
                 }
                 else{
                   // $scope.recencyEncrypt.push( 
@@ -244,6 +242,12 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
                 localStorage.removeItem('RecencyData');
               }
               localStorage.setItem('counter', $scope.recencyEncrypt.length);   
+
+              $ionicPopup.alert({
+                title: 'Success',
+                template: $scope.syncedCount +' Data Has been Synced'
+              });
+              $scope.onLoadRecency();
             }
           })
           .error(function () {
@@ -280,11 +284,8 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
                     if($scope.response[i]=='success'){
                       $scope.recencySubList.splice(i);
                       $scope.syncedCount = $scope.syncedCount + 1;
-                    }
-                    else{
-                      $scope.recencyEncrypt.push( 
-                      $scope.recencySubList[i]
-                      );
+                    }else{
+                      $scope.recencyEncrypt.push($scope.recencySubList[i]);
                     }
                   }
     
