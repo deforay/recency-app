@@ -25,7 +25,7 @@ app = angular.module('starter.editSampleInfoCtrl', ['starter.services'])
       $preLoader.show();
 
       $scope.index = $scope.qcSampleInfo.index;
-      console.log($scope.qcSampleInfo.available)
+     // console.log($scope.qcSampleInfo.available)
       if($scope.qcSampleInfo.isLocal==true){
         $scope.qcSampleInfo.qcSampleId = $scope.qcSampleInfo.qcSampleNo
       }
@@ -43,12 +43,12 @@ app = angular.module('starter.editSampleInfoCtrl', ['starter.services'])
       $scope.qcSampleInfo = {};
 
       // // Hide toast during debugging
-      // $cordovaToast.show('Edited Successfully', 'long', 'center')
-      //   .then(function (success) {
-      //     // success
-      //   }, function (error) {
-      //     // error
-      //   });
+      $cordovaToast.show('Edited Successfully', 'long', 'center')
+        .then(function (success) {
+          // success
+        }, function (error) {
+          // error
+        });
 
       $location.path('/app/addQcSettings');
       $preLoader.hide();

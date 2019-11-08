@@ -171,14 +171,14 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
               for (let n = 0; n < $scope.slicedQCDataList.length; n++) {
              
                 $scope.encryptedData = {};
-                console.log($scope.slicedQCDataList[n])
+                // console.log($scope.slicedQCDataList[n])
                 $scope.encryptedData = CryptoJS.AES.encrypt(JSON.stringify($scope.slicedQCDataList[n]), $scope.secretKey, {
                   format: CryptoJSAesJson
                 }).toString();
                 $scope.QCEncrypt.push(
                   $scope.encryptedData);            
               }
-              console.log($scope.QCEncrypt);
+            //  console.log($scope.QCEncrypt);
               $preLoader.show();
 
               $http.post($rootScope.apiUrl + "/api/quality-check", {
@@ -186,7 +186,6 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
                   "userId": localStorage.getItem('userId')
                 })
                 .success(function (data) {
-debugger;
                   if (data.status == 'failed') {
                     $preLoader.hide();
                     $ionicPopup.alert({
@@ -231,12 +230,12 @@ debugger;
                         template: $scope.syncedCount + ' Data Has been Synced'
                       });
                       // Hide Toast during Debugging
-                      // $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
-                      //   .then(function (success) {
-                      //     // success
-                      //   }, function (error) {
-                      //     // error
-                      //   });
+                      $cordovaToast.show('Data has been Successfully Synced', 'long', 'bottom')
+                        .then(function (success) {
+                          // success
+                        }, function (error) {
+                          // error
+                        });
                       $scope.onLoadQc();
                     }
                   }

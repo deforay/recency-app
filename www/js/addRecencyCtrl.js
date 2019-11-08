@@ -1489,15 +1489,15 @@ app.controller('addRecencyCtrl', function ($scope, $rootScope, $http, $timeout, 
     }
   }
   $scope.showToastAlert = function (mandatorytitle) {
-    $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
+   // $ionicPopup.alert({title:'Alert!',template:mandatorytitle});
 
     // Hide Toast during Debug
-    // $cordovaToast.show(mandatorytitle, 'long', 'center')
-    //   .then(function (success) {
-    //     // success
-    //   }, function (error) {
-    //     // error
-    //   });
+    $cordovaToast.show(mandatorytitle, 'long', 'center')
+      .then(function (success) {
+        // success
+      }, function (error) {
+        // error
+      });
   }
 
   // Section 1 Mandatory Data Validation
@@ -2108,7 +2108,7 @@ app.controller('addRecencyCtrl', function ($scope, $rootScope, $http, $timeout, 
     $preLoader.show();
     //var recency = $scope.recency;
     var recency= CryptoJS.AES.encrypt(JSON.stringify($scope.recency),$scope.secretKey , {format: CryptoJSAesJson}).toString();
-    console.log("recency:",recency);
+    //console.log("recency:",recency);
    
 
 
@@ -2130,12 +2130,12 @@ app.controller('addRecencyCtrl', function ($scope, $rootScope, $http, $timeout, 
     $scope.recencydisplay = true;
 
     //Hide Toast During Debugging 
-    // $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
-    //   .then(function (success) {
-    //     // success
-    //   }, function (error) {
-    //     // error
-    //   });
+    $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
+      .then(function (success) {
+        // success
+      }, function (error) {
+        // error
+      });
 
     $scope.getLatLong();
     $scope.showRecencyTick = false;

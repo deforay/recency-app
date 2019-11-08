@@ -200,12 +200,12 @@ app = angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
                   $preLoader.hide();
 
                   // Hide Toast During Debugging
-                  // $cordovaToast.show('Authentication is Sucess', 'long', 'bottom')
-                  //   .then(function (success) {
-                  //     // success
-                  //   }, function (error) {
-                  //     // error
-                  //   });
+                  $cordovaToast.show('Authentication is Sucess', 'long', 'bottom')
+                    .then(function (success) {
+                      // success
+                    }, function (error) {
+                      // error
+                    });
 
                   $scope.showauth = false;
                   if (decryptedData.length > 0) {

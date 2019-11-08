@@ -212,12 +212,12 @@ app = angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
                   $localStorage.set('ServerRecencyData', 'login');
                   $preLoader.hide();
                   // Hide Toast During Debugging
-                  // $cordovaToast.show('Authentication is Sucess', 'long', 'bottom')
-                  //   .then(function (success) {
-                  //     // success
-                  //   }, function (error) {
-                  //     // error
-                  //   });
+                  $cordovaToast.show('Authentication is Sucess', 'long', 'bottom')
+                    .then(function (success) {
+                      // success
+                    }, function (error) {
+                      // error
+                    });
 
                   $scope.showauth = false;
                   if (decryptedData.length > 0) {

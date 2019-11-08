@@ -208,12 +208,12 @@ app = angular.module('starter.recencyDataCtrl', ['starter.services'])
                   $localStorage.set('ServerRecencyData', 'login');
                   $preLoader.hide();
                   // Hide Toast During Debugging
-                  // $cordovaToast.show('Authentication is Sucess', 'long', 'bottom')
-                  //   .then(function (success) {
-                  //     // success
-                  //   }, function (error) {
-                  //     // error
-                  //   });
+                  $cordovaToast.show('Authentication is Sucess', 'long', 'bottom')
+                    .then(function (success) {
+                      // success
+                    }, function (error) {
+                      // error
+                    });
                   var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.recency, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
                   $scope.showauth = false;
 

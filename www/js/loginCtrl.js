@@ -107,13 +107,13 @@ app = angular.module('starter.loginCtrl', ['starter.services'])
 
             $preLoader.show();
             // Hide Toast During Debugging 
-            // $cordovaToast
-            //   .show('App Password Created Successfully', 'long', 'center')
-            //   .then(function (success) {
-            //     // success
-            //   }, function (error) {
-            //     // error
-            //   });
+            $cordovaToast
+              .show('App Password Created Successfully', 'long', 'center')
+              .then(function (success) {
+                // success
+              }, function (error) {
+                // error
+              });
             $timeout(function () {
               $location.path('/app/addRecency');
               $preLoader.hide();

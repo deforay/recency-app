@@ -94,13 +94,13 @@ app = angular.module('starter.addQcSettingsCtrl', ['starter.services'])
         $scope.isVisibleLot = false;
       }
       var SampleInfoList = localStorage.getItem('SampleIdInfo');
-      console.log(SampleInfoList)
+    //  console.log(SampleInfoList)
       if (SampleInfoList == null || SampleInfoList == "") {
         $scope.isVisibleSample = true;
       } else {
         SampleInfoList = JSON.parse(SampleInfoList);
         $scope.SampleInfoList = SampleInfoList;
-        console.log($scope.SampleInfoList)
+       // console.log($scope.SampleInfoList)
         $scope.isVisibleSample = false;
       }
     });
