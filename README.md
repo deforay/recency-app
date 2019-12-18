@@ -10,6 +10,8 @@ https://play.google.com/store/apps/details?id=com.deforay.recency
 
 ---
 
+### Building Android app on your own
+
 #### Before Setting up :
 
 * Install NodeJS (https://nodejs.org)
