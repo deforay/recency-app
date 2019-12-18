@@ -1,5 +1,9 @@
 # HIV Recency Mobile/Tablet app
 
+Please note that this app requires Recency Web Application (https://github.com/deforay/recency-web) to be set up and running on a web server that can be reached over the internet.
+
+---
+
 The current release can be found on Google play store
 
 https://play.google.com/store/apps/details?id=com.deforay.recency
