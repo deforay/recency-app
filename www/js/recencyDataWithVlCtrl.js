@@ -32,7 +32,9 @@ app = angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
         }).then(function successCallback(response) {
           if (response.data.status == "success") {
             $localStorage.set('authToken', response.data.userDetails['authToken']);
-            $localStorage.set('secretKey', response.data.userDetails['secretKey']);
+            if(response.data.userDetails['secretKey']){
+              $localStorage.set('secretKey', response.data.userDetails['secretKey']);
+            }
             $localStorage.set('userId', response.data.userDetails['userId']);
 
             $http.get($localStorage.get('apiUrl') + '/api/recency-result-with-vl?authToken=' + response.data.userDetails['authToken'] + '&userId='+response.data.userDetails['userId'] + '&start=' + $rootScope.fromVlDate + '&end=' + $rootScope.toVlDate)
@@ -92,8 +94,8 @@ app = angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
 
       $scope.fromDate = $rootScope.fromVlDate;
       $scope.recencyVlCount = "";
-      $scope.secretKey = $secretKey.getSecretKey();
       $scope.userId = localStorage.getItem('userId');
+      $scope.secretKey = $secretKey.getSecretKey();
 
       if (localStorage.getItem('ServerRecencyData') == 'logout' || localStorage.getItem('ServerRecencyData') == 'success') {
         $scope.showauth = true;
@@ -110,7 +112,9 @@ app = angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
 
           if (response.data.status == "success") {
             $localStorage.set('authToken', response.data.userDetails['authToken']);
-            $localStorage.set('secretKey', response.data.userDetails['secretKey']);
+            if(response.data.userDetails['secretKey']){
+              $localStorage.set('secretKey', response.data.userDetails['secretKey']);
+            }
             $localStorage.set('userId', response.data.userDetails['userId']);
 
             $http.get($localStorage.get('apiUrl') + '/api/recency-result-with-vl?authToken='+ response.data.userDetails['authToken'] + '&userId='+response.data.userDetails['userId'] +  '&start=' + $rootScope.fromVlDate + '&end=' + $rootScope.toVlDate)
@@ -202,7 +206,9 @@ app = angular.module('starter.recencyDataWithVlCtrl', ['starter.services'])
         }).then(function successCallback(response) {
           if (response.data.status == "success") {
             $localStorage.set('authToken', response.data.userDetails['authToken']);
-            $localStorage.set('secretKey', response.data.userDetails['secretKey']);
+            if(response.data.userDetails['secretKey']){
+              $localStorage.set('secretKey', response.data.userDetails['secretKey']);
+            }
             $localStorage.set('userId', response.data.userDetails['userId']);
 
             $http.get($localStorage.get('apiUrl') + '/api/recency-result-with-vl?authToken=' + response.data.userDetails['authToken'] + '&userId='+response.data.userDetails['userId'] + '&start=' + $rootScope.fromVlDate + '&end=' + $rootScope.toVlDate)

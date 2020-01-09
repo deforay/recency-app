@@ -30,7 +30,7 @@ app = angular.module('starter.editRecencyCtrl', ['starter.services'])
     $scope.recency = $scope.recencyDetails;
     $scope.TestKitLotList = [];
     $scope.testkitlotObj = JSON.parse(localStorage.getItem('LotInfo'));
-
+    $scope.secretKey = $secretKey.getSecretKey();
     if ($scope.testkitlotObj != null) {
       var TestKitLotListLen = Object.keys($scope.testkitlotObj).length;
       for (i = 0; i < TestKitLotListLen; i++) {
@@ -1972,7 +1972,12 @@ $scope.getNewOutcome = function (controlLine, positiveLine, longTermLine) {
       }
 
       $scope.chkrecency = JSON.parse(localStorage.getItem('RecencyData'))
-      var recency= CryptoJS.AES.encrypt(JSON.stringify($scope.recency),$scope.secretKey , {format: CryptoJSAesJson}).toString();
+
+      if($scope.chkrecency.unique_id || $scope.chkrecency.appVersion){
+        var recency= CryptoJS.AES.encrypt(JSON.stringify($scope.recency),$scope.secretKey , {format: CryptoJSAesJson}).toString();
+      }else{
+        var recency = $scope.recency;
+      }
 
       $scope.chkrecency[$scope.index] = recency;
 

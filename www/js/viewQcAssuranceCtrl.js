@@ -31,10 +31,15 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
         // }
         for (i = 0; i < Object.keys(QCDataList).length; i++) {
           $scope.decryptedData = {};
-          $scope.decryptedData = JSON.parse(CryptoJS.AES.decrypt(QCDataList[i], $scope.secretKey, {
-            format: CryptoJSAesJson
-          }).toString(CryptoJS.enc.Utf8));
-          $scope.QCDataDecrypt.push($scope.decryptedData);
+          if(QCDataList[i].unique_id || QCDataList[i].appVersion){
+            console.log(QCDataList[i])
+            $scope.QCDataDecrypt.push(QCDataList[i]);
+          }else{
+            $scope.decryptedData = JSON.parse(CryptoJS.AES.decrypt(QCDataList[i], $scope.secretKey, {
+              format: CryptoJSAesJson
+            }).toString(CryptoJS.enc.Utf8));
+            $scope.QCDataDecrypt.push($scope.decryptedData);
+          }
         }
 
         $scope.QCDataList = $scope.QCDataDecrypt;
@@ -89,14 +94,19 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
         // for (i = 0; i < result.length; i++) {
         //   $scope.QCDataList.push(result[i][1])
         // }
+    
         for (i = 0; i < Object.keys(QCDataList).length; i++) {
           $scope.decryptedData = {};
-          $scope.decryptedData = JSON.parse(CryptoJS.AES.decrypt(QCDataList[i], $scope.secretKey, {
-            format: CryptoJSAesJson
-          }).toString(CryptoJS.enc.Utf8));
-          $scope.QCDataDecrypt.push($scope.decryptedData);
+          if(QCDataList[i].unique_id || QCDataList[i].appVersion){
+            console.log(QCDataList[i])
+            $scope.QCDataDecrypt.push(QCDataList[i]);
+          }else{
+            $scope.decryptedData = JSON.parse(CryptoJS.AES.decrypt(QCDataList[i], $scope.secretKey, {
+              format: CryptoJSAesJson
+            }).toString(CryptoJS.enc.Utf8));
+            $scope.QCDataDecrypt.push($scope.decryptedData);
+          }
         }
-
         $scope.QCDataList = $scope.QCDataDecrypt;
         //  console.log($scope.QCDataList);
         //  console.log(JSON.stringify($scope.QCDataList));
@@ -171,19 +181,24 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
               for (let n = 0; n < $scope.slicedQCDataList.length; n++) {
              
                 $scope.encryptedData = {};
-                // console.log($scope.slicedQCDataList[n])
-                $scope.encryptedData = CryptoJS.AES.encrypt(JSON.stringify($scope.slicedQCDataList[n]), $scope.secretKey, {
-                  format: CryptoJSAesJson
-                }).toString();
-                $scope.QCEncrypt.push(
-                  $scope.encryptedData);            
+                if($scope.secretKey!=null && $scope.secretKey!=''){
+                  $scope.encryptedData = CryptoJS.AES.encrypt(JSON.stringify($scope.slicedQCDataList[n]), $scope.secretKey, {
+                    format: CryptoJSAesJson
+                  }).toString();
+                  $scope.QCEncrypt.push($scope.encryptedData); 
+                }else{
+                 $scope.encryptedData = $scope.slicedQCDataList[n];
+                 $scope.QCEncrypt.push($scope.encryptedData); 
+                }
+                          
               }
             //  console.log($scope.QCEncrypt);
               $preLoader.show();
 
               $http.post($rootScope.apiUrl + "/api/quality-check", {
                   "qc": $scope.QCEncrypt,
-                  "userId": localStorage.getItem('userId')
+                  "userId": localStorage.getItem('userId'),
+                  "version":localStorage.getItem('appVersion')
                 })
                 .success(function (data) {
                   if (data.status == 'failed') {

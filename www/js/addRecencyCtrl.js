@@ -24,7 +24,7 @@ app.controller('addRecencyCtrl', function ($scope, $rootScope, $http, $timeout, 
   $scope.optionalFieldsFlag = JSON.parse(localStorage.getItem('OptionalData'));
   $scope.mandatoryData = JSON.parse(localStorage.getItem('MandatoryData'));
   $scope.facilityData = JSON.parse(localStorage.getItem('FacilityData'));
-
+  $scope.recencySampleData = JSON.parse(localStorage.getItem('RecencySampleData'));
   $scope.facilityTestData = JSON.parse(localStorage.getItem('TestingFacilityData'));
   $scope.facilityTestTypeData = JSON.parse(localStorage.getItem('TestingFacilityTypeData'));
 
@@ -78,7 +78,13 @@ app.controller('addRecencyCtrl', function ($scope, $rootScope, $http, $timeout, 
       $scope.recency.addedBy = localStorage.getItem('userId');
       $scope.recency.formInitDateTime = "";
       $scope.recency.formSavedDateTime = "";
+    if($scope.recencySampleData.recencyId){
+      $scope.recency.sampleId =$scope.recencySampleData.recencyId;
+
+      }else{
       $scope.recency.sampleId = "";
+
+      }
       $scope.recency.patientId = "";
       $scope.recency.sampleCollectionDate = "";
       $scope.recency.sampleReceiptDate = "";
@@ -711,6 +717,21 @@ app.controller('addRecencyCtrl', function ($scope, $rootScope, $http, $timeout, 
       
     }
   }
+
+  $scope.getSampleId = function(){
+    $http.get($localStorage.get('apiUrl') + '/api/recency-sampleid')
+    .success(function (data) {
+      if (data.status == "success") {
+        $scope.recencySampleData = data['sample-data'];
+        $scope.recency.sampleId=$scope.recencySampleData.recencyId;
+        localStorage.setItem('RecencySampleData', JSON.stringify(data['sample-data']))
+      } else {
+        localStorage.setItem('RecencySampleData', '')
+      }
+    });
+  }
+  $scope.getSampleId();
+
   //On Viral Load Change
   $scope.OnVlLoadChange = function (vlLoadResultDropdown) {
     if($scope.recency.recencyOutcome=='Invalid'){
@@ -2107,7 +2128,11 @@ app.controller('addRecencyCtrl', function ($scope, $rootScope, $http, $timeout, 
 
     $preLoader.show();
     //var recency = $scope.recency;
-    var recency= CryptoJS.AES.encrypt(JSON.stringify($scope.recency),$scope.secretKey , {format: CryptoJSAesJson}).toString();
+    if($scope.secretKey!=null && $scope.secretKey!=''){
+      var recency= CryptoJS.AES.encrypt(JSON.stringify($scope.recency),$scope.secretKey , {format: CryptoJSAesJson}).toString();
+    }else{
+      var recency = $scope.recency;
+    }
     //console.log("recency:",recency);
    
 
@@ -2130,14 +2155,15 @@ app.controller('addRecencyCtrl', function ($scope, $rootScope, $http, $timeout, 
     $scope.recencydisplay = true;
 
     //Hide Toast During Debugging 
-    $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
-      .then(function (success) {
-        // success
-      }, function (error) {
-        // error
-      });
+    // $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
+    //   .then(function (success) {
+    //     // success
+    //   }, function (error) {
+    //     // error
+    //   });
 
     $scope.getLatLong();
+    $scope.getSampleId();
     $scope.showRecencyTick = false;
     $scope.showBehaviourTick = false;
 

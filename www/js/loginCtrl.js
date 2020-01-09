@@ -107,13 +107,13 @@ app = angular.module('starter.loginCtrl', ['starter.services'])
 
             $preLoader.show();
             // Hide Toast During Debugging 
-            $cordovaToast
-              .show('App Password Created Successfully', 'long', 'center')
-              .then(function (success) {
-                // success
-              }, function (error) {
-                // error
-              });
+            // $cordovaToast
+            //   .show('App Password Created Successfully', 'long', 'center')
+            //   .then(function (success) {
+            //     // success
+            //   }, function (error) {
+            //     // error
+            //   });
             $timeout(function () {
               $location.path('/app/addRecency');
               $preLoader.hide();
@@ -340,6 +340,17 @@ app = angular.module('starter.loginCtrl', ['starter.services'])
                localStorage.setItem('Samplecounter', $scope.sampleInfo.length);
             }
           })
+          // Get Recency Sample ID 
+          $http.get($localStorage.get('apiUrl') + '/api/recency-sampleid')
+          .success(function (data) {
+            if (data.status == "success") {
+              $scope.recencySampleData = data['sample-data'];
+              localStorage.setItem('RecencySampleData', JSON.stringify(data['sample-data']))
+            } else {
+              localStorage.setItem('RecencySampleData', '')
+            }
+          });
+          // End Recency sample ID
         $http.get($localStorage.get('apiUrl') + '/api/test-kit-info')
         .success(function (resp) {
         //  console.log(resp)
@@ -542,15 +553,21 @@ app = angular.module('starter.loginCtrl', ['starter.services'])
             $localStorage.set('userId', response.data.userDetails['userId']);
             $localStorage.set('userName', response.data.userDetails['userName']);
           //  $localStorage.set('secretKey', 'secretkeyissecretphrasesecretphr');
-          $localStorage.set('secretKey', response.data.userDetails['secretKey']);
-            
-            // Hide secretKeyebugging  
-            // $cordsecretKey'Successfully Logged in', 'long', 'bottom')
-            //   .thsecretKeyuccess) {
-            //     /secretKey
-            //   }, secretKeyr) {
-            //     /secretKey
-            //   });secretKey
+          if(response.data.userDetails['secretKey']){
+            $localStorage.set('secretKey', response.data.userDetails['secretKey']);
+          }
+         else{
+          $localStorage.set('secretKey','');
+
+         } 
+            // Hide Debugging  
+            // $cordovaToast
+            // .show('Successfully Logged In', 'long', 'bottom')
+            // .then(function (success) {
+            //   // success
+            // }, function (error) {
+            //   // error
+            // });
             $scope.viewLogin = false;
             $scope.viewAddPassword = true;
             $scope.viewConfirmPassword = false;

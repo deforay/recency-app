@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-  .controller('AppCtrl', function ($scope, $rootScope, $http, $ionicModal, $ionicHistory, $cordovaNetwork, $location, $refresh, $window, $ionicModal, $timeout, $ionicPopup, $localStorage, $preLoader, $state) {
+  .controller('AppCtrl', function ($scope, $rootScope,$http, $ionicModal, $ionicHistory, $cordovaNetwork, $location, $refresh, $window, $ionicModal, $timeout, $ionicPopup, $localStorage, $preLoader, $state) {
 
     $('.authWrapper  .loginFields  .input-field input')
       .focus(function () {
@@ -20,10 +20,17 @@ angular.module('starter.controllers', [])
       $window.location.reload(true);
       $preLoader.hide();
     };
+  
 
     document.addEventListener("online", ononline, false);
     document.addEventListener("offline", onoffline, false);
+    document.addEventListener("deviceready", onDeviceReady, false);
 
+    function onDeviceReady(){
+      cordova.getAppVersion.getVersionNumber(function (version) {
+        alert(version);
+      });
+    }
     function ononline() {
       var isOnline = $cordovaNetwork.isOnline();
       $localStorage.set('online', isOnline);
@@ -118,7 +125,7 @@ angular.module('starter.controllers', [])
         $scope.displayqcbadge = false;
       }
 
-      $scope.appVersion = 2.3;
+      $scope.appVersion = 2.9;
     }
 
 
@@ -140,7 +147,8 @@ angular.module('starter.controllers', [])
       $scope.displayqcbadge = false;
     }
 
-    $scope.appVersion = 2.3;
+    $scope.appVersion = 2.9;
+    
     localStorage.setItem('AppVersion', $scope.appVersion);
 
     $scope.addRecency = function () {
@@ -311,6 +319,19 @@ angular.module('starter.controllers', [])
              localStorage.setItem('Samplecounter', $scope.sampleInfo.length);
           }
         })
+
+            // Get Recency Sample ID 
+            $http.get($localStorage.get('apiUrl') + '/api/recency-sampleid')
+            .success(function (data) {
+              if (data.status == "success") {
+                $scope.recencySampleData = data['sample-data'];
+                localStorage.setItem('RecencySampleData', JSON.stringify(data['sample-data']))
+              } else {
+                localStorage.setItem('RecencySampleData', '')
+              }
+            });
+            // End Recency sample ID
+            
         $http.get($localStorage.get('apiUrl') + '/api/test-kit-info')
         .success(function (resp) {
           $scope.testerLotInfo = [];

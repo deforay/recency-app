@@ -26,7 +26,9 @@ app = angular.module('starter.pendingRecencyResultCtrl', ['starter.services'])
         }).then(function successCallback(response) {
           if (response.data.status == "success") {
             $localStorage.set('authToken', response.data.userDetails['authToken']);
-            $localStorage.set('secretKey', response.data.userDetails['secretKey']);
+            if(response.data.userDetails['secretKey']){
+              $localStorage.set('secretKey', response.data.userDetails['secretKey']);
+            }
             $localStorage.set('userId', response.data.userDetails['userId']);
 
             $http.get($localStorage.get('apiUrl') + '/api/pending-vl-result?authToken=' + response.data.userDetails['authToken']+ '&userId='+response.data.userDetails['userId'])
@@ -109,7 +111,9 @@ app = angular.module('starter.pendingRecencyResultCtrl', ['starter.services'])
 
           if (response.data.status == "success") {
             $localStorage.set('authToken', response.data.userDetails['authToken']);
-            $localStorage.set('secretKey', response.data.userDetails['secretKey']);
+            if(response.data.userDetails['secretKey']){
+              $localStorage.set('secretKey', response.data.userDetails['secretKey']);
+            }
             $localStorage.set('userId', response.data.userDetails['userId']);
 
             $http.get($localStorage.get('apiUrl') + '/api/pending-vl-result?authToken=' + response.data.userDetails['authToken']+ '&userId='+response.data.userDetails['userId'])

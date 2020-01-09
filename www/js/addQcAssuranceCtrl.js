@@ -598,8 +598,12 @@ app = angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
 
       $preLoader.show();
      // var qcAssurance = $scope.qcAssurance;
-      var qcAssurance= CryptoJS.AES.encrypt(JSON.stringify($scope.qcAssurance),$scope.secretKey , {format: CryptoJSAesJson}).toString();
 
+     if($scope.secretKey!=null && $scope.secretKey!=''){
+      var qcAssurance = CryptoJS.AES.encrypt(JSON.stringify($scope.qcAssurance),$scope.secretKey , {format: CryptoJSAesJson}).toString();
+     }else{
+      var qcAssurance = $scope.qcAssurance;
+     }
 
       if (JSON.parse(localStorage.getItem('QCData')) != null) {
         $scope.qcData = JSON.parse(localStorage.getItem('QCData'));

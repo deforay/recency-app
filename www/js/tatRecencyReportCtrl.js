@@ -32,8 +32,10 @@ app = angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
          
           if (response.data.status == "success") {
             $localStorage.set('authToken', response.data.userDetails['authToken']);
+           if(response.data.userDetails['secretKey']){
             $localStorage.set('secretKey', response.data.userDetails['secretKey']);
-            $localStorage.set('userId', response.data.userDetails['userId']);
+          }            
+          $localStorage.set('userId', response.data.userDetails['userId']);
 
             $http.get($localStorage.get('apiUrl') + '/api/tat-report?authToken=' + response.data.userDetails['authToken'] + '&userId='+response.data.userDetails['userId']+'&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate)
               .then(function (response) {
@@ -100,7 +102,9 @@ app = angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
       
           if (response.data.status == "success") {
             $localStorage.set('authToken', response.data.userDetails['authToken']);
-            $localStorage.set('secretKey', response.data.userDetails['secretKey']);
+            if(response.data.userDetails['secretKey']){
+              $localStorage.set('secretKey', response.data.userDetails['secretKey']);
+            }
             $localStorage.set('userId', response.data.userDetails['userId']);
 
             $http.get($localStorage.get('apiUrl') + '/api/tat-report?authToken=' +response.data.userDetails['authToken']+ '&userId='+response.data.userDetails['userId'] + '&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate)
@@ -187,7 +191,9 @@ app = angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
         }).then(function successCallback(response) {
           if (response.data.status == "success") {
             $localStorage.set('authToken', response.data.userDetails['authToken']);
-            $localStorage.set('secretKey', response.data.userDetails['secretKey']);
+            if(response.data.userDetails['secretKey']){
+              $localStorage.set('secretKey', response.data.userDetails['secretKey']);
+            }
             $localStorage.set('userId', response.data.userDetails['userId']);
 
             $http.get($localStorage.get('apiUrl') + '/api/tat-report?authToken=' + response.data.userDetails['authToken'] + '&userId='+response.data.userDetails['userId'] + '&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate)

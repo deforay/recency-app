@@ -102,7 +102,11 @@ angular.module('starter.services', [])
     return {
       getSecretKey: function () {
       //  return $rootScope.secretKey='secretkeyissecretphrasesecretphr';
+      if($window.localStorage.getItem('secretKey')!='' && $window.localStorage.getItem('secretKey')){
         return $rootScope.secretKey = $window.localStorage.getItem('secretKey')
+      }else{
+        return null
+      }
       }
     }
   })

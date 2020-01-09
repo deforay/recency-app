@@ -641,7 +641,7 @@ height: 100%;
     padding-left: 15px;
     font-weight: 600;
 }
-
+input[readonly]#sampleId,
 input[readonly]#testKitExpDate ,
 input[disabled]#vlTestDate,
 input[disabled]#vlLoadResult ,

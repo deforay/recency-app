@@ -40,6 +40,9 @@
     },
     "cordova-plugin-x-toast": {
       "PACKAGE_NAME": "com.deforay.rtri"
+    },
+    "cordova-plugin-app-version": {
+      "PACKAGE_NAME": "com.deforay.rtri"
     }
   },
   "dependent_plugins": {}
