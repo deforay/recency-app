@@ -19,8 +19,8 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
 
         for(i=0;i<Object.keys(recencyList).length;i++){
           if(recencyList[i].unique_id || recencyList[i].appVersion){
-            console.log(recencyList[i])
             $scope.recencyDecrypt.push(recencyList[i]);
+            console.log($scope.recencyDecrypt);
           }else if($scope.secretKey!=null && $scope.secretKey!=''){
             $scope.decryptedData ={};
             $scope.decryptedData = JSON.parse(CryptoJS.AES.decrypt(recencyList[i], $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
@@ -31,7 +31,6 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
 
         $scope.recencyList = $scope.recencyDecrypt;
         var unsyncount = $scope.recencyList.length;
-
         if ($rootScope.recencyUnsyncCount != undefined) {} else {
           $rootScope.recencyUnsyncCount = '(' + unsyncount + ')';
         }
@@ -42,7 +41,6 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
         $scope.syncCount = localStorage.getItem('syncCount');
         if ($scope.syncCount == undefined || $scope.syncCount == "") {
           $scope.syncCount = 0;
-
         }
         $scope.displaymessage = true;
       }
@@ -75,7 +73,7 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
 
         for(i=0;i<Object.keys(recencyList).length;i++){
           if(recencyList[i].unique_id || recencyList[i].appVersion){
-            console.log(recencyList[i])
+            console.log(recencyList[i]);
             $scope.recencyDecrypt.push(recencyList[i]);
           }else if($scope.secretKey!=null && $scope.secretKey!=''){
             $scope.decryptedData ={};
@@ -185,7 +183,7 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
           currentdatetime.getMinutes() + ":" +
           currentdatetime.getSeconds();
           $scope.encryptedData ={};
-            if($scope.secretKey!=null && $scope.secretKey!=''){
+            if($scope.secretKey!=null && $scope.secretKey!=''&&  $scope.appVersion>=2.9){
               $scope.encryptedData= CryptoJS.AES.encrypt(JSON.stringify( $scope.recencyList[i]),$scope.secretKey, {format: CryptoJSAesJson}).toString();
               $scope.recencyEncrypt.push($scope.encryptedData);
             }else{
@@ -249,7 +247,6 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
             }
           })
           .error(function () {
-
             $ionicPopup.alert({
               title: data.response
             });
@@ -287,7 +284,7 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
                       $scope.recencyEncrypt.push($scope.recencySubList[i]);
                     }
                   }
-    
+
                   if ($scope.recencyEncrypt.length == 0) {
                     localStorage.setItem('RecencyData', ($scope.recencyEncrypt));
                   } else {
@@ -318,9 +315,7 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
                   title: data.message
                 });
               });         
-          }
-
-    
+          }    
         }
       }
     }

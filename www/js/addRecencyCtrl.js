@@ -24,7 +24,9 @@ app.controller('addRecencyCtrl', function ($scope, $rootScope, $http, $timeout, 
   $scope.optionalFieldsFlag = JSON.parse(localStorage.getItem('OptionalData'));
   $scope.mandatoryData = JSON.parse(localStorage.getItem('MandatoryData'));
   $scope.facilityData = JSON.parse(localStorage.getItem('FacilityData'));
-  $scope.recencySampleData = JSON.parse(localStorage.getItem('RecencySampleData'));
+  if(localStorage.getItem('RecencySampleData')){
+    $scope.recencySampleData = JSON.parse(localStorage.getItem('RecencySampleData'));
+  }
   $scope.facilityTestData = JSON.parse(localStorage.getItem('TestingFacilityData'));
   $scope.facilityTestTypeData = JSON.parse(localStorage.getItem('TestingFacilityTypeData'));
 
@@ -34,7 +36,24 @@ app.controller('addRecencyCtrl', function ($scope, $rootScope, $http, $timeout, 
     $scope.recencydisplay = true;
     $("#main-recency").addClass("active");
   });
-
+  $scope.getSampleId = function(){
+    $http.get($localStorage.get('apiUrl') + '/api/recency-sampleid')
+    .success(function (data) {
+      if (data.status == "success") {
+        $scope.recencySampleData = data['sample-data'];
+        if($scope.recencySampleData.recencyId){
+          $scope.recency.sampleId=$scope.recencySampleData.recencyId;
+        }
+        localStorage.setItem('RecencySampleData', JSON.stringify(data['sample-data']))
+      } else {
+        localStorage.setItem('RecencySampleData', '')
+      }
+    })
+    .error(function(err,errCode){
+      localStorage.setItem('RecencySampleData', '')
+    });
+  }
+  $scope.getSampleId();
   $scope.getLatLong = function () {
     $scope.optionalFieldsFlag = JSON.parse(localStorage.getItem('OptionalData'));
     $scope.TestKitLotList = [];
@@ -78,9 +97,10 @@ app.controller('addRecencyCtrl', function ($scope, $rootScope, $http, $timeout, 
       $scope.recency.addedBy = localStorage.getItem('userId');
       $scope.recency.formInitDateTime = "";
       $scope.recency.formSavedDateTime = "";
-    if($scope.recencySampleData.recencyId){
-      $scope.recency.sampleId =$scope.recencySampleData.recencyId;
+      $scope.getSampleId();
 
+    if(localStorage.getItem('RecencySampleData')){
+      $scope.recency.sampleId =$scope.recencySampleData.recencyId;
       }else{
       $scope.recency.sampleId = "";
 
@@ -389,7 +409,7 @@ app.controller('addRecencyCtrl', function ($scope, $rootScope, $http, $timeout, 
 // console.log($scope.provinceData)
 // console.log($scope.districtData)
     }
-
+   
 
 
 
@@ -718,19 +738,7 @@ app.controller('addRecencyCtrl', function ($scope, $rootScope, $http, $timeout, 
     }
   }
 
-  $scope.getSampleId = function(){
-    $http.get($localStorage.get('apiUrl') + '/api/recency-sampleid')
-    .success(function (data) {
-      if (data.status == "success") {
-        $scope.recencySampleData = data['sample-data'];
-        $scope.recency.sampleId=$scope.recencySampleData.recencyId;
-        localStorage.setItem('RecencySampleData', JSON.stringify(data['sample-data']))
-      } else {
-        localStorage.setItem('RecencySampleData', '')
-      }
-    });
-  }
-  $scope.getSampleId();
+  
 
   //On Viral Load Change
   $scope.OnVlLoadChange = function (vlLoadResultDropdown) {
@@ -2128,7 +2136,7 @@ app.controller('addRecencyCtrl', function ($scope, $rootScope, $http, $timeout, 
 
     $preLoader.show();
     //var recency = $scope.recency;
-    if($scope.secretKey!=null && $scope.secretKey!=''){
+    if($scope.secretKey!=null && $scope.secretKey!='' && $scope.recency.appVersion>=2.9){
       var recency= CryptoJS.AES.encrypt(JSON.stringify($scope.recency),$scope.secretKey , {format: CryptoJSAesJson}).toString();
     }else{
       var recency = $scope.recency;

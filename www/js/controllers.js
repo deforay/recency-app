@@ -28,7 +28,8 @@ angular.module('starter.controllers', [])
 
     function onDeviceReady(){
       cordova.getAppVersion.getVersionNumber(function (version) {
-        alert(version);
+      localStorage.setItem('AppVersion',version);
+      $scope.appVersion = version;
       });
     }
     function ononline() {
@@ -125,7 +126,7 @@ angular.module('starter.controllers', [])
         $scope.displayqcbadge = false;
       }
 
-      $scope.appVersion = 2.9;
+      $scope.appVersion = localStorage.getItem('AppVersion');
     }
 
 
@@ -147,9 +148,8 @@ angular.module('starter.controllers', [])
       $scope.displayqcbadge = false;
     }
 
-    $scope.appVersion = 2.9;
+    $scope.appVersion = localStorage.getItem('AppVersion');
     
-    localStorage.setItem('AppVersion', $scope.appVersion);
 
     $scope.addRecency = function () {
 
@@ -325,10 +325,15 @@ angular.module('starter.controllers', [])
             .success(function (data) {
               if (data.status == "success") {
                 $scope.recencySampleData = data['sample-data'];
+                if($scope.recencySampleData.recencyId){
                 localStorage.setItem('RecencySampleData', JSON.stringify(data['sample-data']))
-              } else {
+              }
+             } else {
                 localStorage.setItem('RecencySampleData', '')
               }
+            })
+            .error(function(err,errCode){
+              localStorage.setItem('RecencySampleData', '')
             });
             // End Recency sample ID
             

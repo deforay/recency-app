@@ -552,10 +552,9 @@ app = angular.module('starter.loginCtrl', ['starter.services'])
             $localStorage.set('serverpassword', credentials.serverpassword);
             $localStorage.set('userId', response.data.userDetails['userId']);
             $localStorage.set('userName', response.data.userDetails['userName']);
-          //  $localStorage.set('secretKey', 'secretkeyissecretphrasesecretphr');
-          if(response.data.userDetails['secretKey']){
-            $localStorage.set('secretKey', response.data.userDetails['secretKey']);
-          }
+            if(response.data.userDetails['secretKey']){
+              $localStorage.set('secretKey', response.data.userDetails['secretKey']);
+            }
          else{
           $localStorage.set('secretKey','');
 
