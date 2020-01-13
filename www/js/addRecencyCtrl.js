@@ -2163,12 +2163,12 @@ app.controller('addRecencyCtrl', function ($scope, $rootScope, $http, $timeout, 
     $scope.recencydisplay = true;
 
     //Hide Toast During Debugging 
-    // $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
-    //   .then(function (success) {
-    //     // success
-    //   }, function (error) {
-    //     // error
-    //   });
+    $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
+      .then(function (success) {
+        // success
+      }, function (error) {
+        // error
+      });
 
     $scope.getLatLong();
     $scope.getSampleId();

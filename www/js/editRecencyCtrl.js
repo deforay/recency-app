@@ -198,7 +198,7 @@ app = angular.module('starter.editRecencyCtrl', ['starter.services'])
     else {
       $scope.recency.showTermOutcome = false;
       $scope.recency.recencyOutcomeDisplay = "";
-    console.log($scope.recency.showTermOutcome);
+ //   console.log($scope.recency.showTermOutcome);
 
     }
   
@@ -1986,12 +1986,12 @@ $scope.getNewOutcome = function (controlLine, positiveLine, longTermLine) {
       $scope.recencydisplay = true;
 
     //  Hide Toast during debugging
-      // $cordovaToast.show('Edited Successfully', 'long', 'center')
-      //   .then(function (success) {
-      //     // success
-      //   }, function (error) {
-      //     // error
-      //   });
+      $cordovaToast.show('Edited Successfully', 'long', 'center')
+        .then(function (success) {
+          // success
+        }, function (error) {
+          // error
+        });
 
       $("#main-recency").addClass("active");
       $("#other-recency").removeClass('active');

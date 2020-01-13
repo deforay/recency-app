@@ -599,7 +599,7 @@ app = angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
       $preLoader.show();
      // var qcAssurance = $scope.qcAssurance;
 
-     if($scope.secretKey!=null && $scope.secretKey!=''){
+     if($scope.secretKey!=null && $scope.secretKey!='' && $scope.appVersion>=2.9){
       var qcAssurance = CryptoJS.AES.encrypt(JSON.stringify($scope.qcAssurance),$scope.secretKey , {format: CryptoJSAesJson}).toString();
      }else{
       var qcAssurance = $scope.qcAssurance;
@@ -614,12 +614,12 @@ app = angular.module('starter.addQcAssuranceCtrl', ['starter.services'])
       localStorage.setItem('qccounter', $scope.counter);
 
       $scope.qcAssurance = {};
-      // $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
-      //   .then(function (success) {
-      //     // success
-      //   }, function (error) {
-      //     // error
-      //   });
+      $cordovaToast.show('Data Has Been Saved Successfully', 'long', 'center')
+        .then(function (success) {
+          // success
+        }, function (error) {
+          // error
+        });
       $scope.qcAssuranceinit();
       $scope.qcOutcomeCheck();
       $preLoader.hide();

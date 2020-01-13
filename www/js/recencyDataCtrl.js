@@ -19,6 +19,7 @@ app = angular.module('starter.recencyDataCtrl', ['starter.services'])
       $rootScope.toDate = $filter('date')(todate, "dd-MMM-yyyy");
       $scope.secretKey = $secretKey.getSecretKey();
       $scope.userId = localStorage.getItem('userId');
+      $scope.appVersion = localStorage.getItem('AppVersion');
 
 
       if (localStorage.getItem('ServerRecencyData') == 'logout' || localStorage.getItem('ServerRecencyData') == 'success') {
@@ -39,10 +40,23 @@ app = angular.module('starter.recencyDataCtrl', ['starter.services'])
             $localStorage.set('secretKey', response.data.userDetails['secretKey']);
             $localStorage.set('userId', response.data.userDetails['userId']);
 
-            $http.get($localStorage.get('apiUrl') + '/api/recency?authToken=' + response.data.userDetails['authToken'] + '&userId='+response.data.userDetails['userId'] + '&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate)
+            $http.get($localStorage.get('apiUrl') + '/api/recency?authToken=' + response.data.userDetails['authToken'] + '&userId='+response.data.userDetails['userId'] + '&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate+'&version='+$scope.appVersion)
               .then(function (response) {
                 if (response.data.status == "success") {
-                 var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.recency, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
+                  if(response.data.recency.length>0){                 
+                    if(response.data.recency[0].unique_id || response.data.recency[0].appVersion){
+                      var decryptedData = response.data.recency;
+                    }else{
+                      var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.recency, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
+                    }
+                  }
+                  else {
+                    $scope.recencyDatas = [];
+                    $scope.displaymessage = true;
+                    $scope.recencyCount = "";
+                    $scope.displayCount = false;
+                  }
+               //  var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.recency, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
                   $localStorage.set('ServerRecencyData', 'login');
                   $preLoader.hide();
                   $scope.showauth = false;
@@ -60,12 +74,6 @@ app = angular.module('starter.recencyDataCtrl', ['starter.services'])
                     }
                     $scope.displayCount = true;
                     $preLoader.hide()
-                  } else {
-                    $scope.recencyDatas = [];
-                    $scope.displaymessage = true;
-                    $scope.recencyCount = "";
-                    $scope.displayCount = false;
-
                   }
                 } else {
                   $preLoader.hide();
@@ -93,6 +101,7 @@ app = angular.module('starter.recencyDataCtrl', ['starter.services'])
     $scope.getRecencyData = function () {
       $scope.secretKey = $secretKey.getSecretKey();
       $scope.userId = localStorage.getItem('userId');
+      $scope.appVersion = localStorage.getItem('AppVersion');
 
       if (localStorage.getItem('ServerRecencyData') == 'logout' || localStorage.getItem('ServerRecencyData') == 'success') {
         $scope.showauth = true;
@@ -111,10 +120,24 @@ app = angular.module('starter.recencyDataCtrl', ['starter.services'])
             $localStorage.set('secretKey', response.data.userDetails['secretKey']);
             $localStorage.set('userId', response.data.userDetails['userId']);
             
-            $http.get($localStorage.get('apiUrl') + '/api/recency?authToken=' + response.data.userDetails['authToken'] + '&userId='+response.data.userDetails['userId'] + '&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate)
+            $http.get($localStorage.get('apiUrl') + '/api/recency?authToken=' + response.data.userDetails['authToken'] + '&userId='+response.data.userDetails['userId'] + '&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate+'&version='+$scope.appVersion)
               .then(function (response) {
                 if (response.data.status == "success") {
-                  var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.recency, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
+                  if(response.data.recency.length>0){                 
+                    if(response.data.recency[0].unique_id || response.data.recency[0].appVersion){
+                      var decryptedData = response.data.recency;
+                    }else{
+                      var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.recency, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
+                    }
+                  }
+                  else {
+                    $scope.recencyDatas = [];
+                    $scope.displaymessage = true;
+                    $scope.recencyCount = "";
+                    $scope.displayCount = false;
+                  }
+
+                 // var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.recency, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
                   $localStorage.set('ServerRecencyData', 'login');
                   $preLoader.hide();
                   $scope.showauth = false;
@@ -132,11 +155,6 @@ app = angular.module('starter.recencyDataCtrl', ['starter.services'])
                     }
                     $scope.displayCount = true;
                     $preLoader.hide()
-                  } else {
-                    $scope.recencyDatas = [];
-                    $scope.displaymessage = true;
-                    $scope.recencyCount = "";
-                    $scope.displayCount = false;
                   }
                 } else {
                   $preLoader.hide();
@@ -171,7 +189,7 @@ app = angular.module('starter.recencyDataCtrl', ['starter.services'])
       $rootScope.toDate = $filter('date')(todate, "dd-MMM-yyyy");
       $scope.secretKey = $secretKey.getSecretKey();
       $scope.userId = localStorage.getItem('userId');
-
+      $scope.appVersion = localStorage.getItem('AppVersion');
 
       if (!credentials.email) {
         $ionicPopup.alert({
@@ -201,7 +219,7 @@ app = angular.module('starter.recencyDataCtrl', ['starter.services'])
             $localStorage.set('secretKey', response.data.userDetails['secretKey']);
             $localStorage.set('userId', response.data.userDetails['userId']);
 
-            $http.get($localStorage.get('apiUrl') + '/api/recency?authToken=' +  response.data.userDetails['authToken'] + '&userId='+response.data.userDetails['userId']+ '&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate)
+            $http.get($localStorage.get('apiUrl') + '/api/recency?authToken=' +  response.data.userDetails['authToken'] + '&userId='+response.data.userDetails['userId']+ '&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate+'&version='+$scope.appVersion)
               .then(function (response) {
 
                 if (response.data.status == "success") {
@@ -214,7 +232,22 @@ app = angular.module('starter.recencyDataCtrl', ['starter.services'])
                     }, function (error) {
                       // error
                     });
-                  var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.recency, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
+
+
+                    if(response.data.recency.length>0){                 
+                      if(response.data.recency[0].unique_id || response.data.recency[0].appVersion){
+                        var decryptedData = response.data.recency;
+                      }else{
+                        var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.recency, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
+                      }
+                    }
+                    else {
+                      $scope.recencyDatas = [];
+                      $scope.displaymessage = true;
+                      $scope.recencyCount = "";
+                      $scope.displayCount = false;
+                    }  
+                  //var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.recency, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
                   $scope.showauth = false;
 
                   if (decryptedData.length > 0) {
@@ -230,13 +263,7 @@ app = angular.module('starter.recencyDataCtrl', ['starter.services'])
                     }
                     $scope.displayCount = true;
                     $preLoader.hide();
-                  } else {
-                    $scope.recencyDatas = [];
-                    $scope.displaymessage = true;
-                    $scope.recencyCount = "";
-                    $scope.displayCount = false;
                   }
-
                 } else {
                   $preLoader.hide();
                   $localStorage.set('ServerRecencyData', 'login');

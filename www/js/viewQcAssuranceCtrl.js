@@ -8,6 +8,7 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
       $rootScope.apiUrl = localStorage.getItem('apiUrl');
       var QCDataList = localStorage.getItem('QCData');
       $scope.syncDataLimit = $syncDataLimit.setSyncDataLimit();
+      $scope.appVersion = localStorage.getItem('AppVersion');
 
       $scope.NewQcDataList = [];
       $scope.NewQcObj = [];
@@ -16,23 +17,11 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
 
       if (QCDataList != null) {
         QCDataList = JSON.parse(QCDataList);
-        //  var unSyncQcCount = Object.keys(QCDataList).length;
-        // if ($rootScope.qcUnsynCount != undefined) {
 
-        // } else {
-        //   $rootScope.qcUnsynCount = '(' + unSyncQcCount + ')';
-        // }
-        // var result = Object.keys(QCDataList).map(function (key, value) {
-        //   return [(key), QCDataList[value]];
-        // });
-        // $scope.QCDataList = [];
-        // for (i = 0; i < result.length; i++) {
-        //   $scope.QCDataList.push(result[i][1])
-        // }
         for (i = 0; i < Object.keys(QCDataList).length; i++) {
           $scope.decryptedData = {};
-          if(QCDataList[i].unique_id || QCDataList[i].appVersion){
-            console.log(QCDataList[i])
+          if(QCDataList[i].unique_id || QCDataList[i].appVersion && $scope.appVersion>=2.9){
+          //  console.log(QCDataList[i])
             $scope.QCDataDecrypt.push(QCDataList[i]);
           }else{
             $scope.decryptedData = JSON.parse(CryptoJS.AES.decrypt(QCDataList[i], $scope.secretKey, {
@@ -66,6 +55,7 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
       $scope.secretKey = $secretKey.getSecretKey();
       $rootScope.apiUrl = localStorage.getItem('apiUrl');
       var QCDataList = localStorage.getItem('QCData');
+      $scope.appVersion = localStorage.getItem('AppVersion');
       $scope.syncDataLimit = $syncDataLimit.setSyncDataLimit();
 
       $scope.NewQcDataList = [];
@@ -98,7 +88,7 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
         for (i = 0; i < Object.keys(QCDataList).length; i++) {
           $scope.decryptedData = {};
           if(QCDataList[i].unique_id || QCDataList[i].appVersion){
-            console.log(QCDataList[i])
+            //console.log(QCDataList[i])
             $scope.QCDataDecrypt.push(QCDataList[i]);
           }else{
             $scope.decryptedData = JSON.parse(CryptoJS.AES.decrypt(QCDataList[i], $scope.secretKey, {
@@ -178,10 +168,9 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
             setTimeout(function () {
               $scope.slicedQCDataList = $scope.copyQCDataList.splice(0, $scope.syncDataLimit);
               $scope.QCEncrypt=[];
-              for (let n = 0; n < $scope.slicedQCDataList.length; n++) {
-             
+              for (let n = 0; n < $scope.slicedQCDataList.length; n++) {             
                 $scope.encryptedData = {};
-                if($scope.secretKey!=null && $scope.secretKey!=''){
+                if($scope.secretKey!=null && $scope.secretKey!='' && $scope.appVersion>=2.9){
                   $scope.encryptedData = CryptoJS.AES.encrypt(JSON.stringify($scope.slicedQCDataList[n]), $scope.secretKey, {
                     format: CryptoJSAesJson
                   }).toString();
@@ -189,8 +178,7 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
                 }else{
                  $scope.encryptedData = $scope.slicedQCDataList[n];
                  $scope.QCEncrypt.push($scope.encryptedData); 
-                }
-                          
+                }   
               }
             //  console.log($scope.QCEncrypt);
               $preLoader.show();
@@ -198,7 +186,7 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
               $http.post($rootScope.apiUrl + "/api/quality-check", {
                   "qc": $scope.QCEncrypt,
                   "userId": localStorage.getItem('userId'),
-                  "version":localStorage.getItem('appVersion')
+                  "version":localStorage.getItem('AppVersion')
                 })
                 .success(function (data) {
                   if (data.status == 'failed') {
@@ -237,17 +225,20 @@ app = angular.module('starter.viewQcAssuranceCtrl', ['starter.services'])
                     $scope.QCDataList = $scope.copyQCDataList;
                     $preLoader.hide();
                     if (m == (iterationLength - 1)) {
-                      var decryptedTenData = JSON.parse(CryptoJS.AES.decrypt($scope.tenRecord, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
+                      if($scope.tenRecord[0].qcSampleId){
+                        var decryptedTenData = $scope.tenRecord;
+                      }else if($scope.secretKey!=null && $scope.secretKey!='' && $scope.appVersion>=2.9){
+                        var decryptedTenData = JSON.parse(CryptoJS.AES.decrypt($scope.tenRecord, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
+                      }
                       //console.log(decryptedTenData);
-                    localStorage.setItem('lastTenQcData', JSON.stringify(decryptedTenData))
-
+                      localStorage.setItem('lastTenQcData', JSON.stringify(decryptedTenData));
                       localStorage.setItem('LastTesterName', $scope.slicedQCDataList[responselen - 1].testerName)
                       localStorage.setItem('LastTestDate', currentdate);
                       // $ionicPopup.alert({
                       //   title: 'Success',
                       //   template: $scope.syncedCount + ' Data Has been Synced'
                       // });
-                      // Hide Toast during Debugging
+                     // Hide Toast during Debugging
                       $cordovaToast.show($scope.syncedCount + ' Data has been Successfully Synced', 'long', 'bottom')
                         .then(function (success) {
                           // success

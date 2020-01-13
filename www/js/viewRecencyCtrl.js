@@ -10,7 +10,7 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
 
       $scope.secretKey = $secretKey.getSecretKey();
       $scope.DataLimit = $syncDataLimit.setSyncDataLimit();
-      $scope.appVersion = localStorage.getItem('appVersion');
+      $scope.appVersion = localStorage.getItem('AppVersion');
       $rootScope.apiUrl = localStorage.getItem('apiUrl');
       var recencyList = localStorage.getItem('RecencyData');
 
@@ -20,8 +20,8 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
         for(i=0;i<Object.keys(recencyList).length;i++){
           if(recencyList[i].unique_id || recencyList[i].appVersion){
             $scope.recencyDecrypt.push(recencyList[i]);
-            console.log($scope.recencyDecrypt);
-          }else if($scope.secretKey!=null && $scope.secretKey!=''){
+            //console.log($scope.recencyDecrypt);
+          }else if($scope.secretKey!=null && $scope.secretKey!='' && $scope.appVersion>=2.9){
             $scope.decryptedData ={};
             $scope.decryptedData = JSON.parse(CryptoJS.AES.decrypt(recencyList[i], $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
             $scope.recencyDecrypt.push($scope.decryptedData);
@@ -61,7 +61,6 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
       $scope.recencyDecrypt = [];
       $scope.recencyEncrypt=[];
       $scope.secretKey = $secretKey.getSecretKey();
-      console.log($scope.secretKey);
 
       $scope.DataLimit = $syncDataLimit.setSyncDataLimit();
 
@@ -73,7 +72,6 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
 
         for(i=0;i<Object.keys(recencyList).length;i++){
           if(recencyList[i].unique_id || recencyList[i].appVersion){
-            console.log(recencyList[i]);
             $scope.recencyDecrypt.push(recencyList[i]);
           }else if($scope.secretKey!=null && $scope.secretKey!=''){
             $scope.decryptedData ={};
@@ -175,7 +173,7 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
             
      
         }
-      //  console.log($scope.recencyList[i])
+        //console.log($scope.recencyList[i])
         $scope.recencyList[i].formTransferDateTime = currentdatetime.getFullYear() + "-" +
           (currentdatetime.getMonth() + 1) + "-" +
           currentdatetime.getDate() + " " +
@@ -192,14 +190,18 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
               }   
           }
          var totLength = $scope.recencyEncrypt.length;
-         console.log($scope.recencyEncrypt)
+      //   console.log(JSON.stringify($scope.recencyEncrypt[0]))
+
+        //  $scope.decryptedData ={};
+        //  $scope.decryptedData = JSON.parse(CryptoJS.AES.decrypt($scope.recencyEncrypt[0], $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
+        //   console.log( $scope.decryptedData)
 
         if(totLength<=$scope.DataLimit){
           $scope.syncedCount = 0;
           $http.post($rootScope.apiUrl + "/api/recency", {
             "form": $scope.recencyEncrypt,
             "userId":localStorage.getItem('userId'),
-            "version":localStorage.getItem('appVersion')
+            "version":localStorage.getItem('AppVersion')
           })
           .success(function (data) {
            // console.log(data);
@@ -232,17 +234,17 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
               }
               localStorage.setItem('counter', $scope.recencyEncrypt.length);   
 
-              $ionicPopup.alert({
-                title: 'Success',
-                template: $scope.syncedCount +' Data Has been Synced'
-              });
+              // $ionicPopup.alert({
+              //   title: 'Success',
+              //   template: $scope.syncedCount +' Data Has been Synced'
+              // });
 
-              // $cordovaToast.show($scope.syncedCount + ' Data has been Successfully Synced', 'long', 'bottom')
-              //           .then(function (success) {
-              //             // success
-              //           }, function (error) {
-              //             // error
-              //           });
+              $cordovaToast.show($scope.syncedCount + ' Data has been Successfully Synced', 'long', 'bottom')
+                        .then(function (success) {
+                          // success
+                        }, function (error) {
+                          // error
+                        });
               $scope.onLoadRecency();
             }
           })
@@ -261,7 +263,7 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
               $http.post($rootScope.apiUrl + "/api/recency", {
                 "form": $scope.recencySubList,
                 "userId":localStorage.getItem('userId'),
-                "version":localStorage.getItem('appVersion')
+                "version":localStorage.getItem('AppVersion')
               })
               .success(function (data) {
              
@@ -295,16 +297,16 @@ app = angular.module('starter.viewRecencyCtrl', ['starter.services'])
                   }
                   localStorage.setItem('counter', $scope.recencyEncrypt.length);  
                   if($scope.syncDataCount==$scope.responseRecCount && $scope.syncedCount!=0){
-                    $ionicPopup.alert({
-                      title: 'Success',
-                      template: $scope.syncedCount +' Data Has been Synced'
-                    });
-                    // $cordovaToast.show($scope.syncedCount + ' Data has been Successfully Synced', 'long', 'bottom')
-                    //     .then(function (success) {
-                    //       // success
-                    //     }, function (error) {
-                    //       // error
-                    //     });
+                    // $ionicPopup.alert({
+                    //   title: 'Success',
+                    //   template: $scope.syncedCount +' Data Has been Synced'
+                    // });
+                    $cordovaToast.show($scope.syncedCount + ' Data has been Successfully Synced', 'long', 'bottom')
+                        .then(function (success) {
+                          // success
+                        }, function (error) {
+                          // error
+                        });
                     $scope.onLoadRecency();
                   } 
                 }

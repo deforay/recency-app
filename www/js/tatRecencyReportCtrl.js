@@ -16,6 +16,7 @@ app = angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
       $scope.tatDataCount = "";
       $scope.secretKey = $secretKey.getSecretKey();
       $scope.userId = localStorage.getItem('userId');
+      $scope.appVersion = localStorage.getItem('AppVersion');
 
       if (localStorage.getItem('ServerRecencyData') == 'logout' || localStorage.getItem('ServerRecencyData') == 'success') {
         $scope.showauth = true;
@@ -34,14 +35,25 @@ app = angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
             $localStorage.set('authToken', response.data.userDetails['authToken']);
            if(response.data.userDetails['secretKey']){
             $localStorage.set('secretKey', response.data.userDetails['secretKey']);
-          }            
+            }            
           $localStorage.set('userId', response.data.userDetails['userId']);
 
-            $http.get($localStorage.get('apiUrl') + '/api/tat-report?authToken=' + response.data.userDetails['authToken'] + '&userId='+response.data.userDetails['userId']+'&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate)
+            $http.get($localStorage.get('apiUrl') + '/api/tat-report?authToken=' + response.data.userDetails['authToken'] + '&userId='+response.data.userDetails['userId']+'&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate+'&version='+$scope.appVersion)
               .then(function (response) {
                 if (response.data.status == "success") {
-
-                  var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.tat, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
+                  if(response.data.tat.length>0){                 
+                    if(response.data.tat[0].sample_id){
+                      var decryptedData = response.data.tat;
+                    }else{
+                      var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.tat, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
+                    }
+                  }
+                  else {
+                    $scope.displaymessage = true;
+                    $scope.tatDataCount = "";
+                    $scope.tatDatas = [];
+                  }
+                 // var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.tat, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
                   $localStorage.set('ServerRecencyData', 'login');
                   $preLoader.hide();
                   $scope.showauth = false;
@@ -52,11 +64,7 @@ app = angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
                     $scope.tatDatas = decryptedData;
                     $scope.tatDataCount = $scope.tatDatas.length;
                     $preLoader.hide()
-                  } else {
-                    $scope.displaymessage = true;
-                    $scope.tatDataCount = "";
-                    $scope.tatDatas = [];
-                  }
+                  } 
                 } else {
                   $preLoader.hide();
                   $localStorage.set('ServerRecencyData', 'login');
@@ -87,6 +95,9 @@ app = angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
       $scope.tatDataCount = "";
       $scope.secretKey = $secretKey.getSecretKey();
       $scope.userId = localStorage.getItem('userId');
+      $scope.appVersion = localStorage.getItem('AppVersion');
+
+
       if (localStorage.getItem('ServerRecencyData') == 'logout' || localStorage.getItem('ServerRecencyData') == 'success') {
         $scope.showauth = true;
       } else {
@@ -107,11 +118,22 @@ app = angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
             }
             $localStorage.set('userId', response.data.userDetails['userId']);
 
-            $http.get($localStorage.get('apiUrl') + '/api/tat-report?authToken=' +response.data.userDetails['authToken']+ '&userId='+response.data.userDetails['userId'] + '&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate)
+            $http.get($localStorage.get('apiUrl') + '/api/tat-report?authToken=' +response.data.userDetails['authToken']+ '&userId='+response.data.userDetails['userId'] + '&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate +'&version='+$scope.appVersion)
               .then(function (response) {
-
                 if (response.data.status == "success") {
-                  var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.tat, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
+                  if(response.data.tat.length>0){                 
+                    if(response.data.tat[0].sample_id){
+                      var decryptedData = response.data.tat;
+                    }else{
+                      var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.tat, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
+                    }
+                  }
+                  else {
+                    $scope.displaymessage = true;
+                    $scope.tatDataCount = "";
+                    $scope.tatDatas = [];
+                  }
+                 // var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.tat, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
                   $localStorage.set('ServerRecencyData', 'login');
                   $preLoader.hide();
                   $scope.showauth = false;
@@ -120,15 +142,8 @@ app = angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
                     $scope.displaymessage = false;
                     $preLoader.show();
                     $scope.tatDatas = decryptedData;
-
                     $scope.tatDataCount = $scope.tatDatas.length;
-
                     $preLoader.hide()
-                  } else {
-                    $scope.displaymessage = true;
-
-                    $scope.tatDataCount = "";
-                    $scope.tatDatas = [];
                   }
                 } else {
                   $preLoader.hide();
@@ -166,6 +181,7 @@ app = angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
       $scope.tatDataCount = "";
       $scope.secretKey = $secretKey.getSecretKey();
       $scope.userId = localStorage.getItem('userId');
+      $scope.appVersion = localStorage.getItem('AppVersion');
 
       if (!credentials.email) {
         $ionicPopup.alert({
@@ -196,11 +212,23 @@ app = angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
             }
             $localStorage.set('userId', response.data.userDetails['userId']);
 
-            $http.get($localStorage.get('apiUrl') + '/api/tat-report?authToken=' + response.data.userDetails['authToken'] + '&userId='+response.data.userDetails['userId'] + '&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate)
+            $http.get($localStorage.get('apiUrl') + '/api/tat-report?authToken=' + response.data.userDetails['authToken'] + '&userId='+response.data.userDetails['userId'] + '&start=' + $rootScope.fromDate + '&end=' + $rootScope.toDate+'&version='+$scope.appVersion)
               .then(function (response) {
              
                 if (response.data.status == "success") {
-                  var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.tat, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
+                  if(response.data.tat.length>0){                 
+                    if(response.data.tat[0].sample_id){
+                      var decryptedData = response.data.tat;
+                    }else{
+                      var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.tat, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
+                    }
+                  }
+                  else {
+                    $scope.displaymessage = true;
+                    $scope.tatDataCount = "";
+                    $scope.tatDatas = [];
+                  }
+                 // var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.tat, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
 
                   $localStorage.set('ServerRecencyData', 'login');
                   $preLoader.hide();
@@ -218,26 +246,16 @@ app = angular.module('starter.tatRecencyReportCtrl', ['starter.services'])
                     $scope.displaymessage = false;
                     $preLoader.show();
                     $scope.tatDatas =decryptedData;
-
                     $scope.tatDataCount = $scope.tatDatas.length;
-
-
                     $preLoader.hide()
-                  } else {
-                    $scope.displaymessage = true;
-
-                    $scope.tatDataCount = "";
-                    $scope.tatDatas = [];
-                  }
+                  } 
                 } else {
                   $preLoader.hide();
                   $localStorage.set('ServerRecencyData', 'login');
                   $scope.showauth = false;
                   $scope.tatDatas = [];
                   $scope.displaymessage = true;
-
                   $scope.tatDataCount = "";
-
                 }
               })
           } else {

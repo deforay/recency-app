@@ -11,8 +11,9 @@ app = angular.module('starter.pendingRecencyResultCtrl', ['starter.services'])
       $scope.recencyVlCount = "";
       $scope.secretKey = $secretKey.getSecretKey();
       $scope.userId = localStorage.getItem('userId');
+      $scope.appVersion = localStorage.getItem('AppVersion');
 
-         if (localStorage.getItem('ServerRecencyData') == 'logout' || localStorage.getItem('ServerRecencyData') == 'success') {
+     if (localStorage.getItem('ServerRecencyData') == 'logout' || localStorage.getItem('ServerRecencyData') == 'success') {
         $scope.showauth = true;
       } else {
         $preLoader.show();
@@ -31,11 +32,24 @@ app = angular.module('starter.pendingRecencyResultCtrl', ['starter.services'])
             }
             $localStorage.set('userId', response.data.userDetails['userId']);
 
-            $http.get($localStorage.get('apiUrl') + '/api/pending-vl-result?authToken=' + response.data.userDetails['authToken']+ '&userId='+response.data.userDetails['userId'])
+            $http.get($localStorage.get('apiUrl') + '/api/pending-vl-result?authToken=' + response.data.userDetails['authToken']+ '&userId='+response.data.userDetails['userId']+'&version='+$scope.appVersion)
               .then(function (response) {
                 if (response.data.status == "success") {
-                  var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.recency, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
 
+                  if(response.data.recency.length>0){                 
+                    if(response.data.recency[0].sample_id==null || response.data.recency[0].sample_id){
+                      var decryptedData = response.data.recency;
+                    }else{
+                      var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.recency, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
+                    }
+                  }
+                  else {
+                    $scope.displaymessage = true;
+                    $scope.displayVlCount = false;
+                    $scope.recencyVlCount = "";
+                    $scope.recencyVlDatas = [];
+                  }
+                //  var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.recency, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
                   $localStorage.set('ServerRecencyData', 'login');
                   $preLoader.hide();
                   $scope.showauth = false;
@@ -48,11 +62,6 @@ app = angular.module('starter.pendingRecencyResultCtrl', ['starter.services'])
 
                     $scope.displayVlCount = true;
                     $preLoader.hide()
-                  } else {
-                    $scope.displaymessage = true;
-                    $scope.displayVlCount = false;
-                    $scope.recencyVlCount = "";
-                    $scope.recencyVlDatas = [];
                   }
                 } else {
                   $preLoader.hide();
@@ -85,6 +94,7 @@ app = angular.module('starter.pendingRecencyResultCtrl', ['starter.services'])
       $scope.recencyVlCount = "";
       $scope.secretKey = $secretKey.getSecretKey();
       $scope.userId = localStorage.getItem('userId');
+      $scope.appVersion = localStorage.getItem('AppVersion');
 
       if (!credentials.email) {
         $ionicPopup.alert({
@@ -116,7 +126,7 @@ app = angular.module('starter.pendingRecencyResultCtrl', ['starter.services'])
             }
             $localStorage.set('userId', response.data.userDetails['userId']);
 
-            $http.get($localStorage.get('apiUrl') + '/api/pending-vl-result?authToken=' + response.data.userDetails['authToken']+ '&userId='+response.data.userDetails['userId'])
+            $http.get($localStorage.get('apiUrl') + '/api/pending-vl-result?authToken=' + response.data.userDetails['authToken']+ '&userId='+response.data.userDetails['userId'] +'&version='+$scope.appVersion)
               .then(function (response) {
 
                 if (response.data.status == "success") {
@@ -130,7 +140,20 @@ app = angular.module('starter.pendingRecencyResultCtrl', ['starter.services'])
                       // error
                     });
 
-                    var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.recency, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
+                    if(response.data.recency.length>0){                 
+                      if(response.data.recency[0].sample_id==null || response.data.recency[0].sample_id){
+                        var decryptedData = response.data.recency;
+                      }else{
+                        var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.recency, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
+                      }
+                    }
+                    else {
+                      $scope.displaymessage = true;
+                      $scope.displayVlCount = false;
+                      $scope.recencyVlCount = "";
+                      $scope.recencyVlDatas = [];
+                    }
+                  //  var decryptedData = JSON.parse(CryptoJS.AES.decrypt(response.data.recency, $scope.secretKey, {format: CryptoJSAesJson}).toString(CryptoJS.enc.Utf8));
                     $scope.showauth = false;
                   if (decryptedData.length > 0) {
                     $scope.displaymessage = false;
@@ -140,12 +163,8 @@ app = angular.module('starter.pendingRecencyResultCtrl', ['starter.services'])
                     $scope.recencyVlCount = $scope.recencyVlDatas.length;
                     $scope.displayVlCount = true;
                     $preLoader.hide()
-                  } else {
-                    $scope.displaymessage = true;
-                    $scope.displayVlCount = false;
-                    $scope.recencyVlCount = "";
-                    $scope.recencyVlDatas = [];
-                  }
+                  } 
+             
                 } else {
                   $preLoader.hide();
                   $localStorage.set('ServerRecencyData', 'login');
